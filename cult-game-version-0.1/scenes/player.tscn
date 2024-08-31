@@ -1,0 +1,57 @@
+[gd_scene load_steps=7 format=3 uid="uid://cts6cpmg1ehil"]
+
+[ext_resource type="Script" path="res://scripts/player.gd" id="1_5qw1a"]
+[ext_resource type="Texture2D" uid="uid://cjy33wyjwplx" path="res://art/icon.svg" id="2_wlc8n"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bab5j"]
+atlas = ExtResource("2_wlc8n")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_nhdyx"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bab5j")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nrcso"]
+size = Vector2(132, 132)
+
+[sub_resource type="GDScript" id="GDScript_qd5eh"]
+script/source = "extends Camera2D
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(_delta: float) -> void:
+	pass
+"
+
+[node name="player" type="CharacterBody2D"]
+script = ExtResource("1_5qw1a")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_nhdyx")
+animation = &"idle"
+frame_progress = 0.334865
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_nrcso")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position_smoothing_enabled = true
+drag_horizontal_enabled = true
+drag_vertical_enabled = true
+drag_left_margin = 0.1
+drag_top_margin = 0.1
+drag_right_margin = 0.1
+drag_bottom_margin = 0.1
+script = SubResource("GDScript_qd5eh")
