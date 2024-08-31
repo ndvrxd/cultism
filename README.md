@@ -1,2 +1,0 @@
-# cultism
-uhhhhhh my game
