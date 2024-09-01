@@ -67,7 +67,7 @@ texture = ExtResource("1_br0cv")
 
 [node name="player" parent="." instance=ExtResource("2_hddls")]
 speed = 400
-accel = 100
+accel = 7.0
 
 [node name="enemy" parent="." instance=ExtResource("3_5gkxb")]
 position = Vector2(1096, -764)

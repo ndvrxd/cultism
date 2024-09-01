@@ -15,12 +15,15 @@ size = Vector2(16.2614, 5.94796)
 [node name="test effigy" type="StaticBody2D"]
 scale = Vector2(12.7775, 12.7775)
 
-[node name="MeshInstance2D" type="MeshInstance2D" parent="."]
+[node name="flame fx" type="MeshInstance2D" parent="."]
 material = SubResource("ShaderMaterial_moupg")
 position = Vector2(1.49012e-08, -7.25659)
 rotation = 3.14159
 scale = Vector2(12.2, 12.2)
 mesh = SubResource("QuadMesh_lbiwx")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+scale = Vector2(1, 1)
 
 [node name="Sprite" type="Sprite2D" parent="."]
 texture_filter = 1
