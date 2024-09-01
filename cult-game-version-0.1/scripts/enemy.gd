@@ -13,13 +13,3 @@ func _process(_delta: float) -> void:
 	velocity.y = move_toward(velocity.y, speed * direction.y, accel)
 	
 	move_and_slide()
-
-
-
-'''func _physics_process(delta: float) -> void:
-	player_pos = player.global_position
-	target_pos = (player.pos - global_position).normalized()
-	
-	if global_position.distance_to(player_pos) > 3:
-		global_position += target_pos * speed * delta
-'''
