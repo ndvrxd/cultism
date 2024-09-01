@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-@export var speed:float = 400
+@export var speed:float = 150
 @export var accel:float = 7
 var player_pos
 var target_pos

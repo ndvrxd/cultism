@@ -138,6 +138,7 @@ position = Vector2(-501, -108)
 
 [node name="Map Boundaries" type="StaticBody2D" parent="."]
 position = Vector2(-853, -566)
+collision_layer = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Map Boundaries"]
 position = Vector2(0, 2)
