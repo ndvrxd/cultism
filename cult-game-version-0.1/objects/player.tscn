@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://veo5l360amx3" path="res://art/player ph.png" id="2_ysvs3"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nrcso"]
-size = Vector2(132, 132)
+size = Vector2(132, 111.963)
 
 [sub_resource type="GDScript" id="GDScript_qd5eh"]
 script/source = "extends Camera2D
@@ -25,6 +25,7 @@ texture_filter = 6
 script = ExtResource("1_5qw1a")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 8.065)
 scale = Vector2(0.335, 0.805)
 shape = SubResource("RectangleShape2D_nrcso")
 

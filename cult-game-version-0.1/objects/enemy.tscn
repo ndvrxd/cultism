@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://6i8qff0kq7ei" path="res://art/enemy ph.png" id="2_xabwo"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7evg3"]
-size = Vector2(94, 94)
+size = Vector2(94, 75)
 
 [node name="enemy" type="CharacterBody2D"]
 disable_mode = 1
@@ -21,7 +21,7 @@ scale = Vector2(0.69, 0.69)
 texture = ExtResource("2_xabwo")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 1)
+position = Vector2(0, 10.5)
 scale = Vector2(0.8, 1)
 shape = SubResource("RectangleShape2D_7evg3")
 debug_color = Color(0.772432, 0.263693, 0.879854, 0.42)

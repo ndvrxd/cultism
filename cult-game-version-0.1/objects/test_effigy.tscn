@@ -10,7 +10,7 @@ shader = ExtResource("2_bln26")
 size = Vector2(-1, 1)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_10w11"]
-size = Vector2(16.2614, 16.2614)
+size = Vector2(16.2614, 5.94796)
 
 [node name="test effigy" type="StaticBody2D"]
 scale = Vector2(12.7775, 12.7775)
@@ -29,6 +29,6 @@ scale = Vector2(0.09, 0.09)
 texture = ExtResource("1_qbvs6")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0.165134, 0.165133)
+position = Vector2(0.165134, 5.32185)
 scale = Vector2(0.685, 1)
 shape = SubResource("RectangleShape2D_10w11")
