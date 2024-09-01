@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://dxiibdkgas3eu"]
 
 [ext_resource type="Script" path="res://scripts/pause_menu.gd" id="1_dmpsi"]
-[ext_resource type="Shader" path="res://art/pausemenu.gdshader" id="2_mb4ie"]
+[ext_resource type="Shader" path="res://shaders/pausemenu.gdshader" id="2_mb4ie"]
 [ext_resource type="FontFile" uid="uid://dhk11k42eybnt" path="res://art/chela-one.regular.ttf" id="3_iihm8"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_fiai1"]

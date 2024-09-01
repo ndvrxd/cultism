@@ -1,13 +1,10 @@
-[gd_scene load_steps=20 format=3 uid="uid://c6t867f13wn4u"]
+[gd_scene load_steps=19 format=3 uid="uid://c6t867f13wn4u"]
 
 [ext_resource type="Texture2D" uid="uid://dr1jlcktudyg" path="res://art/playermapxd.png" id="1_br0cv"]
-[ext_resource type="PackedScene" uid="uid://cts6cpmg1ehil" path="res://scenes/player.tscn" id="2_hddls"]
-[ext_resource type="PackedScene" uid="uid://ct6dh5rgiuip3" path="res://scenes/enemy.tscn" id="3_5gkxb"]
-[ext_resource type="Texture2D" uid="uid://bmcl5vl05h6ty" path="res://art/missing texture.png" id="3_h51de"]
+[ext_resource type="PackedScene" uid="uid://cts6cpmg1ehil" path="res://objects/player.tscn" id="2_hddls"]
+[ext_resource type="PackedScene" uid="uid://ct6dh5rgiuip3" path="res://objects/enemy.tscn" id="3_5gkxb"]
+[ext_resource type="PackedScene" uid="uid://bhatrw3cecxw1" path="res://objects/test_effigy.tscn" id="4_4fgws"]
 [ext_resource type="PackedScene" uid="uid://dxiibdkgas3eu" path="res://scenes/pause_menu.tscn" id="5_yfg13"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_10w11"]
-size = Vector2(16.2614, 16.2614)
 
 [sub_resource type="SegmentShape2D" id="SegmentShape2D_reqib"]
 a = Vector2(-2, -479)
@@ -63,6 +60,7 @@ b = Vector2(-256, 1161)
 [node name="world" type="Node2D"]
 
 [node name="Playermapxd" type="Sprite2D" parent="."]
+texture_filter = 2
 position = Vector2(30, -11)
 scale = Vector2(1.94283, 2.36346)
 texture = ExtResource("1_br0cv")
@@ -86,17 +84,8 @@ position = Vector2(-640, 744)
 [node name="enemy5" parent="." instance=ExtResource("3_5gkxb")]
 position = Vector2(972, 592)
 
-[node name="test effigy" type="StaticBody2D" parent="."]
-position = Vector2(-529, -82)
-scale = Vector2(12.7775, 12.7775)
-
-[node name="MissingTexture" type="Sprite2D" parent="test effigy"]
-position = Vector2(0.173748, 0.173744)
-texture = ExtResource("3_h51de")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="test effigy"]
-position = Vector2(0.165134, 0.165133)
-shape = SubResource("RectangleShape2D_10w11")
+[node name="test effigy" parent="." instance=ExtResource("4_4fgws")]
+position = Vector2(-501, -108)
 
 [node name="Map Boundaries" type="StaticBody2D" parent="."]
 position = Vector2(-853, -566)
