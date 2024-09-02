@@ -38,7 +38,7 @@ size = Vector2(104, 321)
 
 [node name="world" type="Node2D"]
 
-[node name="Playermapxd" type="Sprite2D" parent="."]
+[node name="Playermapxd" type="Sprite2D" parent="." groups=["entity"]]
 texture_filter = 2
 position = Vector2(-4, -2)
 scale = Vector2(1.94283, 2.36346)
@@ -52,7 +52,6 @@ position = Vector2(-496, 1.99999)
 
 [node name="player" parent="Node" instance=ExtResource("2_hddls")]
 position = Vector2(-216, -132)
-accel = 8.5
 
 [node name="enemy" parent="Node" instance=ExtResource("3_5gkxb")]
 position = Vector2(1096, -764)

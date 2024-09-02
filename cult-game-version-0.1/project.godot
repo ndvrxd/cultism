@@ -15,6 +15,10 @@ run/main_scene="res://scenes/world.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 config/icon="res://art/icon.svg"
 
+[global_group]
+
+entity="Group containing all entities"
+
 [input]
 
 up={
