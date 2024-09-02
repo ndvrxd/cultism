@@ -1,4 +1,4 @@
-[gd_resource type="VisualShader" load_steps=23 format=3 uid="uid://hcf2iarxkvam"]
+[gd_resource type="VisualShader" load_steps=23 format=3 uid="uid://cchd4lawas5cx"]
 
 [ext_resource type="Texture2D" uid="uid://b77qqcqt0hl5o" path="res://shaders/noisetextures/linear_radial_gradient.png" id="1_gmv4y"]
 [ext_resource type="Texture2D" uid="uid://b0wakp5n2vy6e" path="res://shaders/noisetextures/wave_map_vertical.png" id="2_xysuk"]
@@ -9,11 +9,9 @@ default_input_values = [0, Vector2(0, 0), 1, Vector2(-0.1, 1), 2, Vector2(0, 0)]
 op_type = 1
 
 [sub_resource type="VisualShaderNodeInput" id="VisualShaderNodeInput_gkfby"]
-output_port_for_preview = 0
 input_name = "uv"
 
 [sub_resource type="VisualShaderNodeVectorOp" id="VisualShaderNodeVectorOp_vjji8"]
-output_port_for_preview = 0
 default_input_values = [0, Vector2(0, 0), 1, Vector2(1, 1)]
 op_type = 0
 operator = 4

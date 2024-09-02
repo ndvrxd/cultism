@@ -1,6 +1,25 @@
-[gd_scene load_steps=2 format=3 uid="uid://ci2psjf4f2qtu"]
+[gd_scene load_steps=9 format=3 uid="uid://ci2psjf4f2qtu"]
 
 [ext_resource type="Script" path="res://scripts/player_controls.gd" id="1_122va"]
+[ext_resource type="Texture2D" uid="uid://ccds8ab8fiqhe" path="res://art/health.png" id="2_nyne5"]
+[ext_resource type="FontFile" uid="uid://dhk11k42eybnt" path="res://art/chela-one.regular.ttf" id="3_6ivni"]
+[ext_resource type="Texture2D" uid="uid://bdeo180vqay6m" path="res://art/run.png" id="3_pwfur"]
+[ext_resource type="Texture2D" uid="uid://b8uotdxr13iyg" path="res://art/attack.png" id="4_c01lm"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_8wkxw"]
+font = ExtResource("3_6ivni")
+font_size = 25
+font_color = Color(1, 0.418427, 0.501334, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_y2qkh"]
+font = ExtResource("3_6ivni")
+font_size = 25
+font_color = Color(0, 0.762777, 0.386614, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_xynuc"]
+font = ExtResource("3_6ivni")
+font_size = 25
+font_color = Color(4.04298e-06, 0.682316, 0.985905, 1)
 
 [node name="PlayerControls" type="Node2D"]
 script = ExtResource("1_122va")
@@ -14,3 +33,72 @@ drag_left_margin = 0.1
 drag_top_margin = 0.1
 drag_right_margin = 0.1
 drag_bottom_margin = 0.1
+
+[node name="HUD STUFF" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="HUD STUFF"]
+layout_mode = 3
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -202.0
+offset_top = -92.0
+offset_right = -37.0
+offset_bottom = 98.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="HUD STUFF/Control"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -165.0
+offset_top = -92.5
+offset_bottom = 92.5
+grow_horizontal = 0
+grow_vertical = 2
+pivot_offset = Vector2(-100, 0)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HUD STUFF/Control/PanelContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HUD STUFF/Control/PanelContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="HUD STUFF/Control/PanelContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("2_nyne5")
+
+[node name="Label" type="Label" parent="HUD STUFF/Control/PanelContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Health: "
+label_settings = SubResource("LabelSettings_8wkxw")
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="HUD STUFF/Control/PanelContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="HUD STUFF/Control/PanelContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+texture = ExtResource("3_pwfur")
+
+[node name="Label" type="Label" parent="HUD STUFF/Control/PanelContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+text = "Speed: "
+label_settings = SubResource("LabelSettings_y2qkh")
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="HUD STUFF/Control/PanelContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="HUD STUFF/Control/PanelContainer/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+texture = ExtResource("4_c01lm")
+
+[node name="Label" type="Label" parent="HUD STUFF/Control/PanelContainer/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+text = "Attack: "
+label_settings = SubResource("LabelSettings_xynuc")

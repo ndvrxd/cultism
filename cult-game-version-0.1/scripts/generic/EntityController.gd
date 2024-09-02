@@ -7,7 +7,7 @@ var target:Entity = null;
 func _ready():
 	nav = NavigationAgent2D.new();
 	ent.add_child.call_deferred(nav)
-	#nav.debug_enabled = true;
+	nav.debug_enabled = true;
 
 func findNewTarget(friendlyfire=false) -> void:
 	## stock aggro mechanics for all enemies
