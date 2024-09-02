@@ -3,8 +3,8 @@
 [ext_resource type="Script" path="res://scripts/enemy.gd" id="1_8t12i"]
 [ext_resource type="Texture2D" uid="uid://6i8qff0kq7ei" path="res://art/enemy ph.png" id="2_xabwo"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_7evg3"]
-size = Vector2(94, 75)
+[sub_resource type="CircleShape2D" id="CircleShape2D_34l8v"]
+radius = 41.0122
 
 [node name="enemy" type="CharacterBody2D" node_paths=PackedStringArray("navAgent")]
 y_sort_enabled = true
@@ -26,9 +26,8 @@ scale = Vector2(0.69, 0.69)
 texture = ExtResource("2_xabwo")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -51.5)
-scale = Vector2(0.8, 1)
-shape = SubResource("RectangleShape2D_7evg3")
+position = Vector2(-7, -50)
+shape = SubResource("CircleShape2D_34l8v")
 debug_color = Color(0.772432, 0.263693, 0.879854, 0.42)
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
