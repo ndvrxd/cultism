@@ -7,6 +7,7 @@ var target:Entity = null;
 func _ready():
 	nav = NavigationAgent2D.new();
 	ent.add_child.call_deferred(nav)
+	#nav.debug_enabled = true;
 
 func findNewTarget(friendlyfire=false) -> void:
 	## stock aggro mechanics for all enemies
@@ -20,8 +21,8 @@ func findNewTarget(friendlyfire=false) -> void:
 		var e = i as Entity
 		nav.target_position = e.global_position;
 		if e.team != ent.team or friendlyfire:
-			var dist:float = nav.distance_to_target()
-			if nav.is_target_reachable() and dist < closest:
+			var dist:float = ent.global_position.distance_to(e.global_position)
+			if dist < closest: #nav.is_target_reachable() and dist < closest:
 				if dist < (ent.stat_aggroRange.val + e.stat_aggroNoise.val):
 					target = e;
 					closest = dist;
