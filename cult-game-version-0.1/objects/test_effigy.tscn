@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://c3l4kkjo4q83i" path="res://art/particle/sparkle haha.png" id="1_ocdxr"]
 [ext_resource type="Texture2D" uid="uid://cqrh7ndjucvg5" path="res://art/effigy ph.png" id="1_qbvs6"]
-[ext_resource type="Shader" uid="uid://hcf2iarxkvam" path="res://shaders/effigy_flame.tres" id="2_bln26"]
+[ext_resource type="Shader" uid="uid://cchd4lawas5cx" path="res://shaders/effigy_flame.tres" id="2_bln26"]
 
 [sub_resource type="Gradient" id="Gradient_68kti"]
 colors = PackedColorArray(1, 0, 0, 1, 1, 0, 1, 1)
