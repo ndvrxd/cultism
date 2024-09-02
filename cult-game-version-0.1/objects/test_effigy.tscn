@@ -1,8 +1,9 @@
-[gd_scene load_steps=12 format=3 uid="uid://bhatrw3cecxw1"]
+[gd_scene load_steps=13 format=3 uid="uid://bhatrw3cecxw1"]
 
+[ext_resource type="Script" path="res://scripts/effigy.gd" id="1_bfdly"]
 [ext_resource type="Texture2D" uid="uid://c3l4kkjo4q83i" path="res://art/particle/sparkle haha.png" id="1_ocdxr"]
 [ext_resource type="Texture2D" uid="uid://cqrh7ndjucvg5" path="res://art/effigy ph.png" id="1_qbvs6"]
-[ext_resource type="Shader" uid="uid://cchd4lawas5cx" path="res://shaders/effigy_flame.tres" id="2_bln26"]
+[ext_resource type="Shader" uid="uid://hcf2iarxkvam" path="res://shaders/effigy_flame.tres" id="2_bln26"]
 
 [sub_resource type="Gradient" id="Gradient_68kti"]
 colors = PackedColorArray(1, 0, 0, 1, 1, 0, 1, 1)
@@ -40,11 +41,13 @@ size = Vector2(-1, 1)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_10w11"]
 size = Vector2(16.2614, 2.45244)
 
-[node name="test effigy" type="StaticBody2D"]
+[node name="test effigy" type="CharacterBody2D"]
 y_sort_enabled = true
 scale = Vector2(12.7775, 12.7775)
 collision_layer = 3
 collision_mask = 0
+motion_mode = 1
+script = ExtResource("1_bfdly")
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="."]
 position = Vector2(-0.0956805, -15.7721)
