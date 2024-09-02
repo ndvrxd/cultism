@@ -29,7 +29,7 @@ func _process(delta: float) -> void:
 	velocity.y = move_toward(velocity.y / stat_speed.val, moveIntent.y, stat_accel.val * delta) * stat_speed.val
 	move_and_slide()
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	streamMovement.rpc(global_position, moveIntent, lookDirection)
 
 # what i'm thinking is that the authority for each entity
@@ -42,19 +42,19 @@ func setMoveIntent(dir:Vector2) -> void:
 	moveIntent = dir.normalized();
 
 @rpc("any_peer", "call_local", "reliable")
-func primaryFire(target:Vector2) -> void:
+func primaryFire(_target:Vector2) -> void:
 	pass
 
 @rpc("any_peer", "call_local", "reliable")
-func secondaryFire(target:Vector2) -> void:
+func secondaryFire(_target:Vector2) -> void:
 	pass
 
 @rpc("any_peer", "call_local", "reliable")
-func activeAbility(target:Vector2) -> void:
+func activeAbility(_target:Vector2) -> void:
 	pass
 
 @rpc("any_peer", "call_local", "reliable")
-func chat(msg:String) -> void:
+func chat(_msg:String) -> void:
 	pass
 
 @rpc("any_peer", "call_local", "reliable")
