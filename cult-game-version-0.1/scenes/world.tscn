@@ -1,9 +1,11 @@
-[gd_scene load_steps=15 format=3 uid="uid://c6t867f13wn4u"]
+[gd_scene load_steps=17 format=3 uid="uid://c6t867f13wn4u"]
 
 [ext_resource type="Texture2D" uid="uid://dr1jlcktudyg" path="res://art/playermapxd.png" id="1_br0cv"]
 [ext_resource type="PackedScene" uid="uid://cts6cpmg1ehil" path="res://objects/player.tscn" id="2_hddls"]
 [ext_resource type="PackedScene" uid="uid://ct6dh5rgiuip3" path="res://objects/enemy.tscn" id="3_5gkxb"]
 [ext_resource type="PackedScene" uid="uid://bhatrw3cecxw1" path="res://objects/test_effigy.tscn" id="4_4fgws"]
+[ext_resource type="PackedScene" uid="uid://m5cwr1mtoo1p" path="res://objects/controllers/basic_enemy_ai.tscn" id="4_8i88f"]
+[ext_resource type="PackedScene" uid="uid://ci2psjf4f2qtu" path="res://objects/controllers/player_controls.tscn" id="5_y2jcq"]
 [ext_resource type="PackedScene" uid="uid://dxiibdkgas3eu" path="res://scenes/pause_menu.tscn" id="5_yfg13"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_ob1or"]
@@ -53,20 +55,32 @@ position = Vector2(-496, 1.99999)
 [node name="player" parent="Node" instance=ExtResource("2_hddls")]
 position = Vector2(-216, -132)
 
+[node name="PlayerControls" parent="Node/player" instance=ExtResource("5_y2jcq")]
+
 [node name="enemy" parent="Node" instance=ExtResource("3_5gkxb")]
 position = Vector2(1096, -764)
+
+[node name="BasicEnemyAi" parent="Node/enemy" instance=ExtResource("4_8i88f")]
 
 [node name="enemy2" parent="Node" instance=ExtResource("3_5gkxb")]
 position = Vector2(-756, -936)
 
+[node name="BasicEnemyAi" parent="Node/enemy2" instance=ExtResource("4_8i88f")]
+
 [node name="enemy3" parent="Node" instance=ExtResource("3_5gkxb")]
 position = Vector2(-1252, -280)
+
+[node name="BasicEnemyAi" parent="Node/enemy3" instance=ExtResource("4_8i88f")]
 
 [node name="enemy4" parent="Node" instance=ExtResource("3_5gkxb")]
 position = Vector2(-697, 781)
 
+[node name="BasicEnemyAi" parent="Node/enemy4" instance=ExtResource("4_8i88f")]
+
 [node name="enemy5" parent="Node" instance=ExtResource("3_5gkxb")]
 position = Vector2(972, 592)
+
+[node name="BasicEnemyAi" parent="Node/enemy5" instance=ExtResource("4_8i88f")]
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 

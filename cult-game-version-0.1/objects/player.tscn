@@ -1,7 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://cts6cpmg1ehil"]
+[gd_scene load_steps=4 format=3 uid="uid://cts6cpmg1ehil"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_5qw1a"]
-[ext_resource type="PackedScene" uid="uid://ci2psjf4f2qtu" path="res://objects/player_controls.tscn" id="2_255xr"]
 [ext_resource type="Texture2D" uid="uid://veo5l360amx3" path="res://art/player ph.png" id="2_ysvs3"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nrcso"]
@@ -11,6 +10,7 @@ size = Vector2(132, 111.963)
 y_sort_enabled = true
 texture_filter = 6
 script = ExtResource("1_5qw1a")
+team = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-0.5, -49.435)
@@ -22,5 +22,3 @@ texture_filter = 1
 position = Vector2(5.5, -71.5)
 scale = Vector2(0.765, 0.765)
 texture = ExtResource("2_ysvs3")
-
-[node name="PlayerControls" parent="." instance=ExtResource("2_255xr")]

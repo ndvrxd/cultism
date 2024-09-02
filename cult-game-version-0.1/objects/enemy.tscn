@@ -6,7 +6,7 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_34l8v"]
 radius = 19.0
 
-[node name="enemy" type="CharacterBody2D" node_paths=PackedStringArray("navAgent")]
+[node name="enemy" type="CharacterBody2D"]
 y_sort_enabled = true
 disable_mode = 1
 collision_layer = 2
@@ -16,8 +16,7 @@ slide_on_ceiling = false
 wall_min_slide_angle = 0.0
 platform_wall_layers = 15
 script = ExtResource("1_8t12i")
-speed = 200.0
-navAgent = NodePath("NavigationAgent2D")
+team = 2
 
 [node name="sprite" type="Sprite2D" parent="."]
 texture_filter = 1

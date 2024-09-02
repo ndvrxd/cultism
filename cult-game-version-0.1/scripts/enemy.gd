@@ -1,19 +1,6 @@
-extends CharacterBody2D
+extends Entity
 
-@export var speed:float = 150
-@export var accel:float = 7
-var player_pos
-var target_pos
-@onready var player = get_parent().get_node("player")
-
-@export var navAgent:NavigationAgent2D;
-
-func _process(delta: float) -> void:
-	navAgent.target_position = player.global_position;
-	var direction = global_position.direction_to(navAgent.get_next_path_position());
-	#( player.global_position - self.global_position ).normalized()
-	
-	velocity.x = move_toward(velocity.x / speed, direction.x, accel * delta) * speed
-	velocity.y = move_toward(velocity.y / speed, direction.y, accel * delta) * speed
-	
-	move_and_slide()
+#any special functionality for the enemy can be overridden here
+func _ready():
+	super._ready();
+	stat_speed = Stat.fromBase(200);

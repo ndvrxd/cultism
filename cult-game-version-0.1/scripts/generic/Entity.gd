@@ -14,7 +14,7 @@ class_name Entity extends CharacterBody2D
 @export var stat_speed:Stat = Stat.fromBase(400);
 @export var stat_accel:Stat = Stat.fromBase(8.5);
 # "aggro" stats get used by entity controllers for target selection
-@export var stat_aggroRange:Stat = Stat.fromBase(500);
+@export var stat_aggroRange:Stat = Stat.fromBase(1000);
 @export var stat_aggroNoise:Stat = Stat.fromBase(0);
 
 @export var health:float = stat_maxHp.val;

@@ -1,3 +1,3 @@
 extends Entity
 
-#anything special to the player can be overridden here
+#any special functionality for the player character can be defined here
