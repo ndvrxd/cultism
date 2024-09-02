@@ -6,7 +6,7 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7evg3"]
 size = Vector2(94, 75)
 
-[node name="enemy" type="CharacterBody2D"]
+[node name="enemy" type="CharacterBody2D" node_paths=PackedStringArray("navAgent")]
 disable_mode = 1
 collision_layer = 2
 collision_mask = 2
@@ -16,6 +16,7 @@ wall_min_slide_angle = 0.0
 platform_wall_layers = 15
 script = ExtResource("1_8t12i")
 speed = 200.0
+navAgent = NodePath("NavigationAgent2D")
 
 [node name="sprite" type="Sprite2D" parent="."]
 texture_filter = 1
@@ -28,3 +29,5 @@ position = Vector2(0, 10.5)
 scale = Vector2(0.8, 1)
 shape = SubResource("RectangleShape2D_7evg3")
 debug_color = Color(0.772432, 0.263693, 0.879854, 0.42)
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
