@@ -51,6 +51,7 @@ position = Vector2(-496, 1.99999)
 
 [node name="player" parent="Node" instance=ExtResource("2_hddls")]
 position = Vector2(-216, -132)
+accel = 8.5
 
 [node name="enemy" parent="Node" instance=ExtResource("3_5gkxb")]
 position = Vector2(1096, -764)

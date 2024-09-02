@@ -1,6 +1,23 @@
-[gd_scene load_steps=2 format=3 uid="uid://b8sugkqtnmwoa"]
+[gd_scene load_steps=2 format=3 uid="uid://cwloc5k8ljxeu"]
 
-[ext_resource type="Script" path="res://scripts/pause.gd" id="1_tt1e0"]
+[sub_resource type="GDScript" id="GDScript_q57l1"]
+script/source = "extends Control
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(_delta: float) -> void:
+	if Input.is_action_just_pressed(\"esc\"):
+		pause_or_unpause()
+		
+		
+func pause_or_unpause():
+	if get_tree().paused == true:
+		$\".\".hide()
+		get_tree().paused = false
+	elif get_tree().paused == false:
+		$\".\".show()
+		get_tree().paused = true
+		
+"
 
 [node name="pause" type="Control"]
 process_mode = 3
@@ -8,7 +25,7 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 1152.0
 offset_bottom = 648.0
-script = ExtResource("1_tt1e0")
+script = SubResource("GDScript_q57l1")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 0
