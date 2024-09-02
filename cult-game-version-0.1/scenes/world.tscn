@@ -13,6 +13,7 @@ outlines = Array[PackedVector2Array]([PackedVector2Array(-872, 418, -1422, 445, 
 agent_radius = 49.79
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_248c2"]
+size = Vector2(20, 20.9461)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_h12cv"]
 size = Vector2(108, 431)
@@ -80,14 +81,16 @@ navigation_polygon = SubResource("NavigationPolygon_ob1or")
 position = Vector2(-1153, -758)
 rotation = -0.058147
 scale = Vector2(31.8182, 31.7495)
+collision_layer = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="navmesh/wall"]
 shape = SubResource("RectangleShape2D_248c2")
 
 [node name="wall2" type="StaticBody2D" parent="navmesh"]
-position = Vector2(-661, -1135)
+position = Vector2(-660, -1134)
 rotation = 0.070108
 scale = Vector2(21.8056, 9.74075)
+collision_layer = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="navmesh/wall2"]
 shape = SubResource("RectangleShape2D_248c2")
@@ -96,6 +99,7 @@ shape = SubResource("RectangleShape2D_248c2")
 position = Vector2(576, -931)
 rotation = 0.00449016
 scale = Vector2(103.328, 10.8187)
+collision_layer = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="navmesh/wall3"]
 shape = SubResource("RectangleShape2D_248c2")
@@ -104,6 +108,7 @@ shape = SubResource("RectangleShape2D_248c2")
 position = Vector2(1335, 94)
 rotation = 0.00449016
 scale = Vector2(14.567, 95.905)
+collision_layer = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="navmesh/wall4"]
 shape = SubResource("RectangleShape2D_248c2")
@@ -112,6 +117,7 @@ shape = SubResource("RectangleShape2D_248c2")
 position = Vector2(512, 863)
 rotation = -0.0859955
 scale = Vector2(90.7362, 13.9785)
+collision_layer = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="navmesh/wall5"]
 shape = SubResource("RectangleShape2D_248c2")
@@ -120,6 +126,7 @@ shape = SubResource("RectangleShape2D_248c2")
 position = Vector2(-580, 1023)
 rotation = -0.0818783
 scale = Vector2(19.8298, 8.26559)
+collision_layer = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="navmesh/wall6"]
 shape = SubResource("RectangleShape2D_248c2")
@@ -128,6 +135,7 @@ shape = SubResource("RectangleShape2D_248c2")
 position = Vector2(-1093, 716)
 rotation = -0.0461165
 scale = Vector2(31.1817, 35.5987)
+collision_layer = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="navmesh/wall7"]
 shape = SubResource("RectangleShape2D_248c2")
@@ -136,6 +144,7 @@ shape = SubResource("RectangleShape2D_248c2")
 position = Vector2(-1482, 6)
 rotation = -0.0361567
 scale = Vector2(9.33007, 52.2768)
+collision_layer = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="navmesh/wall8"]
 shape = SubResource("RectangleShape2D_248c2")
@@ -144,6 +153,7 @@ shape = SubResource("RectangleShape2D_248c2")
 position = Vector2(-1110, -395)
 rotation = -0.0361567
 scale = Vector2(4.92861, 5.66043)
+collision_layer = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="navmesh/wall11"]
 shape = SubResource("RectangleShape2D_248c2")
@@ -152,6 +162,7 @@ shape = SubResource("RectangleShape2D_248c2")
 position = Vector2(-1090, 296)
 rotation = -0.0361567
 scale = Vector2(4.92861, 5.66043)
+collision_layer = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="navmesh/wall16"]
 shape = SubResource("RectangleShape2D_248c2")
@@ -160,6 +171,7 @@ shape = SubResource("RectangleShape2D_248c2")
 position = Vector2(102, -96)
 rotation = -0.25617
 scale = Vector2(11.047, 46.5686)
+collision_layer = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="navmesh/wall9"]
 shape = SubResource("RectangleShape2D_248c2")
@@ -168,6 +180,7 @@ shape = SubResource("RectangleShape2D_248c2")
 position = Vector2(313, 643)
 rotation = -0.120352
 scale = Vector2(10.5342, -9.64395)
+collision_layer = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="navmesh/wall10"]
 shape = SubResource("RectangleShape2D_248c2")
