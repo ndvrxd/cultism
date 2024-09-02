@@ -1,6 +1,8 @@
 class_name Stat extends Resource
 ## Meant to be used to cleanly track and modify entity stats.
-	
+
+signal valueChanged(value:float);
+
 ## The base value of the statistic. Modify with set only.
 ## May be set in the inspector.
 @export var baseValue:float = 0.0;
@@ -37,22 +39,27 @@ static func fromBase(base:float) -> Stat:
 func setBase(value:float):
 	## Set the base value of the statistic.
 	baseValue = value
+	valueChanged.emit(getValue());
 	
 func modifyBase(flatValue:float):
 	## Additively modify the base value of the statistic.
 	baseModifier += flatValue
+	valueChanged.emit(getValue());
 
 func modifyMult(factor:float):
 	## Multiplicatively modify the base value of the statistic.
 	multiplier *= factor
+	valueChanged.emit(getValue());
 
 func modifyMultFlat(flatValue:float):
 	## Add a flat multiplicative modifier to the base value of the statistic.
 	multFlatModifier += flatValue
+	valueChanged.emit(getValue());
 	
 func modifyFlat(flatValue:float):
 	## Add a flat value to the statistic, after modifiers.
 	additive += flatValue
+	valueChanged.emit(getValue());
 
 func getValue() -> float:
 	## Returns the final value of the statistic.
