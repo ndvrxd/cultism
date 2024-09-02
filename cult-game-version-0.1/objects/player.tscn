@@ -21,15 +21,17 @@ func _process(_delta: float) -> void:
 "
 
 [node name="player" type="CharacterBody2D"]
+y_sort_enabled = true
 texture_filter = 6
 script = ExtResource("1_5qw1a")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 8.065)
+position = Vector2(-0.5, -49.435)
 scale = Vector2(0.335, 0.805)
 shape = SubResource("RectangleShape2D_nrcso")
 
 [node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(-0.5, -57.5)
 position_smoothing_enabled = true
 drag_horizontal_enabled = true
 drag_vertical_enabled = true
@@ -41,6 +43,6 @@ script = SubResource("GDScript_qd5eh")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1
-position = Vector2(6, -14)
+position = Vector2(5.5, -71.5)
 scale = Vector2(0.765, 0.765)
 texture = ExtResource("2_ysvs3")
