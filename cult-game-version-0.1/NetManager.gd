@@ -37,7 +37,7 @@ func join_game(address="localhost", port=24500):
 		return error
 	multiplayer.multiplayer_peer = peer
 
-func start_listen_server(hostname="localhost", port=24500, maxplayers=16):
+func start_listen_server(_hostname="localhost", port=24500, maxplayers=16):
 	var peer = ENetMultiplayerPeer.new()
 	var error = peer.create_server(port, maxplayers)
 	if error:

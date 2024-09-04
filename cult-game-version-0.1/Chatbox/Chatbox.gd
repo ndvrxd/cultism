@@ -14,7 +14,7 @@ func _enter_tree():
 func _ready():
 	chatLabel.text=''
 
-func _input(event):
+func _input(_event):
 	if Input.is_action_just_pressed("Chat"):
 		var vp:Viewport = get_viewport()
 		if vp.gui_get_focus_owner() != chatInput:

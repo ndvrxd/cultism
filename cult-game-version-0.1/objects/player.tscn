@@ -9,6 +9,7 @@ size = Vector2(132, 111.963)
 [node name="player" type="CharacterBody2D"]
 y_sort_enabled = true
 texture_filter = 6
+slide_on_ceiling = false
 script = ExtResource("1_5qw1a")
 team = 1
 objPath = "res://objects/player.tscn"
