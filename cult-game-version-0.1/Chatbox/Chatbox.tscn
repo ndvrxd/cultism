@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://4x1q48mnamto"]
 
-[ext_resource type="Script" path="res://Chatbox/Chatbox.gd" id="1_lmsbv"]
+[ext_resource type="Script" path="res://Chatbox/Chatbox.gd" id="1_nj28l"]
 
 [node name="Chatbox" type="Control" node_paths=PackedStringArray("chatLabel", "chatInput")]
 clip_contents = true
@@ -16,7 +16,7 @@ offset_right = 160.0
 offset_bottom = 104.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_lmsbv")
+script = ExtResource("1_nj28l")
 chatLabel = NodePath("Label")
 chatInput = NodePath("LineEdit")
 
