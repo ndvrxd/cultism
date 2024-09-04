@@ -5,6 +5,9 @@ class_name Entity extends CharacterBody2D
 
 @export var entityName:String = "Entity";
 @export var team:int = 0;
+@export var objPath:String = ""
+@export var controllerPath:String = ""
+@export var controllerAttached:bool = false;
 
 @export var moveIntent:Vector2 = Vector2.ZERO;
 @export var lookDirection:Vector2 = Vector2.UP;
@@ -30,7 +33,7 @@ func _process(delta: float) -> void:
 	move_and_slide()
 
 func _physics_process(_delta: float) -> void:
-	streamMovement.rpc(global_position, moveIntent, lookDirection)
+	if controllerAttached: streamMovement.rpc(global_position, moveIntent, lookDirection)
 
 # what i'm thinking is that the authority for each entity
 # can attach a controller to it clientside, and the controller can make

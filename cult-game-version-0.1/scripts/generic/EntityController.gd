@@ -1,13 +1,21 @@
 class_name EntityController extends Node2D
 
-var nav:NavigationAgent2D;
-@onready var ent:Entity = get_parent();
+var nav:NavigationAgent2D = null;
+var ent:Entity;
 var target:Entity = null;
 
 func _ready():
-	nav = NavigationAgent2D.new();
-	ent.add_child.call_deferred(nav)
+	attemptControl()
+
+func attemptControl() -> void:
+	var parent = get_parent();
+	if not parent is Entity: return
+	ent = parent
+	if nav == null or not ent.is_ancestor_of(nav):
+		nav = NavigationAgent2D.new();
+		ent.add_child.call_deferred(nav)
 	nav.debug_enabled = true;
+	ent.controllerAttached = true;
 
 func findNewTarget(friendlyfire=false) -> void:
 	## stock aggro mechanics for all enemies

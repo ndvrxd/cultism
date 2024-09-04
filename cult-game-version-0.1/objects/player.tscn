@@ -11,6 +11,7 @@ y_sort_enabled = true
 texture_filter = 6
 script = ExtResource("1_5qw1a")
 team = 1
+objPath = "res://objects/player.tscn"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-0.5, -49.435)

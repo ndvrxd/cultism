@@ -1,0 +1,49 @@
+[gd_scene load_steps=2 format=3 uid="uid://4x1q48mnamto"]
+
+[ext_resource type="Script" path="res://mp/Chatbox/Chatbox.gd" id="1_lmsbv"]
+
+[node name="Chatbox" type="Control" node_paths=PackedStringArray("chatLabel", "chatInput")]
+clip_contents = true
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -160.0
+offset_top = -96.0
+offset_right = 160.0
+offset_bottom = 104.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_lmsbv")
+chatLabel = NodePath("Label")
+chatInput = NodePath("LineEdit")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -194.0
+offset_right = 312.0
+offset_bottom = -38.0
+grow_vertical = 0
+text = "chat line 1
+chat line 2
+chat line 3
+chat line 4
+chat line 5 aaaaaaaaaaaaaaaa word wrap"
+vertical_alignment = 2
+autowrap_mode = 2
+
+[node name="LineEdit" type="LineEdit" parent="."]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -32.0
+offset_right = 256.0
+offset_bottom = -1.0
+grow_vertical = 0
+placeholder_text = "press enter to chat"
