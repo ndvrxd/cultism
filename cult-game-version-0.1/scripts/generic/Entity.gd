@@ -40,6 +40,16 @@ func _physics_process(_delta: float) -> void:
 # Entity RPC calls from within itself so shit gets synced for everyone
 # from within a script that ISNT synced for everyone
 
+# exists to determine the entity's name clientside
+static func spawn(scnPath:String, pos:Vector2=Vector2.ZERO, ctlPath:String="", playerName:String=""):
+	var isPlayer:bool = false;
+	if playerName == "":
+		playerName = str(randi_range(0, 999999999999))
+	else:
+		ctlPath = NetManager.PLAYERCONTROLSOBJ
+		isPlayer = true;
+	NetManager.spawnEntityRpc.rpc(scnPath, pos, ctlPath, playerName, isPlayer) 
+
 # networked callbacks for use by controller and items
 func setMoveIntent(dir:Vector2) -> void:
 	moveIntent = dir.normalized();
