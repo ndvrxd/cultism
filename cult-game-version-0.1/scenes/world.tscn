@@ -1,8 +1,9 @@
-[gd_scene load_steps=14 format=3 uid="uid://c6t867f13wn4u"]
+[gd_scene load_steps=15 format=3 uid="uid://c6t867f13wn4u"]
 
 [ext_resource type="Texture2D" uid="uid://dr1jlcktudyg" path="res://art/playermapxd.png" id="1_br0cv"]
 [ext_resource type="PackedScene" uid="uid://bhatrw3cecxw1" path="res://objects/test_effigy.tscn" id="4_4fgws"]
 [ext_resource type="PackedScene" uid="uid://4x1q48mnamto" path="res://Chatbox/Chatbox.tscn" id="4_wntds"]
+[ext_resource type="Script" path="res://scripts/testEnemySpawner.gd" id="5_f408w"]
 [ext_resource type="PackedScene" uid="uid://dxiibdkgas3eu" path="res://scenes/pause_menu.tscn" id="5_yfg13"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_ob1or"]
@@ -208,3 +209,7 @@ shape = SubResource("RectangleShape2D_dq5sq")
 [node name="CollisionShape2D27" type="CollisionShape2D" parent="navmesh/mapbounds"]
 position = Vector2(-244, 525.5)
 shape = SubResource("RectangleShape2D_5uquc")
+
+[node name="testSpawner" type="Node2D" parent="."]
+position = Vector2(1127, 41)
+script = ExtResource("5_f408w")
