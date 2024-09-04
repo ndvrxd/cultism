@@ -127,7 +127,8 @@ func load_game(game_scene_path):
 		Chatbox.inst.set_username(playerinfo_local["name"])
 
 func onPlayerDisconnect(id): # all clients, NOT JUST server
-	get_tree().current_scene.get_node("spawns").get_node(players[id]["name"]).queue_free()
+	if get_tree().current_scene.get_node("spawns") and get_tree().current_scene.get_node("spawns").get_node(players[id]["name"]):
+		get_tree().current_scene.get_node("spawns").get_node(players[id]["name"]).queue_free()
 	if Chatbox.inst:
 		Chatbox.inst.print_chat(players[id]["name"] + " disconnected.")
 	players.erase(id)

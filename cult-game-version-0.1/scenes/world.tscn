@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://dr1jlcktudyg" path="res://art/playermapxd.png" id="1_br0cv"]
 [ext_resource type="PackedScene" uid="uid://bhatrw3cecxw1" path="res://objects/test_effigy.tscn" id="4_4fgws"]
-[ext_resource type="PackedScene" uid="uid://4x1q48mnamto" path="res://Chatbox/Chatbox.tscn" id="4_8joej"]
+[ext_resource type="PackedScene" uid="uid://4x1q48mnamto" path="res://Chatbox/Chatbox.tscn" id="4_6bv28"]
 [ext_resource type="Script" path="res://scripts/testEnemySpawner.gd" id="5_f408w"]
 [ext_resource type="PackedScene" uid="uid://dxiibdkgas3eu" path="res://scenes/pause_menu.tscn" id="5_yfg13"]
 
@@ -54,15 +54,15 @@ position = Vector2(-496, 1.99999)
 
 [node name="PauseMenu" parent="CanvasLayer" instance=ExtResource("5_yfg13")]
 
-[node name="Chatbox" parent="CanvasLayer" instance=ExtResource("4_8joej")]
+[node name="Chatbox" parent="CanvasLayer" instance=ExtResource("4_6bv28")]
 anchors_preset = 2
 anchor_left = 0.0
 anchor_top = 1.0
 anchor_right = 0.0
 anchor_bottom = 1.0
-offset_left = 22.0
+offset_left = 18.0
 offset_top = -225.0
-offset_right = 342.0
+offset_right = 338.0
 offset_bottom = -25.0
 grow_horizontal = 1
 grow_vertical = 0
