@@ -96,14 +96,14 @@ func spawnEntity(scnPath:String, pos:Vector2 = Vector2.ZERO, name4sync:String=""
 	var id = multiplayer.get_remote_sender_id()
 	if id:
 		if name4sync != "":
-			if get_tree().current_scene.has_node(name4sync): return
+			if get_tree().current_scene.get_child(1).has_node(name4sync): return
 		var ebody:Entity = load(scnPath).instantiate();
 		ebody.global_position = pos
 		if name4sync != "":
 			ebody.name = name4sync;
 			if entNameIsNodeName:
 				ebody.entityName = name4sync;
-		get_tree().current_scene.add_child.call_deferred(ebody)
+		get_tree().current_scene.get_child(1).add_child.call_deferred(ebody)
 		if id == multiplayer.get_unique_id():
 			var ectl:EntityController
 			if ctlPath != "":
@@ -127,8 +127,7 @@ func load_game(game_scene_path):
 		Chatbox.inst.set_username(playerinfo_local["name"])
 
 func onPlayerDisconnect(id): # all clients, NOT JUST server
-	if id in players and "proxy" in players[id]:
-		players[id]["proxy"].queue_free()
+	get_tree().current_scene.find_child(players[id]["name"]).queue_free()
 	if Chatbox.inst:
 		Chatbox.inst.print_chat(players[id]["name"] + " disconnected.")
 	players.erase(id)

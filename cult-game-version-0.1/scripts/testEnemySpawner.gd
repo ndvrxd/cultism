@@ -3,7 +3,7 @@ extends Node2D
 const bodypath:String = "res://objects/enemy.tscn"
 
 @export var spawnEvery:float = 5.0;
-var spawnTimer:float = spawnEvery - 0.1;
+var spawnTimer:float = spawnEvery - 1;
 
 func _ready():
 	if !multiplayer.is_server(): queue_free()

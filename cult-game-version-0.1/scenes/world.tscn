@@ -38,13 +38,16 @@ size = Vector2(104, 321)
 
 [node name="world" type="Node2D"]
 
-[node name="Playermapxd" type="Sprite2D" parent="." groups=["entity"]]
+[node name="Playermapxd" type="Sprite2D" parent="."]
 texture_filter = 2
 position = Vector2(-4, -2)
 scale = Vector2(1.94283, 2.36346)
 texture = ExtResource("1_br0cv")
 
-[node name="test effigy" parent="." instance=ExtResource("4_4fgws")]
+[node name="spawns" type="Node2D" parent="."]
+y_sort_enabled = true
+
+[node name="test effigy" parent="spawns" instance=ExtResource("4_4fgws")]
 position = Vector2(-496, 1.99999)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
