@@ -12,5 +12,5 @@ func _physics_process(delta):
 	spawnTimer += delta
 	if spawnTimer > spawnEvery:
 		var ename = str(randi_range(0, 999999999999))
-		NetManager.spawnEntity(bodypath, global_position, ename)
+		NetManager.spawnEntity.rpc(bodypath, global_position, ename)
 		spawnTimer = 0
