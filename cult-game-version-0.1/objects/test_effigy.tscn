@@ -43,7 +43,6 @@ size = Vector2(16.2614, 2.45244)
 
 [node name="test effigy" type="CharacterBody2D"]
 y_sort_enabled = true
-scale = Vector2(12.7775, 12.7775)
 collision_layer = 3
 collision_mask = 0
 motion_mode = 1
@@ -56,22 +55,22 @@ scale = Vector2(1, 1)
 
 [node name="flame fx" type="MeshInstance2D" parent="Node2D"]
 material = SubResource("ShaderMaterial_moupg")
-position = Vector2(-0.0956804, -15.5787)
+position = Vector2(-5.82068e-11, -193)
 rotation = 3.14159
-scale = Vector2(12.2, 12.2)
+scale = Vector2(144, 144)
 mesh = SubResource("QuadMesh_lbiwx")
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="Node2D"]
-position = Vector2(-0.0956805, -15.7721)
-scale = Vector2(1, 1)
+position = Vector2(-4.44089e-16, -193)
+scale = Vector2(12, 12)
 process_material = SubResource("ParticleProcessMaterial_yi8o0")
 texture = ExtResource("1_ocdxr")
 trail_lifetime = 0.2
 
 [node name="Sprite" type="Sprite2D" parent="Node2D"]
 texture_filter = 1
-position = Vector2(-0.15672, -8.14838)
-scale = Vector2(0.09, 0.09)
+position = Vector2(0, -104)
+scale = Vector2(1.155, 1.155)
 texture = ExtResource("1_qbvs6")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

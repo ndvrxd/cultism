@@ -22,17 +22,31 @@ class_name Entity extends CharacterBody2D
 
 @export var health:float = stat_maxHp.val;
 
+var shoulderPoint:Node2D;
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	add_to_group("entity"); # for polling all active entities
+	
+	shoulderPoint = get_node("shoulder")
+	if shoulderPoint == null:
+		var temp = Node2D.new();
+		temp.name = "shoulder";
+		add_child(temp);
+		shoulderPoint = temp;
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	velocity.x = move_toward(velocity.x / stat_speed.val, moveIntent.x, stat_accel.val * delta) * stat_speed.val
 	velocity.y = move_toward(velocity.y / stat_speed.val, moveIntent.y, stat_accel.val * delta) * stat_speed.val
 	move_and_slide()
+	
+	if shoulderPoint:
+		shoulderPoint.look_at(shoulderPoint.global_position + lookDirection)
 
 func _physics_process(_delta: float) -> void:
+	moveIntent = moveIntent.normalized();
+	lookDirection = lookDirection.normalized();
 	if controllerAttached: streamMovement.rpc(global_position, moveIntent, lookDirection)
 
 # what i'm thinking is that the authority for each entity
@@ -51,9 +65,6 @@ static func spawn(scnPath:String, pos:Vector2=Vector2.ZERO, ctlPath:String="", p
 	NetManager.spawnEntityRpc.rpc(scnPath, pos, ctlPath, playerName, isPlayer) 
 
 # networked callbacks for use by controller and items
-func setMoveIntent(dir:Vector2) -> void:
-	moveIntent = dir.normalized();
-
 @rpc("any_peer", "call_local", "reliable")
 func primaryFire(_target:Vector2) -> void:
 	pass

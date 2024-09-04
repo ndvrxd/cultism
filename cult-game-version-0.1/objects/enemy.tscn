@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://ct6dh5rgiuip3"]
+[gd_scene load_steps=5 format=3 uid="uid://ct6dh5rgiuip3"]
 
 [ext_resource type="Script" path="res://scripts/enemy.gd" id="1_8t12i"]
 [ext_resource type="Texture2D" uid="uid://6i8qff0kq7ei" path="res://art/enemy ph.png" id="2_xabwo"]
+[ext_resource type="Texture2D" uid="uid://clqo76f6tebyl" path="res://art/arrow.png" id="2_xaobe"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_34l8v"]
 radius = 19.0
@@ -20,11 +21,20 @@ team = 2
 objPath = "res://objects/enemy.tscn"
 controllerPath = "res://objects/controllers/basic_enemy_ai.tscn"
 
-[node name="Node2D" type="Node2D" parent="." groups=["upright_sprite"]]
+[node name="shoulder" type="Node2D" parent="."]
+position = Vector2(-10, -79)
+
+[node name="Sprite2D" type="Sprite2D" parent="shoulder"]
+modulate = Color(1, 0, 0, 1)
+position = Vector2(60, 0)
+rotation = 1.5708
+texture = ExtResource("2_xaobe")
+
+[node name="anchor" type="Node2D" parent="." groups=["upright_sprite"]]
 y_sort_enabled = true
 position = Vector2(0, 3.8147e-06)
 
-[node name="sprite" type="Sprite2D" parent="Node2D"]
+[node name="sprite" type="Sprite2D" parent="anchor"]
 texture_filter = 1
 position = Vector2(0, -63)
 scale = Vector2(0.69, 0.69)

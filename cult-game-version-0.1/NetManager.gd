@@ -12,7 +12,7 @@ var players = {};
 
 const MAP = "res://scenes/world.tscn"
 const PLAYERCONTROLSOBJ = "res://objects/controllers/player_controls.tscn"
-var playerBodyPath = "res://objects/player.tscn";
+#var playerBodyPath = "res://objects/enemy.tscn";
 
 # THIS IS ALL VERY TRUSTING OF THE CLIENT
 # BAD OPSEC BUT SUFFICIENT FOR PLAYTESTING
@@ -104,6 +104,7 @@ func spawnEntityRpc(scnPath:String, pos:Vector2 = Vector2.ZERO, ctlPath:String="
 			ebody.name = eName;
 			if isPlayer:
 				ebody.entityName = eName;
+				ebody.team = 1;
 		get_tree().current_scene.get_node("spawns").add_child.call_deferred(ebody)
 		if id == multiplayer.get_unique_id():
 			var ectl:EntityController
@@ -122,7 +123,7 @@ func load_game(game_scene_path):
 	get_tree().change_scene_to_file(game_scene_path)
 	await get_tree().create_timer(0.1).timeout
 	if !IsDedicated():
-		Entity.spawn.call_deferred(playerBodyPath, Vector2.ZERO, '', playerinfo_local["name"])
+		Entity.spawn.call_deferred(playerinfo_local["charbody"], Vector2.ZERO, '', playerinfo_local["name"])
 		if !multiplayer.is_server(): askForEntities.rpc_id.call_deferred(1)
 		Chatbox.inst.set_username(playerinfo_local["name"])
 

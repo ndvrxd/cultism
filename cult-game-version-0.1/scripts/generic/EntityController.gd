@@ -14,7 +14,7 @@ func attemptControl() -> void:
 	if nav == null or not ent.is_ancestor_of(nav):
 		nav = NavigationAgent2D.new();
 		ent.add_child.call_deferred(nav)
-	nav.debug_enabled = true;
+	#nav.debug_enabled = true;
 	ent.controllerAttached = true;
 
 func findNewTarget(friendlyfire=false) -> void:
