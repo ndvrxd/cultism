@@ -1,6 +1,7 @@
-[gd_scene load_steps=9 format=3 uid="uid://ci2psjf4f2qtu"]
+[gd_scene load_steps=10 format=3 uid="uid://ci2psjf4f2qtu"]
 
 [ext_resource type="Script" path="res://scripts/player_controls.gd" id="1_122va"]
+[ext_resource type="Script" path="res://scripts/camera_tilt_test.gd" id="2_fxmue"]
 [ext_resource type="Texture2D" uid="uid://ccds8ab8fiqhe" path="res://art/health.png" id="2_nyne5"]
 [ext_resource type="FontFile" uid="uid://dhk11k42eybnt" path="res://art/chela-one.regular.ttf" id="3_6ivni"]
 [ext_resource type="Texture2D" uid="uid://bdeo180vqay6m" path="res://art/run.png" id="3_pwfur"]
@@ -33,6 +34,7 @@ drag_left_margin = 0.1
 drag_top_margin = 0.1
 drag_right_margin = 0.1
 drag_bottom_margin = 0.1
+script = ExtResource("2_fxmue")
 
 [node name="HUD STUFF" type="CanvasLayer" parent="."]
 

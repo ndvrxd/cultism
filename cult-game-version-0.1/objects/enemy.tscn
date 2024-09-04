@@ -20,7 +20,11 @@ team = 2
 objPath = "res://objects/enemy.tscn"
 controllerPath = "res://objects/controllers/basic_enemy_ai.tscn"
 
-[node name="sprite" type="Sprite2D" parent="."]
+[node name="Node2D" type="Node2D" parent="." groups=["upright_sprite"]]
+y_sort_enabled = true
+position = Vector2(0, 3.8147e-06)
+
+[node name="sprite" type="Sprite2D" parent="Node2D"]
 texture_filter = 1
 position = Vector2(0, -63)
 scale = Vector2(0.69, 0.69)
@@ -30,6 +34,3 @@ texture = ExtResource("2_xabwo")
 position = Vector2(-7, -50)
 shape = SubResource("CircleShape2D_34l8v")
 debug_color = Color(0.772432, 0.263693, 0.879854, 0.42)
-
-[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
-debug_enabled = true

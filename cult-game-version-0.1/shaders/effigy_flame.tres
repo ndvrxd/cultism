@@ -9,9 +9,11 @@ default_input_values = [0, Vector2(0, 0), 1, Vector2(-0.1, 1), 2, Vector2(0, 0)]
 op_type = 1
 
 [sub_resource type="VisualShaderNodeInput" id="VisualShaderNodeInput_gkfby"]
+output_port_for_preview = 0
 input_name = "uv"
 
 [sub_resource type="VisualShaderNodeVectorOp" id="VisualShaderNodeVectorOp_vjji8"]
+output_port_for_preview = 0
 default_input_values = [0, Vector2(0, 0), 1, Vector2(1, 1)]
 op_type = 0
 operator = 4

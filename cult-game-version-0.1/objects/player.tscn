@@ -20,7 +20,10 @@ position = Vector2(-0.5, -49.435)
 scale = Vector2(0.335, 0.805)
 shape = SubResource("RectangleShape2D_nrcso")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Node2D" type="Node2D" parent="." groups=["upright_sprite"]]
+y_sort_enabled = true
+
+[node name="Sprite2D" type="Sprite2D" parent="Node2D"]
 texture_filter = 1
 position = Vector2(5.5, -71.5)
 scale = Vector2(0.765, 0.765)
