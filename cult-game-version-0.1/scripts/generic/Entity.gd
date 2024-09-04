@@ -72,7 +72,7 @@ func changeHealth(by:float) -> void:
 func die() -> void:
 	pass # ideally, remove self from the scene
 
-@rpc("any_peer", "call_remote", "unreliable") # netcode stuff testing ???
+@rpc("any_peer", "call_remote", "unreliable_ordered") # netcode stuff testing ???
 func streamMovement(pos:Vector2, intent:Vector2, lookDir:Vector2):
 	global_position = pos;
 	moveIntent = intent.normalized();
