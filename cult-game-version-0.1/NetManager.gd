@@ -90,10 +90,10 @@ func askForEntities():
 		for i in ents:
 			if not i is Entity: continue
 			var e = i as Entity
-			spawnEntityRpc.rpc_id(id, e.objPath, e.global_position, e.name);
+			spawnEntityRpc.rpc_id(id, e.objPath, e.global_position, "", e.name);
 
 @rpc("any_peer", "call_local", "reliable")
-func spawnEntityRpc(scnPath:String, pos:Vector2 = Vector2.ZERO, ctlPath:String="", eName:String="", isPlayer=true):
+func spawnEntityRpc(scnPath:String, pos:Vector2 = Vector2.ZERO, ctlPath:String="", eName:String="", isPlayer=false):
 	var id = multiplayer.get_remote_sender_id()
 	if id:
 		if eName != "":
