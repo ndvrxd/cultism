@@ -90,7 +90,11 @@ func askForEntities():
 		for i in ents:
 			if not i is Entity: continue
 			var e = i as Entity
-			spawnEntityRpc.rpc_id(id, e.objPath, e.global_position, "", e.name);
+			spawnEntityRpc.rpc_id(id, e.objPath, e.global_position, "", e.name,
+				e.name == e.entityName); # very stupid bandaid fix this is BAD.
+				# this only nametags an entity & considers it a player if the
+				# node name is the same as the entity name.
+				# i really need to do some cleanup around here
 
 @rpc("any_peer", "call_local", "reliable")
 func spawnEntityRpc(scnPath:String, pos:Vector2 = Vector2.ZERO, ctlPath:String="", eName:String="", isPlayer=false):
