@@ -105,6 +105,7 @@ func spawnEntityRpc(scnPath:String, pos:Vector2 = Vector2.ZERO, ctlPath:String="
 			if isPlayer:
 				ebody.entityName = eName;
 				ebody.team = 1;
+				addNametagToEntity.call_deferred(ebody)
 		get_tree().current_scene.get_node("spawns").add_child.call_deferred(ebody)
 		if id == multiplayer.get_unique_id():
 			var ectl:EntityController
@@ -115,6 +116,13 @@ func spawnEntityRpc(scnPath:String, pos:Vector2 = Vector2.ZERO, ctlPath:String="
 			else: return
 			ebody.add_child.call_deferred(ectl)
 			#ectl.attemptControl.call_deferred();
+
+func addNametagToEntity(ebody): # here so i can call this deferred clientside
+	await get_tree().create_timer(0.1).timeout
+	var nametag = preload("res://objects/nameTag.tscn").instantiate();
+	ebody.add_child(nametag)
+	nametag.get_child(0).position.y = (ebody.shoulderPoint.position.y - ebody.position.y) * 2
+	nametag.get_child(0).text = ebody.entityName
 
 # When the server decides to start the game from a UI scene,
 # do load_game.rpc(filepath)

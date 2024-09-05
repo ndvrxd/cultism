@@ -28,7 +28,7 @@ func findNewTarget(friendlyfire=false) -> void:
 		if not i is Entity: continue
 		var e = i as Entity
 		nav.target_position = e.global_position;
-		if e.team != ent.team or friendlyfire:
+		if (e.team != ent.team or friendlyfire) and not e.team == 0:
 			var dist:float = ent.global_position.distance_to(e.global_position)
 			if dist < closest: #nav.is_target_reachable() and dist < closest:
 				if dist < (ent.stat_aggroRange.val + e.stat_aggroNoise.val):

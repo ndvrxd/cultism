@@ -47,11 +47,11 @@ collision_layer = 3
 collision_mask = 0
 motion_mode = 1
 script = ExtResource("1_bfdly")
+team = 1
 objPath = "res://objects/test_effigy.tscn"
 
 [node name="Node2D" type="Node2D" parent="." groups=["upright_sprite"]]
 y_sort_enabled = true
-scale = Vector2(1, 1)
 
 [node name="flame fx" type="MeshInstance2D" parent="Node2D"]
 material = SubResource("ShaderMaterial_moupg")
@@ -74,6 +74,6 @@ scale = Vector2(1.155, 1.155)
 texture = ExtResource("1_qbvs6")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0.0694535, -4.74803)
-scale = Vector2(0.685, 1)
+position = Vector2(0.069, -50.318)
+scale = Vector2(8.22, 12)
 shape = SubResource("RectangleShape2D_10w11")

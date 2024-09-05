@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=3 uid="uid://c3sbhr7hqxks5"]
+
+[ext_resource type="FontFile" uid="uid://dhk11k42eybnt" path="res://art/chela-one.regular.ttf" id="1_d162y"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_pxwi6"]
+font = ExtResource("1_d162y")
+font_size = 26
+outline_size = 7
+outline_color = Color(0, 0, 0, 1)
+
+[node name="NameTag" type="Node2D" groups=["upright_sprite"]]
+
+[node name="Label" type="Label" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -48.0
+offset_top = -16.0
+offset_right = 48.0
+offset_bottom = 16.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "riff was here"
+label_settings = SubResource("LabelSettings_pxwi6")
+horizontal_alignment = 1
+vertical_alignment = 1
