@@ -55,19 +55,19 @@ y_sort_enabled = true
 position = Vector2(-496, 1.99999)
 
 [node name="tree" parent="spawns" instance=ExtResource("6_ry3q4")]
-position = Vector2(-335, 122)
+position = Vector2(-331, 114)
 
 [node name="tree2" parent="spawns" instance=ExtResource("6_ry3q4")]
-position = Vector2(-92, 88)
+position = Vector2(-92, 77)
 
 [node name="sunflower" parent="spawns" instance=ExtResource("7_e0ymt")]
-position = Vector2(-891, -125)
+position = Vector2(-891, -133)
 
 [node name="sunflower2" parent="spawns" instance=ExtResource("7_e0ymt")]
-position = Vector2(-958, -131)
+position = Vector2(-958, -135)
 
 [node name="sunflower3" parent="spawns" instance=ExtResource("7_e0ymt")]
-position = Vector2(-952, 32)
+position = Vector2(-952, 24)
 
 [node name="rocks" parent="spawns" instance=ExtResource("8_16m30")]
 position = Vector2(-1303, 253)
@@ -287,5 +287,5 @@ position = Vector2(-244, 525.5)
 shape = SubResource("RectangleShape2D_5uquc")
 
 [node name="testSpawner" type="Node2D" parent="."]
-position = Vector2(1127, 41)
+position = Vector2(1119, -147)
 script = ExtResource("5_f408w")

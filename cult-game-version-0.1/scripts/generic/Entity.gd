@@ -25,6 +25,7 @@ var healthBarShakeTimer:float = 0;
 var moveIntent:Vector2 = Vector2.ZERO;
 var lookDirection:Vector2 = Vector2.UP;
 # TODO: allow lookDirection into lookAngle conversion
+	# NOTE: this may not actually be necessary
 
 @export var stat_maxHp:Stat = Stat.fromBase(100);
 @export var stat_speed:Stat = Stat.fromBase(400);
@@ -49,12 +50,15 @@ func _ready() -> void:
 		add_child(temp);
 		shoulderPoint = temp;
 		
-	var hbscn = preload(HEALTHBAR_SCENE).instantiate()
-	add_child(hbscn)
-	healthBar = hbscn.get_node("healthbar")
-	healthBar.position.y = (shoulderPoint.global_position.y - global_position.y) * 2
-	healthBar.tint_progress = healthBarColor
-	healthBar.visible = false;
+	# health bars only need to be shown in visible game windows
+	# otherwise, we don't need to instantiate or drive them
+	if !NetManager.IsDedicated():
+		var hbscn = preload(HEALTHBAR_SCENE).instantiate()
+		add_child(hbscn)
+		healthBar = hbscn.get_node("healthbar")
+		healthBar.position.y = (shoulderPoint.global_position.y - global_position.y) * 2
+		healthBar.tint_progress = healthBarColor
+		healthBar.visible = false;
 	
 	# ensure any stat changes by child class are reflected,
 	# regardless of super._ready() being called before or after:
@@ -72,7 +76,7 @@ func _process(delta: float) -> void:
 	if shoulderPoint: #aiming
 		shoulderPoint.look_at(shoulderPoint.global_position + lookDirection)
 	
-	if healthBarTimer > 0:
+	if healthBarTimer > 0 && !NetManager.IsDedicated():
 		if !healthBar.visible: healthBar.visible = true
 		healthBarTimer -= delta
 		healthBar.value = (health / stat_maxHp.val) * 100
@@ -97,7 +101,9 @@ func _physics_process(delta: float) -> void:
 # Entity RPC calls from within itself so shit gets synced for everyone
 # from within a script that ISNT synced for everyone
 
-# exists to determine the entity's name clientside
+# static "spawn" method for all entities
+# use this instead of NetManager.spawnEntityRpc.rpc
+# exists to ensure network sync by determining the entity's name & nodepath clientside
 static func spawn(scnPath:String, pos:Vector2=Vector2.ZERO, ctlPath:String="", playerName:String=""):
 	var isPlayer:bool = false;
 	if playerName == "":
@@ -127,11 +133,25 @@ func chat(_msg:String) -> void:
 @rpc("any_peer", "call_local", "reliable")
 func spawn_something() -> void:
 	pass # idk how to make this work
+	# TODO: split network spawn-something rpc off into like 3 things -> ...
+		# - spawnEffect for particles and such, any_peer
+		# - spawnProjectile for projectiles, any_peer
+		# - hitscan can be clientside, it feels better that way in coop
+		# - and SpawnEntity i guess can be a thing but only host authoritative-
+		# it'd only run it for everyone when called within an RPC 
+		# on the server side. when we start to enforce client/host authority,
+		# we'll need to do this!!!
+			# TODO, again: ALSO RESEARCH CLIENT AUTHORITY RULES
+			# how do i hand off authority to a specific client
+			# to call entity network methods like streamMovement and such,
+			# without anyone else being able to do it on their behalf?
+			# any_peer is, after all, callable by *any peer*
 
 @rpc("any_peer", "call_local", "reliable")
 func changeHealth(current:float, by:float, inflictor:Entity=null) -> void:
+	# current health needs to be passed in to sync health between clients!
 	health = current;
-	health += by; #maybe take a moment to show a health bar above
+	health += by;
 	healthBarTimer = 2;
 	if sign(by) == -1:
 		damage_taken.emit(-by, inflictor)
@@ -140,14 +160,21 @@ func changeHealth(current:float, by:float, inflictor:Entity=null) -> void:
 		healthBarShakeTimer = 0.3
 	elif sign(by) == 1:
 		healed.emit(by, inflictor)
+	else:
+		# when the host is syncing entity health for joining players,
+		# it'll pass in their current health with a delta of 0.
+		# this ensures every entity has the correct amount of health on all clients,
+		# from the very beginning of the game, or dropping in midway through.
+		# no healthbar timer needs to be shown for this
+		healthBarTimer = 0
 	if health <= 0:
 		health = 0
-		die(inflictor)
+		die(inflictor) # needs to be called on the clientside, since we're already in an RPC
 
 @rpc("any_peer", "call_local", "reliable")
 func die(killedBy:Entity=null) -> void:
 	killed.emit(killedBy)
-	queue_free() # ideally, remove self from the scene
+	queue_free() # ideally, play some effects on death
 
 @rpc("any_peer", "call_remote", "unreliable_ordered")
 func streamMovement(pos:Vector2, intent:Vector2, lookDir:Vector2):

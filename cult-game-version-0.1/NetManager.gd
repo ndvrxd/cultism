@@ -161,3 +161,10 @@ func onServerDisconnect(): # clientside only
 	multiplayer.multiplayer_peer = null
 	players.clear()
 	server_disconnected.emit()
+
+@rpc("authority", "reliable", "call_local")
+func transferAuthority(nodepath:String, cid:int, recursive:bool=false) -> void: # use this later
+	# make sure all clients are in agreement over who controls what
+	var node:Node
+	node = get_tree().get_node(nodepath)
+	node.set_multiplayer_authority(cid, false);

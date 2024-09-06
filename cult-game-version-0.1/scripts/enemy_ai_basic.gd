@@ -10,7 +10,8 @@ func _physics_process(delta: float) -> void:
 		nav.target_position = target.global_position;
 		var dir = ent.global_position.direction_to(nav.get_next_path_position())
 		ent.moveIntent = dir
-		var targetPos = target.global_position + Vector2(0, -40) # stupid hardcode but w/e
+		var shoulderOffset = Vector2.DOWN * (target.shoulderPoint.global_position - target.global_position)
+		var targetPos = target.shoulderPoint.global_position - shoulderOffset * 0.3
 		ent.lookDirection = ent.shoulderPoint.global_position.direction_to(targetPos)
 		
 	else: # dick around

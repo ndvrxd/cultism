@@ -4,8 +4,9 @@
 [ext_resource type="Texture2D" uid="uid://6i8qff0kq7ei" path="res://art/enemy ph.png" id="2_xabwo"]
 [ext_resource type="Texture2D" uid="uid://clqo76f6tebyl" path="res://art/arrow.png" id="2_xaobe"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_34l8v"]
-radius = 19.0
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_g8jma"]
+radius = 18.0
+height = 74.0
 
 [node name="enemy" type="CharacterBody2D"]
 y_sort_enabled = true
@@ -42,6 +43,6 @@ texture = ExtResource("2_xabwo")
 offset = Vector2(0, -89.58)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-7, -50)
-shape = SubResource("CircleShape2D_34l8v")
+position = Vector2(-7, -41)
+shape = SubResource("CapsuleShape2D_g8jma")
 debug_color = Color(0.772432, 0.263693, 0.879854, 0.42)

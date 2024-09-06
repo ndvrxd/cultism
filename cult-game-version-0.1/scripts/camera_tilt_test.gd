@@ -4,28 +4,30 @@ extends Camera2D
 const refreshRate:float = 2
 var refreshTimer:float = refreshRate - 0.1
 var sprites;
+var tilting:bool=false;
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	if NetManager.IsDedicated(): return
+	tilting=false
 	if Input.is_action_pressed("CameraTiltUp"):
-		sprites = get_tree().get_nodes_in_group("upright_sprite")
-		zoom.y += rate * delta
-		zoom.y = clampf(zoom.y, 0.4, 1)
-		for s:Node2D in sprites:
-			s.scale.y = 1 / zoom.y;
+		zoom.y += rate * delta; tilting = true
 	if Input.is_action_pressed("CameraTiltDown"):
-		sprites = get_tree().get_nodes_in_group("upright_sprite")
-		zoom.y -= rate * delta
+		zoom.y -= rate * delta; tilting = true
+	if tilting:
+		if clampf(zoom.y, 0.4, 1) == zoom.y:
+			sprites = get_tree().get_nodes_in_group("upright_sprite") #this is bad but it fixes a crash
+			for s:Node2D in sprites:
+				s.scale.y = 1 / zoom.y;
 		zoom.y = clampf(zoom.y, 0.4, 1)
-		for s:Node2D in sprites:
-			s.scale.y = 1 / zoom.y;
 	
 
 func _physics_process(delta: float) -> void:
 	if NetManager.IsDedicated(): return
 	refreshTimer += delta;
 	if refreshTimer > refreshRate:
-		sprites = get_tree().get_nodes_in_group("upright_sprite")
+		# if theres a new sprite that hasnt been scaled yet, scale it.
+		# check for that every couple of seconds
+		sprites = get_tree().get_nodes_in_group("upright_sprite") 
 		for s:Node2D in sprites:
 			s.scale.y = 1 / zoom.y;
