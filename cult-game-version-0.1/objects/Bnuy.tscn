@@ -1,0 +1,37 @@
+[gd_scene load_steps=5 format=3 uid="uid://bc03astovlgfb"]
+
+[ext_resource type="Script" path="res://scripts/bnuy.gd" id="1_i4ej6"]
+[ext_resource type="Texture2D" uid="uid://bnet23nlankpn" path="res://art/sprites/characters/bnuy/BUNBUNBUNBUN.png" id="2_fcy37"]
+[ext_resource type="Texture2D" uid="uid://clqo76f6tebyl" path="res://art/arrow.png" id="3_lmv2m"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_qr3n5"]
+radius = 16.0
+height = 50.0
+
+[node name="Bnuy" type="CharacterBody2D"]
+script = ExtResource("1_i4ej6")
+entityName = "Bnuy"
+team = 2
+objPath = "res://objects/Bnuy.tscn"
+healthBarColor = Color(0.853986, 0.000588543, 0.855574, 1)
+
+[node name="shoulder" type="Node2D" parent="."]
+position = Vector2(0, -64)
+
+[node name="Sprite2D" type="Sprite2D" parent="shoulder"]
+modulate = Color(0.489618, 0.433017, 0.996861, 1)
+z_index = 1
+position = Vector2(65, 0)
+rotation = 1.5708
+texture = ExtResource("3_lmv2m")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -49)
+shape = SubResource("CapsuleShape2D_qr3n5")
+
+[node name="Node2D" type="Node2D" parent="." groups=["upright_sprite"]]
+
+[node name="Sprite2D" type="Sprite2D" parent="Node2D"]
+scale = Vector2(0.0559503, 0.0559503)
+texture = ExtResource("2_fcy37")
+offset = Vector2(0, -1048.93)
