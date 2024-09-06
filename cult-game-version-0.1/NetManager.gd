@@ -167,4 +167,4 @@ func transferAuthority(nodepath:String, cid:int, recursive:bool=false) -> void: 
 	# make sure all clients are in agreement over who controls what
 	var node:Node
 	node = get_tree().get_node(nodepath)
-	node.set_multiplayer_authority(cid, false);
+	node.set_multiplayer_authority(cid, recursive);

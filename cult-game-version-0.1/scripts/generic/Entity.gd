@@ -7,7 +7,7 @@ class_name Entity extends CharacterBody2D
 signal damage_taken(amount:float, from:Entity)
 signal damage_dealt(amount:float, to:Entity)
 signal healed(amount:float, by:Entity)
-signal hit_landed(at:Vector2)
+signal hit_landed(at:Vector2, normal:Vector2)
 signal killed(by:Entity)
 
 @export var entityName:String = "Entity";
@@ -115,15 +115,23 @@ static func spawn(scnPath:String, pos:Vector2=Vector2.ZERO, ctlPath:String="", p
 
 # networked callbacks for use by controller and items
 @rpc("any_peer", "call_local", "reliable")
-func primaryFire(_target:Vector2) -> void:
+func primaryFire(target:Vector2) -> void:
 	pass
 
 @rpc("any_peer", "call_local", "reliable")
-func secondaryFire(_target:Vector2) -> void:
+func secondaryFire(target:Vector2) -> void:
 	pass
 
 @rpc("any_peer", "call_local", "reliable")
-func activeAbility(_target:Vector2) -> void:
+func primaryFireReleased(target:Vector2) -> void:
+	pass
+
+@rpc("any_peer", "call_local", "reliable")
+func secondaryFireReleased(target:Vector2) -> void:
+	pass
+
+@rpc("any_peer", "call_local", "reliable")
+func activeAbility(target:Vector2) -> void:
 	pass
 
 @rpc("any_peer", "call_local", "reliable")
@@ -148,11 +156,12 @@ func spawn_something() -> void:
 			# any_peer is, after all, callable by *any peer*
 
 @rpc("any_peer", "call_local", "reliable")
-func changeHealth(current:float, by:float, inflictor:Entity=null) -> void:
+func changeHealth(current:float, by:float, inflictor_path:String="") -> void:
 	# current health needs to be passed in to sync health between clients!
 	health = current;
 	health += by;
 	healthBarTimer = 2;
+	var inflictor = get_node(inflictor_path)
 	if sign(by) == -1:
 		damage_taken.emit(-by, inflictor)
 		if inflictor != null:
@@ -165,15 +174,15 @@ func changeHealth(current:float, by:float, inflictor:Entity=null) -> void:
 		# it'll pass in their current health with a delta of 0.
 		# this ensures every entity has the correct amount of health on all clients,
 		# from the very beginning of the game, or dropping in midway through.
-		# no healthbar timer needs to be shown for this
+		# no healthbar needs to be shown for this
 		healthBarTimer = 0
 	if health <= 0:
 		health = 0
-		die(inflictor) # needs to be called on the clientside, since we're already in an RPC
+		die(inflictor_path) # needs to be called on the clientside, since we're already in an RPC
 
 @rpc("any_peer", "call_local", "reliable")
-func die(killedBy:Entity=null) -> void:
-	killed.emit(killedBy)
+func die(killedBy_path:String="") -> void:
+	killed.emit(get_node(killedBy_path))
 	queue_free() # ideally, play some effects on death
 
 @rpc("any_peer", "call_remote", "unreliable_ordered")
@@ -181,3 +190,55 @@ func streamMovement(pos:Vector2, intent:Vector2, lookDir:Vector2):
 	global_position = pos;
 	moveIntent = intent.normalized();
 	lookDirection = lookDir.normalized();
+
+@rpc("any_peer", "call_local", "reliable")
+func triggerHitEffectsRpc(at:Vector2, normal:Vector2=Vector2.ZERO) -> void:
+	hit_landed.emit(at, normal)
+
+func lineCastFromShoulder(direction:Vector2, range:float, triggerHitEffects=true) -> Dictionary:
+	# hitscan. turns out shape/linecast in godot is tedious as fuck,
+	# so i'm making a nice clean method for it instead.
+	# returns the Entity hit, if any, the position hit, if any,
+	# and the normal of the surface hit, if any.
+	var endpoint:Vector2 = shoulderPoint.global_position + direction.normalized() * range
+	var hit = get_world_2d().direct_space_state.intersect_ray(
+		PhysicsRayQueryParameters2D.create(
+			shoulderPoint.global_position,
+			endpoint
+			# TODO: set collision flags here
+		)
+	)
+	if hit.is_empty():
+		return {
+			"entity": null,
+			"pos": endpoint,
+			"normal": Vector2.ZERO
+		} #all this may not be necessary
+	if triggerHitEffects:
+		triggerHitEffectsRpc.rpc(hit["position"], hit["normal"])
+	return {
+		"entity": hit["collider"] as Entity,
+		"pos": hit["position"],
+		"normal": hit["normal"]
+	}
+
+func shapeCastFromShoulder(motion:Vector2, shape:Shape2D=null, triggerHitEffects=true) -> Array[Entity]:
+	# see above. why do i have to do this
+	var params:PhysicsShapeQueryParameters2D = PhysicsShapeQueryParameters2D.new()
+	var fuck:Transform2D = Transform2D(Vector2.RIGHT, Vector2.DOWN, shoulderPoint.global_position)
+	if shape == null:
+		shape = CircleShape2D.new();
+		shape.radius = 50
+	params.shape = shape
+	params.transform = fuck
+	params.motion = motion
+	var hits = get_world_2d().direct_space_state.intersect_shape(params)
+	var result:Array[Entity] = []
+	for i in hits:
+		if i["collider"] is Entity:
+			var e:Entity = i["collider"] as Entity
+			if not self == e:
+				if triggerHitEffects:
+					triggerHitEffectsRpc.rpc(e.shoulderPoint.global_position)
+				result.append(e)
+	return result;

@@ -1,7 +1,7 @@
 extends Camera2D
 
 @export var rate:float = 0.5
-const refreshRate:float = 2
+const refreshRate:float = 0.3
 var refreshTimer:float = refreshRate - 0.1
 var sprites;
 var tilting:bool=false;
@@ -31,3 +31,5 @@ func _physics_process(delta: float) -> void:
 		sprites = get_tree().get_nodes_in_group("upright_sprite") 
 		for s:Node2D in sprites:
 			s.scale.y = 1 / zoom.y;
+		#refreshTimer=0 #apparently the refresh timer hasn't been resetting.
+		# if it's been working fine the whole time, then... well. i'm not worried
