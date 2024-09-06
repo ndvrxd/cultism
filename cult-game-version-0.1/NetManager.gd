@@ -95,6 +95,7 @@ func askForEntities():
 				# this only nametags an entity & considers it a player if the
 				# node name is the same as the entity name.
 				# i really need to do some cleanup around here
+			e.changeHealth.rpc_id(id, e.health, 0) # sync enemy health when player joins
 
 @rpc("any_peer", "call_local", "reliable")
 func spawnEntityRpc(scnPath:String, pos:Vector2 = Vector2.ZERO, ctlPath:String="", eName:String="", isPlayer=false):
@@ -125,7 +126,7 @@ func addNametagToEntity(ebody): # here so i can call this deferred clientside
 	await get_tree().create_timer(0.1).timeout
 	var nametag = preload("res://objects/nameTag.tscn").instantiate();
 	ebody.add_child(nametag)
-	nametag.get_child(0).position.y = (ebody.shoulderPoint.position.y - ebody.position.y) * 2
+	nametag.get_child(0).position.y = (ebody.shoulderPoint.global_position.y - ebody.global_position.y) * 2.3
 	nametag.get_child(0).text = ebody.entityName
 
 # When the server decides to start the game from a UI scene,

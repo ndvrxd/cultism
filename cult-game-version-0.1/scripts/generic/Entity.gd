@@ -3,24 +3,38 @@ class_name Entity extends CharacterBody2D
 # Base class for all Entities - networked actors with stats, health bars,
 # and the like. Movement code & health stuff is handled here
 
+#signals & hooks for passive items and upgrades and anything else that needs it
+signal damage_taken(amount:float, from:Entity)
+signal damage_dealt(amount:float, to:Entity)
+signal healed(amount:float, by:Entity)
+signal hit_landed(at:Vector2)
+signal killed(by:Entity)
+
 @export var entityName:String = "Entity";
 @export var team:int = 0;
 @export var objPath:String = ""
 @export var controllerPath:String = ""
-@export var controllerAttached:bool = false;
+@export var healthBarColor:Color = Color(1, 1, 1);
+var controllerAttached:bool = false;
 
-@export var moveIntent:Vector2 = Vector2.ZERO;
-@export var lookDirection:Vector2 = Vector2.UP;
+const HEALTHBAR_SCENE = "res://objects/healthBar.tscn"
+var healthBar:TextureProgressBar
+var healthBarTimer:float = 0;
+var healthBarShakeTimer:float = 0;
+
+var moveIntent:Vector2 = Vector2.ZERO;
+var lookDirection:Vector2 = Vector2.UP;
 # TODO: allow lookDirection into lookAngle conversion
 
 @export var stat_maxHp:Stat = Stat.fromBase(100);
 @export var stat_speed:Stat = Stat.fromBase(400);
 @export var stat_accel:Stat = Stat.fromBase(8.5);
+@export var stat_regen:Stat = Stat.fromBase(0);
 # "aggro" stats get used by entity controllers for target selection
 @export var stat_aggroRange:Stat = Stat.fromBase(1000);
 @export var stat_aggroNoise:Stat = Stat.fromBase(0);
 
-@export var health:float = stat_maxHp.val;
+var health:float = 1
 
 var shoulderPoint:Node2D;
 
@@ -34,6 +48,20 @@ func _ready() -> void:
 		temp.name = "shoulder";
 		add_child(temp);
 		shoulderPoint = temp;
+		
+	var hbscn = preload(HEALTHBAR_SCENE).instantiate()
+	add_child(hbscn)
+	healthBar = hbscn.get_node("healthbar")
+	healthBar.position.y = (shoulderPoint.global_position.y - global_position.y) * 2
+	healthBar.tint_progress = healthBarColor
+	healthBar.visible = false;
+	
+	# ensure any stat changes by child class are reflected,
+	# regardless of super._ready() being called before or after:
+	afterStatsSet.call_deferred()
+
+func afterStatsSet():
+	health = stat_maxHp.val
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -41,12 +69,27 @@ func _process(delta: float) -> void:
 	velocity.y = move_toward(velocity.y / stat_speed.val, moveIntent.y, stat_accel.val * delta) * stat_speed.val
 	move_and_slide()
 	
-	if shoulderPoint:
+	if shoulderPoint: #aiming
 		shoulderPoint.look_at(shoulderPoint.global_position + lookDirection)
+	
+	if healthBarTimer > 0:
+		if !healthBar.visible: healthBar.visible = true
+		healthBarTimer -= delta
+		healthBar.value = (health / stat_maxHp.val) * 100
+		if healthBarShakeTimer > 0:
+			healthBarShakeTimer -= delta
+			healthBar.rotation = sin(Time.get_unix_time_from_system()*70) * healthBarShakeTimer * 0.3
+		else:
+			healthBar.rotation = 0;
+	elif healthBarTimer < 0:
+		healthBar.visible = false
+		healthBarTimer = 0
 
-func _physics_process(_delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	moveIntent = moveIntent.normalized();
 	lookDirection = lookDirection.normalized();
+	# if a controller is attached that PROBABLY means our client has control over this bitch
+	# so we need to be the one to stream the movement
 	if controllerAttached: streamMovement.rpc(global_position, moveIntent, lookDirection)
 
 # what i'm thinking is that the authority for each entity
@@ -79,21 +122,34 @@ func activeAbility(_target:Vector2) -> void:
 
 @rpc("any_peer", "call_local", "reliable")
 func chat(_msg:String) -> void:
-	pass
+	pass #I FULLY INTEND TO USE THIS OUR CURRENT CHATBOX IS PLACEHOLDER
 
 @rpc("any_peer", "call_local", "reliable")
 func spawn_something() -> void:
 	pass # idk how to make this work
 
 @rpc("any_peer", "call_local", "reliable")
-func changeHealth(by:float) -> void:
+func changeHealth(current:float, by:float, inflictor:Entity=null) -> void:
+	health = current;
 	health += by; #maybe take a moment to show a health bar above
+	healthBarTimer = 2;
+	if sign(by) == -1:
+		damage_taken.emit(-by, inflictor)
+		if inflictor != null:
+			inflictor.damage_dealt.emit(-by, self)
+		healthBarShakeTimer = 0.3
+	elif sign(by) == 1:
+		healed.emit(by, inflictor)
+	if health <= 0:
+		health = 0
+		die(inflictor)
 
 @rpc("any_peer", "call_local", "reliable")
-func die() -> void:
-	pass # ideally, remove self from the scene
+func die(killedBy:Entity=null) -> void:
+	killed.emit(killedBy)
+	queue_free() # ideally, remove self from the scene
 
-@rpc("any_peer", "call_remote", "unreliable_ordered") # netcode stuff testing ???
+@rpc("any_peer", "call_remote", "unreliable_ordered")
 func streamMovement(pos:Vector2, intent:Vector2, lookDir:Vector2):
 	global_position = pos;
 	moveIntent = intent.normalized();

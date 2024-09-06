@@ -49,6 +49,10 @@ motion_mode = 1
 script = ExtResource("1_bfdly")
 team = 1
 objPath = "res://objects/test_effigy.tscn"
+healthBarColor = Color(0.8245, 0.19, 1, 1)
+
+[node name="shoulder" type="Node2D" parent="."]
+position = Vector2(0, -142)
 
 [node name="Node2D" type="Node2D" parent="." groups=["upright_sprite"]]
 y_sort_enabled = true

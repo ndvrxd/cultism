@@ -15,6 +15,7 @@ slide_on_ceiling = false
 script = ExtResource("1_5qw1a")
 team = 1
 objPath = "res://objects/player.tscn"
+healthBarColor = Color(0.16, 1, 0.3, 1)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-0.5, -49.435)

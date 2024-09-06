@@ -20,6 +20,7 @@ script = ExtResource("1_8t12i")
 team = 2
 objPath = "res://objects/enemy.tscn"
 controllerPath = "res://objects/controllers/basic_enemy_ai.tscn"
+healthBarColor = Color(1, 0.26, 0.26, 1)
 
 [node name="shoulder" type="Node2D" parent="."]
 position = Vector2(-10, -79)
