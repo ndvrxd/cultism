@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://blp1t6dee26tv"]
+
+[ext_resource type="Texture2D" uid="uid://cg4yx07m74i6p" path="res://art/scenery/rocks_ph.png" id="1_667ff"]
+
+[node name="rocks" type="Node2D" groups=["upright_sprite"]]
+y_sort_enabled = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -25)
+texture = ExtResource("1_667ff")

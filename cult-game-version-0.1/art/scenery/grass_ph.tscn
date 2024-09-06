@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://dy3rocd3ulfru"]
+
+[ext_resource type="Texture2D" uid="uid://c4us7s54t8ocx" path="res://art/scenery/grass_ph.png" id="1_fn6ug"]
+
+[node name="grass" type="Node2D" groups=["upright_sprite"]]
+y_sort_enabled = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -25)
+texture = ExtResource("1_fn6ug")

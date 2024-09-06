@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://d3yfvynamcihx"]
+
+[ext_resource type="Texture2D" uid="uid://bwjpw54p8x40n" path="res://art/scenery/post ph.png" id="1_drk1s"]
+
+[node name="post" type="Node2D" groups=["upright_sprite"]]
+y_sort_enabled = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -50)
+texture = ExtResource("1_drk1s")

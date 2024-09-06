@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://cswy0gtegsw2e"]
+
+[ext_resource type="Texture2D" uid="uid://cmkp2psl73aqf" path="res://art/scenery/sunflower ph.png" id="1_755y1"]
+
+[node name="sunflower" type="Node2D" groups=["upright_sprite"]]
+y_sort_enabled = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -50)
+texture = ExtResource("1_755y1")
