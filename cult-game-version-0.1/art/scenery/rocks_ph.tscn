@@ -6,5 +6,5 @@
 y_sort_enabled = true
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(0, -25)
 texture = ExtResource("1_667ff")
+offset = Vector2(0, -25)
