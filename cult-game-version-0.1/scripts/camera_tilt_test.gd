@@ -9,11 +9,13 @@ var sprites;
 func _process(delta: float) -> void:
 	if NetManager.IsDedicated(): return
 	if Input.is_action_pressed("CameraTiltUp"):
+		sprites = get_tree().get_nodes_in_group("upright_sprite")
 		zoom.y += rate * delta
 		zoom.y = clampf(zoom.y, 0.4, 1)
 		for s:Node2D in sprites:
 			s.scale.y = 1 / zoom.y;
 	if Input.is_action_pressed("CameraTiltDown"):
+		sprites = get_tree().get_nodes_in_group("upright_sprite")
 		zoom.y -= rate * delta
 		zoom.y = clampf(zoom.y, 0.4, 1)
 		for s:Node2D in sprites:
