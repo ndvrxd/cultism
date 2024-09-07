@@ -2,7 +2,7 @@ extends Entity
 
 var swordShape:CircleShape2D = CircleShape2D.new()
 @export var swordRange = 100
-@export var swordDamage = 34
+@export var swordDamage = 35
 
 var swingTimer = 0;
 @export var swingDelay = 0.65;
@@ -25,6 +25,8 @@ func primaryFire(target:Vector2) -> void:
 	super.primaryFire(target)
 	if swingTimer <= 0:
 		$shoulder/swordwoosh.restart()
+		$shoulder/swordwoosh.scale.y = -$shoulder/swordwoosh.scale.y
+		swingTimer = swingDelay
 		if multiplayer.get_remote_sender_id() != multiplayer.get_unique_id(): return
 	# everything beyond this point happens clientside
 		var ents = shapeCastFromShoulder(lookDirection*swordRange, swordShape)
@@ -35,7 +37,6 @@ func primaryFire(target:Vector2) -> void:
 				hits += 1
 			if hits >= maxHits:
 				break 
-		swingTimer = swingDelay
 			
 func onHit(pos:Vector2, normal:Vector2):
 	var temp = swordHitFx.instantiate()

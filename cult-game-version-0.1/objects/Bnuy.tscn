@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://bc03astovlgfb"]
+[gd_scene load_steps=9 format=3 uid="uid://7j4v8eoc5ewj"]
 
 [ext_resource type="Script" path="res://scripts/bnuy.gd" id="1_hjkeh"]
 [ext_resource type="Texture2D" uid="uid://b5k4twe1vvha5" path="res://art/character ph/bunny ph.png" id="2_nbsft"]
@@ -45,10 +45,10 @@ y_sort_enabled = true
 
 [node name="Sprite2D" type="Sprite2D" parent="upright_anchor"]
 texture_filter = 1
-position = Vector2(5.5, 0)
 scale = Vector2(0.765, 0.765)
 texture = ExtResource("2_nbsft")
 offset = Vector2(0, -91)
+flip_h = true
 
 [node name="shoulder" type="Node2D" parent="."]
 position = Vector2(0, -79)
@@ -63,6 +63,7 @@ texture = ExtResource("3_l3qs8")
 [node name="swordwoosh" type="GPUParticles2D" parent="shoulder"]
 z_index = 1
 texture_filter = 1
+scale = Vector2(1.3, 1)
 emitting = false
 amount = 1
 process_material = SubResource("ParticleProcessMaterial_b5pqp")

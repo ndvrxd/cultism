@@ -22,6 +22,8 @@ var healthBar:TextureProgressBar
 var healthBarTimer:float = 0;
 var healthBarShakeTimer:float = 0;
 
+var damageNumberScn:PackedScene = preload("res://objects/vfx/damageNumber.tscn")
+
 var moveIntent:Vector2 = Vector2.ZERO;
 var lookDirection:Vector2 = Vector2.UP;
 # TODO: allow lookDirection into lookAngle conversion
@@ -81,6 +83,9 @@ func _process(delta: float) -> void:
 		healthBarTimer -= delta
 		healthBar.value = (health / stat_maxHp.val) * 100
 		if healthBarShakeTimer > 0:
+			var tc = healthBar.tint_under
+			if healthBarShakeTimer > 0.25 or (healthBarShakeTimer <= 0.25 and tc.r > 0.5):
+				healthBar.set_tint_under(Color(1-tc.r, 1-tc.g, 1-tc.b, tc.a))
 			healthBarShakeTimer -= delta
 			healthBar.rotation = sin(Time.get_unix_time_from_system()*70) * healthBarShakeTimer * 0.3
 		else:
@@ -95,6 +100,7 @@ func _physics_process(delta: float) -> void:
 	# if a controller is attached that PROBABLY means our client has control over this bitch
 	# so we need to be the one to stream the movement
 	if controllerAttached: streamMovement.rpc(global_position, moveIntent, lookDirection)
+		
 
 # what i'm thinking is that the authority for each entity
 # can attach a controller to it clientside, and the controller can make
@@ -162,13 +168,19 @@ func changeHealth(current:float, by:float, inflictor_path:String="") -> void:
 	health += by;
 	healthBarTimer = 2;
 	var inflictor = get_node(inflictor_path)
+	var dn:Node2D = damageNumberScn.instantiate()
+	dn.set_number(int(abs(by)))
+	dn.global_position = shoulderPoint.global_position
+	get_tree().current_scene.add_child(dn)
 	if sign(by) == -1:
 		damage_taken.emit(-by, inflictor)
+		dn.set_color(Color.RED)
 		if inflictor != null:
 			inflictor.damage_dealt.emit(-by, self)
 		healthBarShakeTimer = 0.3
 	elif sign(by) == 1:
 		healed.emit(by, inflictor)
+		dn.set_color(Color.GREEN)
 	else:
 		# when the host is syncing entity health for joining players,
 		# it'll pass in their current health with a delta of 0.
@@ -176,6 +188,7 @@ func changeHealth(current:float, by:float, inflictor_path:String="") -> void:
 		# from the very beginning of the game, or dropping in midway through.
 		# no healthbar needs to be shown for this
 		healthBarTimer = 0
+		dn.queue_free()
 	if health <= 0:
 		health = 0
 		die(inflictor_path) # needs to be called on the clientside, since we're already in an RPC

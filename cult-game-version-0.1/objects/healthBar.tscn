@@ -1,7 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://bu7fw3rrrky7w"]
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_tiu1p"]
-size = Vector2(104, 20)
+[ext_resource type="Texture2D" uid="uid://b5cgvymnxluvd" path="res://art/hb_bg.png" id="1_3qw45"]
 
 [sub_resource type="Gradient" id="Gradient_jv83b"]
 colors = PackedColorArray(0.728822, 0.728822, 0.728822, 1, 1, 1, 1, 1)
@@ -27,7 +26,7 @@ grow_horizontal = 2
 grow_vertical = 2
 pivot_offset = Vector2(52, 10)
 value = 100.0
-texture_under = SubResource("PlaceholderTexture2D_tiu1p")
+texture_under = ExtResource("1_3qw45")
 texture_progress = SubResource("GradientTexture2D_fnil8")
 texture_progress_offset = Vector2(2, 2)
 tint_under = Color(0, 0, 0, 0.482353)
