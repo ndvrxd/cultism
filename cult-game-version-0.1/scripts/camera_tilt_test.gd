@@ -10,10 +10,13 @@ var tilting:bool=false;
 func _process(delta: float) -> void:
 	if NetManager.IsDedicated(): return
 	tilting=false
-	if Input.is_action_pressed("CameraTiltUp"):
-		zoom.y += rate * delta; tilting = true
-	if Input.is_action_pressed("CameraTiltDown"):
-		zoom.y -= rate * delta; tilting = true
+	#CHANGE THIS TO Input.is_action_pressed IF KEY/CLICK INPUT, 
+	#OR Input.is_action_just_pressed IF SCROLL WHEEL 
+	# -ndvr :3
+	if Input.is_action_just_pressed("CameraTiltUp"):
+		zoom.y += rate * delta * 2; tilting = true
+	if Input.is_action_just_pressed("CameraTiltDown"):
+		zoom.y -= rate * delta * 2; tilting = true
 	if tilting:
 		if clampf(zoom.y, 0.4, 1) == zoom.y:
 			sprites = get_tree().get_nodes_in_group("upright_sprite") #this is bad but it fixes a crash
