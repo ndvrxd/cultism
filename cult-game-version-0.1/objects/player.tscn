@@ -15,7 +15,7 @@ max_value = 2.0
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.476852, 0.10989), 0.0, 0.0, 0, 0, Vector2(1, 0.0219781), 0.0, 0.0, 0, 0]
 point_count = 3
 
-[sub_resource type="CurveTexture" id="CurveTexture_c2e3b"]
+[sub_resource type="CurveTexture" id="CurveTexture_37tad"]
 curve = SubResource("Curve_78r1v")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_b5pqp"]
@@ -23,7 +23,7 @@ particle_flag_disable_z = true
 emission_shape_offset = Vector3(0, -90, 0)
 orbit_velocity_min = -3.5
 orbit_velocity_max = -3.5
-orbit_velocity_curve = SubResource("CurveTexture_c2e3b")
+orbit_velocity_curve = SubResource("CurveTexture_37tad")
 gravity = Vector3(0, 0, 0)
 scale_min = 0.5
 scale_max = 0.5

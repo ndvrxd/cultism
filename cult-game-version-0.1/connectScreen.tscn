@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://bqn8v6gbnfj1u"]
+[gd_scene load_steps=10 format=3 uid="uid://bqn8v6gbnfj1u"]
 
 [ext_resource type="Script" path="res://connectScreen.gd" id="1_bvb16"]
 [ext_resource type="Texture2D" uid="uid://b5k4twe1vvha5" path="res://art/character ph/bunny ph.png" id="2_lufnk"]
@@ -13,8 +13,6 @@ font_size = 32
 
 [sub_resource type="LabelSettings" id="LabelSettings_yj1jt"]
 font_color = Color(1, 0, 0, 1)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_u7ur4"]
 
 [node name="ConnectScreen" type="Control" node_paths=PackedStringArray("nameBox", "addressBox", "portBox", "errorMsg", "charBodySel")]
 layout_mode = 3
@@ -173,9 +171,6 @@ item_4/icon = ExtResource("6_uhyrj")
 item_5/text = "res://objects/test_effigy.tscn"
 item_5/icon = ExtResource("4_f673u")
 item_5/disabled = true
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-sprite_frames = SubResource("SpriteFrames_u7ur4")
 
 [connection signal="pressed" from="Control/VBoxContainer/CenterContainer/HBoxContainer4/Button" to="." method="onJoinClicked"]
 [connection signal="pressed" from="Control/VBoxContainer/CenterContainer/HBoxContainer4/Button2" to="." method="onCreateClicked"]
