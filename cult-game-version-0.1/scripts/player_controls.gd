@@ -13,7 +13,10 @@ func _physics_process(delta: float) -> void:
 		ent.lookDirection = ent.shoulderPoint.global_position.direction_to(get_global_mouse_position())
 		if cameraStickDir != Vector2.ZERO: mouseLookMode = false
 	else:
-		ent.lookDirection = ent.lookDirection.lerp(cameraStickDir, 20*delta)
+		if cameraStickDir.distance_to(-ent.lookDirection) > 1:
+			ent.lookDirection = ent.lookDirection.lerp(cameraStickDir, 20*delta)
+		elif cameraStickDir.length()>0:
+			ent.lookDirection = cameraStickDir
 		if Input.get_last_mouse_velocity().length() > 0: mouseLookMode = true
 
 func _process(_delta):
