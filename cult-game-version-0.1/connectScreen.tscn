@@ -1,10 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://bqn8v6gbnfj1u"]
+[gd_scene load_steps=9 format=3 uid="uid://bqn8v6gbnfj1u"]
 
 [ext_resource type="Script" path="res://connectScreen.gd" id="1_bvb16"]
 [ext_resource type="Texture2D" uid="uid://veo5l360amx3" path="res://art/player ph.png" id="2_pnqp7"]
 [ext_resource type="Texture2D" uid="uid://6i8qff0kq7ei" path="res://art/enemy ph.png" id="3_ggp5m"]
 [ext_resource type="Texture2D" uid="uid://cqrh7ndjucvg5" path="res://art/effigy ph.png" id="4_f673u"]
 [ext_resource type="Texture2D" uid="uid://bnet23nlankpn" path="res://art/sprites/characters/bnuy/BUNBUNBUNBUN.png" id="5_kho54"]
+[ext_resource type="Texture2D" uid="uid://bdeo180vqay6m" path="res://art/run.png" id="6_l78gu"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_3pw02"]
 font_size = 32
@@ -155,7 +156,7 @@ offset_bottom = 84.0
 grow_horizontal = 2
 grow_vertical = 2
 auto_height = true
-item_count = 4
+item_count = 5
 fixed_icon_size = Vector2i(50, 50)
 item_0/text = "res://objects/player.tscn"
 item_0/icon = ExtResource("2_pnqp7")
@@ -165,6 +166,8 @@ item_2/text = "res://objects/test_effigy.tscn"
 item_2/icon = ExtResource("4_f673u")
 item_3/text = "res://objects/Bnuy.tscn"
 item_3/icon = ExtResource("5_kho54")
+item_4/text = "res://objects/kibby.tscn"
+item_4/icon = ExtResource("6_l78gu")
 
 [connection signal="pressed" from="Control/VBoxContainer/CenterContainer/HBoxContainer4/Button" to="." method="onJoinClicked"]
 [connection signal="pressed" from="Control/VBoxContainer/CenterContainer/HBoxContainer4/Button2" to="." method="onCreateClicked"]

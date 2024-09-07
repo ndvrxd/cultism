@@ -6,7 +6,7 @@
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_g8jma"]
 radius = 18.0
-height = 74.0
+height = 40.0122
 
 [node name="enemy" type="CharacterBody2D"]
 y_sort_enabled = true
@@ -43,6 +43,7 @@ texture = ExtResource("2_xabwo")
 offset = Vector2(0, -89.58)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-7, -41)
+position = Vector2(-0.999999, -15)
+rotation = -1.56429
 shape = SubResource("CapsuleShape2D_g8jma")
 debug_color = Color(0.772432, 0.263693, 0.879854, 0.42)
