@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://bqn8v6gbnfj1u"]
+[gd_scene load_steps=11 format=3 uid="uid://bqn8v6gbnfj1u"]
 
 [ext_resource type="Script" path="res://connectScreen.gd" id="1_bvb16"]
 [ext_resource type="Texture2D" uid="uid://b5k4twe1vvha5" path="res://art/character ph/bunny ph.png" id="2_lufnk"]
@@ -6,12 +6,15 @@
 [ext_resource type="Texture2D" uid="uid://6i8qff0kq7ei" path="res://art/enemy ph.png" id="3_ggp5m"]
 [ext_resource type="Texture2D" uid="uid://cqrh7ndjucvg5" path="res://art/effigy ph.png" id="4_f673u"]
 [ext_resource type="Texture2D" uid="uid://bdeo180vqay6m" path="res://art/run.png" id="6_l78gu"]
+[ext_resource type="Texture2D" uid="uid://pcdp47cn5hr0" path="res://art/sprites/leveled/bnnuy.001.png" id="6_uhyrj"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_3pw02"]
 font_size = 32
 
 [sub_resource type="LabelSettings" id="LabelSettings_yj1jt"]
 font_color = Color(1, 0, 0, 1)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_u7ur4"]
 
 [node name="ConnectScreen" type="Control" node_paths=PackedStringArray("nameBox", "addressBox", "portBox", "errorMsg", "charBodySel")]
 layout_mode = 3
@@ -149,13 +152,13 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -144.0
-offset_top = -107.115
-offset_right = 149.0
-offset_bottom = 103.185
+offset_left = -123.0
+offset_top = -174.0
+offset_right = 128.0
+offset_bottom = 219.0
 grow_horizontal = 2
 grow_vertical = 2
-item_count = 5
+item_count = 6
 fixed_icon_size = Vector2i(50, 50)
 item_0/text = "res://objects/Bnuy.tscn"
 item_0/icon = ExtResource("2_lufnk")
@@ -165,9 +168,14 @@ item_2/text = "res://objects/enemy.tscn"
 item_2/icon = ExtResource("3_ggp5m")
 item_3/text = "res://objects/kibby.tscn"
 item_3/icon = ExtResource("6_l78gu")
-item_4/text = "res://objects/test_effigy.tscn"
-item_4/icon = ExtResource("4_f673u")
-item_4/disabled = true
+item_4/text = "res://objects/Possum.tscn"
+item_4/icon = ExtResource("6_uhyrj")
+item_5/text = "res://objects/test_effigy.tscn"
+item_5/icon = ExtResource("4_f673u")
+item_5/disabled = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_u7ur4")
 
 [connection signal="pressed" from="Control/VBoxContainer/CenterContainer/HBoxContainer4/Button" to="." method="onJoinClicked"]
 [connection signal="pressed" from="Control/VBoxContainer/CenterContainer/HBoxContainer4/Button2" to="." method="onCreateClicked"]

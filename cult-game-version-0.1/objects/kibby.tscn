@@ -10,6 +10,7 @@ height = 62.0
 
 [node name="Kibby" type="CharacterBody2D"]
 script = ExtResource("1_j0iaj")
+objPath = "res://objects/kibby.tscn"
 
 [node name="shoulder" type="Node2D" parent="."]
 position = Vector2(0, -64)
