@@ -5,11 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://6i8qff0kq7ei" path="res://art/enemy ph.png" id="3_ggp5m"]
 [ext_resource type="Texture2D" uid="uid://cqrh7ndjucvg5" path="res://art/effigy ph.png" id="4_f673u"]
 [ext_resource type="Texture2D" uid="uid://bnet23nlankpn" path="res://art/sprites/characters/bnuy/BUNBUNBUNBUN.png" id="5_kho54"]
-<<<<<<< Updated upstream
 [ext_resource type="Texture2D" uid="uid://bdeo180vqay6m" path="res://art/run.png" id="6_l78gu"]
-=======
-[ext_resource type="Texture2D" uid="uid://pcdp47cn5hr0" path="res://art/sprites/leveled/bnnuy.001.png" id="6_1uokc"]
->>>>>>> Stashed changes
 
 [sub_resource type="LabelSettings" id="LabelSettings_3pw02"]
 font_size = 32
@@ -166,7 +162,6 @@ item_0/text = "res://objects/player.tscn"
 item_0/icon = ExtResource("2_pnqp7")
 item_1/text = "res://objects/enemy.tscn"
 item_1/icon = ExtResource("3_ggp5m")
-<<<<<<< Updated upstream
 item_2/text = "res://objects/Bnuy.tscn"
 item_2/icon = ExtResource("5_kho54")
 item_3/text = "res://objects/kibby.tscn"
@@ -174,14 +169,6 @@ item_3/icon = ExtResource("6_l78gu")
 item_4/text = "res://objects/test_effigy.tscn"
 item_4/icon = ExtResource("4_f673u")
 item_4/disabled = true
-=======
-item_2/text = "res://objects/test_effigy.tscn"
-item_2/icon = ExtResource("4_f673u")
-item_3/text = "res://objects/Bnuy.tscn"
-item_3/icon = ExtResource("5_kho54")
-item_4/text = "res://objects/Possum.tscn"
-item_4/icon = ExtResource("6_1uokc")
->>>>>>> Stashed changes
 
 [connection signal="pressed" from="Control/VBoxContainer/CenterContainer/HBoxContainer4/Button" to="." method="onJoinClicked"]
 [connection signal="pressed" from="Control/VBoxContainer/CenterContainer/HBoxContainer4/Button2" to="." method="onCreateClicked"]
