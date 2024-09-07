@@ -12,7 +12,7 @@ height = 50.0
 script = ExtResource("1_1fgx3")
 
 [node name="shoulder" type="Node2D" parent="."]
-position = Vector2(0, -33)
+position = Vector2(0, -64)
 
 [node name="Sprite2D" type="Sprite2D" parent="shoulder"]
 modulate = Color(0.489618, 0.433017, 0.996861, 1)
@@ -28,6 +28,6 @@ shape = SubResource("CapsuleShape2D_gokdr")
 [node name="Node2D" type="Node2D" parent="." groups=["upright_sprite"]]
 
 [node name="Sprite2D" type="Sprite2D" parent="Node2D"]
-scale = Vector2(0.158, 0.158)
+scale = Vector2(0.0559503, 0.0559503)
 texture = ExtResource("3_2euqh")
-offset = Vector2(0, -242.26)
+offset = Vector2(0, -1048.93)
