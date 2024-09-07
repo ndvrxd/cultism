@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://c1luyms3v2wv5"]
+[gd_scene load_steps=7 format=3 uid="uid://c1luyms3v2wv5"]
 
 [ext_resource type="Texture2D" uid="uid://c3l4kkjo4q83i" path="res://art/particle/sparkle haha.png" id="1_l3cy8"]
 
@@ -10,9 +10,14 @@ point_count = 2
 _data = [Vector2(0, 0.384615), 0.0, 0.785714, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 2
 
+[sub_resource type="Curve" id="Curve_djr1y"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
 [sub_resource type="CurveXYZTexture" id="CurveXYZTexture_50y75"]
 curve_x = SubResource("Curve_36aen")
 curve_y = SubResource("Curve_i5xg3")
+curve_z = SubResource("Curve_djr1y")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_dnpfs"]
 particle_flag_disable_z = true
@@ -31,6 +36,7 @@ process_material = SubResource("ParticleProcessMaterial_dnpfs")
 texture = ExtResource("1_l3cy8")
 lifetime = 0.17
 one_shot = true
+fixed_fps = 60
 local_coords = true
 
 [node name="particle kill timer" type="Timer" parent="."]
