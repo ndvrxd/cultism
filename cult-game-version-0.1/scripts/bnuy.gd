@@ -7,6 +7,7 @@ var swordShape:CircleShape2D = CircleShape2D.new()
 var swingTimer = 0;
 @export var swingDelay = 0.65;
 @export var maxHits = 3;
+var holdingPrimary:bool = false
 
 var swordHitFx:PackedScene = preload("res://objects/vfx/sword_hit.tscn")
 
@@ -20,14 +21,13 @@ func _process(delta):
 	super._process(delta)
 	if swingTimer > 0: swingTimer -= delta
 
-@rpc("any_peer", "call_local", "reliable")
-func primaryFire(target:Vector2) -> void:
-	super.primaryFire(target)
-	if swingTimer <= 0:
+func _physics_process(delta: float) -> void:
+	if swingTimer <= 0 and holdingPrimary:
 		$shoulder/swordwoosh.restart()
 		$shoulder/swordwoosh.scale.y = -$shoulder/swordwoosh.scale.y
 		swingTimer = swingDelay
-		if multiplayer.get_remote_sender_id() != multiplayer.get_unique_id(): return
+		#if multiplayer.get_remote_sender_id() != multiplayer.get_unique_id(): return
+		if !get_node("PlayerControls"): return
 	# everything beyond this point happens clientside
 		var ents = shapeCastFromShoulder(lookDirection*swordRange, swordShape)
 		var hits = 0
@@ -37,6 +37,16 @@ func primaryFire(target:Vector2) -> void:
 				hits += 1
 			if hits >= maxHits:
 				break 
+
+@rpc("any_peer", "call_local", "reliable")
+func primaryFire(target:Vector2) -> void:
+	super.primaryFire(target)
+	holdingPrimary = true;
+	
+@rpc("any_peer", "call_local", "reliable")
+func primaryFireReleased(target:Vector2) -> void:
+	super.primaryFire(target)
+	holdingPrimary = false;
 			
 func onHit(pos:Vector2, normal:Vector2):
 	var temp = swordHitFx.instantiate()

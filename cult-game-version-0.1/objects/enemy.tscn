@@ -5,8 +5,8 @@
 [ext_resource type="Texture2D" uid="uid://clqo76f6tebyl" path="res://art/arrow.png" id="2_xaobe"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_g8jma"]
-radius = 18.0
-height = 40.0122
+radius = 24.0
+height = 54.0
 
 [node name="enemy" type="CharacterBody2D"]
 y_sort_enabled = true
@@ -24,7 +24,7 @@ controllerPath = "res://objects/controllers/basic_enemy_ai.tscn"
 healthBarColor = Color(1, 0.26, 0.26, 1)
 
 [node name="shoulder" type="Node2D" parent="."]
-position = Vector2(-10, -79)
+position = Vector2(-1, -78)
 
 [node name="Sprite2D" type="Sprite2D" parent="shoulder"]
 modulate = Color(1, 0, 0, 1)
@@ -38,12 +38,12 @@ position = Vector2(0, 3.8147e-06)
 
 [node name="sprite" type="Sprite2D" parent="upright_anchor"]
 texture_filter = 1
+position = Vector2(10, -3.8147e-06)
 scale = Vector2(0.69, 0.69)
 texture = ExtResource("2_xabwo")
 offset = Vector2(0, -89.58)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-0.999999, -15)
-rotation = -1.56429
+position = Vector2(4.76837e-07, -47)
 shape = SubResource("CapsuleShape2D_g8jma")
 debug_color = Color(0.772432, 0.263693, 0.879854, 0.42)

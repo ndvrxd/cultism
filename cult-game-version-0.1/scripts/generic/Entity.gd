@@ -188,7 +188,7 @@ func changeHealth(current:float, by:float, inflictor_path:String="") -> void:
 		# from the very beginning of the game, or dropping in midway through.
 		# no healthbar needs to be shown for this
 		healthBarTimer = 0
-		dn.queue_free()
+		#dn.queue_free()
 	if health <= 0:
 		health = 0
 		die(inflictor_path) # needs to be called on the clientside, since we're already in an RPC
