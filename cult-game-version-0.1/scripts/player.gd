@@ -23,10 +23,10 @@ func _process(delta):
 @rpc("any_peer", "call_local", "reliable")
 func primaryFire(target:Vector2) -> void:
 	super.primaryFire(target)
-	if multiplayer.get_remote_sender_id() != multiplayer.get_unique_id(): return
-	# everything beyond this point happens clientside
-	
 	if swingTimer <= 0:
+		swordWoosh.restart()
+		if multiplayer.get_remote_sender_id() != multiplayer.get_unique_id(): return
+	# everything beyond this point happens clientside
 		var ents = shapeCastFromShoulder(lookDirection*swordRange, swordShape)
 		var hits = 0
 		for e:Entity in ents:
@@ -35,7 +35,6 @@ func primaryFire(target:Vector2) -> void:
 				hits += 1
 			if hits >= maxHits:
 				break 
-		swordWoosh.restart()
 		swingTimer = swingDelay
 			
 func onHit(pos:Vector2, normal:Vector2):
