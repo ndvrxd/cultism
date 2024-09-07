@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://7j4v8eoc5ewj"]
+[gd_scene load_steps=9 format=3 uid="uid://bc03astovlgfb"]
 
 [ext_resource type="Script" path="res://scripts/bnuy.gd" id="1_hjkeh"]
 [ext_resource type="Texture2D" uid="uid://b5k4twe1vvha5" path="res://art/character ph/bunny ph.png" id="2_nbsft"]
@@ -34,6 +34,7 @@ texture_filter = 6
 collision_layer = 4
 slide_on_ceiling = false
 script = ExtResource("1_hjkeh")
+objPath = "res://objects/Bnuy.tscn"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-1, -44)

@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://pr17s47egsv2"]
 
-[ext_resource type="Script" path="res://objects/possum.gd" id="1_1fgx3"]
+[ext_resource type="Script" path="res://scripts/possum.gd" id="1_1fgx3"]
 [ext_resource type="Texture2D" uid="uid://clqo76f6tebyl" path="res://art/arrow.png" id="2_fns0g"]
 [ext_resource type="Texture2D" uid="uid://pcdp47cn5hr0" path="res://art/sprites/leveled/bnnuy.001.png" id="3_2euqh"]
 
