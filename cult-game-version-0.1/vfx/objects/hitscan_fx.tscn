@@ -1,0 +1,48 @@
+[gd_scene load_steps=5 format=3 uid="uid://1uajbkc46q8k"]
+
+[ext_resource type="Shader" uid="uid://cv2xoettixbwf" path="res://vfx/shaders/hitscan_tracer.tres" id="1_e4i53"]
+
+[sub_resource type="GDScript" id="GDScript_8r1so"]
+resource_name = "HitscanTracer"
+script/source = "extends Node2D
+
+var ttl:float = 0.1
+var age:float = 0
+
+func setTTL(time:float):
+	ttl = time
+func setRange(range:float, offset:float=0):
+	$MeshInstance2D.scale.x = range-offset
+	$MeshInstance2D.position.x = offset
+func setTracerWidth(width:float):
+	scale.y = width
+func setDirection(dir:Vector2):
+	look_at(global_position + dir)
+	
+func _ready():
+	$MeshInstance2D.material = ShaderMaterial.new();
+	$MeshInstance2D.material.shader = preload(\"res://vfx/shaders/hitscan_tracer.tres\")
+	if NetManager.IsDedicated():
+		queue_free();
+
+func _process(delta: float) -> void:
+	$MeshInstance2D.material.set_shader_parameter(\"Interp\", age/ttl)
+	age += delta
+	if age > ttl: queue_free()
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fd1gu"]
+shader = ExtResource("1_e4i53")
+shader_parameter/Interp = 0.0
+
+[sub_resource type="QuadMesh" id="QuadMesh_oyyjr"]
+center_offset = Vector3(0.5, 0, 0)
+
+[node name="HitscanTracer" type="Node2D"]
+scale = Vector2(1, 7)
+script = SubResource("GDScript_8r1so")
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="."]
+material = SubResource("ShaderMaterial_fd1gu")
+scale = Vector2(1, 1)
+mesh = SubResource("QuadMesh_oyyjr")

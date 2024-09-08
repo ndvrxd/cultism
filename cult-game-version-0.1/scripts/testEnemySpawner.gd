@@ -2,7 +2,7 @@ extends Node2D
 
 const bodypath:String = "res://objects/characters/enemy.tscn"
 
-@export var spawnEvery:float = 0.3;
+@export var spawnEvery:float = 5;
 var spawnTimer:float = spawnEvery - 1;
 
 func _ready():

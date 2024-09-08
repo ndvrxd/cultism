@@ -48,9 +48,15 @@ func primaryFire(target:Vector2) -> void:
 	
 @rpc("any_peer", "call_local", "reliable")
 func primaryFireReleased(target:Vector2) -> void:
-	super.primaryFire(target)
+	super.primaryFireReleased(target)
 	holdingPrimary = false;
-			
+
+@rpc("any_peer", "call_local", "reliable")
+func secondaryFire(target:Vector2) -> void:
+	super.secondaryFire(target)
+	$shoulder/swordflurry.restart()
+	$shoulder/swordflurry2.restart()
+	
 func onHit(pos:Vector2, normal:Vector2):
 	var temp = swordHitFx.instantiate()
 	temp.emitting = true

@@ -1,32 +1,15 @@
-[gd_scene load_steps=10 format=3 uid="uid://7j4v8eoc5ewj"]
+[gd_scene load_steps=9 format=3 uid="uid://7j4v8eoc5ewj"]
 
 [ext_resource type="Script" path="res://scripts/characters/bnuy.gd" id="1_l02gv"]
 [ext_resource type="Texture2D" uid="uid://b5k4twe1vvha5" path="res://art/character ph/bunny ph.png" id="2_c6683"]
 [ext_resource type="Texture2D" uid="uid://clqo76f6tebyl" path="res://art/ui/arrow.png" id="3_n0sa5"]
+[ext_resource type="Material" uid="uid://dlqvc37rv373i" path="res://vfx/particle/processmaterial/bladeswing.tres" id="4_8bs3g"]
 [ext_resource type="Texture2D" uid="uid://c3l4kkjo4q83i" path="res://vfx/particle/sparkle haha.png" id="4_28g8c"]
+[ext_resource type="Material" uid="uid://mxrc8o1ov8cn" path="res://vfx/particle/processmaterial/bladeflurry.tres" id="4_bpfa7"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_mtypy"]
 radius = 22.0
 height = 88.0
-
-[sub_resource type="Curve" id="Curve_78r1v"]
-min_value = -2.0
-max_value = 2.0
-_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.476852, 0.10989), 0.0, 0.0, 0, 0, Vector2(1, 0.0219781), 0.0, 0.0, 0, 0]
-point_count = 3
-
-[sub_resource type="CurveTexture" id="CurveTexture_c2e3b"]
-curve = SubResource("Curve_78r1v")
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_b5pqp"]
-particle_flag_disable_z = true
-emission_shape_offset = Vector3(0, -90, 0)
-orbit_velocity_min = -3.5
-orbit_velocity_max = -3.5
-orbit_velocity_curve = SubResource("CurveTexture_c2e3b")
-gravity = Vector3(0, 0, 0)
-scale_min = 0.5
-scale_max = 0.5
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_cmjvs"]
 radius = 5.74163
@@ -72,7 +55,37 @@ texture_filter = 1
 scale = Vector2(1.3, 1)
 emitting = false
 amount = 1
-process_material = SubResource("ParticleProcessMaterial_b5pqp")
+process_material = ExtResource("4_8bs3g")
+texture = ExtResource("4_28g8c")
+lifetime = 0.5
+one_shot = true
+fixed_fps = 60
+local_coords = true
+trail_enabled = true
+trail_lifetime = 0.24
+
+[node name="swordflurry" type="GPUParticles2D" parent="shoulder"]
+z_index = 1
+texture_filter = 1
+scale = Vector2(1.2, 1)
+emitting = false
+amount = 3
+process_material = ExtResource("4_bpfa7")
+texture = ExtResource("4_28g8c")
+lifetime = 0.5
+one_shot = true
+fixed_fps = 60
+local_coords = true
+trail_enabled = true
+trail_lifetime = 0.24
+
+[node name="swordflurry2" type="GPUParticles2D" parent="shoulder"]
+z_index = 1
+texture_filter = 1
+scale = Vector2(1.2, -1)
+emitting = false
+amount = 4
+process_material = ExtResource("4_bpfa7")
 texture = ExtResource("4_28g8c")
 lifetime = 0.5
 one_shot = true

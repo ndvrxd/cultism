@@ -43,7 +43,7 @@ turbulence_enabled = true
 size = Vector2(6.78411, 1.37636)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_vkpq7"]
-radius = 6.31579
+radius = 1.33971
 height = 35.598
 
 [node name="test effigy" type="CharacterBody2D"]
