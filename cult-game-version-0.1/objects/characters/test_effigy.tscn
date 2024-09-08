@@ -1,0 +1,96 @@
+[gd_scene load_steps=14 format=3 uid="uid://bhatrw3cecxw1"]
+
+[ext_resource type="Script" path="res://scripts/characters/effigy.gd" id="1_bfdly"]
+[ext_resource type="Texture2D" uid="uid://c3l4kkjo4q83i" path="res://vfx/particle/sparkle haha.png" id="1_ocdxr"]
+[ext_resource type="Texture2D" uid="uid://cqrh7ndjucvg5" path="res://art/character ph/effigy ph.png" id="1_qbvs6"]
+[ext_resource type="Shader" uid="uid://cchd4lawas5cx" path="res://vfx/shaders/effigy_flame.tres" id="2_bln26"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_moupg"]
+shader = ExtResource("2_bln26")
+
+[sub_resource type="QuadMesh" id="QuadMesh_lbiwx"]
+size = Vector2(-1, 1)
+center_offset = Vector3(0, 1.34, 0)
+
+[sub_resource type="Gradient" id="Gradient_68kti"]
+colors = PackedColorArray(1, 0, 0, 1, 1, 0, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_id21g"]
+gradient = SubResource("Gradient_68kti")
+
+[sub_resource type="Curve" id="Curve_l2qjb"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.233333, 0.901099), 1.04895, 1.04895, 0, 0, Vector2(0.72, 0.681319), -1.15735, -1.15735, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_uot4q"]
+curve = SubResource("Curve_l2qjb")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_yi8o0"]
+particle_flag_disable_z = true
+emission_shape = 2
+emission_sphere_radius = 3.0
+direction = Vector3(0, -1, 0)
+initial_velocity_min = 3.0
+initial_velocity_max = 4.0
+gravity = Vector3(0, -200, 0)
+scale_min = 0.2
+scale_max = 0.2
+scale_curve = SubResource("CurveTexture_uot4q")
+color_ramp = SubResource("GradientTexture1D_id21g")
+turbulence_enabled = true
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_10w11"]
+size = Vector2(6.78411, 1.37636)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_vkpq7"]
+radius = 6.31579
+height = 35.598
+
+[node name="test effigy" type="CharacterBody2D"]
+y_sort_enabled = true
+collision_layer = 3
+collision_mask = 0
+motion_mode = 1
+script = ExtResource("1_bfdly")
+entityName = "Effigy"
+team = 1
+objPath = "res://objects/characters/test_effigy.tscn"
+healthBarColor = Color(0.8245, 0.19, 1, 1)
+
+[node name="shoulder" type="Node2D" parent="."]
+position = Vector2(0, -142)
+
+[node name="upright_anchor" type="Node2D" parent="." groups=["upright_sprite"]]
+y_sort_enabled = true
+
+[node name="flame fx" type="MeshInstance2D" parent="upright_anchor"]
+material = SubResource("ShaderMaterial_moupg")
+rotation = 3.14159
+scale = Vector2(144, 144)
+mesh = SubResource("QuadMesh_lbiwx")
+
+[node name="Sprite" type="Sprite2D" parent="upright_anchor"]
+texture_filter = 1
+scale = Vector2(1.155, 1.155)
+texture = ExtResource("1_qbvs6")
+offset = Vector2(0, -85)
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="upright_anchor/Sprite"]
+position = Vector2(-3.84493e-16, -167.1)
+scale = Vector2(10.3896, 10.3896)
+process_material = SubResource("ParticleProcessMaterial_yi8o0")
+texture = ExtResource("1_ocdxr")
+trail_lifetime = 0.2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(3.8147e-06, -34.7418)
+scale = Vector2(8.22, 12)
+shape = SubResource("RectangleShape2D_10w11")
+
+[node name="hurtbox" type="Area2D" parent="."]
+position = Vector2(0, -37)
+scale = Vector2(5.225, 5.225)
+
+[node name="shape" type="CollisionShape2D" parent="hurtbox"]
+position = Vector2(5.96046e-08, -10.3349)
+shape = SubResource("CapsuleShape2D_vkpq7")

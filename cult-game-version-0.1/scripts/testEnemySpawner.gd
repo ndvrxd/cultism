@@ -1,6 +1,6 @@
 extends Node2D
 
-const bodypath:String = "res://objects/enemy.tscn"
+const bodypath:String = "res://objects/characters/enemy.tscn"
 
 @export var spawnEvery:float = 5.0;
 var spawnTimer:float = spawnEvery - 1;

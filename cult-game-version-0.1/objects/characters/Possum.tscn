@@ -1,0 +1,79 @@
+[gd_scene load_steps=8 format=3 uid="uid://pr17s47egsv2"]
+
+[ext_resource type="Script" path="res://scripts/characters/possum.gd" id="1_1fgx3"]
+[ext_resource type="Texture2D" uid="uid://bdyllnybosvnm" path="res://art/character ph/poss ph.png" id="2_5mqqm"]
+[ext_resource type="Texture2D" uid="uid://clqo76f6tebyl" path="res://art/ui/arrow.png" id="2_fns0g"]
+[ext_resource type="Texture2D" uid="uid://c3l4kkjo4q83i" path="res://vfx/particle/sparkle haha.png" id="4_yinxt"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_gokdr"]
+radius = 22.0
+height = 88.0
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_86ulr"]
+particle_flag_disable_z = true
+spread = 0.0
+initial_velocity_min = 10000.0
+initial_velocity_max = 10000.7
+gravity = Vector3(0, 0, 0)
+scale_min = 0.2
+scale_max = 0.2
+collision_mode = 1
+collision_friction = 1.0
+collision_bounce = 0.0
+collision_use_scale = true
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_esllf"]
+radius = 5.74163
+height = 21.0526
+
+[node name="Possum" type="CharacterBody2D"]
+collision_layer = 4
+script = ExtResource("1_1fgx3")
+entityName = "Possum"
+team = 1
+objPath = "res://objects/characters/Possum.tscn"
+controllerPath = "res://objects/controllers/basic_enemy_ai.tscn"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -48)
+shape = SubResource("CapsuleShape2D_gokdr")
+
+[node name="Node2D" type="Node2D" parent="." groups=["upright_sprite"]]
+
+[node name="Sprite2D" type="Sprite2D" parent="Node2D"]
+scale = Vector2(0.79, 0.79)
+texture = ExtResource("2_5mqqm")
+offset = Vector2(0, -96.055)
+
+[node name="shoulder" type="Node2D" parent="."]
+position = Vector2(0, -87)
+
+[node name="Sprite2D" type="Sprite2D" parent="shoulder"]
+modulate = Color(0.489618, 0.433017, 0.996861, 1)
+z_index = 1
+position = Vector2(65, 0)
+rotation = 1.5708
+texture = ExtResource("2_fns0g")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="shoulder"]
+modulate = Color(1, 0.746832, 0.584172, 1)
+position = Vector2(-157, 0)
+emitting = false
+amount = 1
+process_material = SubResource("ParticleProcessMaterial_86ulr")
+texture = ExtResource("4_yinxt")
+lifetime = 0.5
+one_shot = true
+fixed_fps = 60
+collision_base_size = 10.0
+trail_enabled = true
+trail_lifetime = 0.01
+trail_sections = 2
+trail_section_subdivisions = 1
+
+[node name="hurtbox" type="Area2D" parent="."]
+scale = Vector2(5.225, 5.225)
+
+[node name="shape" type="CollisionShape2D" parent="hurtbox"]
+position = Vector2(5.96046e-08, -10.3349)
+shape = SubResource("CapsuleShape2D_esllf")

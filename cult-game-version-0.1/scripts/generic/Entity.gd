@@ -17,12 +17,12 @@ signal killed(by:Entity)
 @export var healthBarColor:Color = Color(1, 1, 1);
 var controllerAttached:bool = false;
 
-const HEALTHBAR_SCENE = "res://objects/healthBar.tscn"
 var healthBar:TextureProgressBar
 var healthBarTimer:float = 0;
 var healthBarShakeTimer:float = 0;
-
-var damageNumberScn:PackedScene = preload("res://objects/vfx/damageNumber.tscn")
+ 
+const damageNumberScn:PackedScene = preload("res://objects/damageNumber.tscn")
+const healthBarScn:PackedScene = preload("res://objects/healthBar.tscn")
 
 var moveIntent:Vector2 = Vector2.ZERO;
 var lookDirection:Vector2 = Vector2.UP;
@@ -55,7 +55,7 @@ func _ready() -> void:
 	# health bars only need to be shown in visible game windows
 	# otherwise, we don't need to instantiate or drive them
 	if !NetManager.IsDedicated():
-		var hbscn = preload(HEALTHBAR_SCENE).instantiate()
+		var hbscn = healthBarScn.instantiate()
 		add_child(hbscn)
 		healthBar = hbscn.get_node("healthbar")
 		healthBar.position.y = (shoulderPoint.global_position.y - global_position.y) * 2

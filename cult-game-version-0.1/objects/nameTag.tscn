@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://c3sbhr7hqxks5"]
 
-[ext_resource type="FontFile" uid="uid://dhk11k42eybnt" path="res://art/chela-one.regular.ttf" id="1_d162y"]
+[ext_resource type="FontFile" uid="uid://dhk11k42eybnt" path="res://fonts/chela-one.regular.ttf" id="1_d162y"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_pxwi6"]
 font = ExtResource("1_d162y")
