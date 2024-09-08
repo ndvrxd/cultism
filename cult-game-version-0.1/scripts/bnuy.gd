@@ -22,12 +22,13 @@ func _process(delta):
 	if swingTimer > 0: swingTimer -= delta
 
 func _physics_process(delta: float) -> void:
+	super._physics_process(delta)
 	if swingTimer <= 0 and holdingPrimary:
 		$shoulder/swordwoosh.restart()
 		$shoulder/swordwoosh.scale.y = -$shoulder/swordwoosh.scale.y
 		swingTimer = swingDelay
 		#if multiplayer.get_remote_sender_id() != multiplayer.get_unique_id(): return
-		if !get_node("PlayerControls"): return
+		if !has_node("PlayerControls"): return
 	# everything beyond this point happens clientside
 		var ents = shapeCastFromShoulder(lookDirection*swordRange, swordShape)
 		var hits = 0
