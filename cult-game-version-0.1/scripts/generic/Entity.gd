@@ -94,7 +94,7 @@ func _process(delta: float) -> void:
 		healthBar.visible = false
 		healthBarTimer = 0
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	moveIntent = moveIntent.normalized();
 	lookDirection = lookDirection.normalized();
 	# if a controller is attached that PROBABLY means our client has control over this bitch
@@ -121,23 +121,23 @@ static func spawn(scnPath:String, pos:Vector2=Vector2.ZERO, ctlPath:String="", p
 
 # networked callbacks for use by controller and items
 @rpc("any_peer", "call_local", "reliable")
-func primaryFire(target:Vector2) -> void:
+func primaryFire(_target:Vector2) -> void:
 	pass
 
 @rpc("any_peer", "call_local", "reliable")
-func secondaryFire(target:Vector2) -> void:
+func secondaryFire(_target:Vector2) -> void:
 	pass
 
 @rpc("any_peer", "call_local", "reliable")
-func primaryFireReleased(target:Vector2) -> void:
+func primaryFireReleased(_target:Vector2) -> void:
 	pass
 
 @rpc("any_peer", "call_local", "reliable")
-func secondaryFireReleased(target:Vector2) -> void:
+func secondaryFireReleased(_target:Vector2) -> void:
 	pass
 
 @rpc("any_peer", "call_local", "reliable")
-func activeAbility(target:Vector2) -> void:
+func activeAbility(_target:Vector2) -> void:
 	pass
 
 @rpc("any_peer", "call_local", "reliable")

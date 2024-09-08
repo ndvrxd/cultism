@@ -70,7 +70,7 @@ texture = ExtResource("2_ty8gh")
 offset = Vector2(-8, -64)
 
 [node name="shoulder" type="Node2D" parent="."]
-position = Vector2(0, -79)
+position = Vector2(0, -65)
 
 [node name="Sprite2D" type="Sprite2D" parent="shoulder"]
 modulate = Color(0.489618, 0.433017, 0.996861, 1)

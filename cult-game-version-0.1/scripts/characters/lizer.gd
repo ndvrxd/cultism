@@ -2,11 +2,11 @@ extends Entity
 
 var swordShape:CircleShape2D = CircleShape2D.new()
 @export var swordRange = 75
-@export var swordDamage = 50
+@export var swordDamage = 20
 
 var swingTimer = 0;
-@export var swingDelay = 0.35;
-@export var maxHits = 5;
+@export var swingDelay = 0.17;
+@export var maxHits = 7;
 
 # KNIFE THROW, CHANGE EVENTUALLY
 @export var gunRange = 3000
@@ -92,7 +92,7 @@ func secondaryFireAction():
 		if team != ent.team:
 			ent.changeHealth.rpc(ent.health, -gunDamage, get_path())
 			
-func onHit(pos:Vector2, normal:Vector2):
+func onHit(pos:Vector2, _normal:Vector2):
 	var temp = swordHitFx.instantiate()
 	temp.emitting = true
 	temp.global_position = pos
