@@ -28,7 +28,9 @@ func _physics_process(delta: float) -> void:
 		$shoulder/swordwoosh.scale.y = -$shoulder/swordwoosh.scale.y
 		swingTimer = swingDelay
 		#if multiplayer.get_remote_sender_id() != multiplayer.get_unique_id(): return
-		if !has_node("PlayerControls"): return
+		if get_multiplayer_authority() != multiplayer.get_unique_id(): return
+		# TODO: until we have proper authority handling implemented,
+		# this makes hit calculations happen serverside. Fuck,
 	# everything beyond this point happens clientside
 		var ents = shapeCastFromShoulder(lookDirection*swordRange, swordShape)
 		var hits = 0
