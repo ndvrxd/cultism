@@ -1,55 +1,54 @@
 extends Entity
 
-
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	super._ready()
-	stat_speed = Stat.fromBase(500);
-	stat_maxHp = Stat.fromBase(75);
-	swordShape.radius = 50;
-	hit_landed.connect(onHit)
-
-#EVERYTHING BENEATH THIS I COPIED FROM PLAYER.GD TO MAKE POSSUM PLAYABLE
-#ITS PROLLY INEFFICIENT BUT IT WORKS FOR NOW ANIMATIONS AND ALL
-#-ndvr :3 
-#(ps this proly fukin sux i dont see why i cant just extend player.gd or smthn butttt im just playin around here)
-
 var swordShape:CircleShape2D = CircleShape2D.new()
-@export var swordWoosh:GPUParticles2D;
-@export var swordRange = 100
-@export var swordDamage = 34
+@export var gunRange = 3000
+@export var gunDamage = 20
 
 var swingTimer = 0;
-@export var swingDelay = 0.65;
-@export var maxHits = 3;
+@export var swingDelay = 0.4;
+var holdingPrimary:bool = false
 
 var swordHitFx:PackedScene = preload("res://objects/vfx/sword_hit.tscn")
 
-
+func _ready():
+	super._ready()
+	swordShape.radius = 50;
+	hit_landed.connect(onHit)
 
 func _process(delta):
+	$Node2D/Sprite2D.flip_h = lookDirection.x < 0
 	super._process(delta)
 	if swingTimer > 0: swingTimer -= delta
+
+func _physics_process(delta: float) -> void:
+	super._physics_process(delta)
+	if swingTimer <= 0 and holdingPrimary:
+		$shoulder/GPUParticles2D.restart()
+		swingTimer = swingDelay
+		#if multiplayer.get_remote_sender_id() != multiplayer.get_unique_id(): return
+		if get_multiplayer_authority() != multiplayer.get_unique_id(): return
+		# TODO: until we have proper authority handling implemented,
+		# this makes hit calculations happen serverside. Fuck,
+	# everything beyond this point happens clientside
+		var hit = lineCastFromShoulder(lookDirection, gunRange)
+		var ent = hit["entity"]
+		if ent:
+			if team != ent.team:
+				ent.changeHealth.rpc(ent.health, -gunDamage, get_path())
 
 @rpc("any_peer", "call_local", "reliable")
 func primaryFire(target:Vector2) -> void:
 	super.primaryFire(target)
-	if swingTimer <= 0:
-		$shoulder/swordwoosh.restart()
-		if multiplayer.get_remote_sender_id() != multiplayer.get_unique_id(): return
-	# everything beyond this point happens clientside
-		var ents = shapeCastFromShoulder(lookDirection*swordRange, swordShape)
-		var hits = 0
-		for e:Entity in ents:
-			if team != e.team:
-				e.changeHealth.rpc(e.health, -swordDamage, get_path())
-				hits += 1
-			if hits >= maxHits:
-				break 
-		swingTimer = swingDelay
+	holdingPrimary = true;
+	
+@rpc("any_peer", "call_local", "reliable")
+func primaryFireReleased(target:Vector2) -> void:
+	super.primaryFire(target)
+	holdingPrimary = false;
 			
 func onHit(pos:Vector2, normal:Vector2):
 	var temp = swordHitFx.instantiate()
 	temp.emitting = true
 	temp.global_position = pos
+	temp.modulate = Color.GOLD
 	get_parent().add_child(temp)
