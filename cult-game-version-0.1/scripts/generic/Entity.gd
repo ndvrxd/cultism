@@ -214,12 +214,16 @@ func lineCastFromShoulder(direction:Vector2, range:float, triggerHitEffects=true
 	# returns the Entity hit, if any, the position hit, if any,
 	# and the normal of the surface hit, if any.
 	var endpoint:Vector2 = shoulderPoint.global_position + direction.normalized() * range
-	var hit = get_world_2d().direct_space_state.intersect_ray(
-		PhysicsRayQueryParameters2D.create(
+	
+	var physics_query = PhysicsRayQueryParameters2D.create(
 			shoulderPoint.global_position,
 			endpoint
 			# TODO: set collision flags here
 		)
+	physics_query.set_collide_with_areas(true);
+	
+	var hit = get_world_2d().direct_space_state.intersect_ray(
+		physics_query
 	)
 	if hit.is_empty():
 		return {
@@ -230,7 +234,7 @@ func lineCastFromShoulder(direction:Vector2, range:float, triggerHitEffects=true
 	if triggerHitEffects:
 		triggerHitEffectsRpc.rpc(hit["position"], hit["normal"])
 	return {
-		"entity": hit["collider"] as Entity,
+		"entity": hit["collider"].get_parent() as Entity,
 		"pos": hit["position"],
 		"normal": hit["normal"]
 	}
@@ -238,18 +242,24 @@ func lineCastFromShoulder(direction:Vector2, range:float, triggerHitEffects=true
 func shapeCastFromShoulder(motion:Vector2, shape:Shape2D=null, triggerHitEffects=true) -> Array[Entity]:
 	# see above. why do i have to do this
 	var params:PhysicsShapeQueryParameters2D = PhysicsShapeQueryParameters2D.new()
+	params.set_collide_with_bodies(false)
+	params.set_collide_with_areas(true)
+	
 	var fuck:Transform2D = Transform2D(Vector2.RIGHT, Vector2.DOWN, shoulderPoint.global_position)
 	if shape == null:
 		shape = CircleShape2D.new();
 		shape.radius = 50
+		
 	params.shape = shape
 	params.transform = fuck
 	params.motion = motion
+	
 	var hits = get_world_2d().direct_space_state.intersect_shape(params)
 	var result:Array[Entity] = []
 	for i in hits:
-		if i["collider"] is Entity:
-			var e:Entity = i["collider"] as Entity
+		var collider = i["collider"].get_parent()
+		if collider is Entity:
+			var e:Entity = collider as Entity
 			if not self == e:
 				if triggerHitEffects:
 					triggerHitEffectsRpc.rpc(e.shoulderPoint.global_position)

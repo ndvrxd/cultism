@@ -1,8 +1,12 @@
-[gd_scene load_steps=5 format=3 uid="uid://ct6dh5rgiuip3"]
+[gd_scene load_steps=6 format=3 uid="uid://ct6dh5rgiuip3"]
 
 [ext_resource type="Script" path="res://scripts/enemy.gd" id="1_8t12i"]
 [ext_resource type="Texture2D" uid="uid://6i8qff0kq7ei" path="res://art/enemy ph.png" id="2_xabwo"]
 [ext_resource type="Texture2D" uid="uid://clqo76f6tebyl" path="res://art/arrow.png" id="2_xaobe"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_jucqc"]
+radius = 5.74163
+height = 21.0526
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_g8jma"]
 radius = 24.0
@@ -24,7 +28,7 @@ controllerPath = "res://objects/controllers/basic_enemy_ai.tscn"
 healthBarColor = Color(1, 0.26, 0.26, 1)
 
 [node name="shoulder" type="Node2D" parent="."]
-position = Vector2(-1, -78)
+position = Vector2(-1, -72)
 
 [node name="Sprite2D" type="Sprite2D" parent="shoulder"]
 modulate = Color(1, 0, 0, 1)
@@ -43,7 +47,14 @@ scale = Vector2(0.69, 0.69)
 texture = ExtResource("2_xabwo")
 offset = Vector2(0, -89.58)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="Area2D" type="Area2D" parent="."]
+scale = Vector2(5.225, 5.225)
+
+[node name="hitbox_collision" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(5.96046e-08, -10.3349)
+shape = SubResource("CapsuleShape2D_jucqc")
+
+[node name="movement_collision" type="CollisionShape2D" parent="."]
 position = Vector2(4.76837e-07, -47)
 shape = SubResource("CapsuleShape2D_g8jma")
 debug_color = Color(0.772432, 0.263693, 0.879854, 0.42)
