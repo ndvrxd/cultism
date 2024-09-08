@@ -3,6 +3,7 @@ extends Entity
 var swordShape:CircleShape2D = CircleShape2D.new()
 @export var swordRange = 75
 @export var swordDamage = 20
+@export var dmgRange = 5 #set this to 0 for consistent damage (boring imo but yk..) - ndvr :3
 
 var swingTimer = 0;
 @export var swingDelay = 0.17;
@@ -74,7 +75,7 @@ func primaryFireAction():
 	var hits = 0
 	for e:Entity in ents:
 		if team != e.team:
-			e.changeHealth.rpc(e.health, -swordDamage, get_path())
+			e.changeHealth.rpc(e.health, -randf_range(swordDamage-dmgRange,swordDamage+dmgRange), get_path())
 			hits += 1
 		if hits >= maxHits:
 			break

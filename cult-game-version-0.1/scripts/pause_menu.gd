@@ -2,6 +2,7 @@ extends Control
 
 func _ready():
 	$AnimationPlayer.play("RESET")
+	grab_focus()
 
 #func resize():
 	#size() = OS.get_screen_size()

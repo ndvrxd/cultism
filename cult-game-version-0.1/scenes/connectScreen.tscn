@@ -1,6 +1,6 @@
-[gd_scene load_steps=11 format=3 uid="uid://bqn8v6gbnfj1u"]
+[gd_scene load_steps=12 format=3 uid="uid://bqn8v6gbnfj1u"]
 
-[ext_resource type="Script" path="res://scenes/connectScreen.gd" id="1_bngj7"]
+[ext_resource type="Script" path="res://scripts/menus/connectScreen.gd" id="1_bngj7"]
 [ext_resource type="Texture2D" uid="uid://b5k4twe1vvha5" path="res://art/character ph/bunny ph.png" id="2_rywp4"]
 [ext_resource type="Texture2D" uid="uid://bdyllnybosvnm" path="res://art/character ph/poss ph.png" id="3_vst5a"]
 [ext_resource type="Texture2D" uid="uid://veo5l360amx3" path="res://art/character ph/player ph.png" id="4_iac7p"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://bdeo180vqay6m" path="res://art/ui/run.png" id="6_2uyg7"]
 [ext_resource type="Texture2D" uid="uid://dx7xpikedu613" path="res://art/character ph/lizer ph.png" id="7_m7alx"]
 [ext_resource type="Texture2D" uid="uid://cqrh7ndjucvg5" path="res://art/character ph/effigy ph.png" id="8_3ew3o"]
+[ext_resource type="Script" path="res://scripts/menus/connectScreenGrabFocus.gd" id="9_ucoia"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_3pw02"]
 font_size = 32
@@ -173,6 +174,7 @@ item_5/text = "res://objects/characters/Lizer.tscn"
 item_5/icon = ExtResource("7_m7alx")
 item_6/text = "res://objects/characters/test_effigy.tscn"
 item_6/icon = ExtResource("8_3ew3o")
+script = ExtResource("9_ucoia")
 
 [connection signal="pressed" from="Control/VBoxContainer/CenterContainer/HBoxContainer4/Button" to="." method="onJoinClicked"]
 [connection signal="pressed" from="Control/VBoxContainer/CenterContainer/HBoxContainer4/Button2" to="." method="onCreateClicked"]
