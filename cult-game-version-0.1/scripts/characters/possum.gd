@@ -23,7 +23,7 @@ func primaryFireActionAuthority():
 				ent.changeHealth.rpc(ent.health, -gunDamage, get_path())
 
 func primaryFireAction():
-		var hit = lineCastFromShoulder(lookDirection, gunRange)
+		var hit = lineCastFromShoulder(lookDirection, gunRange, false) #don't trigger hit effects
 		var tr = hitscanTracer.instantiate()
 		tr.global_position = shoulderPoint.global_position
 		tr.setDirection(lookDirection)
