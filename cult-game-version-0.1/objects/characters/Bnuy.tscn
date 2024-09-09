@@ -73,21 +73,20 @@ scale = Vector2(0.765, 0.765)
 texture = ExtResource("2_c6683")
 offset = Vector2(0, -91)
 
-[node name="shoulder" type="Node2D" parent="."]
-position = Vector2(0, -79)
-
-[node name="Sprite2D" type="Sprite2D" parent="shoulder"]
-modulate = Color(0.489618, 0.433017, 0.996861, 1)
+[node name="charged_loop" type="GPUParticles2D" parent="upright_anchor"]
+modulate = Color(0.966667, 1, 0, 1)
 z_index = 1
-position = Vector2(65, 0)
-rotation = 1.5708
-texture = ExtResource("3_n0sa5")
+position = Vector2(55, -79)
+emitting = false
+process_material = ExtResource("5_kngdb")
+texture = ExtResource("4_28g8c")
+local_coords = true
 
-[node name="charged" type="GPUParticles2D" parent="shoulder"]
+[node name="charged" type="GPUParticles2D" parent="upright_anchor"]
 modulate = Color(0.933333, 1, 0, 1)
 z_index = 1
 texture_filter = 1
-position = Vector2(61, 0)
+position = Vector2(61, -79)
 rotation = 1.5708
 emitting = false
 amount = 1
@@ -97,14 +96,15 @@ lifetime = 0.4
 one_shot = true
 local_coords = true
 
-[node name="charged_loop" type="GPUParticles2D" parent="shoulder"]
-modulate = Color(0.966667, 1, 0, 1)
+[node name="shoulder" type="Node2D" parent="."]
+position = Vector2(0, -79)
+
+[node name="Sprite2D" type="Sprite2D" parent="shoulder"]
+modulate = Color(0.489618, 0.433017, 0.996861, 1)
 z_index = 1
-position = Vector2(55, 0)
-emitting = false
-process_material = ExtResource("5_kngdb")
-texture = ExtResource("4_28g8c")
-local_coords = true
+position = Vector2(65, 0)
+rotation = 1.5708
+texture = ExtResource("3_n0sa5")
 
 [node name="swordwoosh" type="GPUParticles2D" parent="shoulder"]
 z_index = 1

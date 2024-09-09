@@ -22,14 +22,17 @@ func _ready():
 	$chargeslash_end.timeout.connect(chargeslash_end)
 
 func _process(delta):
-	$upright_anchor/Sprite2D.flip_h = lookDirection.x < 0
+	$upright_anchor.scale.x = sign(lookDirection.x)
+	#$upright_anchor/Sprite2D.flip_h = lookDirection.x < 0
 	super._process(delta)
 
 func primaryFireAction():
+	if charged or $chargetimer.time_left > 0 or $chargeslash_end.time_left > 0: return
 	$shoulder/swordwoosh.restart()
 	$shoulder/swordwoosh.scale.y = -$shoulder/swordwoosh.scale.y
 	
 func primaryFireActionAuthority():
+	if charged or $chargetimer.time_left > 0 or $chargeslash_end.time_left > 0: return
 	var ents = shapeCastFromShoulder(lookDirection*swordRange, swordShape)
 	var hits = 0
 	for e:Entity in ents:
@@ -54,7 +57,7 @@ func secondaryFireReleased(target:Vector2) -> void:
 	if charged:
 		$shoulder/swordflurry.restart()
 		$shoulder/swordflurry2.restart()
-		$shoulder/charged_loop.emitting = false
+		$upright_anchor/charged_loop.emitting = false
 		$chargeslash_end.start()
 		if is_multiplayer_authority():
 			$chargeslash_hit.start()
@@ -69,8 +72,8 @@ func chargeblink():
 func chargetimer_end():
 	charged = true
 	$chargeblink.stop()
-	$shoulder/charged.restart()
-	$shoulder/charged_loop.emitting=true
+	$upright_anchor/charged.restart()
+	$upright_anchor/charged_loop.emitting=true
 
 func chargeslash_end():
 	$chargeslash_hit.stop()

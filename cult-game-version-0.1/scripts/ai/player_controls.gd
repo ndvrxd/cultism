@@ -29,4 +29,4 @@ func _process(_delta):
 	if Input.is_action_just_released("SecondaryAttack"):
 		ent.secondaryFireReleased.rpc(get_global_mouse_position())
 	if Input.is_action_just_pressed("SpecialAbility"):
-		ent.activeAbility.rpc(get_global_mouse_position())
+		ent.activeAbilityRpc.rpc(get_global_mouse_position())
