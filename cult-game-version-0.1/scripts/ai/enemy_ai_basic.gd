@@ -13,6 +13,7 @@ func _physics_process(delta: float) -> void:
 		var shoulderOffset = Vector2.DOWN * (target.shoulderPoint.global_position - target.global_position)
 		var targetPos = target.shoulderPoint.global_position - shoulderOffset * 0.3
 		ent.lookDirection = ent.shoulderPoint.global_position.direction_to(targetPos)
+		ent.aimPosition = targetPos
 		
 	else: # dick around
 		ent.moveIntent = Vector2.ZERO

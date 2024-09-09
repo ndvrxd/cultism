@@ -10,6 +10,7 @@ func _physics_process(delta: float) -> void:
 	var cameraStickDir = Input.get_vector("LookLeft", "LookRight", "LookUp", "LookDown").normalized();
 	if mouseLookMode:
 		ent.lookDirection = ent.shoulderPoint.global_position.direction_to(get_global_mouse_position())
+		ent.aimPosition = get_global_mouse_position()
 		if cameraStickDir != Vector2.ZERO: mouseLookMode = false
 	else:
 		if cameraStickDir.distance_to(-ent.lookDirection) > 1:

@@ -28,6 +28,7 @@ var moveIntent:Vector2 = Vector2.ZERO;
 var lookDirection:Vector2 = Vector2.UP;
 # TODO: allow lookDirection into lookAngle conversion
 	# NOTE: this may not actually be necessary
+var aimPosition:Vector2 = Vector2.ZERO;
 
 @export var stat_maxHp:Stat = Stat.fromBase(100);
 @export var stat_speed:Stat = Stat.fromBase(400);
@@ -36,6 +37,16 @@ var lookDirection:Vector2 = Vector2.UP;
 # "aggro" stats get used by entity controllers for target selection
 @export var stat_aggroRange:Stat = Stat.fromBase(1000);
 @export var stat_aggroNoise:Stat = Stat.fromBase(0);
+
+# TODO replace these with Stats when the Stat rework rolls around
+@export var primaryCD:float = 1;
+@export var secondaryCD:float = 1;
+@export var activeCD:float = 20;
+var primaryTimer:float = 0;
+var secondaryTimer:float = 0;
+var activeTimer:float = 0;
+var holdingPrimary:bool = false;
+var holdingSecondary:bool = false;
 
 var health:float = 1
 
@@ -94,13 +105,27 @@ func _process(delta: float) -> void:
 		healthBar.visible = false
 		healthBarTimer = 0
 
-func _physics_process(_delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	moveIntent = moveIntent.normalized();
 	lookDirection = lookDirection.normalized();
 	# if a controller is attached that PROBABLY means our client has control over this bitch
 	# so we need to be the one to stream the movement
 	if controllerAttached: streamMovement.rpc(global_position, moveIntent, lookDirection)
-		
+	
+	if holdingPrimary and primaryTimer <= 0:
+		primaryFireAction()
+		if get_multiplayer_authority() == multiplayer.get_unique_id():
+			primaryFireActionAuthority()
+		primaryTimer = primaryCD
+	if holdingSecondary and secondaryTimer <= 0:
+		secondaryFireAction()
+		if get_multiplayer_authority() == multiplayer.get_unique_id():
+			secondaryFireActionAuthority()
+		secondaryTimer = secondaryCD
+	if primaryTimer > 0: primaryTimer -= delta
+	if secondaryTimer > 0: secondaryTimer -= delta
+	if activeTimer > 0: activeTimer -= delta
+
 
 # what i'm thinking is that the authority for each entity
 # can attach a controller to it clientside, and the controller can make
@@ -121,24 +146,39 @@ static func spawn(scnPath:String, pos:Vector2=Vector2.ZERO, ctlPath:String="", p
 
 # networked callbacks for use by controller and items
 @rpc("any_peer", "call_local", "reliable")
-func primaryFire(_target:Vector2) -> void:
-	pass
+func primaryFire(target:Vector2) -> void:
+	aimPosition = target
+	holdingPrimary = true
 
 @rpc("any_peer", "call_local", "reliable")
-func secondaryFire(_target:Vector2) -> void:
-	pass
+func secondaryFire(target:Vector2) -> void:
+	aimPosition = target
+	holdingSecondary = true
 
 @rpc("any_peer", "call_local", "reliable")
-func primaryFireReleased(_target:Vector2) -> void:
-	pass
+func primaryFireReleased(target:Vector2) -> void:
+	aimPosition = target
+	holdingPrimary = false
 
 @rpc("any_peer", "call_local", "reliable")
-func secondaryFireReleased(_target:Vector2) -> void:
-	pass
+func secondaryFireReleased(target:Vector2) -> void:
+	aimPosition = target
+	holdingSecondary = false
 
 @rpc("any_peer", "call_local", "reliable")
-func activeAbility(_target:Vector2) -> void:
-	pass
+func activeAbilityRpc(target:Vector2) -> void:
+	if activeTimer > 0: return
+	activeAbilityAction()
+	if multiplayer.get_remote_sender_id() == multiplayer.get_unique_id():
+		activeAbilityActionAuthority()
+
+# mmmmaybe use these hooks from now on
+func primaryFireAction() -> void: pass
+func secondaryFireAction() -> void: pass
+func primaryFireActionAuthority() -> void: pass
+func secondaryFireActionAuthority() -> void: pass
+func activeAbilityAction() -> void: pass
+func activeAbilityActionAuthority() -> void: pass
 
 @rpc("any_peer", "call_local", "reliable")
 func chat(_msg:String) -> void:
