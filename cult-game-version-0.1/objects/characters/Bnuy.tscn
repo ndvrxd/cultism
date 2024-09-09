@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://7j4v8eoc5ewj"]
+[gd_scene load_steps=14 format=3 uid="uid://7j4v8eoc5ewj"]
 
 [ext_resource type="Script" path="res://scripts/characters/bnuy.gd" id="1_l02gv"]
 [ext_resource type="Texture2D" uid="uid://b5k4twe1vvha5" path="res://art/character ph/bunny ph.png" id="2_c6683"]
@@ -6,10 +6,30 @@
 [ext_resource type="Material" uid="uid://dlqvc37rv373i" path="res://vfx/particle/processmaterial/bladeswing.tres" id="4_8bs3g"]
 [ext_resource type="Texture2D" uid="uid://c3l4kkjo4q83i" path="res://vfx/particle/sparkle haha.png" id="4_28g8c"]
 [ext_resource type="Material" uid="uid://mxrc8o1ov8cn" path="res://vfx/particle/processmaterial/bladeflurry.tres" id="4_bpfa7"]
+[ext_resource type="Texture2D" uid="uid://brlqerolroesd" path="res://vfx/particle/lightflare.png" id="4_o3lk5"]
+[ext_resource type="Material" uid="uid://beg2mqqa0fc2f" path="res://vfx/particle/processmaterial/sparkle.tres" id="5_kngdb"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_mtypy"]
 radius = 22.0
 height = 88.0
+
+[sub_resource type="Curve" id="Curve_5rmyf"]
+_data = [Vector2(0, 0), 0.0, 8.49281, 0, 0, Vector2(0.0659898, 1), -0.6436, -0.6436, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_rhrpu"]
+curve = SubResource("Curve_5rmyf")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_0rg2x"]
+particle_flag_disable_z = true
+angle_min = 1.07288e-05
+angle_max = 360.0
+angular_velocity_min = -478.97
+angular_velocity_max = -95.79
+gravity = Vector3(0, 0, 0)
+scale_min = 2.0
+scale_max = 2.0
+scale_curve = SubResource("CurveTexture_rhrpu")
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_cmjvs"]
 radius = 5.74163
@@ -30,6 +50,20 @@ controllerPath = "res://objects/controllers/basic_enemy_ai.tscn"
 position = Vector2(-1, -44)
 shape = SubResource("CapsuleShape2D_mtypy")
 
+[node name="chargeslash_hit" type="Timer" parent="."]
+wait_time = 0.1
+
+[node name="chargeslash_end" type="Timer" parent="."]
+wait_time = 0.65
+one_shot = true
+
+[node name="chargetimer" type="Timer" parent="."]
+wait_time = 0.8
+one_shot = true
+
+[node name="chargeblink" type="Timer" parent="."]
+wait_time = 0.3
+
 [node name="upright_anchor" type="Node2D" parent="." groups=["upright_sprite"]]
 y_sort_enabled = true
 
@@ -48,6 +82,29 @@ z_index = 1
 position = Vector2(65, 0)
 rotation = 1.5708
 texture = ExtResource("3_n0sa5")
+
+[node name="charged" type="GPUParticles2D" parent="shoulder"]
+modulate = Color(0.933333, 1, 0, 1)
+z_index = 1
+texture_filter = 1
+position = Vector2(61, 0)
+rotation = 1.5708
+emitting = false
+amount = 1
+process_material = SubResource("ParticleProcessMaterial_0rg2x")
+texture = ExtResource("4_o3lk5")
+lifetime = 0.4
+one_shot = true
+local_coords = true
+
+[node name="charged_loop" type="GPUParticles2D" parent="shoulder"]
+modulate = Color(0.966667, 1, 0, 1)
+z_index = 1
+position = Vector2(55, 0)
+emitting = false
+process_material = ExtResource("5_kngdb")
+texture = ExtResource("4_28g8c")
+local_coords = true
 
 [node name="swordwoosh" type="GPUParticles2D" parent="shoulder"]
 z_index = 1
