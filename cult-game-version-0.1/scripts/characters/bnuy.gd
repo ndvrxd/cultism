@@ -33,14 +33,15 @@ func primaryFireAction():
 	
 func primaryFireActionAuthority():
 	if charged or $chargetimer.time_left > 0 or $chargeslash_end.time_left > 0: return
-	var ents = shapeCastFromShoulder(lookDirection*swordRange, swordShape)
+	var ents = shapeCastFromShoulder(lookDirection*swordRange, swordShape, false)
 	var hits = 0
 	for e:Entity in ents:
+		triggerHitEffectsRpc.rpc(e.shoulderPoint.global_position)
 		if team != e.team:
 			e.changeHealth.rpc(e.health, -swordDamage, get_path())
 			hits += 1
 		if hits >= maxHits:
-			break 
+			break
 
 @rpc("any_peer", "call_local", "reliable")
 func secondaryFire(target:Vector2) -> void:
