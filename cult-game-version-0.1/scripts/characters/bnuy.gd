@@ -55,9 +55,9 @@ func secondaryFireReleased(target:Vector2) -> void:
 		$shoulder/swordflurry.restart()
 		$shoulder/swordflurry2.restart()
 		$shoulder/charged_loop.emitting = false
+		$chargeslash_end.start()
 		if is_multiplayer_authority():
 			$chargeslash_hit.start()
-			$chargeslash_end.start()
 	charged=false
 
 func chargeblink():
