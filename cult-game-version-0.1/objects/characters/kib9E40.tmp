@@ -1,12 +1,10 @@
-[gd_scene load_steps=10 format=3 uid="uid://ci7mx2j77fwhs"]
+[gd_scene load_steps=8 format=3 uid="uid://ci7mx2j77fwhs"]
 
 [ext_resource type="Script" path="res://scripts/characters/kibby.gd" id="1_j0iaj"]
 [ext_resource type="Texture2D" uid="uid://clqo76f6tebyl" path="res://art/ui/arrow.png" id="2_ooq4y"]
 [ext_resource type="Material" uid="uid://dlqvc37rv373i" path="res://vfx/particle/processmaterial/bladeswing.tres" id="3_c10h1"]
 [ext_resource type="Texture2D" uid="uid://soudc4snc7fj" path="res://art/character ph/kibby ph 2.png" id="3_vd5t2"]
 [ext_resource type="Texture2D" uid="uid://dga7i0vpugytw" path="res://vfx/particle/diamond_blackcenter.png" id="4_y4mt3"]
-[ext_resource type="Material" uid="uid://ck8ixyuqbmu4n" path="res://vfx/particle/processmaterial/burst.tres" id="6_copnh"]
-[ext_resource type="Texture2D" uid="uid://dmcej1hbhoaj0" path="res://vfx/particle/aoe.png" id="7_wry1b"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_86oxc"]
 radius = 27.1662
@@ -65,17 +63,3 @@ scale = Vector2(5.225, 5.225)
 [node name="shape" type="CollisionShape2D" parent="hurtbox"]
 position = Vector2(5.96046e-08, -10.3349)
 shape = SubResource("CapsuleShape2D_u7vwb")
-
-[node name="AoeBurst" type="GPUParticles2D" parent="."]
-modulate = Color(1, 0.765667, 0.26, 1)
-self_modulate = Color(1, 1, 1, 0.72549)
-show_behind_parent = true
-scale = Vector2(4, 4)
-emitting = false
-amount = 3
-process_material = ExtResource("6_copnh")
-texture = ExtResource("7_wry1b")
-lifetime = 0.5
-one_shot = true
-visibility_rect = Rect2(-50, -50, 100, 100)
-local_coords = true

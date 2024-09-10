@@ -110,7 +110,8 @@ func _physics_process(delta: float) -> void:
 	lookDirection = lookDirection.normalized();
 	# if a controller is attached that PROBABLY means our client has control over this bitch
 	# so we need to be the one to stream the movement
-	if controllerAttached: streamMovement.rpc(global_position, moveIntent, lookDirection)
+	if controllerAttached: streamMovement.rpc(global_position, moveIntent,
+									lookDirection, aimPosition)
 	
 	if holdingPrimary and primaryTimer <= 0:
 		primaryFireAction()
@@ -144,6 +145,10 @@ static func spawn(scnPath:String, pos:Vector2=Vector2.ZERO, ctlPath:String="", p
 		isPlayer = true;
 	NetManager.spawnEntityRpc.rpc(scnPath, pos, ctlPath, playerName, isPlayer) 
 
+@rpc("any_peer", "call_local", "reliable")
+func changeTeam(newTeam:int) -> void:
+	team = newTeam
+
 # networked callbacks for use by controller and items
 @rpc("any_peer", "call_local", "reliable")
 func primaryFire(target:Vector2) -> void:
@@ -168,6 +173,7 @@ func secondaryFireReleased(target:Vector2) -> void:
 @rpc("any_peer", "call_local", "reliable")
 func activeAbilityRpc(target:Vector2) -> void:
 	if activeTimer > 0: return
+	aimPosition = target
 	activeAbilityAction()
 	if multiplayer.get_remote_sender_id() == multiplayer.get_unique_id():
 		activeAbilityActionAuthority()
@@ -240,10 +246,11 @@ func die(killedBy_path:String="") -> void:
 	queue_free() # ideally, play some effects on death
 
 @rpc("any_peer", "call_remote", "unreliable_ordered")
-func streamMovement(pos:Vector2, intent:Vector2, lookDir:Vector2):
+func streamMovement(pos:Vector2, intent:Vector2, lookDir:Vector2, aimPos:Vector2):
 	global_position = pos;
 	moveIntent = intent.normalized();
 	lookDirection = lookDir.normalized();
+	aimPosition = aimPos;
 
 @rpc("any_peer", "call_local", "reliable")
 func triggerHitEffectsRpc(at:Vector2, normal:Vector2=Vector2.ZERO) -> void:

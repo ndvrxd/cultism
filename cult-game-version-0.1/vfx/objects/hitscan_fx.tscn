@@ -44,5 +44,4 @@ script = SubResource("GDScript_8r1so")
 
 [node name="MeshInstance2D" type="MeshInstance2D" parent="."]
 material = SubResource("ShaderMaterial_fd1gu")
-scale = Vector2(1, 1)
 mesh = SubResource("QuadMesh_oyyjr")
