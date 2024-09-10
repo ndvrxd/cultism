@@ -16,5 +16,5 @@ orbit_velocity_min = -3.5
 orbit_velocity_max = -3.5
 orbit_velocity_curve = SubResource("CurveTexture_c2e3b")
 gravity = Vector3(0, 0, 0)
-scale_min = 0.5
-scale_max = 0.5
+scale_min = 0.4
+scale_max = 0.4

@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://7j4v8eoc5ewj"]
+[gd_scene load_steps=18 format=3 uid="uid://7j4v8eoc5ewj"]
 
 [ext_resource type="Script" path="res://scripts/characters/bnuy.gd" id="1_l02gv"]
 [ext_resource type="Texture2D" uid="uid://b5k4twe1vvha5" path="res://art/character ph/bunny ph.png" id="2_c6683"]
@@ -6,8 +6,9 @@
 [ext_resource type="Material" uid="uid://dlqvc37rv373i" path="res://vfx/particle/processmaterial/bladeswing.tres" id="4_8bs3g"]
 [ext_resource type="Texture2D" uid="uid://c3l4kkjo4q83i" path="res://vfx/particle/sparkle haha.png" id="4_28g8c"]
 [ext_resource type="Material" uid="uid://mxrc8o1ov8cn" path="res://vfx/particle/processmaterial/bladeflurry.tres" id="4_bpfa7"]
-[ext_resource type="Texture2D" uid="uid://brlqerolroesd" path="res://vfx/particle/lightflare.png" id="4_o3lk5"]
+[ext_resource type="Texture2D" uid="uid://b5aefjahrsgq1" path="res://vfx/particle/lightflare2.png" id="5_kavyb"]
 [ext_resource type="Material" uid="uid://beg2mqqa0fc2f" path="res://vfx/particle/processmaterial/sparkle.tres" id="5_kngdb"]
+[ext_resource type="Texture2D" uid="uid://7dro3tyfewrc" path="res://vfx/particle/diamond_lightercenter.png" id="8_grr0g"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_mtypy"]
 radius = 22.0
@@ -112,13 +113,13 @@ rotation = 1.5708
 emitting = false
 amount = 1
 process_material = SubResource("ParticleProcessMaterial_0rg2x")
-texture = ExtResource("4_o3lk5")
+texture = ExtResource("5_kavyb")
 lifetime = 0.4
 one_shot = true
 local_coords = true
 
 [node name="speedup" type="GPUParticles2D" parent="upright_anchor"]
-modulate = Color(0.5, 0.833333, 1, 1)
+modulate = Color(7.41214e-06, 0.568697, 0.762368, 1)
 position = Vector2(0, -49)
 emitting = false
 process_material = SubResource("ParticleProcessMaterial_15fnb")
@@ -142,7 +143,7 @@ scale = Vector2(1.3, 1)
 emitting = false
 amount = 1
 process_material = ExtResource("4_8bs3g")
-texture = ExtResource("4_28g8c")
+texture = ExtResource("8_grr0g")
 lifetime = 0.5
 one_shot = true
 fixed_fps = 60
@@ -157,7 +158,7 @@ scale = Vector2(1.2, 1)
 emitting = false
 amount = 3
 process_material = ExtResource("4_bpfa7")
-texture = ExtResource("4_28g8c")
+texture = ExtResource("8_grr0g")
 lifetime = 0.5
 one_shot = true
 fixed_fps = 60
@@ -172,7 +173,7 @@ scale = Vector2(1.2, -1)
 emitting = false
 amount = 4
 process_material = ExtResource("4_bpfa7")
-texture = ExtResource("4_28g8c")
+texture = ExtResource("8_grr0g")
 lifetime = 0.5
 one_shot = true
 fixed_fps = 60
