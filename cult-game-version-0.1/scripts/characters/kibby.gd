@@ -3,13 +3,17 @@ extends Entity
 var meleeShape:CircleShape2D = CircleShape2D.new()
 var aoeShape:CircleShape2D = CircleShape2D.new()
 @export var guitarRange = 100
-@export var guitarDamage = 20
+@export var guitarDamage = 18
+@export var lightningDamage = 50
 
 @export var maxHits = 8;
+
+var lightningMeter = 1;
 
 var swordHitFx:PackedScene = preload("res://vfx/objects/sword_hit.tscn")
 var wololoHitFx:PackedScene = preload("res://vfx/objects/wololo_flash.tscn")
 var aoeFx:PackedScene = preload("res://vfx/objects/aoe_burst.tscn")
+var aoeDmg:PackedScene = preload("res://objects/aoe_dmg.tscn")
 
 func _ready():
 	super._ready()
@@ -20,9 +24,12 @@ func _ready():
 	hit_landed.connect(onHit)
 	primaryCD = 0.9
 	activeCD = 25
+	$AoeHitboxTick.timeout.connect(starstruckTick)
+	$AoeDuration.timeout.connect(starstruckExpire)
 
 func _process(delta):
-	$Node2D/Sprite2D.flip_h = lookDirection.x < 0
+	$Node2D.scale.x = sign(lookDirection.x)
+	$Node2D/lightningbar.value = lightningMeter * 100
 	super._process(delta)
 
 func primaryFireAction():
@@ -36,24 +43,54 @@ func primaryFireActionAuthority():
 		triggerHitEffectsRpc.rpc(e.shoulderPoint.global_position)
 		if team != e.team:
 			e.changeHealth.rpc(e.health, -guitarDamage, get_path())
+			lightningMeter += 0.04
+			if lightningMeter >= 1 and not $Node2D/m2readyloop.emitting:
+				$Node2D/m2readyloop.emitting = true
+				$Node2D/m2readycue.restart()
 			hits += 1
 		if hits >= maxHits:
 			break
 
+func secondaryFireAction():
+	if lightningMeter < 1: return
+	var temp = aoeFx.instantiate()
+	temp.global_position = aimPosition
+	temp.scale = Vector2(aoeShape.radius / 50, aoeShape.radius / 50)
+	temp.modulate = Color.CORNFLOWER_BLUE
+	temp.lifetime = 0.2
+	temp.fixed_fps = 60
+	get_tree().current_scene.add_child(temp)
+	lightningMeter = 0
+	$Node2D/m2readyloop.emitting = false
+	if is_multiplayer_authority():
+		temp = aoeDmg.instantiate()
+		temp.global_position = aimPosition
+		temp.scale = Vector2(aoeShape.radius, aoeShape.radius)
+		temp.damage = lightningDamage
+		temp.team = team
+		temp.inflictor = get_path()
+		get_tree().current_scene.add_child(temp)
+
 func activeAbilityAction():
 	$AoeBurst.restart()
-	var ents = shapeCastFromShoulder(Vector2.ZERO, meleeShape, false)
+	$AoeDuration.start()
+	$AoeHitboxTick.start()
+	stat_speed.modifyMultFlat(-0.99)
+	velocity = Vector2.ZERO
+
+func starstruckTick():
+	var ents = shapeCastFromShoulder(Vector2.ZERO, aoeShape, false)
 	for e:Entity in ents:
 		if team != e.team:
 			var temp = wololoHitFx.instantiate()
 			temp.global_position = e.shoulderPoint.global_position
 			get_tree().current_scene.add_child(temp)
+			if is_multiplayer_authority():
+				e.changeTeam.rpc(team)
 
-func activeAbilityActionAuthority():
-	var ents = shapeCastFromShoulder(Vector2.ZERO, meleeShape, false)
-	for e:Entity in ents:
-		if team != e.team:
-			e.changeTeam.rpc(team)
+func starstruckExpire():
+	$AoeHitboxTick.stop()
+	stat_speed.modifyMultFlat(0.99)
 	
 func onHit(pos:Vector2, normal:Vector2):
 	var temp = swordHitFx.instantiate()
