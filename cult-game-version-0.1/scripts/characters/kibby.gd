@@ -8,7 +8,7 @@ var aoeShape:CircleShape2D = CircleShape2D.new()
 
 @export var maxHits = 8;
 
-var lightningMeter = 1;
+var lightningMeter = 0;
 
 var swordHitFx:PackedScene = preload("res://vfx/objects/sword_hit.tscn")
 var wololoHitFx:PackedScene = preload("res://vfx/objects/wololo_flash.tscn")
