@@ -32,23 +32,22 @@ func _process(delta):
 	$Node2D/lightningbar.value = lightningMeter * 100
 	super._process(delta)
 
-func primaryFireAction():
-	$shoulder/swordwoosh.restart()
-	$shoulder/swordwoosh.scale.y = -$shoulder/swordwoosh.scale.y
-
 @rpc("authority", "call_local", "reliable")
 func syncLightningMeter(value:float) -> void:
 	lightningMeter = value
 
-func primaryFireActionAuthority():
+func primaryFireAction():
+	$shoulder/swordwoosh.restart()
+	$shoulder/swordwoosh.scale.y = -$shoulder/swordwoosh.scale.y
 	var ents = shapeCastFromShoulder(lookDirection*guitarRange, meleeShape, false)
 	var hits = 0
 	for e:Entity in ents:
-		triggerHitEffectsRpc.rpc(e.shoulderPoint.global_position)
 		if team != e.team:
-			e.changeHealth.rpc(e.health, -guitarDamage, get_path())
 			lightningMeter += 0.04
-			syncLightningMeter.rpc(lightningMeter)
+			if is_multiplayer_authority():
+				e.changeHealth.rpc(e.health, -guitarDamage, get_path())
+				triggerHitEffectsRpc.rpc(e.shoulderPoint.global_position)
+				syncLightningMeter.rpc(lightningMeter)
 			if lightningMeter >= 1 and not $Node2D/m2readyloop.emitting:
 				$Node2D/m2readyloop.emitting = true
 				$Node2D/m2readycue.restart()
