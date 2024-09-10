@@ -4,7 +4,7 @@ var meleeShape:CircleShape2D = CircleShape2D.new()
 var aoeShape:CircleShape2D = CircleShape2D.new()
 @export var guitarRange = 100
 @export var guitarDamage = 18
-@export var lightningDamage = 50
+@export var lightningDamage = 30
 
 @export var maxHits = 8;
 

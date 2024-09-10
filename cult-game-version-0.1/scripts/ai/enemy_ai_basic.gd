@@ -3,6 +3,9 @@ extends EntityController
 const aggroCheckMaxTime:float = 2;
 var aggroCheckTimer:float = aggroCheckMaxTime-0.1;
 
+@export var attackRange = 100;
+var attacking:bool = false
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta: float) -> void:
 	
@@ -14,6 +17,13 @@ func _physics_process(delta: float) -> void:
 		var targetPos = target.shoulderPoint.global_position - shoulderOffset * 0.3
 		ent.lookDirection = ent.shoulderPoint.global_position.direction_to(targetPos)
 		ent.aimPosition = targetPos
+		
+		if not attacking and global_position.distance_to(target.global_position) <= attackRange:
+			attacking = true
+			ent.primaryFire.rpc(ent.aimPosition)
+		if attacking and global_position.distance_to(target.global_position) > attackRange:
+			attacking = false
+			ent.primaryFireReleased.rpc(ent.aimPosition)
 		
 	else: # dick around
 		ent.moveIntent = Vector2.ZERO
