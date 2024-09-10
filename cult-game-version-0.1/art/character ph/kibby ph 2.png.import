@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b2sgmom2bqars"
-path="res://.godot/imported/kibby.png-ce8d596fbc719a6532a9886ba14b5e46.ctex"
+uid="uid://soudc4snc7fj"
+path="res://.godot/imported/kibby ph 2.png-b92d2993b79c38e74f18de538d8b3d31.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://art/character ph/kibby.png"
-dest_files=["res://.godot/imported/kibby.png-ce8d596fbc719a6532a9886ba14b5e46.ctex"]
+source_file="res://art/character ph/kibby ph 2.png"
+dest_files=["res://.godot/imported/kibby ph 2.png-b92d2993b79c38e74f18de538d8b3d31.ctex"]
 
 [params]
 

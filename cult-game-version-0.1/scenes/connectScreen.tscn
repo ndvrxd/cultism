@@ -3,9 +3,9 @@
 [ext_resource type="Script" path="res://scripts/menus/connectScreen.gd" id="1_bngj7"]
 [ext_resource type="Texture2D" uid="uid://b5k4twe1vvha5" path="res://art/character ph/bunny ph.png" id="2_rywp4"]
 [ext_resource type="Texture2D" uid="uid://bdyllnybosvnm" path="res://art/character ph/poss ph.png" id="3_vst5a"]
+[ext_resource type="Texture2D" uid="uid://soudc4snc7fj" path="res://art/character ph/kibby ph 2.png" id="4_3m4t2"]
 [ext_resource type="Texture2D" uid="uid://veo5l360amx3" path="res://art/character ph/player ph.png" id="4_iac7p"]
 [ext_resource type="Texture2D" uid="uid://6i8qff0kq7ei" path="res://art/character ph/enemy ph.png" id="5_hl3gd"]
-[ext_resource type="Texture2D" uid="uid://bdeo180vqay6m" path="res://art/ui/run.png" id="6_2uyg7"]
 [ext_resource type="Texture2D" uid="uid://dx7xpikedu613" path="res://art/character ph/lizer ph.png" id="7_m7alx"]
 [ext_resource type="Texture2D" uid="uid://cqrh7ndjucvg5" path="res://art/character ph/effigy ph.png" id="8_3ew3o"]
 [ext_resource type="Script" path="res://scripts/menus/connectScreenGrabFocus.gd" id="9_ucoia"]
@@ -21,6 +21,8 @@ layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_top = 1.0
+offset_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_bngj7")
@@ -160,19 +162,19 @@ grow_horizontal = 2
 grow_vertical = 2
 item_count = 7
 fixed_icon_size = Vector2i(50, 50)
-item_0/text = "res://objects/characters/Bnuy.tscn"
+item_0/text = "Bnuy"
 item_0/icon = ExtResource("2_rywp4")
-item_1/text = "res://objects/characters/Possum.tscn"
+item_1/text = "Possum"
 item_1/icon = ExtResource("3_vst5a")
-item_2/text = "res://objects/characters/player.tscn"
-item_2/icon = ExtResource("4_iac7p")
-item_3/text = "res://objects/characters/enemy.tscn"
-item_3/icon = ExtResource("5_hl3gd")
-item_4/text = "res://objects/characters/kibby.tscn"
-item_4/icon = ExtResource("6_2uyg7")
-item_5/text = "res://objects/characters/Lizer.tscn"
-item_5/icon = ExtResource("7_m7alx")
-item_6/text = "res://objects/characters/test_effigy.tscn"
+item_2/text = "kibby"
+item_2/icon = ExtResource("4_3m4t2")
+item_3/text = "Lizer"
+item_3/icon = ExtResource("7_m7alx")
+item_4/text = "player"
+item_4/icon = ExtResource("4_iac7p")
+item_5/text = "enemy"
+item_5/icon = ExtResource("5_hl3gd")
+item_6/text = "test_effigy"
 item_6/icon = ExtResource("8_3ew3o")
 script = ExtResource("9_ucoia")
 
