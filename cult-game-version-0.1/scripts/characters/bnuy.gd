@@ -13,13 +13,16 @@ var swordHitFx:PackedScene = preload("res://vfx/objects/sword_hit.tscn")
 
 func _ready():
 	super._ready()
+	stat_speed = Stat.fromBase(300)
 	swordShape.radius = 50;
 	hit_landed.connect(onHit)
 	primaryCD = 0.65
+	activeCD = 12
 	$chargeblink.timeout.connect(chargeblink)
 	$chargetimer.timeout.connect(chargetimer_end)
 	$chargeslash_hit.timeout.connect(chargeslash_hit)
 	$chargeslash_end.timeout.connect(chargeslash_end)
+	$active_timer.timeout.connect(activeExpire)
 
 func _process(delta):
 	$upright_anchor.scale.x = sign(lookDirection.x)
@@ -42,6 +45,15 @@ func primaryFireActionAuthority():
 			hits += 1
 		if hits >= maxHits:
 			break
+
+func activeAbilityAction():
+	stat_speed.modifyBase(100)
+	$upright_anchor/speedup.emitting=true
+	$active_timer.start()
+
+func activeExpire():
+	stat_speed.modifyBase(-100)
+	$upright_anchor/speedup.emitting=false
 
 @rpc("any_peer", "call_local", "reliable")
 func secondaryFire(target:Vector2) -> void:

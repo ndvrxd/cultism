@@ -171,6 +171,7 @@ func activeAbilityRpc(target:Vector2) -> void:
 	activeAbilityAction()
 	if multiplayer.get_remote_sender_id() == multiplayer.get_unique_id():
 		activeAbilityActionAuthority()
+	activeTimer = activeCD;
 
 # mmmmaybe use these hooks from now on
 func primaryFireAction() -> void: pass

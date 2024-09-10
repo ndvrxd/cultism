@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://7j4v8eoc5ewj"]
+[gd_scene load_steps=17 format=3 uid="uid://7j4v8eoc5ewj"]
 
 [ext_resource type="Script" path="res://scripts/characters/bnuy.gd" id="1_l02gv"]
 [ext_resource type="Texture2D" uid="uid://b5k4twe1vvha5" path="res://art/character ph/bunny ph.png" id="2_c6683"]
@@ -30,6 +30,23 @@ gravity = Vector3(0, 0, 0)
 scale_min = 2.0
 scale_max = 2.0
 scale_curve = SubResource("CurveTexture_rhrpu")
+
+[sub_resource type="Curve" id="Curve_mbyld"]
+_data = [Vector2(0, 0), 0.0, 2.96825, 0, 0, Vector2(0.230769, 0.681319), 0.0, 0.0, 0, 0, Vector2(0.748252, 0.659341), 0.0, 0.0, 0, 0, Vector2(1, 0), -2.79911, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_y7fwn"]
+curve = SubResource("Curve_mbyld")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_15fnb"]
+particle_flag_disable_z = true
+emission_shape_scale = Vector3(1.3, 1, 1)
+emission_shape = 1
+emission_sphere_radius = 60.0
+gravity = Vector3(0, -98, 0)
+scale_min = 0.5
+scale_max = 0.8
+scale_curve = SubResource("CurveTexture_y7fwn")
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_cmjvs"]
 radius = 5.74163
@@ -64,6 +81,10 @@ one_shot = true
 [node name="chargeblink" type="Timer" parent="."]
 wait_time = 0.3
 
+[node name="active_timer" type="Timer" parent="."]
+wait_time = 6.0
+one_shot = true
+
 [node name="upright_anchor" type="Node2D" parent="." groups=["upright_sprite"]]
 y_sort_enabled = true
 
@@ -94,6 +115,14 @@ process_material = SubResource("ParticleProcessMaterial_0rg2x")
 texture = ExtResource("4_o3lk5")
 lifetime = 0.4
 one_shot = true
+local_coords = true
+
+[node name="speedup" type="GPUParticles2D" parent="upright_anchor"]
+modulate = Color(0.5, 0.833333, 1, 1)
+position = Vector2(0, -49)
+emitting = false
+process_material = SubResource("ParticleProcessMaterial_15fnb")
+texture = ExtResource("3_n0sa5")
 local_coords = true
 
 [node name="shoulder" type="Node2D" parent="."]
