@@ -2,7 +2,7 @@ extends Entity
 
 var meleeShape:CircleShape2D = CircleShape2D.new()
 var aoeShape:CircleShape2D = CircleShape2D.new()
-@export var guitarRange = 100
+@export var guitarRange = 50
 @export var guitarDamage = 18
 @export var lightningDamage = 30
 
@@ -42,7 +42,7 @@ func primaryFireAction():
 	$shoulder/swordwoosh.restart()
 	$shoulder/swordwoosh.scale.y = -$shoulder/swordwoosh.scale.y
 	await get_tree().create_timer(0.15).timeout
-	var ents = shapeCastFromShoulder(lookDirection*guitarRange, meleeShape, false)
+	var ents = shapeCastFromShoulder(lookDirection.normalized()*guitarRange, meleeShape, false)
 	var hits = 0
 	for e:Entity in ents:
 		if team != e.team:
@@ -92,6 +92,7 @@ func activeAbilityAction():
 	$AoeBurst.restart()
 	$AoeHitboxTick.start()
 	$snd_starstruck.play()
+	primaryTimer = 2
 	stat_speed.modifyMultFlat(-0.99)
 	velocity = Vector2.ZERO
 	await get_tree().create_timer(0.65).timeout
