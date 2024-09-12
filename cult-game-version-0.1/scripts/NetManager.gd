@@ -32,15 +32,33 @@ func IsDedicated():
 
 func join_game(address="localhost", port=24500):
 	if IsDedicated(): return;
+	multiplayer.multiplayer_peer.disconnect_peer(1)
+	multiplayer.multiplayer_peer.close()
 	var peer = ENetMultiplayerPeer.new()
 	var error = peer.create_client(address, port)
 	if error:
 		return error
 	multiplayer.multiplayer_peer = peer
 
+func leave_game():
+	if IsDedicated(): return;
+	if multiplayer.is_server(): players.clear()
+	get_tree().paused = false
+	multiplayer.multiplayer_peer.disconnect_peer(1)
+	multiplayer.multiplayer_peer.close()
+	get_tree().change_scene_to_file("res://scenes/connectScreen.tscn")
+
+@rpc("authority", "call_remote", "reliable")
+func kick_rpc(reason:String = "No reason given"):
+	leave_game()
+	setDisconnectMessage(reason);
+
 func start_listen_server(_hostname="localhost", port=24500, maxplayers=16):
+	multiplayer.multiplayer_peer.disconnect_peer(1)
+	multiplayer.multiplayer_peer.close()
 	var peer = ENetMultiplayerPeer.new()
 	var error = peer.create_server(port, maxplayers)
+	print(error)
 	if error:
 		return error
 	multiplayer.multiplayer_peer = peer
@@ -56,7 +74,7 @@ func onPlayerConnect(id): # all clients, NOT JUST server
 	if !IsDedicated(): # send local player info to newly connected remote peer
 		recvPeerInfoCallback.rpc_id(id, playerinfo_local);
 
-@rpc("reliable")
+@rpc("reliable", "call_local")
 func setDisconnectMessage(reason):
 	print("Disconnected: " + reason)
 	connection_refused.emit(reason)
@@ -77,7 +95,7 @@ func recvPeerInfoCallback(new_player_info):
 			setDisconnectMessage.rpc_id(new_player_id, discReason);
 			await get_tree().create_timer(0.1).timeout
 			multiplayer.multiplayer_peer.disconnect_peer(new_player_id);
-	if Chatbox.inst:
+	if Chatbox.inst and is_instance_valid(Chatbox.inst):
 		Chatbox.inst.print_chat(new_player_info["name"] + " connected.")
 	players[new_player_id] = new_player_info
 	player_connected.emit(new_player_id, new_player_info)
@@ -155,10 +173,12 @@ func onConnectionSuccess(): # clientside only
 		player_connected.emit(peer_id, playerinfo_local)
 
 func onConnectionFailed(): # clientside only
-	multiplayer.multiplayer_peer = null
+	leave_game()
+	
+	setDisconnectMessage("Dropped from server.");
 
 func onServerDisconnect(): # clientside only
-	multiplayer.multiplayer_peer = null
+	multiplayer.multiplayer_peer.close()
 	players.clear()
 	server_disconnected.emit()
 

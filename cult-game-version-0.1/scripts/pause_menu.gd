@@ -39,6 +39,7 @@ func _on_resume_pressed() -> void:
 func handle_connecting_signals() -> void:
 	settings_button.button_down.connect(_on_settings_pressed)
 	settingslol.exit_settings.connect(on_exit_settings)
+	$"PanelContainer/VBoxContainer/Main Menu".pressed.connect(NetManager.leave_game)
 
 func _on_settings_pressed() -> void:
 	panel_container.visible = false

@@ -14,7 +14,7 @@ signal killed(by:Entity)
 @export var team:int = 0;
 @export var objPath:String = ""
 @export var controllerPath:String = ""
-@export var healthBarColor:Color = Color(1, 1, 1);
+@export var healthBarColor:Color = Color.LIME_GREEN;
 var controllerAttached:bool = false;
 
 var healthBar:TextureProgressBar
@@ -221,7 +221,7 @@ func changeHealth(current:float, by:float, inflictor_path:String="") -> void:
 	get_tree().current_scene.add_child(dn)
 	if sign(by) == -1:
 		damage_taken.emit(-by, inflictor)
-		dn.set_color(Color.RED)
+		if team == 1: dn.set_color(Color.RED) #red is bad for players & allies
 		if inflictor != null:
 			inflictor.damage_dealt.emit(-by, self)
 		healthBarShakeTimer = 0.3

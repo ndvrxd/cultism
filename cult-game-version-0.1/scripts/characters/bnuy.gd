@@ -21,8 +21,6 @@ func _ready():
 	$chargeblink.timeout.connect(chargeblink)
 	$chargetimer.timeout.connect(chargetimer_end)
 	$chargeslash_hit.timeout.connect(chargeslash_hit)
-	$chargeslash_end.timeout.connect(chargeslash_end)
-	$active_timer.timeout.connect(activeExpire)
 
 func _process(delta):
 	$upright_anchor.scale.x = sign(lookDirection.x)
@@ -30,12 +28,14 @@ func _process(delta):
 	super._process(delta)
 
 func primaryFireAction():
-	if charged or $chargetimer.time_left > 0 or $chargeslash_end.time_left > 0: return
+	if charged or $chargetimer.time_left > 0: return
+	$sfx_swordwoosh.play()
 	$shoulder/swordwoosh.restart()
 	$shoulder/swordwoosh.scale.y = -$shoulder/swordwoosh.scale.y
 	
 func primaryFireActionAuthority():
-	if charged or $chargetimer.time_left > 0 or $chargeslash_end.time_left > 0: return
+	if charged or $chargetimer.time_left > 0: return
+	await get_tree().create_timer(0.1).timeout
 	var ents = shapeCastFromShoulder(lookDirection*swordRange, swordShape, false)
 	var hits = 0
 	for e:Entity in ents:
@@ -49,32 +49,18 @@ func primaryFireActionAuthority():
 func activeAbilityAction():
 	stat_speed.modifyBase(100)
 	$upright_anchor/speedup.emitting=true
-	$active_timer.start()
-
-func activeExpire():
+	await get_tree().create_timer(6).timeout
 	stat_speed.modifyBase(-100)
 	$upright_anchor/speedup.emitting=false
+
+#region secondary fire methods
 
 @rpc("any_peer", "call_local", "reliable")
 func secondaryFire(target:Vector2) -> void:
 	super.secondaryFire(target)
-	if $chargeslash_end.time_left <= 0:
-		$chargetimer.start()
-		$chargeblink.start()
-
-@rpc("any_peer", "call_local", "reliable")
-func secondaryFireReleased(target:Vector2) -> void:
-	super.secondaryFireReleased(target)
-	$chargetimer.stop()
-	$chargeblink.stop()
-	if charged:
-		$shoulder/swordflurry.restart()
-		$shoulder/swordflurry2.restart()
-		$upright_anchor/charged_loop.emitting = false
-		$chargeslash_end.start()
-		if is_multiplayer_authority():
-			$chargeslash_hit.start()
-	charged=false
+	# charging an attack needs to be cancelable - use an existing Timer node
+	$chargetimer.start()
+	$chargeblink.start()
 
 func chargeblink():
 	var temp = $upright_anchor/Sprite2D.modulate
@@ -88,15 +74,33 @@ func chargetimer_end():
 	$upright_anchor/charged.restart()
 	$upright_anchor/charged_loop.emitting=true
 
-func chargeslash_end():
-	$chargeslash_hit.stop()
+@rpc("any_peer", "call_local", "reliable")
+func secondaryFireReleased(target:Vector2) -> void:
+	super.secondaryFireReleased(target)
+	$chargetimer.stop()
+	$chargeblink.stop()
+	if charged:
+		charged = false
+		primaryTimer = 0.65 # lock other abilities for the duration
+		secondaryTimer = 0.65
+		$shoulder/swordflurry.restart()
+		$shoulder/swordflurry2.restart()
+		$upright_anchor/charged_loop.emitting = false
+		$chargeslash_hit.start()
+		await get_tree().create_timer(0.65).timeout
+		$chargeslash_hit.stop()
 
 func chargeslash_hit():
-	var ents = shapeCastFromShoulder(lookDirection*swordRange, swordShape)
-	for e:Entity in ents:
-		if team != e.team:
-			e.changeHealth.rpc(e.health, -chargeSlashDamage, get_path())
-	
+	# play a sound effect here?
+	$sfx_swordflurry.play()
+	if is_multiplayer_authority():
+		var ents = shapeCastFromShoulder(lookDirection*swordRange, swordShape)
+		for e:Entity in ents:
+			if team != e.team:
+				e.changeHealth.rpc(e.health, -chargeSlashDamage, get_path())
+
+#endregion
+
 func onHit(pos:Vector2, normal:Vector2):
 	var temp = swordHitFx.instantiate()
 	temp.emitting = true
