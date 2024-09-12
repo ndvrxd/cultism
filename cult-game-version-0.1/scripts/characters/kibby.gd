@@ -29,8 +29,10 @@ func _ready():
 	$AoeHitboxTick.timeout.connect(starstruckTick)
 
 func _process(delta):
-	$Node2D.scale.x = sign(lookDirection.x)
+	$Node2D.scale.x = -1 if lookDirection.x < 0 else 1
 	$Node2D/lightningbar.value = lightningMeter * 100
+	if $AoePreview.visible:
+		$AoePreview.global_position = aimPosition
 	super._process(delta)
 
 @rpc("authority", "call_local", "reliable")
@@ -61,12 +63,25 @@ func primaryFireAction():
 		if hits >= maxHits:
 			break
 
-func secondaryFireAction():
-	if lightningMeter < 1: return
+@rpc("any_peer", "call_local", "reliable")
+func secondaryFire(target:Vector2):
+	super.secondaryFire(target)
+	$AoePreview.global_position = aimPosition
+	if is_multiplayer_authority():
+		syncLightningMeter.rpc(lightningMeter)
+	await get_tree().create_timer(0.1).timeout
+	if lightningMeter > 1: $AoePreview.visible = true;
+
+@rpc("any_peer", "call_local", "reliable")
+func secondaryFireReleased(target:Vector2):
+	super.secondaryFireReleased(target)
+	if lightningMeter < 1 or !$AoePreview.visible:
+		$AoePreview.visible=false
+		return
 	var temp = aoeFx.instantiate()
 	temp.global_position = aimPosition
 	temp.scale = Vector2(aoeShape.radius / 50, aoeShape.radius / 50)
-	temp.modulate = Color.CORNFLOWER_BLUE
+	temp.modulate = Color.DEEP_SKY_BLUE
 	temp.lifetime = 0.2
 	temp.fixed_fps = 60
 	get_tree().current_scene.add_child(temp)
@@ -77,6 +92,7 @@ func secondaryFireAction():
 	sfx.play()
 	lightningMeter = 0
 	$Node2D/m2readyloop.emitting = false
+	$AoePreview.visible = false
 	if is_multiplayer_authority():
 		temp = aoeDmg.instantiate()
 		temp.global_position = aimPosition

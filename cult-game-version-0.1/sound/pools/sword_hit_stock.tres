@@ -1,0 +1,25 @@
+[gd_resource type="AudioStreamSynchronized" load_steps=6 format=3 uid="uid://emh40c16tty5"]
+
+[ext_resource type="AudioStream" uid="uid://de8lmj51x7eys" path="res://sound/fx/bnuuy/blade1.mp3" id="1_pocoy"]
+[ext_resource type="AudioStream" uid="uid://dhbh7yxhjvq2k" path="res://sound/fx/bnuuy/blade2.mp3" id="2_80xb1"]
+[ext_resource type="AudioStream" uid="uid://c2thc8w0vugel" path="res://sound/fx/smallstab.mp3" id="3_7ji61"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_0lx62"]
+playback_mode = 2
+random_pitch = 1.15
+streams_count = 2
+stream_0/stream = ExtResource("1_pocoy")
+stream_1/stream = ExtResource("2_80xb1")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_o60fp"]
+playback_mode = 2
+random_pitch = 1.2
+streams_count = 1
+stream_0/stream = ExtResource("3_7ji61")
+
+[resource]
+stream_count = 2
+stream_0/stream = SubResource("AudioStreamRandomizer_0lx62")
+stream_0/volume = -6.0
+stream_1/stream = SubResource("AudioStreamRandomizer_o60fp")
+stream_1/volume = -7.0

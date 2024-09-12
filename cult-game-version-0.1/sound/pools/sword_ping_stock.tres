@@ -1,0 +1,14 @@
+[gd_resource type="AudioStreamRandomizer" load_steps=5 format=3 uid="uid://bj21hl31ik8f"]
+
+[ext_resource type="AudioStream" uid="uid://tow4ylct6yi6" path="res://sound/fx/bnuuy/swordping1.mp3" id="1_e60gv"]
+[ext_resource type="AudioStream" uid="uid://cofv8lw0hg2iv" path="res://sound/fx/bnuuy/swordping2.mp3" id="2_65fk1"]
+[ext_resource type="AudioStream" uid="uid://b2n4haw8eh3is" path="res://sound/fx/bnuuy/swordping3.mp3" id="3_2ube0"]
+[ext_resource type="AudioStream" uid="uid://bdyoelp3pmmo4" path="res://sound/fx/bnuuy/swordping4.mp3" id="4_0tqg8"]
+
+[resource]
+random_pitch = 1.1
+streams_count = 4
+stream_0/stream = ExtResource("1_e60gv")
+stream_1/stream = ExtResource("2_65fk1")
+stream_2/stream = ExtResource("3_2ube0")
+stream_3/stream = ExtResource("4_0tqg8")

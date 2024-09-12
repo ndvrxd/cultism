@@ -23,7 +23,7 @@ func _ready():
 	$chargeslash_hit.timeout.connect(chargeslash_hit)
 
 func _process(delta):
-	$upright_anchor.scale.x = sign(lookDirection.x)
+	$upright_anchor.scale.x = -1 if lookDirection.x < 0 else 1
 	#$upright_anchor/Sprite2D.flip_h = lookDirection.x < 0
 	super._process(delta)
 
@@ -32,19 +32,21 @@ func primaryFireAction():
 	$sfx_swordwoosh.play()
 	$shoulder/swordwoosh.restart()
 	$shoulder/swordwoosh.scale.y = -$shoulder/swordwoosh.scale.y
-	
-func primaryFireActionAuthority():
-	if charged or $chargetimer.time_left > 0: return
 	await get_tree().create_timer(0.1).timeout
 	var ents = shapeCastFromShoulder(lookDirection*swordRange, swordShape, false)
 	var hits = 0
 	for e:Entity in ents:
 		triggerHitEffectsRpc.rpc(e.shoulderPoint.global_position)
 		if team != e.team:
-			e.changeHealth.rpc(e.health, -swordDamage, get_path())
+			if is_multiplayer_authority():
+				e.changeHealth.rpc(e.health, -swordDamage, get_path())
 			hits += 1
 		if hits >= maxHits:
 			break
+	if hits > 0:
+		$sfx_swordhit.play()
+	elif !ents.is_empty():
+		$sfx_swordping.play()
 
 func activeAbilityAction():
 	stat_speed.modifyBase(100)
@@ -59,8 +61,10 @@ func activeAbilityAction():
 func secondaryFire(target:Vector2) -> void:
 	super.secondaryFire(target)
 	# charging an attack needs to be cancelable - use an existing Timer node
+	$sfx_chargestance.play()
 	$chargetimer.start()
 	$chargeblink.start()
+	chargeblink()
 
 func chargeblink():
 	var temp = $upright_anchor/Sprite2D.modulate
@@ -70,6 +74,7 @@ func chargeblink():
 
 func chargetimer_end():
 	charged = true
+	$sfx_chargecomplete.play()
 	$chargeblink.stop()
 	$upright_anchor/charged.restart()
 	$upright_anchor/charged_loop.emitting=true
@@ -93,8 +98,10 @@ func secondaryFireReleased(target:Vector2) -> void:
 func chargeslash_hit():
 	# play a sound effect here?
 	$sfx_swordflurry.play()
+	var ents = shapeCastFromShoulder(lookDirection*swordRange, swordShape)
+	if !ents.is_empty():
+		$sfx_flurryhit.play()
 	if is_multiplayer_authority():
-		var ents = shapeCastFromShoulder(lookDirection*swordRange, swordShape)
 		for e:Entity in ents:
 			if team != e.team:
 				e.changeHealth.rpc(e.health, -chargeSlashDamage, get_path())

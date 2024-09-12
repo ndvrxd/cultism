@@ -1,0 +1,31 @@
+[gd_resource type="AudioStreamRandomizer" load_steps=14 format=3 uid="uid://b8rm247vr5k5v"]
+
+[ext_resource type="AudioStream" uid="uid://8j5umwrec7xw" path="res://sound/fx/kibby/starstruck1.mp3" id="1_hptsl"]
+[ext_resource type="AudioStream" uid="uid://b7mmes208r24r" path="res://sound/fx/kibby/starstruck2.mp3" id="2_8oqmk"]
+[ext_resource type="AudioStream" uid="uid://dk5ryvs854kaj" path="res://sound/fx/kibby/starstruck11.mp3" id="3_3c8uf"]
+[ext_resource type="AudioStream" uid="uid://cqrpmv6lffk0b" path="res://sound/fx/kibby/starstruck12.mp3" id="4_gtxg6"]
+[ext_resource type="AudioStream" uid="uid://bs6j42j7vo7m5" path="res://sound/fx/kibby/starstruck13.mp3" id="5_f5gws"]
+[ext_resource type="AudioStream" uid="uid://drufut2lwnyl8" path="res://sound/fx/kibby/starstruck3.mp3" id="6_73imo"]
+[ext_resource type="AudioStream" uid="uid://dsuues1mc5caf" path="res://sound/fx/kibby/starstruck4.mp3" id="7_lfh5h"]
+[ext_resource type="AudioStream" uid="uid://qxje0icm3mtk" path="res://sound/fx/kibby/starstruck5.mp3" id="8_g3m7h"]
+[ext_resource type="AudioStream" uid="uid://bs0u32r1gackx" path="res://sound/fx/kibby/starstruck6.mp3" id="9_pytd0"]
+[ext_resource type="AudioStream" uid="uid://c7yopbr4lt0fe" path="res://sound/fx/kibby/starstruck7.mp3" id="10_ng4ht"]
+[ext_resource type="AudioStream" uid="uid://b1gepbubgk4no" path="res://sound/fx/kibby/starstruck8.mp3" id="11_j1xcx"]
+[ext_resource type="AudioStream" uid="uid://clevmswcjsqkp" path="res://sound/fx/kibby/starstruck9.mp3" id="12_6buah"]
+[ext_resource type="AudioStream" uid="uid://cct5pcuifys0s" path="res://sound/fx/kibby/starstruck10.mp3" id="13_cgi38"]
+
+[resource]
+streams_count = 13
+stream_0/stream = ExtResource("1_hptsl")
+stream_1/stream = ExtResource("2_8oqmk")
+stream_2/stream = ExtResource("6_73imo")
+stream_3/stream = ExtResource("7_lfh5h")
+stream_4/stream = ExtResource("8_g3m7h")
+stream_5/stream = ExtResource("9_pytd0")
+stream_6/stream = ExtResource("10_ng4ht")
+stream_7/stream = ExtResource("11_j1xcx")
+stream_8/stream = ExtResource("12_6buah")
+stream_9/stream = ExtResource("13_cgi38")
+stream_10/stream = ExtResource("3_3c8uf")
+stream_11/stream = ExtResource("4_gtxg6")
+stream_12/stream = ExtResource("5_f5gws")
