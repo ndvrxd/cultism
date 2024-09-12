@@ -106,7 +106,7 @@ popup/item_1/id = 1
 popup/item_2/text = "1280x720"
 popup/item_2/id = 2
 
-[node name="CheckButton" type="CheckButton" parent="TabContainer/Grafics/MarginContainer/VBoxContainer"]
+[node name="Fullscreen" type="CheckButton" parent="TabContainer/Grafics/MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 0
 text = "Fullscreen (disabled is windowed)"
@@ -180,4 +180,4 @@ autowrap_mode = 1
 [connection signal="toggled" from="TabContainer/Sounding/MarginContainer/VBoxContainer/Mute" to="." method="_on_check_button_toggled"]
 [connection signal="toggled" from="TabContainer/Sounding/MarginContainer/VBoxContainer/Mute" to="." method="_on_mute_toggled"]
 [connection signal="item_selected" from="TabContainer/Grafics/MarginContainer/VBoxContainer/Resolutions" to="." method="_on_resolutions_item_selected"]
-[connection signal="toggled" from="TabContainer/Grafics/MarginContainer/VBoxContainer/CheckButton" to="." method="_on_check_button_toggled"]
+[connection signal="toggled" from="TabContainer/Grafics/MarginContainer/VBoxContainer/Fullscreen" to="." method="_on_fullscreen_toggled"]

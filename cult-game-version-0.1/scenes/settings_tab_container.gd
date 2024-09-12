@@ -24,8 +24,12 @@ func _on_resolutions_item_selected(index: int) -> void:
 			get_window().move_to_center()
 
 
-func _on_check_button_toggled(button_toggled):
-	if button_toggled == true:
+#func _on_check_button_toggled(button_pressed):
+
+
+
+func _on_fullscreen_toggled(button_pressed) -> void:
+	if button_pressed == true:
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
 	else:
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
