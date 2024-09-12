@@ -43,8 +43,8 @@ turbulence_enabled = true
 size = Vector2(6.78411, 1.37636)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_vkpq7"]
-radius = 1.33971
-height = 35.598
+radius = 0.75304
+height = 11.2726
 
 [node name="test effigy" type="CharacterBody2D"]
 y_sort_enabled = true
@@ -58,6 +58,7 @@ objPath = "res://objects/characters/test_effigy.tscn"
 healthBarColor = Color(0.8245, 0.19, 1, 1)
 
 [node name="shoulder" type="Node2D" parent="."]
+visible = false
 position = Vector2(0, -142)
 
 [node name="upright_anchor" type="Node2D" parent="." groups=["upright_sprite"]]
@@ -88,9 +89,9 @@ scale = Vector2(8.22, 12)
 shape = SubResource("RectangleShape2D_10w11")
 
 [node name="hurtbox" type="Area2D" parent="."]
-position = Vector2(0, -37)
-scale = Vector2(5.225, 5.225)
+position = Vector2(0, 17)
+scale = Vector2(70.3814, 4.04376)
 
 [node name="shape" type="CollisionShape2D" parent="hurtbox"]
-position = Vector2(5.96046e-08, -10.3349)
+position = Vector2(0.0568332, -17.8052)
 shape = SubResource("CapsuleShape2D_vkpq7")

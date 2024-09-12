@@ -1,6 +1,7 @@
 [gd_scene load_steps=12 format=3 uid="uid://bqn8v6gbnfj1u"]
 
 [ext_resource type="Script" path="res://scripts/menus/connectScreen.gd" id="1_bngj7"]
+[ext_resource type="FontFile" uid="uid://dhk11k42eybnt" path="res://fonts/chela-one.regular.ttf" id="2_ial8x"]
 [ext_resource type="Texture2D" uid="uid://b5k4twe1vvha5" path="res://art/character ph/bunny ph.png" id="2_rywp4"]
 [ext_resource type="Texture2D" uid="uid://bdyllnybosvnm" path="res://art/character ph/poss ph.png" id="3_vst5a"]
 [ext_resource type="Texture2D" uid="uid://soudc4snc7fj" path="res://art/character ph/kibby ph 2.png" id="4_3m4t2"]
@@ -9,9 +10,6 @@
 [ext_resource type="Texture2D" uid="uid://dx7xpikedu613" path="res://art/character ph/lizer ph.png" id="7_m7alx"]
 [ext_resource type="Texture2D" uid="uid://cqrh7ndjucvg5" path="res://art/character ph/effigy ph.png" id="8_3ew3o"]
 [ext_resource type="Script" path="res://scripts/menus/connectScreenGrabFocus.gd" id="9_ucoia"]
-
-[sub_resource type="LabelSettings" id="LabelSettings_3pw02"]
-font_size = 32
 
 [sub_resource type="LabelSettings" id="LabelSettings_yj1jt"]
 font_color = Color(1, 0, 0, 1)
@@ -40,10 +38,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -176.0
-offset_top = -20.0
-offset_right = -136.0
-offset_bottom = 20.0
+offset_left = -442.0
+offset_top = -187.0
+offset_right = 124.0
+offset_bottom = 174.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -54,19 +52,24 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -157.0
-offset_top = -130.0
-offset_right = 157.0
-offset_bottom = 130.0
+offset_left = -168.0
+offset_top = -168.0
+offset_right = 169.0
+offset_bottom = 168.0
 grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Label" type="Label" parent="Control/VBoxContainer"]
 layout_mode = 2
+theme_override_constants/shadow_offset_x = 10
+theme_override_constants/shadow_offset_y = 10
+theme_override_constants/outline_size = 10
+theme_override_constants/shadow_outline_size = 10
+theme_override_fonts/font = ExtResource("2_ial8x")
+theme_override_font_sizes/font_size = 50
 text = "join a server, fool
 
 "
-label_settings = SubResource("LabelSettings_3pw02")
 horizontal_alignment = 1
 
 [node name="HBoxContainer3" type="HBoxContainer" parent="Control/VBoxContainer"]
@@ -74,11 +77,16 @@ layout_mode = 2
 
 [node name="Label" type="Label" parent="Control/VBoxContainer/HBoxContainer3"]
 layout_mode = 2
-text = "Username "
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("2_ial8x")
+theme_override_font_sizes/font_size = 30
+text = "Username : "
 
 [node name="LineEdit" type="LineEdit" parent="Control/VBoxContainer/HBoxContainer3"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
+theme_override_fonts/font = ExtResource("2_ial8x")
+theme_override_font_sizes/font_size = 25
 text = "Player"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Control/VBoxContainer"]
@@ -86,11 +94,16 @@ layout_mode = 2
 
 [node name="Label" type="Label" parent="Control/VBoxContainer/HBoxContainer"]
 layout_mode = 2
-text = "Hostname "
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("2_ial8x")
+theme_override_font_sizes/font_size = 30
+text = "Hostname : "
 
 [node name="LineEdit" type="LineEdit" parent="Control/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
+theme_override_fonts/font = ExtResource("2_ial8x")
+theme_override_font_sizes/font_size = 25
 text = "localhost"
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="Control/VBoxContainer"]
@@ -98,10 +111,15 @@ layout_mode = 2
 
 [node name="Label" type="Label" parent="Control/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
-text = "Port "
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("2_ial8x")
+theme_override_font_sizes/font_size = 25
+text = "Port : "
 
 [node name="LineEdit" type="LineEdit" parent="Control/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("2_ial8x")
+theme_override_font_sizes/font_size = 25
 text = "24500"
 
 [node name="CenterContainer" type="CenterContainer" parent="Control/VBoxContainer"]
@@ -112,10 +130,16 @@ layout_mode = 2
 
 [node name="Button" type="Button" parent="Control/VBoxContainer/CenterContainer/HBoxContainer4"]
 layout_mode = 2
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("2_ial8x")
+theme_override_font_sizes/font_size = 40
 text = "Join"
 
 [node name="Button2" type="Button" parent="Control/VBoxContainer/CenterContainer/HBoxContainer4"]
 layout_mode = 2
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("2_ial8x")
+theme_override_font_sizes/font_size = 40
 text = "Create"
 
 [node name="Label2" type="Label" parent="Control/VBoxContainer"]
@@ -140,11 +164,15 @@ grow_vertical = 2
 
 [node name="Label" type="Label" parent="Panel2"]
 layout_mode = 0
-offset_left = 30.0
-offset_top = 25.0
-offset_right = 222.0
-offset_bottom = 48.0
-text = "vvv  also pick a char  vvv"
+offset_left = 19.0
+offset_top = 11.0
+offset_right = 234.0
+offset_bottom = 43.0
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("2_ial8x")
+theme_override_font_sizes/font_size = 26
+text = "choose ur character  :3"
+horizontal_alignment = 1
 
 [node name="ItemList" type="ItemList" parent="Panel2"]
 custom_minimum_size = Vector2(3.195, 0)

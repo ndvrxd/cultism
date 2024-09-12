@@ -289,4 +289,3 @@ shape = SubResource("RectangleShape2D_5uquc")
 [node name="testSpawner" type="Node2D" parent="."]
 position = Vector2(1119, -147)
 script = ExtResource("9_mnaja")
-spawnEvery = 1.0
