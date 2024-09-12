@@ -43,11 +43,13 @@ func handle_connecting_signals() -> void:
 
 func _on_settings_pressed() -> void:
 	panel_container.visible = false
+	settingslol.set_process(true)
 	settingslol.visible = true
 
 func on_exit_settings() -> void:
-	pass
-
+	panel_container.visible = true
+	settingslol.visible = false
+	
 
 ##############################
 func _on_main_menu_pressed() -> void:

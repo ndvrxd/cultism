@@ -19,6 +19,11 @@ config/icon="res://art/icon.svg"
 
 NetManager="*res://scripts/NetManager.gd"
 
+[display]
+
+window/size/viewport_width=1280
+window/size/viewport_height=720
+
 [global_group]
 
 entity="Group containing all entities"

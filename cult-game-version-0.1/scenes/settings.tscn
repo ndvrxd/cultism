@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://cixt7jlqnxfa6"]
+[gd_scene load_steps=4 format=3 uid="uid://cixt7jlqnxfa6"]
 
 [ext_resource type="Script" path="res://scenes/settings.gd" id="1_7dwqa"]
 [ext_resource type="FontFile" uid="uid://dhk11k42eybnt" path="res://fonts/chela-one.regular.ttf" id="1_tjcct"]
+[ext_resource type="PackedScene" uid="uid://ck7okenaced31" path="res://scenes/settings_tab_container.tscn" id="3_sh46h"]
 
 [node name="Settings" type="Control"]
 layout_mode = 3
@@ -38,10 +39,14 @@ text = "Settings"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="Settings_Tab_Container" parent="MarginContainer/VBoxContainer" instance=ExtResource("3_sh46h")]
+layout_mode = 2
+size_flags_vertical = 3
+
 [node name="Exit_Button" type="Button" parent="MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(120, 60)
 layout_mode = 2
-size_flags_horizontal = 8
-size_flags_vertical = 8
+size_flags_horizontal = 4
+size_flags_vertical = 4
 theme_override_fonts/font = ExtResource("1_tjcct")
 text = "Exit"
