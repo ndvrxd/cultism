@@ -65,6 +65,8 @@ func _process(delta):
 		ent.secondaryFireReleased.rpc(ent.aimPosition)
 	if Input.is_action_just_pressed("SpecialAbility"):
 		ent.activeAbilityRpc.rpc(ent.aimPosition)
+	if Input.is_action_just_pressed("Interact"):
+		ent.interact()
 	#endregion
 
 func damageVignette(dmg_amt, from):

@@ -88,6 +88,7 @@ func recvPeerInfoCallback(new_player_info):
 		for p in players:
 			if new_player_info["name"] == players[p]["name"]:
 				discReason = "Another player already has that name."
+				new_player_info["name"] = "(NAME ALREADY TAKEN)"
 		
 		if discReason.is_empty():
 			load_game.rpc_id(new_player_id, MAP)

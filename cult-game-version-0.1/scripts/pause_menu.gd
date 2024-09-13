@@ -16,15 +16,15 @@ func _ready():
 	#size() = OS.get_screen_size()
 
 func resume():
-	get_tree().paused = false
 	menuOpen = false
 	$AnimationPlayer.play_backwards("blur")
+	if get_tree().paused: get_tree().paused = false
 func pause():
 	menuOpen = true
-	if multiplayer.is_server() and NetManager.players.size() < 2:
-		get_tree().paused = true
 	$AnimationPlayer.play("blur")
 	panel_container.visible = true
+	if multiplayer.is_server() and NetManager.players.size() < 2:
+		get_tree().paused = true
 
 func testEsc():
 	if Input.is_action_just_pressed("esc") and !menuOpen:

@@ -14,6 +14,7 @@ var swordHitFx:PackedScene = preload("res://vfx/objects/sword_hit.tscn")
 func _ready():
 	super._ready()
 	stat_speed = Stat.fromBase(300)
+	stat_regen = Stat.fromBase(2)
 	swordShape.radius = 50;
 	hit_landed.connect(onHit)
 	primaryCD = 0.65

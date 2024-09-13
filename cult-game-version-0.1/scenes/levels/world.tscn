@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://c6t867f13wn4u"]
+[gd_scene load_steps=21 format=3 uid="uid://c6t867f13wn4u"]
 
 [ext_resource type="Texture2D" uid="uid://dr1jlcktudyg" path="res://art/playermapxd.png" id="1_0xhrl"]
 [ext_resource type="PackedScene" uid="uid://bhatrw3cecxw1" path="res://objects/characters/test_effigy.tscn" id="2_8nnc8"]
@@ -8,7 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://d3yfvynamcihx" path="res://objects/scenery/post_ph.tscn" id="6_rk7f1"]
 [ext_resource type="PackedScene" uid="uid://dxiibdkgas3eu" path="res://scenes/pause_menu.tscn" id="7_8nyro"]
 [ext_resource type="PackedScene" uid="uid://4x1q48mnamto" path="res://Chatbox/Chatbox.tscn" id="8_b618d"]
-[ext_resource type="Script" path="res://scripts/testEnemySpawner.gd" id="9_mnaja"]
+[ext_resource type="Texture2D" uid="uid://dmcej1hbhoaj0" path="res://vfx/particle/aoe.png" id="9_2ok4s"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_ob1or"]
 vertices = PackedVector2Array(-429.781, 274.133, -690.711, 280.469, -751.062, 276.953, -995, 170, -995, -251, -744, -390, -338, -390, 162.93, 695.969, -458.703, 749.562, -421.289, 623.531, 140.656, 511.75, -299.156, -508.039, -172.828, -511.969, 83.0078, 464.828, -303.594, -649.969, -338, -728, -328, -708, -496.25, 625.352, -496.25, 841.188, -447.867, 875.133, -722.398, 897.656, -683.75, 841.188, -683.75, 566.93, -990.93, 288, -994.727, 183.211, 1143.18, -765.133, 1136.99, 611.977, 449.094, 474.438, 393.477, 383.508, 213.594, -524.039, 209.156, -665.969, 156.227, -522.242, 141, -769.641, 141, -708, -328, -771.742, -508, -772.57, -536, -728, -536, -921, -507.109, -970.859, -797.758, -991.273, -744, -921, -763.211, -397.531, -1351.96, -363.242, -1208.5, -371.594, -1205.27, -282.211, -1327.83, 303.562, -1193.18, 190.383, -1189.31, 297.156, -1199, 170, -1006.83, -289.383, -1010.21, -383.141, 472.641, 669.258, -1199, -251)
@@ -39,6 +39,36 @@ size = Vector2(413, 42)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5uquc"]
 size = Vector2(104, 321)
+
+[sub_resource type="GDScript" id="GDScript_ta6q2"]
+script/source = "extends Interactable
+
+const bodypath:String = \"res://objects/characters/enemy.tscn\"
+
+@export var spawnEvery:float = 0.3;
+var spawnTimer:float = spawnEvery - 1;
+var active:bool = false;
+
+func _ready():
+	$Sprite2D.modulate = Color(Color.RED, 0.7)
+
+func _on_interacted_with(by:Entity):
+	active = !active
+	if active:
+		$Sprite2D.modulate = Color(Color.GREEN, 0.7)
+	else:
+		$Sprite2D.modulate = Color(Color.RED, 0.7)
+
+func _physics_process(delta):
+	if !active or !multiplayer.is_server(): return
+	spawnTimer += delta
+	if spawnTimer > spawnEvery:
+		Entity.spawn(bodypath, $spawnpoint.global_position)
+		spawnTimer = 0
+"
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_7fxi0"]
+radius = 20.0
 
 [node name="world" type="Node2D"]
 
@@ -287,6 +317,32 @@ position = Vector2(-244, 525.5)
 shape = SubResource("RectangleShape2D_5uquc")
 
 [node name="testSpawner" type="Node2D" parent="."]
+visible = false
 position = Vector2(1119, -147)
-script = ExtResource("9_mnaja")
-spawnEvery = 5.0
+
+[node name="testSpawner2" type="Area2D" parent="."]
+position = Vector2(-323, -50)
+script = SubResource("GDScript_ta6q2")
+spawnEvery = 1.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="testSpawner2"]
+shape = SubResource("CircleShape2D_7fxi0")
+
+[node name="Sprite2D" type="Sprite2D" parent="testSpawner2"]
+modulate = Color(1, 0, 0, 0.572549)
+scale = Vector2(0.39, 0.39)
+texture = ExtResource("9_2ok4s")
+
+[node name="Label" type="Label" parent="testSpawner2"]
+offset_left = -94.0
+offset_top = -82.0
+offset_right = 39.0
+offset_bottom = -7.0
+text = "press e on this to
+start spawning
+enemies"
+
+[node name="spawnpoint" type="Node2D" parent="testSpawner2"]
+position = Vector2(1420, -80)
+
+[connection signal="interacted_with" from="testSpawner2" to="testSpawner2" method="_on_interacted_with"]

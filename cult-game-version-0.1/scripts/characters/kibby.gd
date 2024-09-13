@@ -23,6 +23,7 @@ func _ready():
 	super._ready()
 	stat_speed = Stat.fromBase(300)
 	stat_maxHp = Stat.fromBase(120)
+	stat_regen = Stat.fromBase(2)
 	meleeShape.radius = 100;
 	aoeShape.radius = 200;
 	hit_landed.connect(onHit)

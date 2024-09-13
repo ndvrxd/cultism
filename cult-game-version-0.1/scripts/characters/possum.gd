@@ -9,6 +9,7 @@ var hitscanTracer:PackedScene = preload("res://vfx/objects/hitscan_fx.tscn")
 func _ready():
 	super._ready()
 	hit_landed.connect(onHit)
+	stat_regen = Stat.fromBase(2)
 	primaryCD = 0.4
 
 func _process(delta):

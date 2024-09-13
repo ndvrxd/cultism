@@ -33,7 +33,7 @@ var aimPosition:Vector2 = Vector2.ZERO;
 @export var stat_maxHp:Stat = Stat.fromBase(100);
 @export var stat_speed:Stat = Stat.fromBase(400);
 @export var stat_accel:Stat = Stat.fromBase(8.5);
-@export var stat_regen:Stat = Stat.fromBase(5);
+@export var stat_regen:Stat = Stat.fromBase(0);
 # "aggro" stats get used by entity controllers for target selection
 @export var stat_aggroRange:Stat = Stat.fromBase(1000);
 @export var stat_aggroNoise:Stat = Stat.fromBase(0);
@@ -49,6 +49,7 @@ var holdingPrimary:bool = false;
 var holdingSecondary:bool = false;
 
 var health:float = 1
+var regenTimer:float = 0
 
 var shoulderPoint:Node2D;
 
@@ -88,6 +89,11 @@ func _process(delta: float) -> void:
 	
 	if shoulderPoint: #aiming
 		shoulderPoint.look_at(shoulderPoint.global_position + lookDirection)
+		
+	if regenTimer > 0:
+		regenTimer -= delta
+	else:
+		health = min(health + stat_regen.val * delta, stat_maxHp.val)
 	
 	if healthBarTimer > 0 && !NetManager.IsDedicated():
 		if !healthBar.visible: healthBar.visible = true
@@ -220,6 +226,7 @@ func changeHealth(current:float, by:float, inflictor_path:String="") -> void:
 	dn.global_position = shoulderPoint.global_position
 	get_tree().current_scene.add_child(dn)
 	if sign(by) == -1:
+		regenTimer = 2
 		damage_taken.emit(-by, inflictor)
 		if team == 1: dn.set_color(Color.RED) #red is bad for players & allies
 		if inflictor != null:
@@ -313,3 +320,27 @@ func shapeCastFromShoulder(motion:Vector2, shape:Shape2D=null, triggerHitEffects
 					triggerHitEffectsRpc.rpc(e.shoulderPoint.global_position)
 				result.append(e)
 	return result;
+
+func interact() -> Interactable:
+	# see above. why do i have to do this
+	var params:PhysicsShapeQueryParameters2D = PhysicsShapeQueryParameters2D.new()
+	params.set_collide_with_bodies(false)
+	params.set_collide_with_areas(true)
+	
+	var fuck:Transform2D = Transform2D(Vector2.RIGHT, Vector2.DOWN, shoulderPoint.global_position)
+	
+	var shape = CircleShape2D.new();
+	shape.radius = 50
+		
+	params.shape = shape
+	params.transform = fuck
+	params.motion = lookDirection * 100
+	
+	var hits = get_world_2d().direct_space_state.intersect_shape(params)
+	for i in hits:
+		var collider = i["collider"]
+		if collider is Interactable:
+			var intr = collider as Interactable
+			intr.trigger_interact_rpc.rpc(get_path())
+			return intr
+	return null;
