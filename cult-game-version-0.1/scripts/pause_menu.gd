@@ -3,6 +3,8 @@ extends Control
 @onready var settingslol: Settings = $Settings as Settings
 @onready var panel_container: PanelContainer = $PanelContainer as PanelContainer
 
+var menuOpen:bool = false;
+
 func _ready():
 	$AnimationPlayer.play("RESET")
 	grab_focus()
@@ -15,16 +17,19 @@ func _ready():
 
 func resume():
 	get_tree().paused = false
+	menuOpen = false
 	$AnimationPlayer.play_backwards("blur")
 func pause():
-	get_tree().paused = true
+	menuOpen = true
+	if multiplayer.is_server() and NetManager.players.size() < 2:
+		get_tree().paused = true
 	$AnimationPlayer.play("blur")
 	panel_container.visible = true
 
 func testEsc():
-	if Input.is_action_just_pressed("esc") and !get_tree().paused:
+	if Input.is_action_just_pressed("esc") and !menuOpen:
 		pause()
-	elif Input.is_action_just_pressed("esc") and get_tree().paused:
+	elif Input.is_action_just_pressed("esc") and menuOpen:
 		settingslol.visible = false
 		resume()
 
