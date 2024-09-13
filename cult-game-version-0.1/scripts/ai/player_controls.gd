@@ -30,6 +30,7 @@ func _physics_process(delta: float) -> void:
 			ent.lookDirection = ent.lookDirection.lerp(cameraStickDir, 20*delta)
 		elif cameraStickDir.length()>0:
 			ent.lookDirection = cameraStickDir
+			controllerAimLength = 0
 		lastStickDir = cameraStickDir
 		if Input.get_last_mouse_velocity().length() > 0: mouseLookMode = true
 
