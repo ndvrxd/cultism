@@ -78,7 +78,10 @@ grow_vertical = 0
 scale = Vector2(0.745, 0.745)
 value = 100.0
 fill_mode = 3
+texture_under = ExtResource("5_h4gok")
 texture_progress = ExtResource("5_h4gok")
+tint_under = Color(1, 0, 0, 0)
+tint_progress = Color(0, 0.811765, 1, 1)
 
 [node name="m2readyloop" type="GPUParticles2D" parent="Node2D"]
 modulate = Color(0, 0.966667, 1, 1)

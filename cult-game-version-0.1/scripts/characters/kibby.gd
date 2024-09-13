@@ -17,6 +17,8 @@ var wololoHitFx:PackedScene = preload("res://vfx/objects/wololo_flash.tscn")
 var aoeFx:PackedScene = preload("res://vfx/objects/aoe_burst.tscn")
 var aoeDmg:PackedScene = preload("res://objects/aoe_dmg.tscn")
 
+var tween:Tween;
+
 func _ready():
 	super._ready()
 	stat_speed = Stat.fromBase(300)
@@ -69,13 +71,19 @@ func secondaryFire(target:Vector2):
 	$AoePreview.global_position = aimPosition
 	if is_multiplayer_authority():
 		syncLightningMeter.rpc(lightningMeter)
-	await get_tree().create_timer(0.1).timeout
-	if lightningMeter > 1: $AoePreview.visible = true;
+	#await get_tree().create_timer(0.1).timeout
+	$AoePreview.visible = true;
 
 @rpc("any_peer", "call_local", "reliable")
 func secondaryFireReleased(target:Vector2):
 	super.secondaryFireReleased(target)
 	if lightningMeter < 1 or !$AoePreview.visible:
+		$Node2D/lightningbar.tint_under = Color.RED
+		if is_instance_valid(tween):
+			tween.kill()
+		tween = get_tree().create_tween()
+		tween.tween_property($Node2D/lightningbar, "tint_under",
+			Color(Color.RED, 0), 0.5)
 		$AoePreview.visible=false
 		return
 	var temp = aoeFx.instantiate()
