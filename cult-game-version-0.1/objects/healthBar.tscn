@@ -24,6 +24,7 @@ offset_right = 52.0
 offset_bottom = 10.0
 grow_horizontal = 2
 grow_vertical = 2
+scale = Vector2(0.535, 0.495)
 pivot_offset = Vector2(52, 10)
 value = 100.0
 texture_under = ExtResource("1_3qw45")

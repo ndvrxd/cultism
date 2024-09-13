@@ -1,11 +1,57 @@
-[gd_scene load_steps=10 format=3 uid="uid://ci2psjf4f2qtu"]
+[gd_scene load_steps=25 format=3 uid="uid://ci2psjf4f2qtu"]
 
 [ext_resource type="Script" path="res://scripts/ai/player_controls.gd" id="1_122va"]
 [ext_resource type="Script" path="res://scripts/camera_tilt_test.gd" id="2_fxmue"]
 [ext_resource type="Texture2D" uid="uid://ccds8ab8fiqhe" path="res://art/ui/health.png" id="2_nyne5"]
 [ext_resource type="FontFile" uid="uid://dhk11k42eybnt" path="res://fonts/chela-one.regular.ttf" id="3_6ivni"]
 [ext_resource type="Texture2D" uid="uid://bdeo180vqay6m" path="res://art/ui/run.png" id="3_pwfur"]
+[ext_resource type="Texture2D" uid="uid://btjilywxmdp3g" path="res://art/ui/vignette.png" id="3_vj6ed"]
+[ext_resource type="Texture2D" uid="uid://dmcej1hbhoaj0" path="res://vfx/particle/aoe.png" id="3_w6tec"]
+[ext_resource type="Texture2D" uid="uid://c8fqyfsyylys1" path="res://vfx/particle/aoe_preview.png" id="4_1vgct"]
 [ext_resource type="Texture2D" uid="uid://b8uotdxr13iyg" path="res://art/ui/attack.png" id="4_c01lm"]
+[ext_resource type="Texture2D" uid="uid://clqo76f6tebyl" path="res://art/ui/arrow.png" id="5_i4xsy"]
+[ext_resource type="Texture2D" uid="uid://w30ihm6saioh" path="res://art/ui/keys/key_r.png" id="6_4rguy"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_p2dro"]
+size = Vector2(260, 50)
+
+[sub_resource type="Gradient" id="Gradient_u20vf"]
+offsets = PackedFloat32Array(0.988848)
+colors = PackedColorArray(0.94, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_is5kh"]
+gradient = SubResource("Gradient_u20vf")
+width = 250
+height = 40
+
+[sub_resource type="Gradient" id="Gradient_pn3fe"]
+colors = PackedColorArray(0.65, 0.65, 0.65, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_kteoh"]
+gradient = SubResource("Gradient_pn3fe")
+width = 250
+height = 40
+fill_from = Vector2(0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_cqnds"]
+font = ExtResource("3_6ivni")
+font_size = 26
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_tltw8"]
+size = Vector2(360, 40)
+
+[sub_resource type="Gradient" id="Gradient_5c6l0"]
+offsets = PackedFloat32Array(0.98513)
+colors = PackedColorArray(0.83002, 0.2068, 0.94, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_7n8l3"]
+gradient = SubResource("Gradient_5c6l0")
+width = 350
+height = 30
+
+[sub_resource type="LabelSettings" id="LabelSettings_ad3e4"]
+font = ExtResource("3_6ivni")
+font_size = 28
 
 [sub_resource type="LabelSettings" id="LabelSettings_8wkxw"]
 font = ExtResource("3_6ivni")
@@ -38,7 +84,206 @@ script = ExtResource("2_fxmue")
 
 [node name="HUD STUFF" type="CanvasLayer" parent="."]
 
-[node name="Control" type="Control" parent="HUD STUFF"]
+[node name="vignette" type="TextureRect" parent="HUD STUFF"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_vj6ed")
+
+[node name="healthbar_under" type="TextureProgressBar" parent="HUD STUFF"]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -382.0
+offset_top = -61.67
+offset_right = -122.0
+offset_bottom = -11.67
+grow_horizontal = 0
+grow_vertical = 0
+max_value = 1.0
+step = 0.0
+value = 1.0
+texture_under = SubResource("PlaceholderTexture2D_p2dro")
+texture_progress = SubResource("GradientTexture2D_is5kh")
+texture_progress_offset = Vector2(5, 5)
+tint_under = Color(0, 0, 0, 0.4)
+
+[node name="healthbar_over" type="TextureProgressBar" parent="HUD STUFF/healthbar_under"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -125.0
+offset_top = -20.0
+offset_right = 125.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+max_value = 1.0
+step = 0.0
+value = 1.0
+texture_progress = SubResource("GradientTexture2D_kteoh")
+
+[node name="Label" type="Label" parent="HUD STUFF/healthbar_under"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -35.5
+offset_top = -16.0
+offset_right = 35.5
+offset_bottom = 16.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "fdsafds"
+label_settings = SubResource("LabelSettings_cqnds")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="objective_health" type="TextureProgressBar" parent="HUD STUFF"]
+modulate = Color(1, 1, 1, 0.627451)
+offset_left = 10.0
+offset_top = 6.0
+offset_right = 370.0
+offset_bottom = 56.0
+max_value = 1.0
+step = 0.0
+value = 1.0
+texture_under = SubResource("PlaceholderTexture2D_tltw8")
+texture_progress = SubResource("GradientTexture2D_7n8l3")
+texture_progress_offset = Vector2(5, 5)
+tint_under = Color(0, 0, 0, 0.482353)
+
+[node name="Label2" type="Label" parent="HUD STUFF/objective_health"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -103.0
+offset_top = -24.0
+offset_right = 103.0
+offset_bottom = 10.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Effigy Health (NYI)"
+label_settings = SubResource("LabelSettings_ad3e4")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="active" type="Control" parent="HUD STUFF"]
+layout_mode = 3
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_top = -40.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="cooldown" type="TextureProgressBar" parent="HUD STUFF/active"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -110.0
+offset_top = -110.0
+offset_right = -10.0
+offset_bottom = -10.0
+grow_horizontal = 0
+grow_vertical = 0
+max_value = 1.0
+step = 0.0
+fill_mode = 5
+texture_under = ExtResource("3_w6tec")
+texture_over = ExtResource("4_1vgct")
+texture_progress = ExtResource("3_w6tec")
+tint_under = Color(0, 0, 0, 0.4)
+tint_over = Color(0.71, 0.71, 0.71, 1)
+tint_progress = Color(1, 1, 1, 0.498039)
+
+[node name="tooltip" type="TextureRect" parent="HUD STUFF/active"]
+layout_mode = 0
+offset_left = -74.0
+offset_top = -2.0
+offset_right = -34.0
+offset_bottom = 38.0
+scale = Vector2(0.815, 0.815)
+texture = ExtResource("6_4rguy")
+
+[node name="Label" type="Label" parent="HUD STUFF"]
+modulate = Color(1, 1, 1, 0.741176)
+offset_left = 840.0
+offset_top = 620.0
+offset_right = 1023.0
+offset_bottom = 643.0
+text = "status effect bar (nyi) ->"
+
+[node name="statusEffectBar" type="HBoxContainer" parent="HUD STUFF"]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -163.0
+offset_top = -111.0
+offset_right = -123.0
+offset_bottom = -71.0
+grow_horizontal = 0
+grow_vertical = 0
+alignment = 2
+
+[node name="statusEffectIcon" type="TextureProgressBar" parent="HUD STUFF/statusEffectBar"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+max_value = 1.0
+step = 0.0
+value = 1.0
+fill_mode = 3
+nine_patch_stretch = true
+texture_under = ExtResource("5_i4xsy")
+texture_progress = ExtResource("5_i4xsy")
+tint_under = Color(0, 0, 0, 0.533333)
+
+[node name="statusEffectIcon2" type="TextureProgressBar" parent="HUD STUFF/statusEffectBar"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+max_value = 1.0
+step = 0.0
+value = 0.68
+fill_mode = 3
+nine_patch_stretch = true
+texture_under = ExtResource("5_i4xsy")
+texture_progress = ExtResource("5_i4xsy")
+tint_under = Color(0, 0, 0, 0.533333)
+
+[node name="statusEffectIcon3" type="TextureProgressBar" parent="HUD STUFF/statusEffectBar"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+max_value = 1.0
+step = 0.0
+value = 0.37
+fill_mode = 3
+nine_patch_stretch = true
+texture_under = ExtResource("5_i4xsy")
+texture_progress = ExtResource("5_i4xsy")
+tint_under = Color(0, 0, 0, 0.533333)
+
+[node name="we dont talk about this one" type="Control" parent="HUD STUFF"]
+visible = false
 layout_mode = 3
 anchors_preset = 6
 anchor_left = 1.0
@@ -52,7 +297,7 @@ offset_bottom = 98.0
 grow_horizontal = 0
 grow_vertical = 2
 
-[node name="PanelContainer" type="PanelContainer" parent="HUD STUFF/Control"]
+[node name="PanelContainer" type="PanelContainer" parent="HUD STUFF/we dont talk about this one"]
 layout_mode = 1
 anchors_preset = 6
 anchor_left = 1.0
@@ -66,41 +311,41 @@ grow_horizontal = 0
 grow_vertical = 2
 pivot_offset = Vector2(-100, 0)
 
-[node name="VBoxContainer" type="VBoxContainer" parent="HUD STUFF/Control/PanelContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="HUD STUFF/we dont talk about this one/PanelContainer"]
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="HUD STUFF/Control/PanelContainer/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="HUD STUFF/we dont talk about this one/PanelContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="HUD STUFF/Control/PanelContainer/VBoxContainer/HBoxContainer"]
+[node name="TextureRect" type="TextureRect" parent="HUD STUFF/we dont talk about this one/PanelContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 texture = ExtResource("2_nyne5")
 
-[node name="Label" type="Label" parent="HUD STUFF/Control/PanelContainer/VBoxContainer/HBoxContainer"]
+[node name="Label" type="Label" parent="HUD STUFF/we dont talk about this one/PanelContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 text = "Health: "
 label_settings = SubResource("LabelSettings_8wkxw")
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="HUD STUFF/Control/PanelContainer/VBoxContainer"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="HUD STUFF/we dont talk about this one/PanelContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="HUD STUFF/Control/PanelContainer/VBoxContainer/HBoxContainer2"]
+[node name="TextureRect" type="TextureRect" parent="HUD STUFF/we dont talk about this one/PanelContainer/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
 texture = ExtResource("3_pwfur")
 
-[node name="Label" type="Label" parent="HUD STUFF/Control/PanelContainer/VBoxContainer/HBoxContainer2"]
+[node name="Label" type="Label" parent="HUD STUFF/we dont talk about this one/PanelContainer/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
 text = "Speed: "
 label_settings = SubResource("LabelSettings_y2qkh")
 
-[node name="HBoxContainer3" type="HBoxContainer" parent="HUD STUFF/Control/PanelContainer/VBoxContainer"]
+[node name="HBoxContainer3" type="HBoxContainer" parent="HUD STUFF/we dont talk about this one/PanelContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="HUD STUFF/Control/PanelContainer/VBoxContainer/HBoxContainer3"]
+[node name="TextureRect" type="TextureRect" parent="HUD STUFF/we dont talk about this one/PanelContainer/VBoxContainer/HBoxContainer3"]
 layout_mode = 2
 texture = ExtResource("4_c01lm")
 
-[node name="Label" type="Label" parent="HUD STUFF/Control/PanelContainer/VBoxContainer/HBoxContainer3"]
+[node name="Label" type="Label" parent="HUD STUFF/we dont talk about this one/PanelContainer/VBoxContainer/HBoxContainer3"]
 layout_mode = 2
 text = "Attack: "
 label_settings = SubResource("LabelSettings_xynuc")
