@@ -36,7 +36,8 @@ func primaryFireAction():
 	var ents = shapeCastFromShoulder(lookDirection*swordRange, swordShape, false)
 	var hits = 0
 	for e:Entity in ents:
-		triggerHitEffectsRpc.rpc(e.shoulderPoint.global_position)
+		if is_multiplayer_authority():
+			triggerHitEffectsRpc.rpc(e.shoulderPoint.global_position)
 		if team != e.team:
 			if is_multiplayer_authority():
 				e.changeHealth.rpc(e.health, -swordDamage, get_path())
