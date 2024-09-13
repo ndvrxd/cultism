@@ -22,7 +22,7 @@ func _physics_process(delta: float) -> void:
 		if cameraStickDir.length() > 0:
 			controllerAimLength += controllerAimSpeed * cameraStickDir.length() * delta
 			controllerAimLength = clampf(controllerAimLength /
-					(1 + lastStickDir.distance_to(cameraStickDir) * 0.3),
+					(1 + lastStickDir.distance_to(cameraStickDir) * 0.4),
 					0, controllerAimMaximum)
 		ent.aimPosition = ent.global_position + ent.lookDirection * \
 				(controllerAimMinimum + controllerAimLength)
