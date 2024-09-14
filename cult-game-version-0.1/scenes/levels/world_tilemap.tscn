@@ -87,7 +87,7 @@ grow_horizontal = 1
 grow_vertical = 0
 
 [node name="testSpawner2" type="Area2D" parent="."]
-position = Vector2(-420, -82)
+position = Vector2(527, -157)
 script = SubResource("GDScript_ta6q2")
 spawnEvery = 1.0
 
@@ -109,7 +109,7 @@ start spawning
 enemies"
 
 [node name="spawnpoint" type="Node2D" parent="testSpawner2"]
-position = Vector2(1420, -80)
+position = Vector2(537, 3)
 
 [node name="deco" type="Node2D" parent="."]
 y_sort_enabled = true

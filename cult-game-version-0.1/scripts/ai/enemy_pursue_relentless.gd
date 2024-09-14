@@ -25,11 +25,8 @@ func _physics_process(delta: float) -> void:
 			attacking = false
 			ent.primaryFireReleased.rpc(ent.aimPosition)
 		
-	else: # if not aggroed, move toward the next node in the path
-		updateIdlePathing()
-		nav.target_position = nextPathNode.global_position;
-		ent.moveIntent = ent.global_position.direction_to(nav.get_next_path_position())
-		ent.lookDirection = ent.moveIntent
+	else: # if not aggroed, do fuck all...?
+		ent.moveIntent = Vector2.ZERO
 		
 	aggroCheckTimer += delta;
 	if aggroCheckTimer > aggroCheckMaxTime:
