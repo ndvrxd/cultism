@@ -121,7 +121,8 @@ func spawnEntityRpc(scnPath:String, pos:Vector2 = Vector2.ZERO, ctlPath:String="
 	var id = multiplayer.get_remote_sender_id()
 	if id:
 		if eName != "":
-			if get_tree().current_scene.has_node(eName): return
+			if get_tree().current_scene.has_node(eName):
+				if is_instance_valid(get_tree().current_scene.get_node(eName)): return
 		var ebody:Entity = load(scnPath).instantiate();
 		ebody.global_position = pos
 		if eName != "":

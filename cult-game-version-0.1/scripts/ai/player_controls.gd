@@ -9,6 +9,8 @@ var mouseLookMode = true
 @onready var ui_active_cd:TextureProgressBar = $"HUD STUFF/active/cooldown"
 var vignetteTween:Tween
 
+const spectatorBody:String = "res://objects/characters/spectator.tscn"
+
 var controllerAimLength:float = 0
 var controllerAimMinimum:float = 100
 var controllerAimMaximum:float = 600
@@ -20,8 +22,22 @@ func _ready():
 	ui_hb_over.tint_progress = ent.healthBarColor
 	ent.damage_taken.connect(damageVignette)
 	$"HUD STUFF/vignette".modulate = Color(Color.RED, 0)
+	ent.killed.connect(spectate)
+
+func spectate(killedBy:Entity):
+	var ename:String = ent.name
+	Chatbox.inst.print_chat.rpc("* " + ename + " was killed by " + killedBy.entityName + ".")
+	var epos:Vector2 = ent.global_position
+	reparent(get_tree().current_scene)
+	await get_tree().create_timer(0.1).timeout
+	Entity.spawn(spectatorBody, epos, '', ename)
+	await get_tree().create_timer(0.1).timeout
+	var newEnt: Entity = get_tree().current_scene.get_node(ename)
+	reparent(newEnt)
+	attemptControl.call_deferred()
 
 func _physics_process(delta: float) -> void:
+	if !is_instance_valid(ent): return
 	direction = Input.get_vector("left", "right", "up", "down");
 	ent.moveIntent = direction if !Chatbox.isFocused else Vector2.ZERO
 	
@@ -47,6 +63,7 @@ func _physics_process(delta: float) -> void:
 		if Input.get_last_mouse_velocity().length() > 0: mouseLookMode = true
 
 func _process(delta):
+	if !is_instance_valid(ent): return
 	#region hud stuff
 	ui_hb_over.value = (ent.health / ent.stat_maxHp.val)
 	ui_hb_under.value = lerp(ui_hb_under.value, ui_hb_over.value, delta*7)
@@ -71,6 +88,7 @@ func _process(delta):
 	#endregion
 
 func damageVignette(dmg_amt, from):
+	if !is_instance_valid(ent): return
 	var proportion = dmg_amt / ent.stat_maxHp.val
 	if proportion < $"HUD STUFF/vignette".modulate.a: return
 	$"HUD STUFF/vignette".modulate = Color(Color.RED, proportion)
