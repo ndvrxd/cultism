@@ -5,7 +5,7 @@ extends Control
 
 func _ready():
 	$AnimationPlayer.play("RESET")
-	grab_focus()
+	grab_focus.call_deferred()
 	settingslol.visible = false
 	handle_connecting_signals()
 	

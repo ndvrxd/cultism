@@ -7,6 +7,8 @@ class_name Chatbox extends Control
 static var inst:Chatbox # real unity singleton bullshit
 static var isFocused:bool = false;
 
+const chatSound:AudioStream = preload("res://sound/fx/ui/notify.ogg")
+
 signal chatbox_focus_changed(focused:bool)
 
 func _enter_tree():
@@ -32,6 +34,7 @@ func _input(_event):
 
 @rpc('reliable','call_local', 'any_peer')
 func print_chat(msg:String):
+	$AudioStreamPlayer.play()
 	if msg.length() > 0:
 		chatLabel.text += '\n' + msg;
 		

@@ -28,6 +28,7 @@ window/size/viewport_height=720
 
 entity="Group containing all entities"
 upright_sprite="Sprites that should be visually scaled with camera Y."
+player_spawnpoint=""
 
 [input]
 

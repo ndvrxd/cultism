@@ -1,16 +1,21 @@
-[gd_scene load_steps=6 format=3 uid="uid://pr17s47egsv2"]
+[gd_scene load_steps=8 format=3 uid="uid://pr17s47egsv2"]
 
 [ext_resource type="Script" path="res://scripts/characters/possum.gd" id="1_1fgx3"]
 [ext_resource type="Texture2D" uid="uid://bdyllnybosvnm" path="res://art/character ph/poss ph.png" id="2_5mqqm"]
 [ext_resource type="Texture2D" uid="uid://clqo76f6tebyl" path="res://art/ui/arrow.png" id="2_fns0g"]
+[ext_resource type="AudioStream" uid="uid://b2h08kwrqs8ax" path="res://sound/fx/gunshot.mp3" id="4_0l8cq"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_gokdr"]
-radius = 22.0
-height = 88.0
+[sub_resource type="CircleShape2D" id="CircleShape2D_lyfbl"]
+radius = 23.1948
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_esllf"]
 radius = 5.74163
 height = 21.0526
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_abub5"]
+random_pitch = 1.15
+streams_count = 1
+stream_0/stream = ExtResource("4_0l8cq")
 
 [node name="Possum" type="CharacterBody2D"]
 collision_layer = 4
@@ -21,8 +26,8 @@ objPath = "res://objects/characters/Possum.tscn"
 controllerPath = "res://objects/controllers/basic_enemy_ai.tscn"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -51)
-shape = SubResource("CapsuleShape2D_gokdr")
+position = Vector2(0, -23)
+shape = SubResource("CircleShape2D_lyfbl")
 
 [node name="Node2D" type="Node2D" parent="." groups=["upright_sprite"]]
 
@@ -47,3 +52,9 @@ scale = Vector2(5.225, 5.225)
 [node name="shape" type="CollisionShape2D" parent="hurtbox"]
 position = Vector2(5.96046e-08, -10.3349)
 shape = SubResource("CapsuleShape2D_esllf")
+
+[node name="sfx" type="Node2D" parent="."]
+position = Vector2(0, -79)
+
+[node name="gunshot" type="AudioStreamPlayer2D" parent="sfx"]
+stream = SubResource("AudioStreamRandomizer_abub5")

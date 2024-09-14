@@ -18,7 +18,7 @@
 [ext_resource type="AudioStream" uid="uid://b8rm247vr5k5v" path="res://sound/pools/kibby_starstruck.tres" id="15_fwbwr"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_86oxc"]
-radius = 27.1662
+radius = 23.0868
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_u7vwb"]
 radius = 5.74163
@@ -58,7 +58,7 @@ trail_enabled = true
 trail_lifetime = 0.24
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -33)
+position = Vector2(0, -25)
 shape = SubResource("CircleShape2D_86oxc")
 
 [node name="Node2D" type="Node2D" parent="." groups=["upright_sprite"]]

@@ -1,0 +1,9 @@
+[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://w5lnebw7ico3"]
+
+[ext_resource type="FontFile" uid="uid://dhk11k42eybnt" path="res://fonts/chela-one.regular.ttf" id="1_b2k76"]
+
+[resource]
+font = ExtResource("1_b2k76")
+font_size = 21
+outline_size = 5
+outline_color = Color(0, 0, 0, 1)

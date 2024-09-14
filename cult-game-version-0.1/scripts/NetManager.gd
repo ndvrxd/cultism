@@ -121,7 +121,7 @@ func spawnEntityRpc(scnPath:String, pos:Vector2 = Vector2.ZERO, ctlPath:String="
 	var id = multiplayer.get_remote_sender_id()
 	if id:
 		if eName != "":
-			if get_tree().current_scene.get_node("spawns").has_node(eName): return
+			if get_tree().current_scene.has_node(eName): return
 		var ebody:Entity = load(scnPath).instantiate();
 		ebody.global_position = pos
 		if eName != "":
@@ -130,7 +130,7 @@ func spawnEntityRpc(scnPath:String, pos:Vector2 = Vector2.ZERO, ctlPath:String="
 				ebody.entityName = eName;
 				ebody.team = 1;
 				addNametagToEntity.call_deferred(ebody)
-		get_tree().current_scene.get_node("spawns").add_child.call_deferred(ebody)
+		get_tree().current_scene.add_child.call_deferred(ebody)
 		if id == multiplayer.get_unique_id():
 			var ectl:EntityController
 			if ctlPath != "":
@@ -155,13 +155,15 @@ func load_game(game_scene_path):
 	get_tree().change_scene_to_file(game_scene_path)
 	await get_tree().create_timer(0.1).timeout
 	if !IsDedicated():
-		Entity.spawn.call_deferred(playerinfo_local["charbody"], Vector2.ZERO, '', playerinfo_local["name"])
+		var spawnpoints = get_tree().get_nodes_in_group("player_spawnpoint") 
+		var sp:Vector2 = spawnpoints.pick_random().global_position
+		Entity.spawn.call_deferred(playerinfo_local["charbody"], sp, '', playerinfo_local["name"])
 		if !multiplayer.is_server(): askForEntities.rpc_id.call_deferred(1)
 		Chatbox.inst.set_username(playerinfo_local["name"])
 
 func onPlayerDisconnect(id): # all clients, NOT JUST server
-	if get_tree().current_scene.get_node("spawns") and get_tree().current_scene.get_node("spawns").get_node(players[id]["name"]):
-		get_tree().current_scene.get_node("spawns").get_node(players[id]["name"]).queue_free()
+	if get_tree().current_scene.get_node(players[id]["name"]):
+		get_tree().current_scene.get_node(players[id]["name"]).queue_free()
 	if Chatbox.inst:
 		Chatbox.inst.print_chat(players[id]["name"] + " disconnected.")
 	players.erase(id)

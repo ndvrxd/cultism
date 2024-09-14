@@ -1,10 +1,10 @@
 [gd_scene load_steps=2 format=3 uid="uid://b048rmgq8aq0"]
 
-[ext_resource type="Texture2D" uid="uid://dt3tqh1wpyyar" path="res://art/scenery/tree ph.png" id="1_dvegp"]
+[ext_resource type="Texture2D" uid="uid://depx4pvyohon2" path="res://art/scenery/plant ph 2.png" id="1_dsof4"]
 
 [node name="tree" type="Node2D" groups=["upright_sprite"]]
 y_sort_enabled = true
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("1_dvegp")
+texture = ExtResource("1_dsof4")
 offset = Vector2(0, -45)
