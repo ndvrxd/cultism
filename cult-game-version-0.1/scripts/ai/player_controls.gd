@@ -23,7 +23,7 @@ func _ready():
 
 func _physics_process(delta: float) -> void:
 	direction = Input.get_vector("left", "right", "up", "down");
-	ent.moveIntent = direction
+	ent.moveIntent = direction if !Chatbox.isFocused else Vector2.ZERO
 	
 	var cameraStickDir = Input.get_vector("LookLeft", "LookRight", "LookUp", "LookDown").normalized();
 	if mouseLookMode:
@@ -55,18 +55,19 @@ func _process(delta):
 	#endregion
 	
 	#region input stuff
-	if Input.is_action_just_pressed("PrimaryAttack"):
-		ent.primaryFire.rpc(ent.aimPosition)
-	if Input.is_action_just_pressed("SecondaryAttack"):
-		ent.secondaryFire.rpc(ent.aimPosition)
-	if Input.is_action_just_released("PrimaryAttack"):
-		ent.primaryFireReleased.rpc(ent.aimPosition)
-	if Input.is_action_just_released("SecondaryAttack"):
-		ent.secondaryFireReleased.rpc(ent.aimPosition)
-	if Input.is_action_just_pressed("SpecialAbility"):
-		ent.activeAbilityRpc.rpc(ent.aimPosition)
-	if Input.is_action_just_pressed("Interact"):
-		ent.interact()
+	if !Chatbox.isFocused:
+		if Input.is_action_just_pressed("PrimaryAttack"):
+			ent.primaryFire.rpc(ent.aimPosition)
+		if Input.is_action_just_pressed("SecondaryAttack"):
+			ent.secondaryFire.rpc(ent.aimPosition)
+		if Input.is_action_just_released("PrimaryAttack"):
+			ent.primaryFireReleased.rpc(ent.aimPosition)
+		if Input.is_action_just_released("SecondaryAttack"):
+			ent.secondaryFireReleased.rpc(ent.aimPosition)
+		if Input.is_action_just_pressed("SpecialAbility"):
+			ent.activeAbilityRpc.rpc(ent.aimPosition)
+		if Input.is_action_just_pressed("Interact"):
+			ent.interact()
 	#endregion
 
 func damageVignette(dmg_amt, from):

@@ -5,6 +5,7 @@ class_name Chatbox extends Control
 @export var username:String = "Player"
 
 static var inst:Chatbox # real unity singleton bullshit
+static var isFocused:bool = false;
 
 signal chatbox_focus_changed(focused:bool)
 
@@ -18,9 +19,11 @@ func _input(_event):
 	if Input.is_action_just_pressed("Chat"):
 		var vp:Viewport = get_viewport()
 		if vp.gui_get_focus_owner() != chatInput:
+			isFocused = true
 			chatbox_focus_changed.emit(true)
 			chatInput.grab_focus()
 		else:
+			isFocused = false
 			chatbox_focus_changed.emit(false)
 			chatInput.release_focus()
 			if chatInput.text.length() > 0:
