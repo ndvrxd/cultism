@@ -5,5 +5,5 @@ func _ready() -> void:
 	super._ready()
 	stat_speed = Stat.fromBase(1);
 	stat_maxHp = Stat.fromBase(5000);
-	stat_regen = Stat.fromBase(1)
-	stat_aggroNoise = Stat.fromBase(8000)
+	stat_regen = Stat.fromBase(100);
+	stat_aggroNoise = Stat.fromBase(0)

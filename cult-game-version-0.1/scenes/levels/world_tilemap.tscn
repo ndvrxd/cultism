@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=4 uid="uid://j2javknfi4yo"]
+[gd_scene load_steps=15 format=4 uid="uid://j2javknfi4yo"]
 
 [ext_resource type="Texture2D" uid="uid://dr1jlcktudyg" path="res://art/playermapxd.png" id="1_8gipf"]
 [ext_resource type="PackedScene" uid="uid://bhatrw3cecxw1" path="res://objects/characters/test_effigy.tscn" id="2_wrja3"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://cswy0gtegsw2e" path="res://objects/scenery/sunflower_ph.tscn" id="4_kj20s"]
 [ext_resource type="PackedScene" uid="uid://blp1t6dee26tv" path="res://objects/scenery/rocks_ph.tscn" id="5_c2tqm"]
 [ext_resource type="PackedScene" uid="uid://d3yfvynamcihx" path="res://objects/scenery/post_ph.tscn" id="6_8pmr1"]
+[ext_resource type="Script" path="res://scripts/PathNode.gd" id="6_esxbb"]
 [ext_resource type="PackedScene" uid="uid://dxiibdkgas3eu" path="res://scenes/pause_menu.tscn" id="7_gvci0"]
 [ext_resource type="PackedScene" uid="uid://4x1q48mnamto" path="res://Chatbox/Chatbox.tscn" id="8_ayjcr"]
 [ext_resource type="Texture2D" uid="uid://dmcej1hbhoaj0" path="res://vfx/particle/aoe.png" id="9_6n2p4"]
@@ -110,6 +111,78 @@ enemies"
 [node name="spawnpoint" type="Node2D" parent="testSpawner2"]
 position = Vector2(1420, -80)
 
+[node name="deco" type="Node2D" parent="."]
+y_sort_enabled = true
+
+[node name="tree" parent="deco" instance=ExtResource("3_nqepg")]
+position = Vector2(-331, 114)
+
+[node name="tree2" parent="deco" instance=ExtResource("3_nqepg")]
+position = Vector2(-92, 77)
+
+[node name="sunflower" parent="deco" instance=ExtResource("4_kj20s")]
+position = Vector2(-891, -133)
+
+[node name="sunflower2" parent="deco" instance=ExtResource("4_kj20s")]
+position = Vector2(-958, -135)
+
+[node name="sunflower3" parent="deco" instance=ExtResource("4_kj20s")]
+position = Vector2(-952, 24)
+
+[node name="rocks" parent="deco" instance=ExtResource("5_c2tqm")]
+position = Vector2(-1303, 253)
+
+[node name="rocks2" parent="deco" instance=ExtResource("5_c2tqm")]
+position = Vector2(-1243, -137)
+
+[node name="post" parent="deco" instance=ExtResource("6_8pmr1")]
+position = Vector2(-249, -572)
+
+[node name="post2" parent="deco" instance=ExtResource("6_8pmr1")]
+position = Vector2(101, -606)
+
+[node name="post3" parent="deco" instance=ExtResource("6_8pmr1")]
+position = Vector2(59, -762)
+
+[node name="post4" parent="deco" instance=ExtResource("6_8pmr1")]
+position = Vector2(-282, -732)
+
+[node name="post5" parent="deco" instance=ExtResource("6_8pmr1")]
+position = Vector2(105, 399)
+
+[node name="post6" parent="deco" instance=ExtResource("6_8pmr1")]
+position = Vector2(441, 358)
+
+[node name="post7" parent="deco" instance=ExtResource("6_8pmr1")]
+position = Vector2(482, 511)
+
+[node name="post8" parent="deco" instance=ExtResource("6_8pmr1")]
+position = Vector2(129, 549)
+
+[node name="post9" parent="deco" instance=ExtResource("6_8pmr1")]
+position = Vector2(-1023, 134)
+
+[node name="post10" parent="deco" instance=ExtResource("6_8pmr1")]
+position = Vector2(-1152, 135)
+
+[node name="post11" parent="deco" instance=ExtResource("6_8pmr1")]
+position = Vector2(-1026, 259)
+
+[node name="post12" parent="deco" instance=ExtResource("6_8pmr1")]
+position = Vector2(-1151, 260)
+
+[node name="post13" parent="deco" instance=ExtResource("6_8pmr1")]
+position = Vector2(-1175, -316)
+
+[node name="post14" parent="deco" instance=ExtResource("6_8pmr1")]
+position = Vector2(-1027, -316)
+
+[node name="post15" parent="deco" instance=ExtResource("6_8pmr1")]
+position = Vector2(-1178, -194)
+
+[node name="post16" parent="deco" instance=ExtResource("6_8pmr1")]
+position = Vector2(-1026, -191)
+
 [node name="player spawnpoints" type="Node" parent="."]
 
 [node name="spawnpoint" type="Node2D" parent="player spawnpoints" groups=["player_spawnpoint"]]
@@ -129,76 +202,92 @@ position = Vector2(-1294, 177)
 
 [node name="pathing" type="Node" parent="."]
 
+[node name="start" type="Node2D" parent="pathing" node_paths=PackedStringArray("next_nodes_pool") groups=["path_start_node"]]
+position = Vector2(930, -159)
+script = ExtResource("6_esxbb")
+next_nodes_pool = [NodePath("../a1"), NodePath("../b1")]
+
+[node name="a1" type="Node2D" parent="pathing" node_paths=PackedStringArray("next_nodes_pool")]
+position = Vector2(586, -248)
+script = ExtResource("6_esxbb")
+next_nodes_pool = [NodePath("../a2")]
+
+[node name="a2" type="Node2D" parent="pathing" node_paths=PackedStringArray("next_nodes_pool")]
+position = Vector2(584, -691)
+script = ExtResource("6_esxbb")
+next_nodes_pool = [NodePath("../a3")]
+
+[node name="a3" type="Node2D" parent="pathing" node_paths=PackedStringArray("next_nodes_pool")]
+position = Vector2(-312, -653)
+script = ExtResource("6_esxbb")
+next_nodes_pool = [NodePath("../aa1"), NodePath("../ab1")]
+
+[node name="aa1" type="Node2D" parent="pathing" node_paths=PackedStringArray("next_nodes_pool")]
+position = Vector2(-640, -941)
+script = ExtResource("6_esxbb")
+next_nodes_pool = [NodePath("../aa2")]
+
+[node name="aa2" type="Node2D" parent="pathing" node_paths=PackedStringArray("next_nodes_pool")]
+position = Vector2(-768, -409)
+script = ExtResource("6_esxbb")
+next_nodes_pool = [NodePath("../a_last")]
+
+[node name="ab1" type="Node2D" parent="pathing" node_paths=PackedStringArray("next_nodes_pool")]
+position = Vector2(-321, -362)
+script = ExtResource("6_esxbb")
+next_nodes_pool = [NodePath("../a_last")]
+
+[node name="a_last" type="Node2D" parent="pathing" node_paths=PackedStringArray("next_nodes_pool")]
+position = Vector2(-710, -254)
+script = ExtResource("6_esxbb")
+next_nodes_pool = [NodePath("../b_last")]
+
+[node name="b1" type="Node2D" parent="pathing" node_paths=PackedStringArray("next_nodes_pool")]
+position = Vector2(605, -15)
+script = ExtResource("6_esxbb")
+next_nodes_pool = [NodePath("../b2")]
+
+[node name="b2" type="Node2D" parent="pathing" node_paths=PackedStringArray("next_nodes_pool")]
+position = Vector2(590, 430)
+script = ExtResource("6_esxbb")
+next_nodes_pool = [NodePath("../b3")]
+
+[node name="b3" type="Node2D" parent="pathing" node_paths=PackedStringArray("next_nodes_pool")]
+position = Vector2(14, 466)
+script = ExtResource("6_esxbb")
+next_nodes_pool = [NodePath("../ba1"), NodePath("../bb1")]
+
+[node name="ba1" type="Node2D" parent="pathing" node_paths=PackedStringArray("next_nodes_pool")]
+position = Vector2(-43, 216)
+script = ExtResource("6_esxbb")
+next_nodes_pool = [NodePath("../b_penultimate")]
+
+[node name="bb1" type="Node2D" parent="pathing" node_paths=PackedStringArray("next_nodes_pool")]
+position = Vector2(6, 614)
+script = ExtResource("6_esxbb")
+next_nodes_pool = [NodePath("../bb2")]
+
+[node name="bb2" type="Node2D" parent="pathing" node_paths=PackedStringArray("next_nodes_pool")]
+position = Vector2(-481, 618)
+script = ExtResource("6_esxbb")
+next_nodes_pool = [NodePath("../bb3")]
+
+[node name="bb3" type="Node2D" parent="pathing" node_paths=PackedStringArray("next_nodes_pool")]
+position = Vector2(-702, 745)
+script = ExtResource("6_esxbb")
+next_nodes_pool = [NodePath("../b_penultimate")]
+
+[node name="b_penultimate" type="Node2D" parent="pathing" node_paths=PackedStringArray("next_nodes_pool")]
+position = Vector2(-700, 232)
+script = ExtResource("6_esxbb")
+next_nodes_pool = [NodePath("../b_last")]
+
+[node name="b_last" type="Node2D" parent="pathing" node_paths=PackedStringArray("next_nodes_pool")]
+position = Vector2(-714, 16)
+script = ExtResource("6_esxbb")
+next_nodes_pool = [NodePath("../a_last")]
+
 [node name="test effigy" parent="." instance=ExtResource("2_wrja3")]
 position = Vector2(-706, -71)
-
-[node name="tree" parent="." instance=ExtResource("3_nqepg")]
-position = Vector2(-331, 114)
-
-[node name="tree2" parent="." instance=ExtResource("3_nqepg")]
-position = Vector2(-92, 77)
-
-[node name="sunflower" parent="." instance=ExtResource("4_kj20s")]
-position = Vector2(-891, -133)
-
-[node name="sunflower2" parent="." instance=ExtResource("4_kj20s")]
-position = Vector2(-958, -135)
-
-[node name="sunflower3" parent="." instance=ExtResource("4_kj20s")]
-position = Vector2(-952, 24)
-
-[node name="rocks" parent="." instance=ExtResource("5_c2tqm")]
-position = Vector2(-1303, 253)
-
-[node name="rocks2" parent="." instance=ExtResource("5_c2tqm")]
-position = Vector2(-1243, -137)
-
-[node name="post" parent="." instance=ExtResource("6_8pmr1")]
-position = Vector2(-249, -572)
-
-[node name="post2" parent="." instance=ExtResource("6_8pmr1")]
-position = Vector2(101, -606)
-
-[node name="post3" parent="." instance=ExtResource("6_8pmr1")]
-position = Vector2(59, -762)
-
-[node name="post4" parent="." instance=ExtResource("6_8pmr1")]
-position = Vector2(-282, -732)
-
-[node name="post5" parent="." instance=ExtResource("6_8pmr1")]
-position = Vector2(105, 399)
-
-[node name="post6" parent="." instance=ExtResource("6_8pmr1")]
-position = Vector2(441, 358)
-
-[node name="post7" parent="." instance=ExtResource("6_8pmr1")]
-position = Vector2(482, 511)
-
-[node name="post8" parent="." instance=ExtResource("6_8pmr1")]
-position = Vector2(129, 549)
-
-[node name="post9" parent="." instance=ExtResource("6_8pmr1")]
-position = Vector2(-1023, 134)
-
-[node name="post10" parent="." instance=ExtResource("6_8pmr1")]
-position = Vector2(-1152, 135)
-
-[node name="post11" parent="." instance=ExtResource("6_8pmr1")]
-position = Vector2(-1026, 259)
-
-[node name="post12" parent="." instance=ExtResource("6_8pmr1")]
-position = Vector2(-1151, 260)
-
-[node name="post13" parent="." instance=ExtResource("6_8pmr1")]
-position = Vector2(-1175, -316)
-
-[node name="post14" parent="." instance=ExtResource("6_8pmr1")]
-position = Vector2(-1027, -316)
-
-[node name="post15" parent="." instance=ExtResource("6_8pmr1")]
-position = Vector2(-1178, -194)
-
-[node name="post16" parent="." instance=ExtResource("6_8pmr1")]
-position = Vector2(-1026, -191)
 
 [connection signal="interacted_with" from="testSpawner2" to="testSpawner2" method="_on_interacted_with"]

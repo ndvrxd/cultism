@@ -3,6 +3,7 @@ class_name EntityController extends Node2D
 var nav:NavigationAgent2D = null;
 var ent:Entity;
 var target:Entity = null;
+var nextPathNode:PathNode = null;
 
 func _ready():
 	attemptControl()
@@ -34,3 +35,29 @@ func findNewTarget(friendlyfire=false) -> void:
 				if dist < (ent.stat_aggroRange.val + e.stat_aggroNoise.val):
 					target = e;
 					closest = dist;
+
+func updateIdlePathing():
+	if nextPathNode != null:
+		var dist:float = nextPathNode.global_position.distance_to(ent.global_position)
+		if dist < 100: getNextPathNode()
+	else:
+		getNextPathNode()
+
+func getNextPathNode():
+	if nextPathNode == null:
+		# get the nearest "path start" node
+		var points = get_tree().get_nodes_in_group("path_start_node")
+		if points.is_empty(): return; #jump ship if there's nothing
+		var closest:PathNode = points[0];
+		var closestDist:float = INF;
+		for p:PathNode in points:
+			var dist:float = p.global_position.distance_to(ent.global_position)
+			if dist < closestDist:
+				closest = p
+				closestDist = dist
+		nextPathNode = closest
+	else: # select the next node in the path
+		var temp:PathNode = nextPathNode.next_nodes_pool.pick_random()
+		nextPathNode = temp
+		
+	

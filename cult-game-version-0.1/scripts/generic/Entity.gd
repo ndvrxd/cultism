@@ -35,7 +35,7 @@ var aimPosition:Vector2 = Vector2.ZERO;
 @export var stat_accel:Stat = Stat.fromBase(8.5);
 @export var stat_regen:Stat = Stat.fromBase(0);
 # "aggro" stats get used by entity controllers for target selection
-@export var stat_aggroRange:Stat = Stat.fromBase(1000);
+@export var stat_aggroRange:Stat = Stat.fromBase(250);
 @export var stat_aggroNoise:Stat = Stat.fromBase(0);
 
 # TODO replace these with Stats when the Stat rework rolls around
