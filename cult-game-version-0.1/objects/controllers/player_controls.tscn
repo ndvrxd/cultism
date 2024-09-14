@@ -227,10 +227,17 @@ texture = ExtResource("6_4rguy")
 
 [node name="Label" type="Label" parent="HUD STUFF"]
 modulate = Color(1, 1, 1, 0.741176)
-offset_left = 840.0
-offset_top = 620.0
-offset_right = 1023.0
-offset_bottom = 643.0
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -434.0
+offset_top = -102.0
+offset_right = -251.0
+offset_bottom = -79.0
+grow_horizontal = 0
+grow_vertical = 0
 text = "status effect bar (nyi) ->"
 
 [node name="statusEffectBar" type="HBoxContainer" parent="HUD STUFF"]
