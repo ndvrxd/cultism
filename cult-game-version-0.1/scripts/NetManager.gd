@@ -10,7 +10,7 @@ var gameinfo = {};
 var playerinfo_local = {"name":"Server"};
 var players = {};
 
-const MAP = "res://scenes/levels/world.tscn"
+const MAP = "res://scenes/levels/world_tilemap.tscn"
 const PLAYERCONTROLSOBJ = "res://objects/controllers/player_controls.tscn"
 #var playerBodyPath = "res://objects/enemy.tscn";
 

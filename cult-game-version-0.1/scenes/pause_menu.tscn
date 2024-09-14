@@ -1,9 +1,8 @@
-[gd_scene load_steps=10 format=3 uid="uid://dxiibdkgas3eu"]
+[gd_scene load_steps=9 format=3 uid="uid://dxiibdkgas3eu"]
 
 [ext_resource type="Script" path="res://scripts/pause_menu.gd" id="1_dmpsi"]
 [ext_resource type="Shader" path="res://vfx/shaders/pausemenu.gdshader" id="2_mb4ie"]
 [ext_resource type="FontFile" uid="uid://dhk11k42eybnt" path="res://fonts/chela-one.regular.ttf" id="3_iihm8"]
-[ext_resource type="Script" path="res://scripts/menus/buttonGrabFocus.gd" id="4_mpe36"]
 [ext_resource type="PackedScene" uid="uid://cixt7jlqnxfa6" path="res://scenes/settings.tscn" id="5_68ilw"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_fiai1"]
@@ -154,7 +153,6 @@ theme_override_constants/outline_size = 10
 theme_override_fonts/font = ExtResource("3_iihm8")
 theme_override_font_sizes/font_size = 42
 text = "Resume"
-script = ExtResource("4_mpe36")
 
 [node name="Settings" type="Button" parent="PanelContainer/VBoxContainer"]
 layout_mode = 2

@@ -21,6 +21,7 @@ func resume():
 func pause():
 	visible = true
 	$PanelContainer.visible = true
+	$PanelContainer/VBoxContainer/Resume.grab_focus()
 	$AnimationPlayer.play("blur")
 	if multiplayer.is_server() and NetManager.players.size() < 2:
 		get_tree().paused = true
