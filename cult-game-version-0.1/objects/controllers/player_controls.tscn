@@ -83,6 +83,7 @@ drag_bottom_margin = 0.1
 script = ExtResource("2_fxmue")
 
 [node name="HUD STUFF" type="CanvasLayer" parent="."]
+process_mode = 4
 
 [node name="vignette" type="TextureRect" parent="HUD STUFF"]
 anchors_preset = 15
