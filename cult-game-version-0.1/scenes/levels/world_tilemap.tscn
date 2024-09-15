@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=4 uid="uid://j2javknfi4yo"]
+[gd_scene load_steps=16 format=4 uid="uid://j2javknfi4yo"]
 
 [ext_resource type="Texture2D" uid="uid://dr1jlcktudyg" path="res://art/playermapxd.png" id="1_8gipf"]
 [ext_resource type="PackedScene" uid="uid://bhatrw3cecxw1" path="res://objects/characters/test_effigy.tscn" id="2_wrja3"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://cswy0gtegsw2e" path="res://objects/scenery/sunflower_ph.tscn" id="4_kj20s"]
 [ext_resource type="PackedScene" uid="uid://blp1t6dee26tv" path="res://objects/scenery/rocks_ph.tscn" id="5_c2tqm"]
 [ext_resource type="PackedScene" uid="uid://d3yfvynamcihx" path="res://objects/scenery/post_ph.tscn" id="6_8pmr1"]
+[ext_resource type="FontFile" uid="uid://dhk11k42eybnt" path="res://fonts/chela-one.regular.ttf" id="6_bxv72"]
 [ext_resource type="Script" path="res://scripts/PathNode.gd" id="6_esxbb"]
 [ext_resource type="PackedScene" uid="uid://dxiibdkgas3eu" path="res://scenes/pause_menu.tscn" id="7_gvci0"]
 [ext_resource type="PackedScene" uid="uid://4x1q48mnamto" path="res://Chatbox/Chatbox.tscn" id="8_ayjcr"]
@@ -30,7 +31,7 @@ var active:bool = false;
 func _ready():
 	$Sprite2D.modulate = Color(Color.RED, 0.7)
 
-func _on_interacted_with(by:Entity):
+func _on_interacted_with(_by:Entity):
 	active = !active
 	if active:
 		$Sprite2D.modulate = Color(Color.GREEN, 0.7)
@@ -104,6 +105,8 @@ offset_left = -94.0
 offset_top = -82.0
 offset_right = 39.0
 offset_bottom = -7.0
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("6_bxv72")
 text = "press e on this to
 start spawning
 enemies"

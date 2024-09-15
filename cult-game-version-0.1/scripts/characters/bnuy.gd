@@ -110,7 +110,7 @@ func chargeslash_hit():
 
 #endregion
 
-func onHit(pos:Vector2, normal:Vector2):
+func onHit(pos:Vector2, _normal:Vector2):
 	var temp = swordHitFx.instantiate()
 	temp.emitting = true
 	temp.global_position = pos

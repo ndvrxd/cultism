@@ -27,12 +27,9 @@ grow_vertical = 2
 theme_override_constants/outline_size = 10
 theme_override_fonts/font = ExtResource("1_gkem4")
 theme_override_font_sizes/font_size = 30
-tab_alignment = 1
-current_tab = 1
-drag_to_rearrange_enabled = true
+current_tab = 0
 
 [node name="Sounding" type="TabBar" parent="TabContainer"]
-visible = false
 layout_mode = 2
 metadata/_tab_index = 0
 
@@ -76,6 +73,7 @@ theme_override_font_sizes/font_size = 34
 text = "Mute"
 
 [node name="Grafics" type="TabBar" parent="TabContainer"]
+visible = false
 layout_mode = 2
 metadata/_tab_index = 1
 
@@ -177,7 +175,7 @@ autowrap_mode = 1
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 
 [connection signal="value_changed" from="TabContainer/Sounding/MarginContainer/VBoxContainer/HSlider" to="." method="_on_h_slider_value_changed"]
-[connection signal="toggled" from="TabContainer/Sounding/MarginContainer/VBoxContainer/Mute" to="." method="_on_mute_toggled"]
 [connection signal="toggled" from="TabContainer/Sounding/MarginContainer/VBoxContainer/Mute" to="." method="_on_check_button_toggled"]
+[connection signal="toggled" from="TabContainer/Sounding/MarginContainer/VBoxContainer/Mute" to="." method="_on_mute_toggled"]
 [connection signal="item_selected" from="TabContainer/Grafics/MarginContainer/VBoxContainer/Resolutions" to="." method="_on_resolutions_item_selected"]
 [connection signal="toggled" from="TabContainer/Grafics/MarginContainer/VBoxContainer/Fullscreen" to="." method="_on_fullscreen_toggled"]

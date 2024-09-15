@@ -87,7 +87,7 @@ func _process(delta):
 			ent.interact()
 	#endregion
 
-func damageVignette(dmg_amt, from):
+func damageVignette(dmg_amt, _from):
 	if !is_instance_valid(ent): return
 	var proportion = dmg_amt / ent.stat_maxHp.val
 	if proportion < $"HUD STUFF/vignette".modulate.a: return
