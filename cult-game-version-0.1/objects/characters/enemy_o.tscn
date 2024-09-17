@@ -1,11 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://ct6dh5rgiuip3"]
+[gd_scene load_steps=8 format=3 uid="uid://dpkhgwc5iscnw"]
 
-[ext_resource type="Script" path="res://scripts/characters/enemy.gd" id="1_34ypl"]
-[ext_resource type="Texture2D" uid="uid://clqo76f6tebyl" path="res://art/ui/arrow.png" id="2_dpt7c"]
-[ext_resource type="Texture2D" uid="uid://684pxvrx2k8n" path="res://art/character ph/shadowdemon_body.png" id="3_8qhy0"]
-[ext_resource type="Texture2D" uid="uid://5m8ckagwla2f" path="res://art/character ph/shadowdemon_eyes.png" id="4_6rtsc"]
-[ext_resource type="Material" uid="uid://cnrnbxtuhjeyt" path="res://vfx/particle/processmaterial/charged_tell.tres" id="4_n8gyy"]
-[ext_resource type="Texture2D" uid="uid://b5aefjahrsgq1" path="res://vfx/particle/lightflare2.png" id="5_5l1ig"]
+[ext_resource type="Script" path="res://scripts/characters/enemy.gd" id="1_d40on"]
+[ext_resource type="Texture2D" uid="uid://clqo76f6tebyl" path="res://art/ui/arrow.png" id="2_uoawf"]
+[ext_resource type="Texture2D" uid="uid://6i8qff0kq7ei" path="res://art/character ph/enemy ph.png" id="3_xfmpw"]
+[ext_resource type="Material" uid="uid://cnrnbxtuhjeyt" path="res://vfx/particle/processmaterial/charged_tell.tres" id="4_djl3q"]
+[ext_resource type="Texture2D" uid="uid://b5aefjahrsgq1" path="res://vfx/particle/lightflare2.png" id="5_e5qij"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_jucqc"]
 radius = 5.74163
@@ -23,7 +22,7 @@ motion_mode = 1
 slide_on_ceiling = false
 wall_min_slide_angle = 0.0
 platform_wall_layers = 15
-script = ExtResource("1_34ypl")
+script = ExtResource("1_d40on")
 entityName = "Enemy"
 team = 2
 objPath = "res://objects/characters/enemy.tscn"
@@ -37,34 +36,26 @@ position = Vector2(-1, -72)
 modulate = Color(1, 0, 0, 1)
 position = Vector2(60, 0)
 rotation = 1.5708
-texture = ExtResource("2_dpt7c")
+texture = ExtResource("2_uoawf")
 
 [node name="upright_anchor" type="Node2D" parent="." groups=["upright_sprite"]]
 y_sort_enabled = true
 position = Vector2(0, 3.8147e-06)
 
 [node name="sprite" type="Sprite2D" parent="upright_anchor"]
-modulate = Color(0.408329, 0.408329, 0.408329, 1)
 texture_filter = 1
+position = Vector2(10, -3.8147e-06)
 scale = Vector2(0.69, 0.69)
-texture = ExtResource("3_8qhy0")
+texture = ExtResource("3_xfmpw")
 offset = Vector2(0, -89.58)
-
-[node name="eyes" type="Sprite2D" parent="upright_anchor"]
-modulate = Color(0.94, 0, 0, 1)
-texture_filter = 1
-position = Vector2(0, 3)
-scale = Vector2(0.69, 0.69)
-texture = ExtResource("4_6rtsc")
-offset = Vector2(0, -92.58)
 
 [node name="tell" type="GPUParticles2D" parent="upright_anchor"]
 modulate = Color(1, 0, 0, 1)
 position = Vector2(0, -67)
 emitting = false
 amount = 3
-process_material = ExtResource("4_n8gyy")
-texture = ExtResource("5_5l1ig")
+process_material = ExtResource("4_djl3q")
+texture = ExtResource("5_e5qij")
 lifetime = 0.3
 one_shot = true
 fixed_fps = 40
