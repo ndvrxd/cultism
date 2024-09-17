@@ -70,7 +70,7 @@ baseValue = 400.0
 
 [node name="stat_maxHp" type="Node" parent="."]
 script = ExtResource("2_ttffq")
-baseValue = 50.0
+baseValue = 20.0
 
 [node name="stat_accel" type="Node" parent="."]
 script = ExtResource("2_ttffq")
