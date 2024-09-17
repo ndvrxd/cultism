@@ -31,6 +31,8 @@ upright_sprite="Sprites that should be visually scaled with camera Y."
 player_spawnpoint=""
 path_start_node="Node group for nodes that determine the paths enemies can take.."
 path_node="Group for all enemy pathfinding nodes."
+enemy_spawnpoint="Spawn points for enemies."
+boss_spawnpoint="Spawn point for boss-type enemies."
 
 [input]
 
