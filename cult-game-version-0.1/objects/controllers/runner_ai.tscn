@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://eemv1swdvl8g"]
+
+[ext_resource type="Script" path="res://scripts/ai/enemy_pursue_relentless.gd" id="1_dajrn"]
+
+[node name="RunnerAi" type="Node2D"]
+script = ExtResource("1_dajrn")
+attackRange = 150

@@ -22,7 +22,18 @@ agent_radius = 50.0
 [sub_resource type="GDScript" id="GDScript_ta6q2"]
 script/source = "extends Interactable
 
-const bodypath:String = \"res://objects/characters/enemy.tscn\"
+const bodypath:Array[String] = [
+	\"res://objects/characters/enemy.tscn\",
+	\"res://objects/characters/enemy.tscn\",
+	\"res://objects/characters/enemy.tscn\", #TODO: do some actual proper weighting
+	\"res://objects/characters/enemy.tscn\",
+	\"res://objects/characters/enemy.tscn\",
+	\"res://objects/characters/enemy.tscn\",
+	\"res://objects/characters/enemy.tscn\",
+	\"res://objects/characters/enemy.tscn\",
+	\"res://objects/characters/enemy.tscn\",
+	\"res://objects/characters/runner_enemy.tscn\"
+	]
 
 @export var spawnEvery:float = 0.3;
 var spawnTimer:float = spawnEvery - 1;
@@ -44,7 +55,7 @@ func _physics_process(delta):
 	if !active or !multiplayer.is_server(): return
 	spawnTimer += delta
 	if spawnTimer > spawnEvery:
-		Entity.spawn(bodypath, spawnpoints.pick_random().global_position)
+		Entity.spawn(bodypath.pick_random(), spawnpoints.pick_random().global_position)
 		spawnTimer = 0
 "
 

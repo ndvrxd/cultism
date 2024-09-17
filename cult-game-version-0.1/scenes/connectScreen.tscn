@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://bqn8v6gbnfj1u"]
+[gd_scene load_steps=13 format=3 uid="uid://bqn8v6gbnfj1u"]
 
 [ext_resource type="Script" path="res://scripts/menus/connectScreen.gd" id="1_bngj7"]
 [ext_resource type="FontFile" uid="uid://dhk11k42eybnt" path="res://fonts/chela-one.regular.ttf" id="2_ial8x"]
@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://6i8qff0kq7ei" path="res://art/character ph/enemy ph.png" id="5_hl3gd"]
 [ext_resource type="Texture2D" uid="uid://dx7xpikedu613" path="res://art/character ph/lizer ph.png" id="7_m7alx"]
 [ext_resource type="Texture2D" uid="uid://cqrh7ndjucvg5" path="res://art/character ph/effigy ph.png" id="8_3ew3o"]
+[ext_resource type="Texture2D" uid="uid://684pxvrx2k8n" path="res://art/character ph/shadowdemon_body.png" id="8_4dw75"]
 [ext_resource type="Script" path="res://scripts/menus/connectScreenGrabFocus.gd" id="9_ucoia"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_yj1jt"]
@@ -188,7 +189,7 @@ offset_right = 128.0
 offset_bottom = 219.0
 grow_horizontal = 2
 grow_vertical = 2
-item_count = 7
+item_count = 8
 fixed_icon_size = Vector2i(50, 50)
 item_0/text = "Bnuy"
 item_0/icon = ExtResource("2_rywp4")
@@ -198,12 +199,14 @@ item_2/text = "Possum"
 item_2/icon = ExtResource("3_vst5a")
 item_3/text = "Lizer"
 item_3/icon = ExtResource("7_m7alx")
-item_4/text = "player"
-item_4/icon = ExtResource("4_iac7p")
-item_5/text = "enemy"
+item_4/text = "enemy"
+item_4/icon = ExtResource("8_4dw75")
+item_5/text = "runner_enemy"
 item_5/icon = ExtResource("5_hl3gd")
-item_6/text = "test_effigy"
-item_6/icon = ExtResource("8_3ew3o")
+item_6/text = "player"
+item_6/icon = ExtResource("4_iac7p")
+item_7/text = "test_effigy"
+item_7/icon = ExtResource("8_3ew3o")
 script = ExtResource("9_ucoia")
 
 [connection signal="pressed" from="Control/VBoxContainer/CenterContainer/HBoxContainer4/Button" to="." method="onJoinClicked"]
