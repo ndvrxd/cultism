@@ -1,17 +1,12 @@
-[gd_scene load_steps=5 format=3 uid="uid://c4uqqxt5b81ei"]
+[gd_scene load_steps=6 format=3 uid="uid://c4uqqxt5b81ei"]
 
+[ext_resource type="Script" path="res://abstract/Stat.gd" id="1_bhg58"]
 [ext_resource type="Texture2D" uid="uid://5m8ckagwla2f" path="res://art/character ph/shadowdemon_eyes.png" id="1_ejiw6"]
 [ext_resource type="AudioStream" uid="uid://rqtq3s0mkg0i" path="res://sound/pools/spookyghostboo.tres" id="2_d1gos"]
 
 [sub_resource type="GDScript" id="GDScript_gfdmq"]
 resource_name = "Spectator"
 script/source = "extends Entity
-
-func _ready() -> void:
-	super._ready()
-	stat_maxHp = Stat.fromBase(9999)
-	stat_speed = Stat.fromBase(500)
-	stat_aggroNoise = Stat.fromBase(-1000)
 
 func _process(delta:float):
 	super._process(delta)
@@ -32,6 +27,18 @@ entityName = "Spectator"
 objPath = "res://objects/characters/spectator.tscn"
 healthBarColor = Color(0.65, 0.65, 0.65, 1)
 activeCD = 2.0
+
+[node name="stat_maxHp" type="Node" parent="."]
+script = ExtResource("1_bhg58")
+baseValue = 9999.0
+
+[node name="stat_speed" type="Node" parent="."]
+script = ExtResource("1_bhg58")
+baseValue = 500.0
+
+[node name="stat_aggroNoise" type="Node" parent="."]
+script = ExtResource("1_bhg58")
+baseValue = -1000.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_n3ohw")

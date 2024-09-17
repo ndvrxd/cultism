@@ -1,7 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://pr17s47egsv2"]
+[gd_scene load_steps=9 format=3 uid="uid://pr17s47egsv2"]
 
 [ext_resource type="Script" path="res://scripts/characters/possum.gd" id="1_1fgx3"]
 [ext_resource type="Texture2D" uid="uid://bdyllnybosvnm" path="res://art/character ph/poss ph.png" id="2_5mqqm"]
+[ext_resource type="Script" path="res://abstract/Stat.gd" id="2_6ewo4"]
 [ext_resource type="Texture2D" uid="uid://clqo76f6tebyl" path="res://art/ui/arrow.png" id="2_fns0g"]
 [ext_resource type="AudioStream" uid="uid://b2h08kwrqs8ax" path="res://sound/fx/gunshot.mp3" id="4_0l8cq"]
 
@@ -24,6 +25,10 @@ entityName = "Possum"
 team = 1
 objPath = "res://objects/characters/Possum.tscn"
 controllerPath = "res://objects/controllers/basic_enemy_ai.tscn"
+
+[node name="stat_regen" type="Node" parent="."]
+script = ExtResource("2_6ewo4")
+baseValue = 2.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -23)

@@ -30,13 +30,13 @@ var lookDirection:Vector2 = Vector2.UP;
 	# NOTE: this may not actually be necessary
 var aimPosition:Vector2 = Vector2.ZERO;
 
-@export var stat_maxHp:Stat = Stat.fromBase(100);
-@export var stat_speed:Stat = Stat.fromBase(400);
-@export var stat_accel:Stat = Stat.fromBase(8.5);
-@export var stat_regen:Stat = Stat.fromBase(0);
+var stat_maxHp:Stat
+var stat_speed:Stat
+var stat_accel:Stat
+var stat_regen:Stat
 # "aggro" stats get used by entity controllers for target selection
-@export var stat_aggroRange:Stat = Stat.fromBase(250);
-@export var stat_aggroNoise:Stat = Stat.fromBase(0);
+var stat_aggroRange:Stat
+var stat_aggroNoise:Stat
 
 # TODO replace these with Stats when the Stat rework rolls around
 @export var primaryCD:float = 1;
@@ -56,6 +56,24 @@ var shoulderPoint:Node2D;
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	add_to_group("entity"); # for polling all active entities
+	
+	var defaultStats = {
+		"stat_maxHp": 100,
+		"stat_speed": 400,
+		"stat_accel": 8.5,
+		"stat_regen": 0,
+		"stat_aggroRange": 250,
+		"stat_aggroNoise": 0
+	}
+	for key in defaultStats:
+		if !has_node(key):
+			add_child(Stat.fromBase(defaultStats[key], key))
+	stat_maxHp = $stat_maxHp
+	stat_speed = $stat_speed
+	stat_accel = $stat_accel
+	stat_regen = $stat_regen
+	stat_aggroRange = $stat_aggroRange
+	stat_aggroNoise = $stat_aggroNoise
 	
 	shoulderPoint = get_node("shoulder")
 	if shoulderPoint == null:

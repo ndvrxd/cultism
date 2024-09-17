@@ -13,8 +13,6 @@ var swordHitFx:PackedScene = preload("res://vfx/objects/sword_hit.tscn")
 
 func _ready():
 	super._ready()
-	stat_speed = Stat.fromBase(300)
-	stat_regen = Stat.fromBase(2)
 	swordShape.radius = 50;
 	hit_landed.connect(onHit)
 	primaryCD = 0.65
@@ -51,10 +49,10 @@ func primaryFireAction():
 		$sfx_swordping.play()
 
 func activeAbilityAction():
-	stat_speed.modifyBase(100)
+	if is_multiplayer_authority(): stat_speed.modifyBase(100)
 	$upright_anchor/speedup.emitting=true
 	await get_tree().create_timer(6).timeout
-	stat_speed.modifyBase(-100)
+	if is_multiplayer_authority(): stat_speed.modifyBase(-100)
 	$upright_anchor/speedup.emitting=false
 
 #region secondary fire methods
@@ -100,11 +98,12 @@ func secondaryFireReleased(target:Vector2) -> void:
 func chargeslash_hit():
 	# play a sound effect here?
 	$sfx_swordflurry.play()
-	var ents = shapeCastFromShoulder(lookDirection*swordRange, swordShape)
+	var ents = shapeCastFromShoulder(lookDirection*swordRange, swordShape, false)
 	if !ents.is_empty():
 		$sfx_flurryhit.play()
 	if is_multiplayer_authority():
 		for e:Entity in ents:
+			triggerHitEffectsRpc.rpc(e.shoulderPoint.global_position)
 			if team != e.team:
 				e.changeHealth.rpc(e.health, -chargeSlashDamage, get_path())
 

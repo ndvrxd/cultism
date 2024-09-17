@@ -1,6 +1,7 @@
-[gd_scene load_steps=19 format=3 uid="uid://ci7mx2j77fwhs"]
+[gd_scene load_steps=20 format=3 uid="uid://ci7mx2j77fwhs"]
 
 [ext_resource type="Script" path="res://scripts/characters/kibby.gd" id="1_j0iaj"]
+[ext_resource type="Script" path="res://abstract/Stat.gd" id="2_cnk3q"]
 [ext_resource type="Texture2D" uid="uid://clqo76f6tebyl" path="res://art/ui/arrow.png" id="2_ooq4y"]
 [ext_resource type="Material" uid="uid://dlqvc37rv373i" path="res://vfx/particle/processmaterial/bladeswing.tres" id="3_c10h1"]
 [ext_resource type="Texture2D" uid="uid://soudc4snc7fj" path="res://art/character ph/kibby ph 2.png" id="3_vd5t2"]
@@ -31,6 +32,22 @@ entityName = "Kibby"
 team = 1
 objPath = "res://objects/characters/kibby.tscn"
 controllerPath = "res://objects/controllers/basic_enemy_ai.tscn"
+
+[node name="stat_speed" type="Node" parent="."]
+script = ExtResource("2_cnk3q")
+baseValue = 300.0
+
+[node name="stat_maxHp" type="Node" parent="."]
+script = ExtResource("2_cnk3q")
+baseValue = 120.0
+
+[node name="stat_regen" type="Node" parent="."]
+script = ExtResource("2_cnk3q")
+baseValue = 2.0
+
+[node name="stat_aggroNoise" type="Node" parent="."]
+script = ExtResource("2_cnk3q")
+baseValue = 200.0
 
 [node name="shoulder" type="Node2D" parent="."]
 position = Vector2(0, -91)

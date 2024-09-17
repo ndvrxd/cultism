@@ -1,9 +1,10 @@
-[gd_scene load_steps=14 format=3 uid="uid://bhatrw3cecxw1"]
+[gd_scene load_steps=15 format=3 uid="uid://bhatrw3cecxw1"]
 
 [ext_resource type="Script" path="res://scripts/characters/effigy.gd" id="1_bfdly"]
 [ext_resource type="Texture2D" uid="uid://c3l4kkjo4q83i" path="res://vfx/particle/sparkle haha.png" id="1_ocdxr"]
 [ext_resource type="Texture2D" uid="uid://cqrh7ndjucvg5" path="res://art/character ph/effigy ph.png" id="1_qbvs6"]
 [ext_resource type="Shader" uid="uid://cchd4lawas5cx" path="res://vfx/shaders/effigy_flame.tres" id="2_bln26"]
+[ext_resource type="Script" path="res://abstract/Stat.gd" id="2_nmdvh"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_moupg"]
 shader = ExtResource("2_bln26")
@@ -57,8 +58,19 @@ team = 1
 objPath = "res://objects/characters/test_effigy.tscn"
 healthBarColor = Color(0.8245, 0.19, 1, 1)
 
+[node name="stat_speed" type="Node" parent="."]
+script = ExtResource("2_nmdvh")
+baseValue = 1.0
+
+[node name="stat_maxHp" type="Node" parent="."]
+script = ExtResource("2_nmdvh")
+baseValue = 5000.0
+
+[node name="stat_regen" type="Node" parent="."]
+script = ExtResource("2_nmdvh")
+baseValue = 2.0
+
 [node name="shoulder" type="Node2D" parent="."]
-visible = false
 position = Vector2(0, -142)
 
 [node name="upright_anchor" type="Node2D" parent="." groups=["upright_sprite"]]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://7j4v8eoc5ewj"]
+[gd_scene load_steps=24 format=3 uid="uid://7j4v8eoc5ewj"]
 
 [ext_resource type="Script" path="res://scripts/characters/bnuy.gd" id="1_l02gv"]
 [ext_resource type="Texture2D" uid="uid://b5k4twe1vvha5" path="res://art/character ph/bunny ph.png" id="2_c6683"]
@@ -16,6 +16,7 @@
 [ext_resource type="Material" uid="uid://cnrnbxtuhjeyt" path="res://vfx/particle/processmaterial/charged_tell.tres" id="5_tnbae"]
 [ext_resource type="AudioStream" uid="uid://dr23xuxyu8ihm" path="res://sound/fx/blip.mp3" id="6_qcxc3"]
 [ext_resource type="Texture2D" uid="uid://7dro3tyfewrc" path="res://vfx/particle/diamond_lightercenter.png" id="8_grr0g"]
+[ext_resource type="Script" path="res://abstract/Stat.gd" id="17_bkmbb"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_a5fkp"]
 radius = 20.025
@@ -60,6 +61,14 @@ controllerPath = "res://objects/controllers/basic_enemy_ai.tscn"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-1, -20)
 shape = SubResource("CircleShape2D_a5fkp")
+
+[node name="stat_speed" type="Node" parent="."]
+script = ExtResource("17_bkmbb")
+baseValue = 300.0
+
+[node name="stat_regen" type="Node" parent="."]
+script = ExtResource("17_bkmbb")
+baseValue = 2.0
 
 [node name="chargeslash_hit" type="Timer" parent="."]
 wait_time = 0.1

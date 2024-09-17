@@ -6,7 +6,6 @@ var lockInDirection:Vector2
 #any special functionality for the enemy can be overridden here
 func _ready():
 	super._ready();
-	stat_speed = Stat.fromBase(200);
 	hit_landed.connect(onHit)
 
 func _process(delta:float) -> void:
@@ -20,7 +19,7 @@ func primaryFireAction():
 	$telegraph.start()
 	$upright_anchor/tell.restart()
 	lockInDirection = lookDirection
-	stat_speed.modifyMultFlat(-0.99)
+	if is_multiplayer_authority(): stat_speed.modifyMultFlat(-0.99)
 	velocity = Vector2.ZERO
 	await get_tree().create_timer(0.4).timeout
 	if is_multiplayer_authority():
@@ -29,7 +28,7 @@ func primaryFireAction():
 			if team != ent.team:
 				ent.changeHealth.rpc(ent.health, -30, get_path())
 	await get_tree().create_timer(0.2).timeout
-	stat_speed.modifyMultFlat(0.99)
+	if is_multiplayer_authority(): stat_speed.modifyMultFlat(0.99)
 	lockInDirection = Vector2.ZERO
 
 func onHit(at:Vector2, normal:Vector2):

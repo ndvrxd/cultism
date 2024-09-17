@@ -21,10 +21,6 @@ var tween:Tween;
 
 func _ready():
 	super._ready()
-	stat_speed = Stat.fromBase(300)
-	stat_maxHp = Stat.fromBase(120)
-	stat_regen = Stat.fromBase(2)
-	stat_aggroNoise = Stat.fromBase(200)
 	meleeShape.radius = 100;
 	aoeShape.radius = 200;
 	hit_landed.connect(onHit)
@@ -119,12 +115,12 @@ func activeAbilityAction():
 	$AoeHitboxTick.start()
 	$snd_starstruck.play()
 	primaryTimer = 2
-	stat_speed.modifyMultFlat(-0.99)
+	if is_multiplayer_authority(): stat_speed.modifyMultFlat(-0.99)
 	velocity = Vector2.ZERO
 	await get_tree().create_timer(0.65).timeout
 	$AoeHitboxTick.stop()
 	await get_tree().create_timer(1.45).timeout
-	stat_speed.modifyMultFlat(0.99)
+	if is_multiplayer_authority(): stat_speed.modifyMultFlat(0.99)
 
 func starstruckTick():
 	var ents = shapeCastFromShoulder(Vector2.ZERO, aoeShape, false)
