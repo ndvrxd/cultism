@@ -19,7 +19,7 @@ func primaryFireAction():
 	$telegraph.start()
 	$upright_anchor/tell.restart()
 	lockInDirection = lookDirection
-	if is_multiplayer_authority(): stat_speed.modifyMultFlat(-0.99)
+	stat_speed.modifyMultFlat(-0.99)
 	velocity = Vector2.ZERO
 	await get_tree().create_timer(0.4).timeout
 	if is_multiplayer_authority():
@@ -28,7 +28,7 @@ func primaryFireAction():
 			if team != ent.team:
 				ent.changeHealth.rpc(ent.health, -30, get_path())
 	await get_tree().create_timer(0.2).timeout
-	if is_multiplayer_authority(): stat_speed.modifyMultFlat(0.99)
+	stat_speed.modifyMultFlat(0.99)
 	lockInDirection = Vector2.ZERO
 
 func onHit(at:Vector2, normal:Vector2):

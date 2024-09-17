@@ -49,10 +49,10 @@ func primaryFireAction():
 		$sfx_swordping.play()
 
 func activeAbilityAction():
-	if is_multiplayer_authority(): stat_speed.modifyBase(100)
+	stat_speed.modifyBase(100)
 	$upright_anchor/speedup.emitting=true
 	await get_tree().create_timer(6).timeout
-	if is_multiplayer_authority(): stat_speed.modifyBase(-100)
+	stat_speed.modifyBase(-100)
 	$upright_anchor/speedup.emitting=false
 
 #region secondary fire methods

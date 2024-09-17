@@ -115,12 +115,12 @@ func activeAbilityAction():
 	$AoeHitboxTick.start()
 	$snd_starstruck.play()
 	primaryTimer = 2
-	if is_multiplayer_authority(): stat_speed.modifyMultFlat(-0.99)
+	stat_speed.modifyMultFlat(-0.99)
 	velocity = Vector2.ZERO
 	await get_tree().create_timer(0.65).timeout
 	$AoeHitboxTick.stop()
 	await get_tree().create_timer(1.45).timeout
-	if is_multiplayer_authority(): stat_speed.modifyMultFlat(0.99)
+	stat_speed.modifyMultFlat(0.99)
 
 func starstruckTick():
 	var ents = shapeCastFromShoulder(Vector2.ZERO, aoeShape, false)
