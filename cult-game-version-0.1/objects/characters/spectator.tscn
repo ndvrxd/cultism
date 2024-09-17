@@ -38,7 +38,7 @@ baseValue = 500.0
 
 [node name="stat_aggroNoise" type="Node" parent="."]
 script = ExtResource("1_bhg58")
-baseValue = -1000.0
+baseValue = -9999.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_n3ohw")

@@ -106,7 +106,7 @@ grow_vertical = 0
 [node name="testSpawner2" type="Area2D" parent="."]
 position = Vector2(527, -157)
 script = SubResource("GDScript_ta6q2")
-spawnEvery = 1.0
+spawnEvery = 0.7
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="testSpawner2"]
 shape = SubResource("CircleShape2D_7fxi0")

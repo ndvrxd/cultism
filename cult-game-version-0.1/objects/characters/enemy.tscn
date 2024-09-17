@@ -35,6 +35,10 @@ healthBarColor = Color(1, 0.26, 0.26, 1)
 script = ExtResource("2_f64of")
 baseValue = 200.0
 
+[node name="stat_maxHp" type="Node" parent="."]
+script = ExtResource("2_f64of")
+baseValue = 50.0
+
 [node name="shoulder" type="Node2D" parent="."]
 position = Vector2(-1, -72)
 
