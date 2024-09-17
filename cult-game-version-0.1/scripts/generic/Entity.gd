@@ -14,6 +14,7 @@ signal killed(by:Entity)
 @export var team:int = 0;
 @export var objPath:String = ""
 @export var controllerPath:String = ""
+@export var aggroPriority:int = 0
 @export var healthBarColor:Color = Color.LIME_GREEN;
 var controllerAttached:bool = false;
 

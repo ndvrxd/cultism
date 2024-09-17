@@ -32,6 +32,7 @@ entityName = "Kibby"
 team = 1
 objPath = "res://objects/characters/kibby.tscn"
 controllerPath = "res://objects/controllers/basic_enemy_ai.tscn"
+aggroPriority = 1
 
 [node name="stat_speed" type="Node" parent="."]
 script = ExtResource("2_cnk3q")

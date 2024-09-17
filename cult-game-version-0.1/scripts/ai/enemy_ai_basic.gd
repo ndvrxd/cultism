@@ -33,5 +33,8 @@ func _physics_process(delta: float) -> void:
 		
 	aggroCheckTimer += delta;
 	if aggroCheckTimer > aggroCheckMaxTime:
-		findNewTarget();
+		var e_old:Entity = target;
+		var e:Entity = findNewTarget();
+		if e_old != null and e == null: #if de-aggroing from an enemy
+			seekNearestPathNode()
 		aggroCheckTimer = 0;

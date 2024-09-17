@@ -30,6 +30,7 @@ entity="Group containing all entities"
 upright_sprite="Sprites that should be visually scaled with camera Y."
 player_spawnpoint=""
 path_start_node="Node group for nodes that determine the paths enemies can take.."
+path_node="Group for all enemy pathfinding nodes."
 
 [input]
 

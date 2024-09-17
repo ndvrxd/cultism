@@ -56,6 +56,7 @@ script = ExtResource("1_bfdly")
 entityName = "Effigy"
 team = 1
 objPath = "res://objects/characters/test_effigy.tscn"
+aggroPriority = -1
 healthBarColor = Color(0.8245, 0.19, 1, 1)
 
 [node name="stat_speed" type="Node" parent="."]
