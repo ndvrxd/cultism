@@ -1,7 +1,7 @@
 extends Entity
 
 var swordShape:CircleShape2D = CircleShape2D.new()
-@export var swordRange = 76
+@export var swordRange = 75
 @export var swordDamage = 20
 @export var dmgRange = 5 #set this to 0 for consistent damage (boring imo but yk..) - ndvr :3
 @export var maxHits = 7;
