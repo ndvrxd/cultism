@@ -56,3 +56,4 @@ offset = Vector2(0, -90)
 
 [node name="sfx_boo" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("2_d1gos")
+bus = &"sfx"

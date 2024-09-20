@@ -126,6 +126,7 @@ func starstruckTick():
 	var ents = shapeCastFromShoulder(Vector2.ZERO, aoeShape, false)
 	for e:Entity in ents:
 		if team != e.team:
+			e.modulate = Color.LIGHT_SKY_BLUE
 			var temp = wololoHitFx.instantiate()
 			temp.global_position = e.shoulderPoint.global_position
 			get_tree().current_scene.add_child(temp)
