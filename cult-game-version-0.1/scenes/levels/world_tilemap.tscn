@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=4 uid="uid://j2javknfi4yo"]
+[gd_scene load_steps=25 format=4 uid="uid://j2javknfi4yo"]
 
 [ext_resource type="Texture2D" uid="uid://dr1jlcktudyg" path="res://art/playermapxd.png" id="1_8gipf"]
 [ext_resource type="PackedScene" uid="uid://bhatrw3cecxw1" path="res://objects/characters/test_effigy.tscn" id="2_wrja3"]
@@ -11,8 +11,12 @@
 [ext_resource type="PackedScene" uid="uid://dxiibdkgas3eu" path="res://scenes/pause_menu.tscn" id="7_gvci0"]
 [ext_resource type="PackedScene" uid="uid://4x1q48mnamto" path="res://Chatbox/Chatbox.tscn" id="8_ayjcr"]
 [ext_resource type="AudioStream" uid="uid://bv75udhjj2xn0" path="res://sound/music/boss1.mp3" id="8_nuvqu"]
+[ext_resource type="AudioStream" uid="uid://du8utldpa7rsd" path="res://sound/music/bgm1_loop_candidate.mp3" id="8_owc0s"]
 [ext_resource type="Texture2D" uid="uid://dmcej1hbhoaj0" path="res://vfx/particle/aoe.png" id="9_6n2p4"]
 [ext_resource type="TileSet" uid="uid://daul54ym8tixc" path="res://objects/tileset/test.tres" id="9_g6ap5"]
+[ext_resource type="Script" path="res://scripts/SpawnDirector.gd" id="10_fkhkt"]
+[ext_resource type="Script" path="res://abstract/SpawnCard.gd" id="11_hj8iu"]
+[ext_resource type="Script" path="res://abstract/SpawnDeck.gd" id="12_1wwus"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_ob1or"]
 vertices = PackedVector2Array(1134, -750, 1134, 590, 1070, 590, 402, 402, 402, 238, 146, -718, 146, -750, 370, 142, 274, -210, -430, 626, 142, 494, 142, 690, -466, 718, -430, 270, 110, 434, 14, 114, 14, 242, -974, 178, -18, 114, -974, -242, -50, -14, -498, -782, -338, -782, -338, -718, -462, -722, -210, -718, -210, -686, -46, -686, -46, -718, 146, -658, 370, 238, 338, 142, 338, 46, 306, 46, 306, -82, 274, -82, 242, -210, 242, -306, 210, -306, 210, -434, 178, -434, 178, -530, 146, -530, -114, -658, -114, -626, -178, -626, -178, -494, -146, -494, -146, -366, -462, -366, -114, -366, -114, -302, -82, -142, -82, -302, -50, -142, -18, -14, -754, -366, -974, -270, 46, 242, 46, 306, 78, 306, 78, 370, 110, 370, 306, 434, 306, 402, 1070, 622, 814, 622, 434, 462, 814, 654, 498, 654, 498, 590, 466, 590, 466, 526, 434, 526, 270, 462, 270, 494, 174, 690, 174, 718, -494, 626, -494, 850, -466, 878, -718, 878, -690, 850, -718, 302, -690, 270, -974, 302, -974, 206, -1202, 206, -1202, 302, -1358, 302, -1358, -366, -1234, -270, -1234, -366, -974, -366, -782, -366, -1202, 178, -1202, -242, -754, -946, -782, -974, -498, -974, -526, -946, -526, -722)
@@ -23,47 +27,74 @@ agent_radius = 50.0
 [sub_resource type="GDScript" id="GDScript_ta6q2"]
 script/source = "extends Interactable
 
-const bodypath:Array[String] = [
-	\"res://objects/characters/enemy.tscn\",
-	\"res://objects/characters/enemy.tscn\",
-	\"res://objects/characters/enemy.tscn\", #TODO: do some actual proper weighting
-	\"res://objects/characters/enemy.tscn\",
-	\"res://objects/characters/enemy.tscn\",
-	\"res://objects/characters/enemy.tscn\",
-	\"res://objects/characters/enemy.tscn\",
-	\"res://objects/characters/enemy.tscn\",
-	\"res://objects/characters/enemy.tscn\",
-	\"res://objects/characters/runner_enemy.tscn\"
-	]
-
-@export var spawnEvery:float = 0.3;
-var spawnTimer:float = spawnEvery - 1;
-var active:bool = false;
-var spawnpoints:Array[Node]
+var rampupCoeff:float = 1/1.2
+var rampupFlat:float = -0.5
+var rampupRate:float = 0.02
+var origRateCoeff:float;
+var origMaxCoeff:float;
 
 func _ready():
 	$Sprite2D.modulate = Color(Color.RED, 0.7)
-	spawnpoints = get_tree().get_nodes_in_group(\"enemy_spawnpoint\")
+	NetManager.player_connected.connect(onPlayerAdd)
+	NetManager.player_disconnected.connect(onPlayerRemove)
+	origRateCoeff = $SpawnDirector.rateCoefficient
+	origMaxCoeff = $SpawnDirector.maxCreditsCoefficient
+
+func _physics_process(delta: float) -> void:
+	rampupFlat += rampupRate * delta
+	$SpawnDirector.rateCoefficient = (origRateCoeff + rampupFlat) * rampupCoeff
+	$SpawnDirector.maxCreditsCoefficient = (origMaxCoeff + rampupFlat) * rampupCoeff
+
+func onPlayerAdd(_dum, _dum2):
+	rampupCoeff *= 1.2
+
+func onPlayerRemove(_dum):
+	rampupCoeff /= 1.2
 
 func _on_interacted_with(_by:Entity):
-	active = !active
-	if active:
+	$SpawnDirector.active = !$SpawnDirector.active
+	if $SpawnDirector.active:
+		rampupFlat = -0.5;
 		$Sprite2D.modulate = Color(Color.GREEN, 0.7)
 		$Boss1.playing=true
 	else:
 		$Sprite2D.modulate = Color(Color.RED, 0.7)
 		$Boss1.playing=false
-
-func _physics_process(delta):
-	if !active or !multiplayer.is_server(): return
-	spawnTimer += delta
-	if spawnTimer > spawnEvery:
-		Entity.spawn(bodypath.pick_random(), spawnpoints.pick_random().global_position)
-		spawnTimer = 0
+	$Calm.playing = !$Boss1.playing
 "
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_7fxi0"]
 radius = 20.0
+
+[sub_resource type="Resource" id="Resource_8vkbq"]
+script = ExtResource("11_hj8iu")
+bodyPath = "res://objects/characters/enemy.tscn"
+cost = 3.0
+count_lower = 2
+count_upper = 3
+NYI_weight = 1.0
+
+[sub_resource type="Resource" id="Resource_riyd7"]
+script = ExtResource("11_hj8iu")
+bodyPath = "res://objects/characters/runner_enemy.tscn"
+cost = 12.0
+count_lower = 1
+count_upper = 1
+NYI_weight = 1.0
+
+[sub_resource type="Resource" id="Resource_tbsoq"]
+script = ExtResource("11_hj8iu")
+bodyPath = "res://objects/characters/enemy.tscn"
+cost = 30.0
+count_lower = 15
+count_upper = 25
+NYI_weight = 1.0
+
+[sub_resource type="Resource" id="Resource_evxsg"]
+script = ExtResource("12_1wwus")
+cards = Array[ExtResource("11_hj8iu")]([SubResource("Resource_8vkbq"), SubResource("Resource_riyd7"), SubResource("Resource_tbsoq")])
+rate = 1.5
+maxCredits = 10.0
 
 [node name="world" type="Node2D"]
 y_sort_enabled = true
@@ -109,7 +140,6 @@ grow_vertical = 0
 [node name="testSpawner2" type="Area2D" parent="."]
 position = Vector2(527, -157)
 script = SubResource("GDScript_ta6q2")
-spawnEvery = 0.7
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="testSpawner2"]
 shape = SubResource("CircleShape2D_7fxi0")
@@ -132,8 +162,21 @@ enemies"
 
 [node name="Boss1" type="AudioStreamPlayer" parent="testSpawner2"]
 stream = ExtResource("8_nuvqu")
-stream_paused = true
+volume_db = -1.5
 bus = &"music"
+
+[node name="Calm" type="AudioStreamPlayer" parent="testSpawner2"]
+stream = ExtResource("8_owc0s")
+autoplay = true
+bus = &"music"
+
+[node name="SpawnDirector" type="Node" parent="testSpawner2"]
+script = ExtResource("10_fkhkt")
+deck = SubResource("Resource_evxsg")
+active = false
+attemptDelayUpperBound = 4.0
+attemptDelayLowerBound = 0.5
+maxCardsPerAttempt = 3
 
 [node name="player spawnpoints" type="Node" parent="."]
 process_mode = 4

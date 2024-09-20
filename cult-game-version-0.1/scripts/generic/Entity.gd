@@ -38,6 +38,7 @@ var stat_regen:Stat
 # "aggro" stats get used by entity controllers for target selection
 var stat_aggroRange:Stat
 var stat_aggroNoise:Stat
+var stat_swingSpeed:Stat
 
 # TODO replace these with Stats when the Stat rework rolls around
 @export var primaryCD:float = 1;
@@ -64,7 +65,8 @@ func _ready() -> void:
 		"stat_accel": 8.5,
 		"stat_regen": 0,
 		"stat_aggroRange": 250,
-		"stat_aggroNoise": 0
+		"stat_aggroNoise": 0,
+		"stat_swingSpeed": 1
 	}
 	for key in defaultStats:
 		if !has_node(key):
@@ -75,6 +77,7 @@ func _ready() -> void:
 	stat_regen = $stat_regen
 	stat_aggroRange = $stat_aggroRange
 	stat_aggroNoise = $stat_aggroNoise
+	stat_swingSpeed = $stat_swingSpeed
 	
 	shoulderPoint = get_node("shoulder")
 	if shoulderPoint == null:
@@ -142,12 +145,12 @@ func _physics_process(delta: float) -> void:
 		primaryFireAction()
 		if get_multiplayer_authority() == multiplayer.get_unique_id():
 			primaryFireActionAuthority()
-		primaryTimer = primaryCD
+		primaryTimer = primaryCD / stat_swingSpeed.val
 	if holdingSecondary and secondaryTimer <= 0:
 		secondaryFireAction()
 		if get_multiplayer_authority() == multiplayer.get_unique_id():
 			secondaryFireActionAuthority()
-		secondaryTimer = secondaryCD
+		secondaryTimer = secondaryCD * stat_swingSpeed.val
 	if primaryTimer > 0: primaryTimer -= delta
 	if secondaryTimer > 0: secondaryTimer -= delta
 	if activeTimer > 0: activeTimer -= delta

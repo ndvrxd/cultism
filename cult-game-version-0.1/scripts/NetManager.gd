@@ -130,7 +130,8 @@ func spawnEntityRpc(scnPath:String, pos:Vector2 = Vector2.ZERO, ctlPath:String="
 			if isPlayer:
 				ebody.entityName = eName;
 				ebody.team = 1;
-				addNametagToEntity.call_deferred(ebody)
+				if id != multiplayer.get_unique_id():
+					addNametagToEntity.call_deferred(ebody)
 		get_tree().current_scene.add_child.call_deferred(ebody)
 		if id == multiplayer.get_unique_id():
 			var ectl:EntityController
