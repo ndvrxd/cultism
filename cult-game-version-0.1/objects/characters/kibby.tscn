@@ -161,13 +161,17 @@ wait_time = 0.2
 
 [node name="snd_secondarycharged" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("12_w3v4g")
+bus = &"sfx"
 
 [node name="snd_whiff" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("13_w3jds")
 pitch_scale = 1.2
+bus = &"sfx"
 
 [node name="snd_guitarhit" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("14_nuct7")
+bus = &"sfx"
 
 [node name="snd_starstruck" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("15_fwbwr")
+bus = &"kibby_guitar"

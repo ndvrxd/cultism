@@ -49,6 +49,7 @@ rotation = 1.5708
 texture = ExtResource("2_dpt7c")
 
 [node name="upright_anchor" type="Node2D" parent="." groups=["upright_sprite"]]
+process_mode = 4
 y_sort_enabled = true
 position = Vector2(0, 3.8147e-06)
 
@@ -68,6 +69,7 @@ texture = ExtResource("4_6rtsc")
 offset = Vector2(0, -92.58)
 
 [node name="tell" type="GPUParticles2D" parent="upright_anchor"]
+process_mode = 1
 modulate = Color(1, 0, 0, 1)
 position = Vector2(0, -67)
 emitting = false
@@ -90,7 +92,3 @@ shape = SubResource("CapsuleShape2D_jucqc")
 position = Vector2(0, -20)
 shape = SubResource("CircleShape2D_uaxf4")
 debug_color = Color(0.772432, 0.263693, 0.879854, 0.42)
-
-[node name="telegraph" type="Timer" parent="."]
-wait_time = 0.4
-one_shot = true
