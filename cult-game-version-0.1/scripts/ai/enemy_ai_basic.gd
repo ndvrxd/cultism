@@ -36,5 +36,6 @@ func _physics_process(delta: float) -> void:
 		var e_old:Entity = target;
 		var e:Entity = findNewTarget();
 		if e_old != null and e == null: #if de-aggroing from an enemy
+			attacking = false
 			seekNearestPathNode()
 		aggroCheckTimer = 0;

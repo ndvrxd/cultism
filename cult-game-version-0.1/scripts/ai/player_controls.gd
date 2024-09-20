@@ -29,12 +29,15 @@ func spectate(killedBy:Entity):
 	Chatbox.inst.print_chat.rpc("* " + ename + " was killed by " + killedBy.entityName + ".")
 	var epos:Vector2 = ent.global_position
 	reparent(get_tree().current_scene)
+	global_position = ent.global_position
 	await get_tree().create_timer(0.1).timeout
 	Entity.spawn(spectatorBody, epos, '', ename)
 	await get_tree().create_timer(0.1).timeout
-	var newEnt: Entity = get_tree().current_scene.get_node(ename)
-	reparent(newEnt)
-	attemptControl.call_deferred()
+	queue_free()
+	
+	#var newEnt: Entity = get_tree().current_scene.get_node(ename)
+	#reparent(newEnt)
+	#attemptControl.call_deferred()
 
 func _physics_process(delta: float) -> void:
 	if !is_instance_valid(ent): return
