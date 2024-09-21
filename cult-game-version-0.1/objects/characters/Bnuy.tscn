@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://7j4v8eoc5ewj"]
+[gd_scene load_steps=10 format=3 uid="uid://7j4v8eoc5ewj"]
 
 [ext_resource type="Script" path="res://scripts/characters/bnuy.gd" id="1_l02gv"]
 [ext_resource type="Texture2D" uid="uid://b5k4twe1vvha5" path="res://art/character ph/bunny ph.png" id="2_c6683"]
@@ -6,7 +6,6 @@
 [ext_resource type="Texture2D" uid="uid://clqo76f6tebyl" path="res://art/ui/arrow.png" id="3_n0sa5"]
 [ext_resource type="PackedScene" uid="uid://d0xuqfm81y8em" path="res://objects/abilities/sword_strike_flurry.tscn" id="4_xfqfj"]
 [ext_resource type="PackedScene" uid="uid://bhho2ywfqt0vw" path="res://objects/abilities/sword_strike_stock.tscn" id="5_8sfub"]
-[ext_resource type="PackedScene" uid="uid://bsm1bpkbr01xf" path="res://objects/abilities/sd_melee.tscn" id="5_uauok"]
 [ext_resource type="Script" path="res://scripts/abstract/Stat.gd" id="17_bkmbb"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_a5fkp"]
@@ -26,13 +25,11 @@ entityName = "Bunny"
 team = 1
 objPath = "res://objects/characters/Bnuy.tscn"
 controllerPath = "res://objects/controllers/basic_enemy_ai.tscn"
-abilities = [NodePath("ShadowDemonMelee"), NodePath("SwordStrikeFlurry"), NodePath("SpeedIncrease")]
+abilities = [NodePath("SwordStrikeStock"), NodePath("SwordStrikeFlurry"), NodePath("SpeedIncrease")]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-1, -20)
 shape = SubResource("CircleShape2D_a5fkp")
-
-[node name="ShadowDemonMelee" parent="." instance=ExtResource("5_uauok")]
 
 [node name="upright_anchor" type="Node2D" parent="." groups=["upright_sprite"]]
 y_sort_enabled = true
