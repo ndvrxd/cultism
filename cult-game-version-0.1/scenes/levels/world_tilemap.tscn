@@ -33,14 +33,18 @@ var rampupRate:float = 0.02
 var origRateCoeff:float;
 var origMaxCoeff:float;
 
+var active:bool=false
+
 func _ready():
 	$Sprite2D.modulate = Color(Color.RED, 0.7)
+	if !is_multiplayer_authority(): return
 	NetManager.player_connected.connect(onPlayerAdd)
 	NetManager.player_disconnected.connect(onPlayerRemove)
 	origRateCoeff = $SpawnDirector.rateCoefficient
 	origMaxCoeff = $SpawnDirector.maxCreditsCoefficient
 
 func _physics_process(delta: float) -> void:
+	if !is_multiplayer_authority(): return
 	rampupFlat += rampupRate * delta
 	$SpawnDirector.rateCoefficient = (origRateCoeff + rampupFlat) * rampupCoeff
 	$SpawnDirector.maxCreditsCoefficient = (origMaxCoeff + rampupFlat) * rampupCoeff
@@ -52,14 +56,16 @@ func onPlayerRemove(_dum):
 	rampupCoeff /= 1.2
 
 func _on_interacted_with(_by:Entity):
-	$SpawnDirector.active = !$SpawnDirector.active
-	if $SpawnDirector.active:
+	active = !active
+	if active:
 		rampupFlat = -0.5;
 		$Sprite2D.modulate = Color(Color.GREEN, 0.7)
 		$Boss1.playing=true
 	else:
 		$Sprite2D.modulate = Color(Color.RED, 0.7)
 		$Boss1.playing=false
+	if is_multiplayer_authority():
+		$SpawnDirector.active = active
 	$Calm.playing = !$Boss1.playing
 "
 
