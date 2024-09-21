@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://c4uqqxt5b81ei"]
 
-[ext_resource type="Script" path="res://abstract/Stat.gd" id="1_bhg58"]
+[ext_resource type="Script" path="res://scripts/abstract/Stat.gd" id="1_bhg58"]
 [ext_resource type="Texture2D" uid="uid://5m8ckagwla2f" path="res://art/character ph/shadowdemon_eyes.png" id="1_ejiw6"]
 [ext_resource type="AudioStream" uid="uid://rqtq3s0mkg0i" path="res://sound/pools/spookyghostboo.tres" id="2_d1gos"]
 

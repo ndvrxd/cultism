@@ -1,7 +1,7 @@
 [gd_scene load_steps=11 format=3 uid="uid://fajivgoriugi"]
 
 [ext_resource type="Material" uid="uid://ck8ixyuqbmu4n" path="res://vfx/particle/processmaterial/burst.tres" id="2_rllhs"]
-[ext_resource type="Script" path="res://abstract/Stat.gd" id="2_ttffq"]
+[ext_resource type="Script" path="res://scripts/abstract/Stat.gd" id="2_ttffq"]
 [ext_resource type="Texture2D" uid="uid://clqo76f6tebyl" path="res://art/ui/arrow.png" id="3_8rp6b"]
 [ext_resource type="Texture2D" uid="uid://6i8qff0kq7ei" path="res://art/character ph/enemy ph.png" id="3_na1fc"]
 [ext_resource type="Texture2D" uid="uid://dmcej1hbhoaj0" path="res://vfx/particle/aoe.png" id="3_v8ctk"]

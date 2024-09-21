@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scripts/characters/enemy.gd" id="1_34ypl"]
 [ext_resource type="Texture2D" uid="uid://clqo76f6tebyl" path="res://art/ui/arrow.png" id="2_dpt7c"]
-[ext_resource type="Script" path="res://abstract/Stat.gd" id="2_f64of"]
+[ext_resource type="Script" path="res://scripts/abstract/Stat.gd" id="2_f64of"]
 [ext_resource type="Texture2D" uid="uid://684pxvrx2k8n" path="res://art/character ph/shadowdemon_body.png" id="3_8qhy0"]
 [ext_resource type="Texture2D" uid="uid://5m8ckagwla2f" path="res://art/character ph/shadowdemon_eyes.png" id="4_6rtsc"]
 [ext_resource type="Material" uid="uid://cnrnbxtuhjeyt" path="res://vfx/particle/processmaterial/charged_tell.tres" id="4_n8gyy"]

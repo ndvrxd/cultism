@@ -16,7 +16,7 @@
 [ext_resource type="Material" uid="uid://cnrnbxtuhjeyt" path="res://vfx/particle/processmaterial/charged_tell.tres" id="5_tnbae"]
 [ext_resource type="AudioStream" uid="uid://dr23xuxyu8ihm" path="res://sound/fx/blip.mp3" id="6_qcxc3"]
 [ext_resource type="Texture2D" uid="uid://7dro3tyfewrc" path="res://vfx/particle/diamond_lightercenter.png" id="8_grr0g"]
-[ext_resource type="Script" path="res://abstract/Stat.gd" id="17_bkmbb"]
+[ext_resource type="Script" path="res://scripts/abstract/Stat.gd" id="17_bkmbb"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_a5fkp"]
 radius = 20.025
