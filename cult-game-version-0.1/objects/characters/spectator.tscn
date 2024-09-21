@@ -26,7 +26,6 @@ script = SubResource("GDScript_gfdmq")
 entityName = "Spectator"
 objPath = "res://objects/characters/spectator.tscn"
 healthBarColor = Color(0.65, 0.65, 0.65, 1)
-activeCD = 2.0
 
 [node name="stat_maxHp" type="Node" parent="."]
 script = ExtResource("1_bhg58")

@@ -71,21 +71,24 @@ func _process(delta):
 	ui_hb_over.value = (ent.health / ent.stat_maxHp.val)
 	ui_hb_under.value = lerp(ui_hb_under.value, ui_hb_over.value, delta*7)
 	ui_hb_text.text = str(int(ent.health)) + " / " + str(int(ent.stat_maxHp.val))
-	ui_active_cd.value = 1 - ent.activeTimer / ent.activeCD
+	if ent.abilities.size() > 2 and is_instance_valid(ent.abilities[2]): 
+		ui_active_cd.value = 1 - ent.abilities[2].cdTimer / ent.abilities[2].stat_cooldown.val
 	#endregion
 	
 	#region input stuff
 	if !Chatbox.isFocused:
 		if Input.is_action_just_pressed("PrimaryAttack"):
-			ent.primaryFire.rpc(ent.aimPosition)
-		if Input.is_action_just_pressed("SecondaryAttack"):
-			ent.secondaryFire.rpc(ent.aimPosition)
+			ent.setAbilityPressed.rpc(0, true)
 		if Input.is_action_just_released("PrimaryAttack"):
-			ent.primaryFireReleased.rpc(ent.aimPosition)
+			ent.setAbilityPressed.rpc(0, false)
+		if Input.is_action_just_pressed("SecondaryAttack"):
+			ent.setAbilityPressed.rpc(1, true)
 		if Input.is_action_just_released("SecondaryAttack"):
-			ent.secondaryFireReleased.rpc(ent.aimPosition)
+			ent.setAbilityPressed.rpc(1, false)
 		if Input.is_action_just_pressed("SpecialAbility"):
-			ent.activeAbilityRpc.rpc(ent.aimPosition)
+			ent.setAbilityPressed.rpc(2, true)
+		if Input.is_action_just_released("SpecialAbility"):
+			ent.setAbilityPressed.rpc(2, false)
 		if Input.is_action_just_pressed("Interact"):
 			ent.interact()
 	#endregion

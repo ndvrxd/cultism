@@ -1,0 +1,107 @@
+[gd_scene load_steps=10 format=3 uid="uid://bsm1bpkbr01xf"]
+
+[ext_resource type="Material" uid="uid://cnrnbxtuhjeyt" path="res://vfx/particle/processmaterial/charged_tell.tres" id="2_rwtjk"]
+[ext_resource type="Texture2D" uid="uid://b5aefjahrsgq1" path="res://vfx/particle/lightflare2.png" id="3_6ffd6"]
+[ext_resource type="Texture2D" uid="uid://clqo76f6tebyl" path="res://art/ui/arrow.png" id="3_xbq0c"]
+
+[sub_resource type="GDScript" id="GDScript_kn5v2"]
+script/source = "extends Ability
+
+var lockIn:Vector2 = Vector2.ZERO
+@onready var hitFx:PackedScene = load(\"res://vfx/objects/sword_hit.tscn\")
+
+func _process(delta:float) -> void:
+	super._process(delta)
+	if lockIn != Vector2.ZERO:
+		ent.lookDirection = lockIn.normalized()
+
+func fireAction():
+	$upright/tell.restart()
+	alignNodeWithShoulder($tell2)
+	$tell2/vfx.restart()
+	ent.frozen = true
+	lockIn = ent.lookDirection
+	
+	$attack_delay.start()
+	await $attack_delay.timeout
+	
+	if is_multiplayer_authority():
+		var hit = ent.lineCastFromShoulder(lockIn, 100)
+		var target = hit[\"entity\"]
+		if hit[\"pos\"] != Vector2.ZERO:
+			doHitFx.rpc(hit[\"pos\"])
+		if target:
+			if target.team != ent.team:
+				target.changeHealth.rpc(target.health,
+					-ent.stat_baseDamage.val,ent.get_path())
+	
+	ent.frozen = false
+	lockIn = Vector2.ZERO
+
+@rpc(\"authority\", \"call_local\", \"reliable\")
+func doHitFx(pos:Vector2):
+	var temp = hitFx.instantiate()
+	temp.emitting = true
+	temp.global_position = pos
+	temp.modulate = Color.RED
+	get_tree().current_scene.add_child(temp)
+"
+
+[sub_resource type="Curve" id="Curve_5nvux"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.248588, 0.912088), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_b3t4b"]
+curve = SubResource("Curve_5nvux")
+
+[sub_resource type="Curve" id="Curve_oijoe"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.141243, 1), -0.291759, -0.291759, 0, 0, Vector2(0.485876, 0.692308), -1.08059, -1.08059, 0, 0, Vector2(0.99435, 0.296703), -0.473122, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_lruqc"]
+curve = SubResource("Curve_oijoe")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_4rexe"]
+particle_flag_disable_z = true
+gravity = Vector3(0, -588, 0)
+scale_min = 1.3
+scale_max = 1.3
+scale_curve = SubResource("CurveTexture_lruqc")
+alpha_curve = SubResource("CurveTexture_b3t4b")
+
+[node name="ShadowDemonMelee" type="Node2D"]
+script = SubResource("GDScript_kn5v2")
+
+[node name="attack_delay" type="Timer" parent="."]
+wait_time = 0.4
+
+[node name="upright" type="Node2D" parent="." groups=["upright_sprite"]]
+
+[node name="tell" type="GPUParticles2D" parent="upright"]
+process_mode = 1
+modulate = Color(1, 0, 0, 1)
+position = Vector2(0, -67)
+emitting = false
+amount = 3
+process_material = ExtResource("2_rwtjk")
+texture = ExtResource("3_6ffd6")
+lifetime = 0.3
+one_shot = true
+fixed_fps = 40
+local_coords = true
+
+[node name="tell2" type="Node2D" parent="."]
+
+[node name="vfx" type="GPUParticles2D" parent="tell2"]
+modulate = Color(1, 0, 0, 1)
+z_index = 1
+position = Vector2(49, 0)
+rotation = 1.5708
+emitting = false
+amount = 3
+process_material = SubResource("ParticleProcessMaterial_4rexe")
+texture = ExtResource("3_xbq0c")
+lifetime = 0.4
+one_shot = true
+visibility_rect = Rect2(-50, -50, 100, 100)
+local_coords = true

@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bcsqev2e0pnu"]
+
+[ext_resource type="Script" path="res://scripts/generic/Ability.gd" id="1_35fjn"]
+
+[node name="Selfdestruct" type="Node2D"]
+script = ExtResource("1_35fjn")

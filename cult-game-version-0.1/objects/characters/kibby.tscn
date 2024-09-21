@@ -28,11 +28,19 @@ height = 21.0526
 [node name="Kibby" type="CharacterBody2D"]
 collision_layer = 4
 script = ExtResource("1_j0iaj")
+guitarRange = null
+guitarDamage = null
+lightningDamage = null
+maxHits = null
 entityName = "Kibby"
 team = 1
 objPath = "res://objects/characters/kibby.tscn"
 controllerPath = "res://objects/controllers/basic_enemy_ai.tscn"
 aggroPriority = 1
+healthBarColor = null
+primaryCD = null
+secondaryCD = null
+activeCD = null
 
 [node name="stat_speed" type="Node" parent="."]
 script = ExtResource("2_cnk3q")

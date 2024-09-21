@@ -1,12 +1,11 @@
-[gd_scene load_steps=10 format=3 uid="uid://ct6dh5rgiuip3"]
+[gd_scene load_steps=9 format=3 uid="uid://ct6dh5rgiuip3"]
 
 [ext_resource type="Script" path="res://scripts/characters/enemy.gd" id="1_34ypl"]
+[ext_resource type="PackedScene" uid="uid://bsm1bpkbr01xf" path="res://objects/abilities/sd_melee.tscn" id="2_6wl3w"]
 [ext_resource type="Texture2D" uid="uid://clqo76f6tebyl" path="res://art/ui/arrow.png" id="2_dpt7c"]
 [ext_resource type="Script" path="res://scripts/abstract/Stat.gd" id="2_f64of"]
 [ext_resource type="Texture2D" uid="uid://684pxvrx2k8n" path="res://art/character ph/shadowdemon_body.png" id="3_8qhy0"]
 [ext_resource type="Texture2D" uid="uid://5m8ckagwla2f" path="res://art/character ph/shadowdemon_eyes.png" id="4_6rtsc"]
-[ext_resource type="Material" uid="uid://cnrnbxtuhjeyt" path="res://vfx/particle/processmaterial/charged_tell.tres" id="4_n8gyy"]
-[ext_resource type="Texture2D" uid="uid://b5aefjahrsgq1" path="res://vfx/particle/lightflare2.png" id="5_5l1ig"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_jucqc"]
 radius = 5.74163
@@ -15,7 +14,7 @@ height = 21.0526
 [sub_resource type="CircleShape2D" id="CircleShape2D_uaxf4"]
 radius = 20.0998
 
-[node name="enemy" type="CharacterBody2D"]
+[node name="enemy" type="CharacterBody2D" node_paths=PackedStringArray("abilities")]
 y_sort_enabled = true
 disable_mode = 1
 collision_layer = 2
@@ -30,6 +29,9 @@ team = 2
 objPath = "res://objects/characters/enemy.tscn"
 controllerPath = "res://objects/controllers/basic_enemy_ai.tscn"
 healthBarColor = Color(1, 0.26, 0.26, 1)
+abilities = [NodePath("ShadowDemonMelee")]
+
+[node name="ShadowDemonMelee" parent="." instance=ExtResource("2_6wl3w")]
 
 [node name="stat_speed" type="Node" parent="."]
 script = ExtResource("2_f64of")
@@ -43,6 +45,7 @@ baseValue = 50.0
 position = Vector2(-1, -72)
 
 [node name="Sprite2D" type="Sprite2D" parent="shoulder"]
+visible = false
 modulate = Color(1, 0, 0, 1)
 position = Vector2(60, 0)
 rotation = 1.5708
@@ -67,19 +70,6 @@ position = Vector2(0, 3)
 scale = Vector2(0.69, 0.69)
 texture = ExtResource("4_6rtsc")
 offset = Vector2(0, -92.58)
-
-[node name="tell" type="GPUParticles2D" parent="upright_anchor"]
-process_mode = 1
-modulate = Color(1, 0, 0, 1)
-position = Vector2(0, -67)
-emitting = false
-amount = 3
-process_material = ExtResource("4_n8gyy")
-texture = ExtResource("5_5l1ig")
-lifetime = 0.3
-one_shot = true
-fixed_fps = 40
-local_coords = true
 
 [node name="Area2D" type="Area2D" parent="."]
 scale = Vector2(5.225, 5.225)

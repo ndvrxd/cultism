@@ -1,53 +1,22 @@
-[gd_scene load_steps=24 format=3 uid="uid://7j4v8eoc5ewj"]
+[gd_scene load_steps=11 format=3 uid="uid://7j4v8eoc5ewj"]
 
 [ext_resource type="Script" path="res://scripts/characters/bnuy.gd" id="1_l02gv"]
 [ext_resource type="Texture2D" uid="uid://b5k4twe1vvha5" path="res://art/character ph/bunny ph.png" id="2_c6683"]
-[ext_resource type="AudioStream" uid="uid://emh40c16tty5" path="res://sound/pools/sword_hit_stock.tres" id="2_obnuj"]
-[ext_resource type="AudioStream" uid="uid://bj21hl31ik8f" path="res://sound/pools/sword_ping_stock.tres" id="3_chs2w"]
-[ext_resource type="AudioStream" uid="uid://bmowiy6k6qk1f" path="res://sound/fx/smallstab_quick.mp3" id="3_kj172"]
+[ext_resource type="PackedScene" uid="uid://d2e4q455kjkby" path="res://objects/abilities/speed_increase.tscn" id="3_lqmu2"]
 [ext_resource type="Texture2D" uid="uid://clqo76f6tebyl" path="res://art/ui/arrow.png" id="3_n0sa5"]
-[ext_resource type="AudioStream" uid="uid://ivxk0aryil43" path="res://sound/pools/whiff.tres" id="3_sr8tv"]
-[ext_resource type="Material" uid="uid://dlqvc37rv373i" path="res://vfx/particle/processmaterial/bladeswing.tres" id="4_8bs3g"]
-[ext_resource type="Texture2D" uid="uid://c3l4kkjo4q83i" path="res://vfx/particle/sparkle haha.png" id="4_28g8c"]
-[ext_resource type="Material" uid="uid://mxrc8o1ov8cn" path="res://vfx/particle/processmaterial/bladeflurry.tres" id="4_bpfa7"]
-[ext_resource type="Texture2D" uid="uid://b5aefjahrsgq1" path="res://vfx/particle/lightflare2.png" id="5_kavyb"]
-[ext_resource type="Material" uid="uid://beg2mqqa0fc2f" path="res://vfx/particle/processmaterial/sparkle.tres" id="5_kngdb"]
-[ext_resource type="AudioStream" uid="uid://dtb4qnmeaet6h" path="res://sound/fx/bnuuy/charge_stance.mp3" id="5_makp7"]
-[ext_resource type="Material" uid="uid://cnrnbxtuhjeyt" path="res://vfx/particle/processmaterial/charged_tell.tres" id="5_tnbae"]
-[ext_resource type="AudioStream" uid="uid://dr23xuxyu8ihm" path="res://sound/fx/blip.mp3" id="6_qcxc3"]
-[ext_resource type="Texture2D" uid="uid://7dro3tyfewrc" path="res://vfx/particle/diamond_lightercenter.png" id="8_grr0g"]
+[ext_resource type="PackedScene" uid="uid://d0xuqfm81y8em" path="res://objects/abilities/sword_strike_flurry.tscn" id="4_xfqfj"]
+[ext_resource type="PackedScene" uid="uid://bhho2ywfqt0vw" path="res://objects/abilities/sword_strike_stock.tscn" id="5_8sfub"]
+[ext_resource type="PackedScene" uid="uid://bsm1bpkbr01xf" path="res://objects/abilities/sd_melee.tscn" id="5_uauok"]
 [ext_resource type="Script" path="res://scripts/abstract/Stat.gd" id="17_bkmbb"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_a5fkp"]
 radius = 20.025
 
-[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_8gwm0"]
-random_pitch = 1.2
-streams_count = 1
-stream_0/stream = ExtResource("3_kj172")
-
-[sub_resource type="Curve" id="Curve_mbyld"]
-_data = [Vector2(0, 0), 0.0, 2.96825, 0, 0, Vector2(0.230769, 0.681319), 0.0, 0.0, 0, 0, Vector2(0.748252, 0.659341), 0.0, 0.0, 0, 0, Vector2(1, 0), -2.79911, 0.0, 0, 0]
-point_count = 4
-
-[sub_resource type="CurveTexture" id="CurveTexture_y7fwn"]
-curve = SubResource("Curve_mbyld")
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_15fnb"]
-particle_flag_disable_z = true
-emission_shape_scale = Vector3(1.3, 1, 1)
-emission_shape = 1
-emission_sphere_radius = 60.0
-gravity = Vector3(0, -98, 0)
-scale_min = 0.5
-scale_max = 0.8
-scale_curve = SubResource("CurveTexture_y7fwn")
-
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_cmjvs"]
 radius = 5.74163
 height = 21.0526
 
-[node name="bnuny" type="CharacterBody2D"]
+[node name="bnuny" type="CharacterBody2D" node_paths=PackedStringArray("abilities")]
 y_sort_enabled = true
 texture_filter = 6
 collision_layer = 4
@@ -57,65 +26,13 @@ entityName = "Bunny"
 team = 1
 objPath = "res://objects/characters/Bnuy.tscn"
 controllerPath = "res://objects/controllers/basic_enemy_ai.tscn"
+abilities = [NodePath("ShadowDemonMelee"), NodePath("SwordStrikeFlurry"), NodePath("SpeedIncrease")]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-1, -20)
 shape = SubResource("CircleShape2D_a5fkp")
 
-[node name="stat_speed" type="Node" parent="."]
-script = ExtResource("17_bkmbb")
-baseValue = 300.0
-
-[node name="stat_regen" type="Node" parent="."]
-script = ExtResource("17_bkmbb")
-baseValue = 2.0
-
-[node name="chargeslash_hit" type="Timer" parent="."]
-wait_time = 0.1
-
-[node name="chargetimer" type="Timer" parent="."]
-wait_time = 0.8
-one_shot = true
-
-[node name="chargeblink" type="Timer" parent="."]
-wait_time = 0.3
-
-[node name="sfx_swordhit" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("2_obnuj")
-bus = &"sfx"
-
-[node name="sfx_swordping" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("3_chs2w")
-volume_db = -2.0
-bus = &"sfx"
-
-[node name="sfx_flurryhit" type="AudioStreamPlayer2D" parent="."]
-stream = SubResource("AudioStreamRandomizer_8gwm0")
-pitch_scale = 2.0
-max_polyphony = 3
-bus = &"sfx"
-
-[node name="sfx_chargestance" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("5_makp7")
-volume_db = -5.0
-pitch_scale = 1.3
-bus = &"sfx"
-
-[node name="sfx_chargecomplete" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("6_qcxc3")
-volume_db = -5.0
-bus = &"sfx"
-
-[node name="sfx_swordwoosh" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("3_sr8tv")
-pitch_scale = 2.0
-bus = &"sfx"
-
-[node name="sfx_swordflurry" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("3_sr8tv")
-pitch_scale = 4.0
-max_polyphony = 5
-bus = &"sfx"
+[node name="ShadowDemonMelee" parent="." instance=ExtResource("5_uauok")]
 
 [node name="upright_anchor" type="Node2D" parent="." groups=["upright_sprite"]]
 y_sort_enabled = true
@@ -125,37 +42,6 @@ texture_filter = 1
 scale = Vector2(0.765, 0.765)
 texture = ExtResource("2_c6683")
 offset = Vector2(0, -91)
-
-[node name="charged_loop" type="GPUParticles2D" parent="upright_anchor"]
-modulate = Color(0.966667, 1, 0, 1)
-z_index = 1
-position = Vector2(55, -79)
-emitting = false
-process_material = ExtResource("5_kngdb")
-texture = ExtResource("4_28g8c")
-local_coords = true
-
-[node name="charged" type="GPUParticles2D" parent="upright_anchor"]
-modulate = Color(0.933333, 1, 0, 1)
-z_index = 1
-texture_filter = 1
-position = Vector2(61, -79)
-rotation = 1.5708
-emitting = false
-amount = 1
-process_material = ExtResource("5_tnbae")
-texture = ExtResource("5_kavyb")
-lifetime = 0.4
-one_shot = true
-local_coords = true
-
-[node name="speedup" type="GPUParticles2D" parent="upright_anchor"]
-modulate = Color(7.41214e-06, 0.568697, 0.762368, 1)
-position = Vector2(0, -49)
-emitting = false
-process_material = SubResource("ParticleProcessMaterial_15fnb")
-texture = ExtResource("3_n0sa5")
-local_coords = true
 
 [node name="shoulder" type="Node2D" parent="."]
 position = Vector2(0, -79)
@@ -167,50 +53,23 @@ position = Vector2(65, 0)
 rotation = 1.5708
 texture = ExtResource("3_n0sa5")
 
-[node name="swordwoosh" type="GPUParticles2D" parent="shoulder"]
-z_index = 1
-texture_filter = 1
-scale = Vector2(1.3, 1)
-emitting = false
-amount = 1
-process_material = ExtResource("4_8bs3g")
-texture = ExtResource("8_grr0g")
-lifetime = 0.5
-one_shot = true
-fixed_fps = 60
-local_coords = true
-trail_enabled = true
-trail_lifetime = 0.24
+[node name="stat_speed" type="Node" parent="."]
+script = ExtResource("17_bkmbb")
+baseValue = 300.0
 
-[node name="swordflurry" type="GPUParticles2D" parent="shoulder"]
-z_index = 1
-texture_filter = 1
-scale = Vector2(1.2, 1)
-emitting = false
-amount = 3
-process_material = ExtResource("4_bpfa7")
-texture = ExtResource("8_grr0g")
-lifetime = 0.5
-one_shot = true
-fixed_fps = 60
-local_coords = true
-trail_enabled = true
-trail_lifetime = 0.24
+[node name="stat_regen" type="Node" parent="."]
+script = ExtResource("17_bkmbb")
+baseValue = 2.0
 
-[node name="swordflurry2" type="GPUParticles2D" parent="shoulder"]
-z_index = 1
-texture_filter = 1
-scale = Vector2(1.2, -1)
-emitting = false
-amount = 4
-process_material = ExtResource("4_bpfa7")
-texture = ExtResource("8_grr0g")
-lifetime = 0.5
-one_shot = true
-fixed_fps = 60
-local_coords = true
-trail_enabled = true
-trail_lifetime = 0.24
+[node name="stat_baseDamage" type="Node" parent="."]
+script = ExtResource("17_bkmbb")
+baseValue = 35.0
+
+[node name="SwordStrikeStock" parent="." instance=ExtResource("5_8sfub")]
+
+[node name="SwordStrikeFlurry" parent="." instance=ExtResource("4_xfqfj")]
+
+[node name="SpeedIncrease" parent="." instance=ExtResource("3_lqmu2")]
 
 [node name="hurtbox" type="Area2D" parent="."]
 scale = Vector2(5.225, 5.225)

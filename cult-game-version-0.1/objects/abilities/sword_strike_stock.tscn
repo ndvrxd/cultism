@@ -1,0 +1,103 @@
+[gd_scene load_steps=9 format=3 uid="uid://bhho2ywfqt0vw"]
+
+[ext_resource type="Texture2D" uid="uid://b8uotdxr13iyg" path="res://art/ui/attack.png" id="1_jydsv"]
+[ext_resource type="Material" uid="uid://dlqvc37rv373i" path="res://vfx/particle/processmaterial/bladeswing.tres" id="1_vyj24"]
+[ext_resource type="Script" path="res://scripts/abstract/Stat.gd" id="2_bti61"]
+[ext_resource type="Texture2D" uid="uid://7dro3tyfewrc" path="res://vfx/particle/diamond_lightercenter.png" id="2_xquaf"]
+[ext_resource type="AudioStream" uid="uid://emh40c16tty5" path="res://sound/pools/sword_hit_stock.tres" id="3_yuwv6"]
+[ext_resource type="AudioStream" uid="uid://bj21hl31ik8f" path="res://sound/pools/sword_ping_stock.tres" id="4_mpqot"]
+[ext_resource type="AudioStream" uid="uid://ivxk0aryil43" path="res://sound/pools/whiff.tres" id="5_q4vom"]
+
+[sub_resource type="GDScript" id="GDScript_ae2ol"]
+script/source = "extends Ability
+
+@export var maxHits = 3;
+var swordShape:CircleShape2D = CircleShape2D.new()
+@export var swordRange = 100
+
+@onready var swordHitFx:PackedScene = load(\"res://vfx/objects/sword_hit.tscn\")
+
+func _ready():
+	super._ready()
+	swordShape.radius = 50;
+
+func fireAction():
+	$shoulder/swordwoosh.scale.y = -$shoulder/swordwoosh.scale.y
+	$hitdelay.start()
+	await $hitdelay.timeout
+	var ents = ent.shapeCastFromShoulder(ent.lookDirection*swordRange, swordShape, false)
+	var hits = 0
+	for target:Entity in ents:
+		if is_multiplayer_authority():
+			doHitFlash.rpc(target.shoulderPoint.global_position)
+		if ent.team != target.team:
+			if is_multiplayer_authority():
+				target.changeHealth.rpc(target.health,
+					-ent.stat_baseDamage.val, ent.get_path())
+			hits += 1
+		if hits >= maxHits:
+			break
+	if hits > 0:
+		$sfx/hit.play()
+	elif !ents.is_empty():
+		$sfx/ping.play()
+
+@rpc(\"authority\", \"call_local\", \"reliable\")
+func doHitFlash(pos:Vector2):
+	var temp = swordHitFx.instantiate()
+	temp.emitting = true
+	temp.global_position = pos
+	get_tree().current_scene.add_child(temp)
+"
+
+[node name="SwordStrikeStock" type="Node2D"]
+script = SubResource("GDScript_ae2ol")
+ability_name = "Slash"
+ability_desc = "Swing your sword."
+NYI_ability_portrait = ExtResource("1_jydsv")
+
+[node name="stats" type="Node" parent="."]
+
+[node name="cooldown" type="Node" parent="stats"]
+script = ExtResource("2_bti61")
+baseValue = 0.65
+
+[node name="hitdelay" type="Timer" parent="."]
+wait_time = 0.1
+one_shot = true
+
+[node name="shoulder" type="Node2D" parent="."]
+
+[node name="swordwoosh" type="GPUParticles2D" parent="shoulder"]
+z_index = 1
+texture_filter = 1
+scale = Vector2(1.3, 1)
+emitting = false
+amount = 1
+process_material = ExtResource("1_vyj24")
+texture = ExtResource("2_xquaf")
+lifetime = 0.5
+one_shot = true
+fixed_fps = 60
+local_coords = true
+trail_enabled = true
+trail_lifetime = 0.24
+
+[node name="sfx" type="Node2D" parent="."]
+
+[node name="hit" type="AudioStreamPlayer2D" parent="sfx"]
+stream = ExtResource("3_yuwv6")
+bus = &"sfx"
+
+[node name="ping" type="AudioStreamPlayer2D" parent="sfx"]
+stream = ExtResource("4_mpqot")
+volume_db = -2.0
+bus = &"sfx"
+
+[node name="whiff" type="AudioStreamPlayer2D" parent="sfx"]
+stream = ExtResource("5_q4vom")
+pitch_scale = 2.0
+bus = &"sfx"
+
+[connection signal="fired" from="." to="sfx/whiff" method="play"]
+[connection signal="fired" from="." to="shoulder/swordwoosh" method="restart"]

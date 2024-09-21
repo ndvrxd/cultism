@@ -1,0 +1,64 @@
+[gd_scene load_steps=8 format=3 uid="uid://d2e4q455kjkby"]
+
+[ext_resource type="Script" path="res://scripts/abstract/Stat.gd" id="1_73bgy"]
+[ext_resource type="Texture2D" uid="uid://bdeo180vqay6m" path="res://art/ui/run.png" id="1_ov2w7"]
+[ext_resource type="Texture2D" uid="uid://clqo76f6tebyl" path="res://art/ui/arrow.png" id="2_6g1h3"]
+
+[sub_resource type="GDScript" id="GDScript_b3pcr"]
+script/source = "extends Ability
+
+# +50% speed increase for 6 seconds. Replace with a buff later.
+
+func fireAction():
+	
+	$vfx.emitting = true
+	ent.stat_speed.modifyMultFlat(0.5)
+	
+	$duration.start()
+	await $duration.timeout
+	
+	$vfx.emitting = false
+	ent.stat_speed.modifyMultFlat(-0.5)
+"
+
+[sub_resource type="Curve" id="Curve_m4ufl"]
+_data = [Vector2(0, 0), 0.0, 2.96825, 0, 0, Vector2(0.230769, 0.681319), 0.0, 0.0, 0, 0, Vector2(0.748252, 0.659341), 0.0, 0.0, 0, 0, Vector2(1, 0), -2.79911, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_we5ra"]
+curve = SubResource("Curve_m4ufl")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ca1r6"]
+particle_flag_disable_z = true
+emission_shape_scale = Vector3(1.3, 1, 1)
+emission_shape = 1
+emission_sphere_radius = 60.0
+gravity = Vector3(0, -98, 0)
+scale_min = 0.5
+scale_max = 0.8
+scale_curve = SubResource("CurveTexture_we5ra")
+
+[node name="SpeedIncrease" type="Node2D" groups=["upright_sprite"]]
+script = SubResource("GDScript_b3pcr")
+ability_name = "Sprint"
+ability_desc = "+50% speed increase for 6 seconds."
+bypass_other_abilities_charging = true
+NYI_ability_portrait = ExtResource("1_ov2w7")
+
+[node name="stats" type="Node" parent="."]
+
+[node name="cooldown" type="Node" parent="stats"]
+script = ExtResource("1_73bgy")
+baseValue = 12.0
+
+[node name="duration" type="Timer" parent="."]
+wait_time = 6.0
+one_shot = true
+
+[node name="vfx" type="GPUParticles2D" parent="."]
+modulate = Color(7.41214e-06, 0.568697, 0.762368, 1)
+position = Vector2(0, -49)
+emitting = false
+process_material = SubResource("ParticleProcessMaterial_ca1r6")
+texture = ExtResource("2_6g1h3")
+local_coords = true
