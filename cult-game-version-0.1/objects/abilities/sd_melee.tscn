@@ -81,6 +81,7 @@ wait_time = 0.4
 process_mode = 1
 modulate = Color(1, 0, 0, 1)
 position = Vector2(0, -67)
+scale = Vector2(1.2, 1.2)
 emitting = false
 amount = 3
 process_material = ExtResource("2_rwtjk")

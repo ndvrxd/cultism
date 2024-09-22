@@ -1,6 +1,132 @@
-[gd_scene load_steps=2 format=3 uid="uid://bcsqev2e0pnu"]
+[gd_scene load_steps=11 format=3 uid="uid://bcsqev2e0pnu"]
 
-[ext_resource type="Script" path="res://scripts/generic/Ability.gd" id="1_35fjn"]
+[ext_resource type="Script" path="res://scripts/abstract/Stat.gd" id="1_sn7pp"]
+[ext_resource type="Material" uid="uid://cnrnbxtuhjeyt" path="res://vfx/particle/processmaterial/charged_tell.tres" id="2_w8ofh"]
+[ext_resource type="Texture2D" uid="uid://b5aefjahrsgq1" path="res://vfx/particle/lightflare2.png" id="3_3qmfr"]
+[ext_resource type="Texture2D" uid="uid://dmcej1hbhoaj0" path="res://vfx/particle/aoe.png" id="3_ue5a5"]
+[ext_resource type="Material" uid="uid://ck8ixyuqbmu4n" path="res://vfx/particle/processmaterial/burst.tres" id="4_w5y6n"]
+[ext_resource type="Texture2D" uid="uid://c8fqyfsyylys1" path="res://vfx/particle/aoe_preview.png" id="5_r6rix"]
+[ext_resource type="Material" uid="uid://cnwng2odfnn62" path="res://vfx/particle/processmaterial/explode.tres" id="6_jlti3"]
+[ext_resource type="Texture2D" uid="uid://dp1ve83voy52" path="res://vfx/particle/diamond.png" id="7_t811w"]
+
+[sub_resource type="GDScript" id="GDScript_ffkom"]
+script/source = "extends Ability
+
+func fireAction():
+	ent.frozen = true #freeze the enemy on windup
+
+func _on_aaaa_timeout() -> void:
+	# make the enemy invisible and intangible on exploding
+	for i in ent.find_children(\"\", \"Sprite2D\"):
+		i.visible = false
+	for i in ent.find_children(\"\", \"CollisionShape2D\"):
+		i.set_disabled(true)
+
+func _on_aoe_body_entered(body: Node2D) -> void:
+	# damage radius
+	if not body is Entity: return
+	var target = body as Entity
+	if is_multiplayer_authority() and target.team != ent.team:
+		ent.triggerHitEffectsRpc.rpc(target.shoulderPoint.global_position)
+		target.changeHealth.rpc(target.health,
+			-ent.stat_baseDamage.val*2, ent.get_path())
+
+func _on_cleanup_timeout() -> void:
+	ent.changeHealth.rpc(ent.health, -ent.health, ent.get_path())
+"
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_hapou"]
+radius = 200.0
 
 [node name="Selfdestruct" type="Node2D"]
-script = ExtResource("1_35fjn")
+texture_filter = 1
+script = SubResource("GDScript_ffkom")
+ability_name = "Kamikaze"
+ability_desc = "Fucking explode."
+
+[node name="stats" type="Node" parent="."]
+
+[node name="cooldown" type="Node" parent="stats"]
+script = ExtResource("1_sn7pp")
+baseValue = 4.0
+
+[node name="aaaa" type="Timer" parent="."]
+wait_time = 1.35
+one_shot = true
+
+[node name="cleanup" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[node name="area_active" type="Timer" parent="."]
+wait_time = 0.2
+one_shot = true
+
+[node name="aoe" type="Area2D" parent="."]
+collision_layer = 7
+collision_mask = 7
+
+[node name="radius" type="CollisionShape2D" parent="aoe"]
+shape = SubResource("CircleShape2D_hapou")
+disabled = true
+
+[node name="aoe_vfx" type="GPUParticles2D" parent="."]
+modulate = Color(1, 0.658833, 0.11, 0.823529)
+scale = Vector2(1.8, 1.8)
+emitting = false
+amount = 1
+process_material = ExtResource("2_w8ofh")
+texture = ExtResource("3_ue5a5")
+lifetime = 1.5
+one_shot = true
+local_coords = true
+
+[node name="blastwave" type="GPUParticles2D" parent="."]
+modulate = Color(1, 0.9, 0, 1)
+scale = Vector2(4, 4)
+emitting = false
+amount = 1
+process_material = ExtResource("4_w5y6n")
+texture = ExtResource("5_r6rix")
+lifetime = 0.4
+one_shot = true
+local_coords = true
+
+[node name="upright" type="Node2D" parent="." groups=["upright_sprite"]]
+position = Vector2(0, -67)
+
+[node name="tell" type="GPUParticles2D" parent="upright"]
+modulate = Color(1, 0.65, 0, 1)
+scale = Vector2(2.5, 2.5)
+emitting = false
+amount = 7
+process_material = ExtResource("2_w8ofh")
+texture = ExtResource("3_3qmfr")
+one_shot = true
+fixed_fps = 40
+local_coords = true
+
+[node name="smoke" type="GPUParticles2D" parent="upright"]
+position = Vector2(0, 9)
+scale = Vector2(1.1, 1.1)
+emitting = false
+process_material = ExtResource("6_jlti3")
+texture = ExtResource("7_t811w")
+lifetime = 2.0
+one_shot = true
+explosiveness = 1.0
+visibility_rect = Rect2(-100, -200, 200, 300)
+local_coords = true
+
+[connection signal="fired" from="." to="aaaa" method="start"]
+[connection signal="fired" from="." to="upright/tell" method="restart"]
+[connection signal="timeout" from="aaaa" to="." method="_on_aaaa_timeout"]
+[connection signal="timeout" from="aaaa" to="aoe_vfx" method="restart"]
+[connection signal="timeout" from="aaaa" to="blastwave" method="restart"]
+[connection signal="timeout" from="aaaa" to="upright/smoke" method="restart"]
+[connection signal="timeout" from="aaaa" to="cleanup" method="start"]
+[connection signal="timeout" from="aaaa" to="area_active" method="start"]
+[connection signal="timeout" from="aaaa" to="aoe/radius" method="set_disabled" binds= [false]]
+[connection signal="timeout" from="cleanup" to="." method="_on_cleanup_timeout"]
+[connection signal="timeout" from="area_active" to="aoe/radius" method="set_disabled" binds= [true]]
+[connection signal="body_entered" from="aoe" to="." method="_on_aoe_body_entered"]

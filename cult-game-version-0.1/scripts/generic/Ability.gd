@@ -52,6 +52,8 @@ func press() -> void:
 	
 func release() -> void:
 	chargeTimer = 0
+	if is_charged_ability and isCharging:
+		ent.ability_vars["_busy"] = false
 	isCharging = false
 	isHeld = false
 	if isCharged:

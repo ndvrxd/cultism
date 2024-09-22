@@ -38,7 +38,7 @@ func _on_deal_damage_timeout() -> void:
 			doHitFlash.rpc(target.shoulderPoint.global_position)
 			if ent.team != target.team:
 				target.changeHealth.rpc(target.health,
-					ent.stat_baseDamage.val * 0.20,
+					-ent.stat_baseDamage.val * 0.20,
 					ent.get_path())
 
 func _on_blink_timeout() -> void:

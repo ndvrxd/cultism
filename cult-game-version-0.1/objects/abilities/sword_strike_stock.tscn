@@ -99,5 +99,5 @@ stream = ExtResource("5_q4vom")
 pitch_scale = 2.0
 bus = &"sfx"
 
-[connection signal="fired" from="." to="sfx/whiff" method="play"]
 [connection signal="fired" from="." to="shoulder/swordwoosh" method="restart"]
+[connection signal="fired" from="." to="sfx/whiff" method="play"]

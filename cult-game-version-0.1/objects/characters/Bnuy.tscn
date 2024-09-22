@@ -31,6 +31,8 @@ abilities = [NodePath("SwordStrikeStock"), NodePath("SwordStrikeFlurry"), NodePa
 position = Vector2(-1, -20)
 shape = SubResource("CircleShape2D_a5fkp")
 
+[node name="SpeedIncrease" parent="." instance=ExtResource("3_lqmu2")]
+
 [node name="upright_anchor" type="Node2D" parent="." groups=["upright_sprite"]]
 y_sort_enabled = true
 
@@ -65,8 +67,6 @@ baseValue = 35.0
 [node name="SwordStrikeStock" parent="." instance=ExtResource("5_8sfub")]
 
 [node name="SwordStrikeFlurry" parent="." instance=ExtResource("4_xfqfj")]
-
-[node name="SpeedIncrease" parent="." instance=ExtResource("3_lqmu2")]
 
 [node name="hurtbox" type="Area2D" parent="."]
 scale = Vector2(5.225, 5.225)
