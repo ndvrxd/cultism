@@ -1,0 +1,189 @@
+[gd_scene load_steps=11 format=3 uid="uid://leqtb5qj5y1"]
+
+[ext_resource type="Script" path="res://scripts/menus/abilityIcon.gd" id="1_16lcu"]
+[ext_resource type="Texture2D" uid="uid://vbtj3ovo2lx8" path="res://art/ui/keys/m1.png" id="2_e6673"]
+[ext_resource type="Texture2D" uid="uid://dmcej1hbhoaj0" path="res://vfx/particle/aoe.png" id="2_h6vpc"]
+[ext_resource type="Texture2D" uid="uid://c8fqyfsyylys1" path="res://vfx/particle/aoe_preview.png" id="3_bspmi"]
+[ext_resource type="Texture2D" uid="uid://qvqjdan7wbv4" path="res://art/ui/solid_circle_mask.png" id="3_ph57y"]
+[ext_resource type="FontFile" uid="uid://dhk11k42eybnt" path="res://fonts/chela-one.regular.ttf" id="3_vikn0"]
+[ext_resource type="Texture2D" uid="uid://w30ihm6saioh" path="res://art/ui/keys/key_r.png" id="4_iad6b"]
+
+[sub_resource type="GDScript" id="GDScript_kts64"]
+script/source = "extends MarginContainer
+
+#i have to do this instead of setting properties for some fucking reason?
+#TODO: make this a Theme thing, god damn it
+func _ready():
+	# This code sample assumes the current script is extending MarginContainer.
+	var margin_value = 10
+	add_theme_constant_override(\"margin_top\", margin_value/2)
+	add_theme_constant_override(\"margin_left\", margin_value)
+	add_theme_constant_override(\"margin_bottom\", margin_value/2)
+	add_theme_constant_override(\"margin_right\", margin_value)
+"
+
+[sub_resource type="LabelSettings" id="LabelSettings_a6f3j"]
+font = ExtResource("3_vikn0")
+font_size = 26
+font_color = Color(1, 0.876, 0.38, 1)
+outline_size = 5
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_ibqi0"]
+font = ExtResource("3_vikn0")
+font_size = 21
+
+[node name="AbilityIcon" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_16lcu")
+keyIcon = ExtResource("2_e6673")
+
+[node name="tooled tip" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="tooled tip"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -104.0
+offset_top = -129.0
+offset_right = 43.0
+offset_bottom = -60.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="tooled tip/PanelContainer"]
+layout_mode = 2
+script = SubResource("GDScript_kts64")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="tooled tip/PanelContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="name" type="Label" parent="tooled tip/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Nothing"
+label_settings = SubResource("LabelSettings_a6f3j")
+
+[node name="HSeparator" type="HSeparator" parent="tooled tip/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="desc" type="Label" parent="tooled tip/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "There's no ability here."
+label_settings = SubResource("LabelSettings_ibqi0")
+
+[node name="icon_anchor" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="icon_anchor"]
+clip_children = 1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -50.0
+offset_top = -50.0
+offset_right = 50.0
+offset_bottom = 50.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_ph57y")
+
+[node name="ColorRect" type="ColorRect" parent="icon_anchor/TextureRect"]
+layout_mode = 0
+offset_right = 100.0
+offset_bottom = 100.0
+color = Color(0.114897, 0.114897, 0.114897, 0.764706)
+
+[node name="icon" type="TextureRect" parent="icon_anchor/TextureRect"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -50.0
+offset_top = -50.0
+offset_right = 50.0
+offset_bottom = 50.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_default_cursor_shape = 16
+expand_mode = 1
+
+[node name="TextureRect" type="TextureRect" parent="icon_anchor/TextureRect"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+texture = ExtResource("3_bspmi")
+
+[node name="cooldown" type="TextureProgressBar" parent="icon_anchor"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -50.0
+offset_top = -50.0
+offset_right = 50.0
+offset_bottom = 50.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+max_value = 1.0
+step = 0.0
+fill_mode = 5
+texture_under = ExtResource("2_h6vpc")
+texture_over = ExtResource("3_bspmi")
+texture_progress = ExtResource("2_h6vpc")
+tint_under = Color(0, 0, 0, 0.4)
+tint_over = Color(0.71, 0.71, 0.71, 1)
+tint_progress = Color(1, 1, 1, 0.498039)
+
+[node name="input_hint" type="TextureRect" parent="icon_anchor"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -50.0
+offset_top = 18.0
+offset_right = -18.0
+offset_bottom = 50.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("4_iad6b")
+expand_mode = 1
+
+[connection signal="mouse_entered" from="icon_anchor/TextureRect/icon" to="tooled tip" method="set_visible" binds= [true]]
+[connection signal="mouse_exited" from="icon_anchor/TextureRect/icon" to="tooled tip" method="set_visible" binds= [false]]
+[connection signal="ready" from="icon_anchor/TextureRect/icon" to="tooled tip" method="set_visible" binds= [false]]

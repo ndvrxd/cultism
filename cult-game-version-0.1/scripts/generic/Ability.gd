@@ -8,6 +8,7 @@ signal offCooldown;
 
 @export var ability_name:String = "Nothing"
 @export var ability_desc:String = "Does nothing."
+@export var portrait:Texture2D;
 
 @export var is_charged_ability:bool = false
 @export var bypass_other_abilities_charging:bool = false
@@ -15,7 +16,6 @@ var isCharging:bool = false
 var isCharged:bool = false
 var isHeld:bool = false
 var isOffCooldown:bool = true
-@export var NYI_ability_portrait:Texture2D;
 var stat_cooldown:Stat;
 var stat_chargeTime:Stat;
 var cdTimer:float = 0;

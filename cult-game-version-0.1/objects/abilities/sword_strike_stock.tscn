@@ -54,7 +54,7 @@ func doHitFlash(pos:Vector2):
 script = SubResource("GDScript_ae2ol")
 ability_name = "Slash"
 ability_desc = "Swing your sword."
-NYI_ability_portrait = ExtResource("1_jydsv")
+portrait = ExtResource("1_jydsv")
 
 [node name="stats" type="Node" parent="."]
 

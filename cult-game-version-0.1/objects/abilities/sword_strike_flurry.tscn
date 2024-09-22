@@ -1,7 +1,6 @@
-[gd_scene load_steps=15 format=3 uid="uid://d0xuqfm81y8em"]
+[gd_scene load_steps=14 format=3 uid="uid://d0xuqfm81y8em"]
 
 [ext_resource type="Script" path="res://scripts/abstract/Stat.gd" id="1_7q63i"]
-[ext_resource type="Texture2D" uid="uid://bmcl5vl05h6ty" path="res://art/missing texture.png" id="1_crqij"]
 [ext_resource type="AudioStream" uid="uid://dtb4qnmeaet6h" path="res://sound/fx/bnuuy/charge_stance.mp3" id="2_2py8f"]
 [ext_resource type="Material" uid="uid://mxrc8o1ov8cn" path="res://vfx/particle/processmaterial/bladeflurry.tres" id="2_3y2j5"]
 [ext_resource type="AudioStream" uid="uid://dr23xuxyu8ihm" path="res://sound/fx/blip.mp3" id="3_lvm7p"]
@@ -64,8 +63,8 @@ stream_0/stream = ExtResource("4_537ei")
 script = SubResource("GDScript_7yrby")
 ability_name = "Flurry"
 ability_desc = "Charge to unleash a flurry of hits that cuts through swarms of enemies."
+portrait = ExtResource("5_1yma2")
 is_charged_ability = true
-NYI_ability_portrait = ExtResource("1_crqij")
 
 [node name="deal_damage" type="Timer" parent="."]
 wait_time = 0.1

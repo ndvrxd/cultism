@@ -1,8 +1,10 @@
-[gd_scene load_steps=10 format=3 uid="uid://bsm1bpkbr01xf"]
+[gd_scene load_steps=12 format=3 uid="uid://bsm1bpkbr01xf"]
 
+[ext_resource type="Texture2D" uid="uid://6i8qff0kq7ei" path="res://art/character ph/enemy ph.png" id="1_8sr3p"]
 [ext_resource type="Material" uid="uid://cnrnbxtuhjeyt" path="res://vfx/particle/processmaterial/charged_tell.tres" id="2_rwtjk"]
 [ext_resource type="Texture2D" uid="uid://b5aefjahrsgq1" path="res://vfx/particle/lightflare2.png" id="3_6ffd6"]
 [ext_resource type="Texture2D" uid="uid://clqo76f6tebyl" path="res://art/ui/arrow.png" id="3_xbq0c"]
+[ext_resource type="Script" path="res://scripts/abstract/Stat.gd" id="4_65iks"]
 
 [sub_resource type="GDScript" id="GDScript_kn5v2"]
 script/source = "extends Ability
@@ -71,6 +73,9 @@ alpha_curve = SubResource("CurveTexture_b3t4b")
 
 [node name="ShadowDemonMelee" type="Node2D"]
 script = SubResource("GDScript_kn5v2")
+ability_name = "Lunge"
+ability_desc = "Wind up, then deal 1x base damage."
+portrait = ExtResource("1_8sr3p")
 
 [node name="attack_delay" type="Timer" parent="."]
 wait_time = 0.4
@@ -106,3 +111,9 @@ lifetime = 0.4
 one_shot = true
 visibility_rect = Rect2(-50, -50, 100, 100)
 local_coords = true
+
+[node name="stats" type="Node" parent="."]
+
+[node name="cooldown" type="Node" parent="stats"]
+script = ExtResource("4_65iks")
+baseValue = 1.5

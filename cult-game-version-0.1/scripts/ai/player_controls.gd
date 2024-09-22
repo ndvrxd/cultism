@@ -6,7 +6,6 @@ var mouseLookMode = true
 @onready var ui_hb_over:TextureProgressBar = $"HUD STUFF/healthbar_under/healthbar_over"
 @onready var ui_hb_under:TextureProgressBar = $"HUD STUFF/healthbar_under"
 @onready var ui_hb_text:Label = $"HUD STUFF/healthbar_under/Label"
-@onready var ui_active_cd:TextureProgressBar = $"HUD STUFF/active/cooldown"
 var vignetteTween:Tween
 
 const spectatorBody:String = "res://objects/characters/spectator.tscn"
@@ -23,6 +22,12 @@ func _ready():
 	ent.damage_taken.connect(damageVignette)
 	$"HUD STUFF/vignette".modulate = Color(Color.RED, 0)
 	ent.killed.connect(spectate)
+	if ent.abilities.size() > 0 and is_instance_valid(ent.abilities[0]): 
+		$"HUD STUFF/primaryIcon".set_ability(ent.abilities[0])
+	if ent.abilities.size() > 1 and is_instance_valid(ent.abilities[1]): 
+		$"HUD STUFF/secondaryIcon".set_ability(ent.abilities[1])
+	if ent.abilities.size() > 2 and is_instance_valid(ent.abilities[2]): 
+		$"HUD STUFF/specialIcon".set_ability(ent.abilities[2])
 
 func spectate(killedBy:Entity):
 	var ename:String = ent.name
@@ -71,8 +76,6 @@ func _process(delta):
 	ui_hb_over.value = (ent.health / ent.stat_maxHp.val)
 	ui_hb_under.value = lerp(ui_hb_under.value, ui_hb_over.value, delta*7)
 	ui_hb_text.text = str(int(ent.health)) + " / " + str(int(ent.stat_maxHp.val))
-	if ent.abilities.size() > 2 and is_instance_valid(ent.abilities[2]): 
-		ui_active_cd.value = 1 - ent.abilities[2].cdTimer / ent.abilities[2].stat_cooldown.val
 	#endregion
 	
 	#region input stuff

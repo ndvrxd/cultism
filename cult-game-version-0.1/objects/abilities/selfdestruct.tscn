@@ -1,6 +1,7 @@
-[gd_scene load_steps=11 format=3 uid="uid://bcsqev2e0pnu"]
+[gd_scene load_steps=12 format=3 uid="uid://bcsqev2e0pnu"]
 
 [ext_resource type="Script" path="res://scripts/abstract/Stat.gd" id="1_sn7pp"]
+[ext_resource type="Texture2D" uid="uid://brlqerolroesd" path="res://vfx/particle/lightflare.png" id="1_v5skk"]
 [ext_resource type="Material" uid="uid://cnrnbxtuhjeyt" path="res://vfx/particle/processmaterial/charged_tell.tres" id="2_w8ofh"]
 [ext_resource type="Texture2D" uid="uid://b5aefjahrsgq1" path="res://vfx/particle/lightflare2.png" id="3_3qmfr"]
 [ext_resource type="Texture2D" uid="uid://dmcej1hbhoaj0" path="res://vfx/particle/aoe.png" id="3_ue5a5"]
@@ -43,6 +44,7 @@ texture_filter = 1
 script = SubResource("GDScript_ffkom")
 ability_name = "Kamikaze"
 ability_desc = "Fucking explode."
+portrait = ExtResource("1_v5skk")
 
 [node name="stats" type="Node" parent="."]
 
@@ -121,11 +123,11 @@ local_coords = true
 [connection signal="fired" from="." to="aaaa" method="start"]
 [connection signal="fired" from="." to="upright/tell" method="restart"]
 [connection signal="timeout" from="aaaa" to="." method="_on_aaaa_timeout"]
+[connection signal="timeout" from="aaaa" to="cleanup" method="start"]
+[connection signal="timeout" from="aaaa" to="area_active" method="start"]
 [connection signal="timeout" from="aaaa" to="aoe_vfx" method="restart"]
 [connection signal="timeout" from="aaaa" to="blastwave" method="restart"]
 [connection signal="timeout" from="aaaa" to="upright/smoke" method="restart"]
-[connection signal="timeout" from="aaaa" to="cleanup" method="start"]
-[connection signal="timeout" from="aaaa" to="area_active" method="start"]
 [connection signal="timeout" from="aaaa" to="aoe/radius" method="set_disabled" binds= [false]]
 [connection signal="timeout" from="cleanup" to="." method="_on_cleanup_timeout"]
 [connection signal="timeout" from="area_active" to="aoe/radius" method="set_disabled" binds= [true]]

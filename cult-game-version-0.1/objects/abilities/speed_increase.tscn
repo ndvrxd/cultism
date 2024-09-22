@@ -42,8 +42,8 @@ scale_curve = SubResource("CurveTexture_we5ra")
 script = SubResource("GDScript_b3pcr")
 ability_name = "Sprint"
 ability_desc = "+50% speed increase for 6 seconds."
+portrait = ExtResource("1_ov2w7")
 bypass_other_abilities_charging = true
-NYI_ability_portrait = ExtResource("1_ov2w7")
 
 [node name="stats" type="Node" parent="."]
 
