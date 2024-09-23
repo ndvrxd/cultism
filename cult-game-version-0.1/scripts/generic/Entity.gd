@@ -161,25 +161,25 @@ func chat(_msg:String) -> void:
 	pass #I FULLY INTEND TO USE THIS OUR CURRENT CHATBOX IS PLACEHOLDER
 
 @rpc("any_peer", "call_local", "reliable")
-func changeHealth(current:float, by:float, inflictor_path:String="") -> void:
+func changeHealth(current:float, by:float, inflictor:NodePath="") -> void:
 	# current health needs to be passed in to sync health between clients!
 	health = current;
 	health += by;
 	healthBarTimer = 2;
-	var inflictor = get_node(inflictor_path)
+	var opp = get_node(inflictor)
 	var dn:Node2D = damageNumberScn.instantiate()
 	dn.set_number(int(abs(by)))
 	dn.global_position = shoulderPoint.global_position
 	get_tree().current_scene.add_child(dn)
 	if sign(by) == -1:
 		regenTimer = 2
-		damage_taken.emit(-by, inflictor)
+		damage_taken.emit(-by, opp)
 		if team == 1: dn.set_color(Color.RED) #red is bad for players & allies
-		if inflictor != null:
-			inflictor.damage_dealt.emit(-by, self)
+		if opp != null:
+			opp.damage_dealt.emit(-by, self)
 		healthBarShakeTimer = 0.3
 	elif sign(by) == 1:
-		healed.emit(by, inflictor)
+		healed.emit(by, opp)
 		dn.set_color(Color.GREEN)
 	else:
 		# when the host is syncing entity health for joining players,
@@ -191,11 +191,11 @@ func changeHealth(current:float, by:float, inflictor_path:String="") -> void:
 		#dn.queue_free()
 	if health <= 0:
 		health = 0
-		die(inflictor_path) # needs to be called on the clientside, since we're already in an RPC
+		die(inflictor) # needs to be called on the clientside, since we're already in an RPC
 
 @rpc("any_peer", "call_local", "reliable")
-func die(killedBy_path:String="") -> void:
-	killed.emit(get_node(killedBy_path))
+func die(killedBy:NodePath="") -> void:
+	killed.emit(get_node(killedBy))
 	queue_free() # ideally, play some effects on death
 
 @rpc("any_peer", "call_remote", "unreliable_ordered")

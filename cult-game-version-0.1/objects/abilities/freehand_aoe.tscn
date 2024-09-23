@@ -1,6 +1,257 @@
-[gd_scene load_steps=2 format=3 uid="uid://yk6ynebh8gn1"]
+[gd_scene load_steps=26 format=3 uid="uid://dvy5sraal3n12"]
 
-[ext_resource type="Script" path="res://scripts/generic/Ability.gd" id="1_j2jsf"]
+[ext_resource type="Script" path="res://scripts/abstract/Stat.gd" id="1_tixrr"]
+[ext_resource type="Texture2D" uid="uid://r7ajt3aoays7" path="res://art/ui/ability_icons/lightning2.png" id="2_sp5od"]
+[ext_resource type="Texture2D" uid="uid://d37m7rbl1uqlo" path="res://vfx/particle/zap.png" id="3_8sggu"]
+[ext_resource type="Texture2D" uid="uid://c8fqyfsyylys1" path="res://vfx/particle/aoe_preview.png" id="3_djuaj"]
+[ext_resource type="Material" uid="uid://ck8ixyuqbmu4n" path="res://vfx/particle/processmaterial/burst.tres" id="4_bu8yx"]
+[ext_resource type="Texture2D" uid="uid://dmcej1hbhoaj0" path="res://vfx/particle/aoe.png" id="5_4qhkh"]
+[ext_resource type="AudioStream" uid="uid://dkk5vcxcspwii" path="res://sound/fx/thunder.mp3" id="5_xgsmf"]
+[ext_resource type="Texture2D" uid="uid://swltmg6yi510" path="res://vfx/particle/lightningstrike.png" id="6_b20l4"]
+[ext_resource type="Material" uid="uid://cnrnbxtuhjeyt" path="res://vfx/particle/processmaterial/charged_tell.tres" id="8_x7oc2"]
+
+[sub_resource type="GDScript" id="GDScript_ts7ur"]
+script/source = "extends Ability
+
+signal chargedFire
+signal unchargedFire
+
+func _process(delta:float)->void:
+	super._process(delta)
+	if isCharging or isCharged:
+		$detach/reticle.global_position = ent.aimPosition
+		$detach/reticle/meter.value = ent.ability_vars.get(\"lightning_meter\", 0)
+		
+func _on_charged() -> void:
+	if ent.ability_vars.get(\"lightning_meter\", 0) >= 1:
+		$detach/reticle/ready.emitting = true
+
+func _on_aoe_body_entered(body: Node2D) -> void:
+	var target:Entity = body as Entity
+	if not target or !is_multiplayer_authority(): return
+	if target.team != ent.team:
+		ent.triggerHitEffectsRpc.rpc(target.shoulderPoint.global_position)
+		target.changeHealth.rpc(target.health,
+			-ent.stat_baseDamage.val*1.2, ent.get_path())
+
+func _on_fired() -> void:
+	$detach/aoe.position = ent.aimPosition
+	if not \"lightning_meter\" in ent.ability_vars:
+		ent.ability_vars[\"lightning_meter\"] = 0
+	if ent.ability_vars[\"lightning_meter\"] >= 1:
+		chargedFire.emit()
+		ent.ability_vars[\"lightning_meter\"] = 0
+	else: 
+		unchargedFire.emit()
+"
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_pejsw"]
+radius = 200.0
+
+[sub_resource type="Gradient" id="Gradient_g1hce"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.111628, 0.269767, 1)
+colors = PackedColorArray(0, 1, 1, 1, 0.967442, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_3qji0"]
+gradient = SubResource("Gradient_g1hce")
+
+[sub_resource type="Curve" id="Curve_tdcix"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.0613861, 1), 0.0, 0.0, 0, 0, Vector2(0.152263, 0), 0.0, 0.0, 0, 0, Vector2(0.213992, 0.725275), 0.0, 0.0, 0, 0, Vector2(0.296296, 0), 0.0, 0.0, 0, 0, Vector2(0.399177, 1), 0.0, 0.0, 0, 0, Vector2(0.534979, 0), 0.0, 0.0, 0, 0, Vector2(1, 0), -0.228885, -6.00915, 0, 0]
+point_count = 8
+
+[sub_resource type="CurveTexture" id="CurveTexture_b084v"]
+curve = SubResource("Curve_tdcix")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_dbl73"]
+lifetime_randomness = 0.22
+particle_flag_disable_z = true
+emission_shape = 6
+emission_ring_axis = Vector3(0, 0, 1)
+emission_ring_height = 1.0
+emission_ring_radius = 50.0
+emission_ring_inner_radius = 0.0
+angle_min = 1.07288e-05
+angle_max = 720.0
+gravity = Vector3(0, 0, 0)
+radial_accel_min = 50.0
+radial_accel_max = 70.0
+scale_max = 2.0
+scale_curve = SubResource("CurveTexture_b084v")
+color_ramp = SubResource("GradientTexture1D_3qji0")
+
+[sub_resource type="Curve" id="Curve_73v7x"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.118182, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -1.93407, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_4hul4"]
+curve = SubResource("Curve_73v7x")
+
+[sub_resource type="Gradient" id="Gradient_keqkr"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.0922432, 0.171908, 0.278826, 0.417191, 0.538784, 0.63522)
+colors = PackedColorArray(0, 0.933333, 1, 1, 1, 1, 1, 1, 0, 0.933333, 1, 1, 1, 1, 1, 1, 0, 0.933333, 1, 1, 1, 1, 1, 1, 0, 0.933333, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_c3f5y"]
+gradient = SubResource("Gradient_keqkr")
+
+[sub_resource type="Curve" id="Curve_kuler"]
+max_value = 2.0
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.0435644, 1.99045), -2.86528, -2.86528, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Curve" id="Curve_r43uf"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_2pit4"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveXYZTexture" id="CurveXYZTexture_0c56c"]
+curve_x = SubResource("Curve_kuler")
+curve_y = SubResource("Curve_r43uf")
+curve_z = SubResource("Curve_2pit4")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_wv6w6"]
+particle_flag_disable_z = true
+gravity = Vector3(0, 0, 0)
+scale_curve = SubResource("CurveXYZTexture_0c56c")
+color_ramp = SubResource("GradientTexture1D_c3f5y")
+alpha_curve = SubResource("CurveTexture_4hul4")
 
 [node name="FreehandAoe" type="Node2D"]
-script = ExtResource("1_j2jsf")
+position = Vector2(-4, 0)
+script = SubResource("GDScript_ts7ur")
+ability_name = "Smite"
+ability_desc = "At full meter, allows you to call down an
+area-of-effect lightning strike anywhere
+on the screen."
+portrait = ExtResource("2_sp5od")
+is_charged_ability = true
+
+[node name="stats" type="Node" parent="."]
+process_mode = 4
+
+[node name="chargeTime" type="Node" parent="stats"]
+script = ExtResource("1_tixrr")
+baseValue = 0.2
+
+[node name="cooldown" type="Node" parent="stats"]
+script = ExtResource("1_tixrr")
+baseValue = 0.1
+
+[node name="hitbox_disable" type="Timer" parent="."]
+wait_time = 0.2
+one_shot = true
+
+[node name="detach" type="Node" parent="."]
+process_mode = 4
+
+[node name="aoe" type="Area2D" parent="detach"]
+process_mode = 1
+collision_layer = 7
+collision_mask = 7
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="detach/aoe"]
+shape = SubResource("CircleShape2D_pejsw")
+disabled = true
+
+[node name="AoeBurst" type="GPUParticles2D" parent="detach/aoe"]
+modulate = Color(0.51, 0.967333, 1, 1)
+self_modulate = Color(1, 1, 1, 0.72549)
+show_behind_parent = true
+z_index = -1
+scale = Vector2(4, 4)
+emitting = false
+amount = 1
+process_material = ExtResource("4_bu8yx")
+texture = ExtResource("5_4qhkh")
+lifetime = 0.2
+one_shot = true
+fixed_fps = 60
+visibility_rect = Rect2(-50, -50, 100, 100)
+local_coords = true
+
+[node name="AoeSparks" type="GPUParticles2D" parent="detach/aoe"]
+position = Vector2(1, -1)
+scale = Vector2(4, 4)
+emitting = false
+amount = 40
+process_material = SubResource("ParticleProcessMaterial_dbl73")
+texture = ExtResource("3_8sggu")
+one_shot = true
+explosiveness = 0.3
+randomness = 1.0
+fixed_fps = 20
+visibility_rect = Rect2(-50, -100, 200, 200)
+
+[node name="upright" type="Node2D" parent="detach/aoe" groups=["upright_sprite"]]
+process_mode = 4
+
+[node name="bolt" type="GPUParticles2D" parent="detach/aoe/upright"]
+process_mode = 1
+position = Vector2(0, -148)
+emitting = false
+amount = 1
+process_material = SubResource("ParticleProcessMaterial_wv6w6")
+texture = ExtResource("6_b20l4")
+lifetime = 0.2
+one_shot = true
+local_coords = true
+
+[node name="sfx" type="AudioStreamPlayer2D" parent="detach/aoe"]
+stream = ExtResource("5_xgsmf")
+
+[node name="reticle" type="Node2D" parent="detach"]
+process_mode = 4
+
+[node name="ready" type="GPUParticles2D" parent="detach/reticle"]
+process_mode = 1
+modulate = Color(0, 1, 1, 0.615686)
+z_index = -1
+scale = Vector2(2, 2)
+amount = 3
+process_material = ExtResource("8_x7oc2")
+texture = ExtResource("3_djuaj")
+fixed_fps = 1000
+local_coords = true
+
+[node name="meter" type="TextureProgressBar" parent="detach/reticle"]
+z_index = -1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -200.0
+offset_right = 200.0
+offset_bottom = 200.0
+grow_horizontal = 2
+grow_vertical = 2
+max_value = 1.0
+step = 0.0
+value = 0.7
+fill_mode = 3
+nine_patch_stretch = true
+texture_under = ExtResource("3_djuaj")
+texture_progress = ExtResource("3_djuaj")
+tint_under = Color(0, 0, 0, 0.305882)
+tint_progress = Color(0, 0.916667, 1, 1)
+
+[connection signal="charged" from="." to="." method="_on_charged"]
+[connection signal="chargedFire" from="." to="detach/aoe/AoeBurst" method="restart"]
+[connection signal="chargedFire" from="." to="detach/aoe/upright/bolt" method="restart"]
+[connection signal="chargedFire" from="." to="detach/aoe/AoeSparks" method="restart"]
+[connection signal="chargedFire" from="." to="hitbox_disable" method="start"]
+[connection signal="chargedFire" from="." to="detach/aoe/sfx" method="play"]
+[connection signal="chargedFire" from="." to="detach/aoe/CollisionShape2D" method="set_disabled" binds= [false]]
+[connection signal="fired" from="." to="." method="_on_fired"]
+[connection signal="pressed" from="." to="detach/reticle/ready" method="restart"]
+[connection signal="pressed" from="." to="detach/reticle" method="set_visible" binds= [true]]
+[connection signal="pressed" from="." to="detach/reticle/ready" method="set_emitting" flags=3 binds= [false]]
+[connection signal="ready" from="." to="detach/reticle" method="set_visible" binds= [false]]
+[connection signal="released" from="." to="detach/reticle" method="set_visible" binds= [false]]
+[connection signal="timeout" from="hitbox_disable" to="detach/aoe/CollisionShape2D" method="set_disabled" binds= [true]]
+[connection signal="body_entered" from="detach/aoe" to="." method="_on_aoe_body_entered"]

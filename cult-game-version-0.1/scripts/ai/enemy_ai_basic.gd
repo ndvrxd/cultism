@@ -23,11 +23,12 @@ func update_aggro()->void:
 	var e:Entity = findNewTarget();
 	if e_old != null and e == null: #if de-aggroing from an enemy
 		attacking = false
+		ent.setAbilityPressed(0, false)
 		seekNearestPathNode()
 	# try to counteract the O(n^2) nature of this algorithm
 	# by increasing the interval between retargets based on how many
 	# entities are currently active. this may also help gameplay somewhat
-	var ecount = get_tree().get_nodes_in_group("entity").size() #MAYBE TRACK THIS BETTER
+	var ecount = get_tree().get_node_count_in_group("entity")
 	timer_aggro.start(1 + 0.03 * ecount)
 
 func update_target_loc()->void:

@@ -1,36 +1,43 @@
-[gd_resource type="AudioStreamRandomizer" load_steps=16 format=3 uid="uid://dqntipl1uvb0e"]
+[gd_resource type="AudioStreamSynchronized" load_steps=15 format=3 uid="uid://cij0if3nrfsh"]
 
-[ext_resource type="AudioStream" uid="uid://c32nmfl4hfdp8" path="res://sound/fx/kibby/guitarhit1.mp3" id="1_us5yd"]
-[ext_resource type="AudioStream" uid="uid://bvjt02ohea5xx" path="res://sound/fx/kibby/guitarhit2.mp3" id="2_83ho7"]
-[ext_resource type="AudioStream" uid="uid://du7myi14ehqv8" path="res://sound/fx/kibby/guitarhit11.mp3" id="3_7653b"]
-[ext_resource type="AudioStream" uid="uid://cg17pysyv2b3v" path="res://sound/fx/kibby/guitarhit12.mp3" id="4_p6hl6"]
-[ext_resource type="AudioStream" uid="uid://bn2i8gwq2qyex" path="res://sound/fx/kibby/guitarhit13.mp3" id="5_tgqjs"]
-[ext_resource type="AudioStream" uid="uid://d1gnxmqu5bmm5" path="res://sound/fx/kibby/guitarhit14.mp3" id="6_gl6gt"]
-[ext_resource type="AudioStream" uid="uid://cu1unnc7wq21o" path="res://sound/fx/kibby/guitarhit15.mp3" id="7_aso7x"]
-[ext_resource type="AudioStream" uid="uid://bcybaylaerett" path="res://sound/fx/kibby/guitarhit3.mp3" id="8_gbabe"]
-[ext_resource type="AudioStream" uid="uid://d11r7lmbdoovn" path="res://sound/fx/kibby/guitarhit4.mp3" id="9_owci1"]
-[ext_resource type="AudioStream" uid="uid://jbkdl6wvcse8" path="res://sound/fx/kibby/guitarhit5.mp3" id="10_pbxkw"]
-[ext_resource type="AudioStream" uid="uid://dgah5lgab1swg" path="res://sound/fx/kibby/guitarhit6.mp3" id="11_nooi7"]
-[ext_resource type="AudioStream" uid="uid://dlmh4lqs31ek5" path="res://sound/fx/kibby/guitarhit7.mp3" id="12_klt7d"]
-[ext_resource type="AudioStream" uid="uid://csgn1yreqlw72" path="res://sound/fx/kibby/guitarhit8.mp3" id="13_4uaph"]
-[ext_resource type="AudioStream" uid="uid://bpjcrph3towg5" path="res://sound/fx/kibby/guitarhit9.mp3" id="14_nq132"]
-[ext_resource type="AudioStream" uid="uid://5gfbnjpuocvo" path="res://sound/fx/kibby/guitarhit10.mp3" id="15_oj63b"]
+[ext_resource type="AudioStream" uid="uid://bausilmhk3vdv" path="res://sound/pools/punch.tres" id="1_e6p35"]
+[ext_resource type="AudioStream" uid="uid://oq7jou21cqx5" path="res://sound/fx/kibby/hitchord1.mp3" id="2_wluig"]
+[ext_resource type="AudioStream" uid="uid://or5l2dfkh4e4" path="res://sound/fx/kibby/hitchord2.mp3" id="3_sjus8"]
+[ext_resource type="AudioStream" uid="uid://wc6x06h80kv7" path="res://sound/fx/kibby/hitchord13.mp3" id="4_tpdpu"]
+[ext_resource type="AudioStream" uid="uid://douxua8wcx23u" path="res://sound/fx/kibby/hitchord14.mp3" id="5_ls2an"]
+[ext_resource type="AudioStream" uid="uid://biyfhc043fl2k" path="res://sound/fx/kibby/hitchord3.mp3" id="6_757wx"]
+[ext_resource type="AudioStream" uid="uid://cb1x3u6mgp3r6" path="res://sound/fx/kibby/hitchord4.mp3" id="7_lqxqu"]
+[ext_resource type="AudioStream" uid="uid://dm1sydjxaripx" path="res://sound/fx/kibby/hitchord5.mp3" id="8_cw3gf"]
+[ext_resource type="AudioStream" uid="uid://ni80cxjje8jg" path="res://sound/fx/kibby/hitchord6.mp3" id="9_2evq0"]
+[ext_resource type="AudioStream" uid="uid://bmc5otf8im2cf" path="res://sound/fx/kibby/hitchord7.mp3" id="10_osgd1"]
+[ext_resource type="AudioStream" uid="uid://cmkwklyrkcp51" path="res://sound/fx/kibby/hitchord9.mp3" id="11_hucqj"]
+[ext_resource type="AudioStream" uid="uid://cenhn7iuc8ivc" path="res://sound/fx/kibby/hitchord10.mp3" id="12_2lqhd"]
+[ext_resource type="AudioStream" uid="uid://db454dv23ac83" path="res://sound/fx/kibby/hitchord11.mp3" id="13_y7cwj"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_a34oh"]
+random_pitch = 1.05
+streams_count = 12
+stream_0/stream = ExtResource("2_wluig")
+stream_1/stream = ExtResource("3_sjus8")
+stream_2/stream = ExtResource("6_757wx")
+stream_2/weight = 0.4
+stream_3/stream = ExtResource("7_lqxqu")
+stream_4/stream = ExtResource("8_cw3gf")
+stream_5/stream = ExtResource("9_2evq0")
+stream_6/stream = ExtResource("10_osgd1")
+stream_6/weight = 0.1
+stream_7/stream = ExtResource("11_hucqj")
+stream_7/weight = 0.4
+stream_8/stream = ExtResource("12_2lqhd")
+stream_9/stream = ExtResource("13_y7cwj")
+stream_10/stream = ExtResource("4_tpdpu")
+stream_10/weight = 0.1
+stream_11/stream = ExtResource("5_ls2an")
+stream_11/weight = 0.3
 
 [resource]
-random_pitch = 1.05
-streams_count = 15
-stream_0/stream = ExtResource("1_us5yd")
-stream_1/stream = ExtResource("2_83ho7")
-stream_2/stream = ExtResource("8_gbabe")
-stream_3/stream = ExtResource("9_owci1")
-stream_4/stream = ExtResource("10_pbxkw")
-stream_5/stream = ExtResource("11_nooi7")
-stream_6/stream = ExtResource("12_klt7d")
-stream_7/stream = ExtResource("13_4uaph")
-stream_8/stream = ExtResource("14_nq132")
-stream_9/stream = ExtResource("15_oj63b")
-stream_10/stream = ExtResource("3_7653b")
-stream_11/stream = ExtResource("4_p6hl6")
-stream_12/stream = ExtResource("5_tgqjs")
-stream_13/stream = ExtResource("6_gl6gt")
-stream_14/stream = ExtResource("7_aso7x")
+stream_count = 2
+stream_0/stream = ExtResource("1_e6p35")
+stream_0/volume = -6.0
+stream_1/stream = SubResource("AudioStreamRandomizer_a34oh")
+stream_1/volume = 0.0

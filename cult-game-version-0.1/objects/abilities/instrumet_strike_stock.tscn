@@ -1,0 +1,189 @@
+[gd_scene load_steps=14 format=3 uid="uid://bibt0wcnslvxw"]
+
+[ext_resource type="Texture2D" uid="uid://dibdpf0hq1dib" path="res://art/ui/ability_icons/guitarswing.png" id="1_jbwos"]
+[ext_resource type="Material" uid="uid://beg2mqqa0fc2f" path="res://vfx/particle/processmaterial/sparkle.tres" id="1_rjab4"]
+[ext_resource type="Script" path="res://scripts/abstract/Stat.gd" id="2_d34hl"]
+[ext_resource type="Texture2D" uid="uid://c3l4kkjo4q83i" path="res://vfx/particle/sparkle haha.png" id="2_f0u1r"]
+[ext_resource type="Material" uid="uid://dlqvc37rv373i" path="res://vfx/particle/processmaterial/bladeswing.tres" id="3_43uhb"]
+[ext_resource type="Material" uid="uid://ck8ixyuqbmu4n" path="res://vfx/particle/processmaterial/burst.tres" id="3_au603"]
+[ext_resource type="Texture2D" uid="uid://b5aefjahrsgq1" path="res://vfx/particle/lightflare2.png" id="4_81rle"]
+[ext_resource type="Texture2D" uid="uid://dga7i0vpugytw" path="res://vfx/particle/diamond_blackcenter.png" id="4_mhx4y"]
+[ext_resource type="AudioStream" uid="uid://cij0if3nrfsh" path="res://sound/pools/guitar_hit_stock.tres" id="5_866us"]
+[ext_resource type="AudioStream" uid="uid://ivxk0aryil43" path="res://sound/pools/whiff.tres" id="7_d2q8e"]
+[ext_resource type="AudioStream" uid="uid://dr23xuxyu8ihm" path="res://sound/fx/blip.mp3" id="10_3pod0"]
+[ext_resource type="Texture2D" uid="uid://30dwss7i0e85" path="res://art/ui/ability_icons/lightning.png" id="12_2w2bp"]
+
+[sub_resource type="GDScript" id="GDScript_ae2ol"]
+script/source = "extends Ability
+
+signal meter_used
+signal meter_charged
+signal show_meter
+
+@export var maxHits = 8;
+var swordShape:CircleShape2D = CircleShape2D.new()
+@export var swordRange = 50
+
+var metercharged:bool = false
+
+@onready var swordHitFx:PackedScene = load(\"res://vfx/objects/sword_hit.tscn\")
+
+func _ready():
+	super._ready()
+	swordShape.radius = 100;
+
+func _process(delta:float) -> void:
+	super._process(delta)
+	if metercharged:
+		if ent.ability_vars[\"lightning_meter\"] <= 0:
+			meter_used.emit()
+			metercharged = false
+
+func fireAction():
+	if not \"lightning_meter\" in ent.ability_vars:
+		ent.ability_vars[\"lightning_meter\"] = 0
+	$shoulder/swordwoosh.scale.y = -$shoulder/swordwoosh.scale.y
+	$hitdelay.start()
+	await $hitdelay.timeout
+	var ents = ent.shapeCastFromShoulder(ent.lookDirection*swordRange, swordShape, false)
+	var hits = 0
+	for target:Entity in ents:
+		if ent.team != target.team:
+			if is_multiplayer_authority():
+				updateLightningMeter.rpc(
+					ent.ability_vars[\"lightning_meter\"] + 0.04 )
+				doHitFlash.rpc(target.shoulderPoint.global_position)
+				target.changeHealth.rpc(target.health,
+					-ent.stat_baseDamage.val*0.6, ent.get_path())
+			hits += 1
+		if hits >= maxHits:
+			break
+	if hits > 0:
+		$sfx/hit.play()
+
+@rpc(\"authority\", \"call_local\", \"reliable\")
+func updateLightningMeter(val:float):
+	ent.ability_vars[\"lightning_meter\"] = val
+	if not metercharged:
+		$upright/meter.value = ent.ability_vars[\"lightning_meter\"]
+		show_meter.emit()
+		if ent.ability_vars[\"lightning_meter\"] >= 1:
+			metercharged = true
+			meter_charged.emit()
+
+@rpc(\"authority\", \"call_local\", \"reliable\")
+func doHitFlash(pos:Vector2):
+	var temp = swordHitFx.instantiate()
+	temp.emitting = true
+	temp.global_position = pos
+	get_tree().current_scene.add_child(temp)
+"
+
+[node name="InstrumentStrikeStock" type="Node2D"]
+script = SubResource("GDScript_ae2ol")
+ability_name = "Bludgeon"
+ability_desc = "Swing your guitar at enemies for blunt force damage.
+Deals less-than-impressive individual damage,
+but can easily mow down crowds of enemies.
+
+Successful hits with the guitar charge your meter."
+portrait = ExtResource("1_jbwos")
+
+[node name="m2readyloop" type="GPUParticles2D" parent="."]
+modulate = Color(0, 0.966667, 1, 1)
+position = Vector2(0, -69)
+scale = Vector2(2, 2)
+emitting = false
+amount = 16
+process_material = ExtResource("1_rjab4")
+texture = ExtResource("2_f0u1r")
+visibility_rect = Rect2(-25, -25, 50, 50)
+
+[node name="m2readycue" type="GPUParticles2D" parent="."]
+modulate = Color(0, 0.983334, 1, 1)
+position = Vector2(0, -66)
+scale = Vector2(3, 3)
+emitting = false
+amount = 1
+process_material = ExtResource("3_au603")
+texture = ExtResource("4_81rle")
+lifetime = 0.55
+one_shot = true
+visibility_rect = Rect2(-25, -25, 50, 50)
+local_coords = true
+
+[node name="stats" type="Node" parent="."]
+process_mode = 4
+
+[node name="cooldown" type="Node" parent="stats"]
+script = ExtResource("2_d34hl")
+baseValue = 0.9
+
+[node name="hitdelay" type="Timer" parent="."]
+wait_time = 0.15
+one_shot = true
+
+[node name="shoulder" type="Node2D" parent="."]
+
+[node name="swordwoosh" type="GPUParticles2D" parent="shoulder"]
+z_index = 1
+texture_filter = 1
+scale = Vector2(1.5, 1.3)
+emitting = false
+amount = 1
+process_material = ExtResource("3_43uhb")
+texture = ExtResource("4_mhx4y")
+lifetime = 0.5
+one_shot = true
+fixed_fps = 60
+local_coords = true
+trail_enabled = true
+trail_lifetime = 0.24
+
+[node name="sfx" type="Node2D" parent="."]
+
+[node name="hit" type="AudioStreamPlayer2D" parent="sfx"]
+stream = ExtResource("5_866us")
+bus = &"sfx"
+
+[node name="whiff" type="AudioStreamPlayer2D" parent="sfx"]
+stream = ExtResource("7_d2q8e")
+pitch_scale = 1.2
+bus = &"sfx"
+
+[node name="meterfull" type="AudioStreamPlayer2D" parent="sfx"]
+stream = ExtResource("10_3pod0")
+bus = &"sfx"
+
+[node name="upright" type="Node2D" parent="." groups=["upright_sprite"]]
+process_mode = 4
+
+[node name="meter" type="TextureProgressBar" parent="upright"]
+z_index = 1
+offset_left = 40.0
+offset_top = -109.0
+offset_right = 140.0
+offset_bottom = -9.00001
+scale = Vector2(0.5, 0.7)
+max_value = 1.1
+step = 0.0
+value = 1.0
+fill_mode = 3
+texture_under = ExtResource("12_2w2bp")
+texture_progress = ExtResource("12_2w2bp")
+tint_under = Color(0, 0, 0, 0.298039)
+tint_progress = Color(0.0352941, 1, 1, 1)
+
+[node name="hide_meter" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="fired" from="." to="shoulder/swordwoosh" method="restart"]
+[connection signal="fired" from="." to="sfx/whiff" method="play"]
+[connection signal="meter_charged" from="." to="sfx/meterfull" method="play"]
+[connection signal="meter_charged" from="." to="m2readycue" method="restart"]
+[connection signal="meter_charged" from="." to="m2readyloop" method="set_emitting" binds= [true]]
+[connection signal="meter_used" from="." to="m2readyloop" method="set_emitting" binds= [false]]
+[connection signal="ready" from="." to="upright/meter" method="set_visible" binds= [false]]
+[connection signal="show_meter" from="." to="hide_meter" method="start"]
+[connection signal="show_meter" from="." to="upright/meter" method="set_visible" binds= [true]]
+[connection signal="timeout" from="hide_meter" to="upright/meter" method="set_visible" binds= [false]]
