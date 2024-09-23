@@ -44,6 +44,7 @@ script = ExtResource("1_16lcu")
 keyIcon = ExtResource("2_e6673")
 
 [node name="tooled tip" type="Control" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5

@@ -94,6 +94,7 @@ texture = ExtResource("3_6ffd6")
 lifetime = 0.3
 one_shot = true
 fixed_fps = 40
+visibility_rect = Rect2(-50, -50, 100, 100)
 local_coords = true
 
 [node name="tell2" type="Node2D" parent="."]
@@ -109,7 +110,7 @@ process_material = SubResource("ParticleProcessMaterial_4rexe")
 texture = ExtResource("3_xbq0c")
 lifetime = 0.4
 one_shot = true
-visibility_rect = Rect2(-50, -50, 100, 100)
+visibility_rect = Rect2(-30, -70, 60, 100)
 local_coords = true
 
 [node name="stats" type="Node" parent="."]

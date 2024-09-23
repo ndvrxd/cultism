@@ -1,8 +1,7 @@
-[gd_scene load_steps=9 format=3 uid="uid://ct6dh5rgiuip3"]
+[gd_scene load_steps=8 format=3 uid="uid://ct6dh5rgiuip3"]
 
 [ext_resource type="Script" path="res://scripts/characters/enemy.gd" id="1_34ypl"]
 [ext_resource type="PackedScene" uid="uid://bsm1bpkbr01xf" path="res://objects/abilities/sd_melee.tscn" id="2_6wl3w"]
-[ext_resource type="Texture2D" uid="uid://clqo76f6tebyl" path="res://art/ui/arrow.png" id="2_dpt7c"]
 [ext_resource type="Script" path="res://scripts/abstract/Stat.gd" id="2_f64of"]
 [ext_resource type="Texture2D" uid="uid://684pxvrx2k8n" path="res://art/character ph/shadowdemon_body.png" id="3_8qhy0"]
 [ext_resource type="Texture2D" uid="uid://5m8ckagwla2f" path="res://art/character ph/shadowdemon_eyes.png" id="4_6rtsc"]
@@ -44,13 +43,6 @@ baseValue = 50.0
 [node name="shoulder" type="Node2D" parent="."]
 position = Vector2(-1, -72)
 
-[node name="Sprite2D" type="Sprite2D" parent="shoulder"]
-visible = false
-modulate = Color(1, 0, 0, 1)
-position = Vector2(60, 0)
-rotation = 1.5708
-texture = ExtResource("2_dpt7c")
-
 [node name="upright_anchor" type="Node2D" parent="." groups=["upright_sprite"]]
 process_mode = 4
 y_sort_enabled = true
@@ -82,3 +74,13 @@ shape = SubResource("CapsuleShape2D_jucqc")
 position = Vector2(0, -20)
 shape = SubResource("CircleShape2D_uaxf4")
 debug_color = Color(0.772432, 0.263693, 0.879854, 0.42)
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+rect = Rect2(-45, -123.705, 90, 130)
+
+[connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="ShadowDemonMelee" method="set_visible" binds= [true]]
+[connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="ShadowDemonMelee" method="add_to_group" binds= ["upright_sprite"]]
+[connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="upright_anchor" method="set_visible" binds= [true]]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="remove_from_group" binds= ["upright_sprite"]]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="ShadowDemonMelee" method="set_visible" binds= [false]]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="upright_anchor" method="set_visible" binds= [false]]

@@ -69,6 +69,10 @@ func _physics_process(delta: float) -> void:
 			controllerAimLength = 0
 		lastStickDir = cameraStickDir
 		if Input.get_last_mouse_velocity().length() > 0: mouseLookMode = true
+		
+	if !Chatbox.isFocused:
+		if Input.is_action_just_pressed("Interact"):
+			ent.interact()
 
 func _process(delta):
 	if !is_instance_valid(ent): return
@@ -92,8 +96,6 @@ func _process(delta):
 			ent.setAbilityPressed.rpc(2, true)
 		if Input.is_action_just_released("SpecialAbility"):
 			ent.setAbilityPressed.rpc(2, false)
-		if Input.is_action_just_pressed("Interact"):
-			ent.interact()
 	#endregion
 
 func damageVignette(dmg_amt, _from):
