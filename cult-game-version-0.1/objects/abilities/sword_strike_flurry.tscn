@@ -37,7 +37,7 @@ func _on_deal_damage_timeout() -> void:
 			doHitFlash.rpc(target.shoulderPoint.global_position)
 			if ent.team != target.team:
 				target.changeHealth.rpc(target.health,
-					-ent.stat_baseDamage.val * 0.20,
+					-ent.stat_baseDamage.val * 0.15,
 					ent.get_path())
 
 func _on_blink_timeout() -> void:
@@ -62,7 +62,8 @@ stream_0/stream = ExtResource("4_537ei")
 [node name="SwordStrikeFlurry" type="Node2D"]
 script = SubResource("GDScript_7yrby")
 ability_name = "Flurry"
-ability_desc = "Charge to unleash a flurry of hits that cuts through swarms of enemies."
+ability_desc = "Charge to unleash a flurry of hits that can
+cut through large swarms of enemies."
 portrait = ExtResource("5_1yma2")
 is_charged_ability = true
 

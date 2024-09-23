@@ -80,7 +80,7 @@ portrait = ExtResource("1_8sr3p")
 [node name="attack_delay" type="Timer" parent="."]
 wait_time = 0.4
 
-[node name="upright" type="Node2D" parent="." groups=["upright_sprite"]]
+[node name="upright" type="Node2D" parent="."]
 
 [node name="tell" type="GPUParticles2D" parent="upright"]
 process_mode = 1

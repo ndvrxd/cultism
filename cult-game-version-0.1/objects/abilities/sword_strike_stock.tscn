@@ -53,7 +53,9 @@ func doHitFlash(pos:Vector2):
 [node name="SwordStrikeStock" type="Node2D"]
 script = SubResource("GDScript_ae2ol")
 ability_name = "Slash"
-ability_desc = "Swing your sword."
+ability_desc = "Swing your sword.
+Does decent damage, but can only hit
+up to 3 enemies in one swing."
 portrait = ExtResource("1_jydsv")
 
 [node name="stats" type="Node" parent="."]

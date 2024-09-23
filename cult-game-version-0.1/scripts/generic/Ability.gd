@@ -7,7 +7,7 @@ signal released;
 signal offCooldown;
 
 @export var ability_name:String = "Nothing"
-@export var ability_desc:String = "Does nothing."
+@export_multiline var ability_desc:String = "Does nothing."
 @export var portrait:Texture2D;
 
 @export var is_charged_ability:bool = false
