@@ -1,0 +1,152 @@
+[gd_scene load_steps=14 format=3 uid="uid://b3ebj3hu7gvb1"]
+
+[ext_resource type="AudioStream" uid="uid://ce8l7nxioasql" path="res://sound/pools/kibby_starstruck.tres" id="2_b1qa7"]
+[ext_resource type="Texture2D" uid="uid://dcdjcveiv5jr1" path="res://art/ui/ability_icons/starstruck.png" id="2_ok36r"]
+[ext_resource type="Script" path="res://scripts/abstract/Stat.gd" id="3_ae7nj"]
+[ext_resource type="Material" uid="uid://ck8ixyuqbmu4n" path="res://vfx/particle/processmaterial/burst.tres" id="3_bbg16"]
+[ext_resource type="Texture2D" uid="uid://d37m7rbl1uqlo" path="res://vfx/particle/zap.png" id="4_74knr"]
+[ext_resource type="Texture2D" uid="uid://dmcej1hbhoaj0" path="res://vfx/particle/aoe.png" id="4_qu8dx"]
+
+[sub_resource type="GDScript" id="GDScript_0cxmo"]
+script/source = "extends Ability
+
+@onready var wololoHitFx:PackedScene = load(\"res://vfx/objects/wololo_flash.tscn\")
+
+func _on_fired() -> void:
+	ent.frozen = true
+
+func _on_unfreeze_timeout() -> void:
+	ent.frozen = false
+
+func _on_aoe_body_entered(body: Node2D) -> void:
+	var target:Entity = body as Entity
+	if not target: return
+	if is_multiplayer_authority():
+		turnEnemy.rpc(target.get_path())
+
+@rpc(\"authority\", \"call_local\", \"reliable\")
+func turnEnemy(path:NodePath) -> void:
+	var target:Entity = get_node(path) as Entity
+	if not target or target.team == ent.team or target.aggroPriority > 1: return
+	#TODO make this a debuff when those are in
+	target.modulate = Color.CORNFLOWER_BLUE
+	target.team = ent.team
+	#\"applied\" vfx - again, move this to the debuff when debuffs are in
+	var temp:Node2D = wololoHitFx.instantiate()
+	temp.global_position = target.shoulderPoint.global_position
+	get_tree().current_scene.add_child(temp)
+"
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_240iu"]
+radius = 200.0
+
+[sub_resource type="Curve" id="Curve_bj5nx"]
+_data = [Vector2(0.369128, 0), 0.0, 0.0, 0, 0, Vector2(0.496644, 1), 0.0, 0.0, 0, 0, Vector2(0.838926, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_77unl"]
+curve = SubResource("Curve_bj5nx")
+
+[sub_resource type="Curve" id="Curve_u6pjf"]
+_data = [Vector2(0, 0.527472), 0.0, 0.0, 0, 0, Vector2(0.355705, 1), 0.0, 0.0, 0, 0, Vector2(0.812081, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.538462), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_g25xu"]
+curve = SubResource("Curve_u6pjf")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_o6kpe"]
+particle_flag_align_y = true
+particle_flag_disable_z = true
+direction = Vector3(0, -1, 0)
+spread = 80.0
+initial_velocity_min = 60.0
+initial_velocity_max = 70.0
+gravity = Vector3(0, 0, 0)
+scale_min = 3.0
+scale_max = 5.0
+scale_curve = SubResource("CurveTexture_g25xu")
+alpha_curve = SubResource("CurveTexture_77unl")
+
+[node name="Starstruck" type="Node2D"]
+script = SubResource("GDScript_0cxmo")
+ability_name = "Starstruck"
+ability_desc = "Rally all smaller enemies around you to your cause.
+What you lack in raw damage, you can make up for in
+numbers!
+
+(Note: As Kibby, you draw more attention from enemies
+than any other character. Use this to your advantage!)"
+portrait = ExtResource("2_ok36r")
+
+[node name="stats" type="Node" parent="."]
+
+[node name="cooldown" type="Node" parent="stats"]
+script = ExtResource("3_ae7nj")
+baseValue = 25.0
+
+[node name="aoe" type="Area2D" parent="."]
+collision_layer = 7
+collision_mask = 7
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="aoe"]
+shape = SubResource("CircleShape2D_240iu")
+disabled = true
+
+[node name="enable_hitbox" type="Timer" parent="."]
+wait_time = 0.2
+one_shot = true
+
+[node name="disable_hitbox" type="Timer" parent="."]
+wait_time = 0.65
+one_shot = true
+
+[node name="unfreeze" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[node name="snd" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_b1qa7")
+bus = &"kibby_guitar"
+
+[node name="upright" type="Node2D" parent="." groups=["upright_sprite"]]
+
+[node name="rockin" type="GPUParticles2D" parent="upright"]
+modulate = Color(1, 0.828, 0.14, 1)
+texture_filter = 1
+position = Vector2(0, -84)
+scale = Vector2(4, 4)
+emitting = false
+amount = 10
+process_material = SubResource("ParticleProcessMaterial_o6kpe")
+texture = ExtResource("4_74knr")
+lifetime = 0.5
+one_shot = true
+visibility_rect = Rect2(-30, -40, 60, 40)
+
+[node name="AoeBurst" type="GPUParticles2D" parent="."]
+modulate = Color(1, 0.765667, 0.26, 1)
+self_modulate = Color(1, 1, 1, 0.72549)
+show_behind_parent = true
+z_index = -1
+scale = Vector2(4, 4)
+emitting = false
+amount = 3
+process_material = ExtResource("3_bbg16")
+texture = ExtResource("4_qu8dx")
+lifetime = 0.5
+one_shot = true
+fixed_fps = 60
+visibility_rect = Rect2(-50, -50, 100, 100)
+local_coords = true
+
+[connection signal="fired" from="." to="." method="_on_fired"]
+[connection signal="fired" from="." to="enable_hitbox" method="start"]
+[connection signal="fired" from="." to="disable_hitbox" method="start"]
+[connection signal="fired" from="." to="unfreeze" method="start"]
+[connection signal="fired" from="." to="snd" method="play"]
+[connection signal="fired" from="." to="upright/rockin" method="restart"]
+[connection signal="fired" from="." to="AoeBurst" method="restart"]
+[connection signal="body_entered" from="aoe" to="." method="_on_aoe_body_entered"]
+[connection signal="timeout" from="enable_hitbox" to="aoe/CollisionShape2D" method="set_disabled" binds= [false]]
+[connection signal="timeout" from="disable_hitbox" to="aoe/CollisionShape2D" method="set_disabled" binds= [true]]
+[connection signal="timeout" from="unfreeze" to="." method="_on_unfreeze_timeout"]

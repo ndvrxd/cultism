@@ -20,10 +20,10 @@ func _physics_process(delta: float) -> void:
 		
 		if not attacking and global_position.distance_to(target.global_position) <= attackRange:
 			attacking = true
-			ent.primaryFire.rpc(ent.aimPosition)
+			ent.setAbilityPressed.rpc(0, true)
 		if attacking and global_position.distance_to(target.global_position) > attackRange:
 			attacking = false
-			ent.primaryFireReleased.rpc(ent.aimPosition)
+			ent.setAbilityPressed.rpc(0, false)
 		
 	else: # if not aggroed, do fuck all...?
 		ent.moveIntent = Vector2.ZERO

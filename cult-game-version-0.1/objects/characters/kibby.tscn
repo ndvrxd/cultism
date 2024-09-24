@@ -1,31 +1,21 @@
-[gd_scene load_steps=20 format=3 uid="uid://ci7mx2j77fwhs"]
+[gd_scene load_steps=10 format=3 uid="uid://ci7mx2j77fwhs"]
 
 [ext_resource type="Script" path="res://scripts/characters/kibby.gd" id="1_j0iaj"]
+[ext_resource type="PackedScene" uid="uid://bibt0wcnslvxw" path="res://objects/abilities/instrumet_strike_stock.tscn" id="2_3be6p"]
 [ext_resource type="Script" path="res://scripts/abstract/Stat.gd" id="2_cnk3q"]
 [ext_resource type="Texture2D" uid="uid://clqo76f6tebyl" path="res://art/ui/arrow.png" id="2_ooq4y"]
-[ext_resource type="Material" uid="uid://dlqvc37rv373i" path="res://vfx/particle/processmaterial/bladeswing.tres" id="3_c10h1"]
+[ext_resource type="PackedScene" uid="uid://dvy5sraal3n12" path="res://objects/abilities/freehand_aoe.tscn" id="3_oppbj"]
 [ext_resource type="Texture2D" uid="uid://soudc4snc7fj" path="res://art/character ph/kibby ph 2.png" id="3_vd5t2"]
-[ext_resource type="Texture2D" uid="uid://dga7i0vpugytw" path="res://vfx/particle/diamond_blackcenter.png" id="4_y4mt3"]
-[ext_resource type="Texture2D" uid="uid://cne410unbshys" path="res://art/character ph/kibby meter.png" id="5_h4gok"]
-[ext_resource type="Material" uid="uid://beg2mqqa0fc2f" path="res://vfx/particle/processmaterial/sparkle.tres" id="6_4yom4"]
-[ext_resource type="Material" uid="uid://ck8ixyuqbmu4n" path="res://vfx/particle/processmaterial/burst.tres" id="6_copnh"]
-[ext_resource type="Texture2D" uid="uid://c3l4kkjo4q83i" path="res://vfx/particle/sparkle haha.png" id="7_wq06t"]
-[ext_resource type="Texture2D" uid="uid://dmcej1hbhoaj0" path="res://vfx/particle/aoe.png" id="7_wry1b"]
-[ext_resource type="Texture2D" uid="uid://b5aefjahrsgq1" path="res://vfx/particle/lightflare2.png" id="9_4pe4u"]
-[ext_resource type="Texture2D" uid="uid://c8fqyfsyylys1" path="res://vfx/particle/aoe_preview.png" id="11_ny6kj"]
-[ext_resource type="AudioStream" uid="uid://dr23xuxyu8ihm" path="res://sound/fx/blip.mp3" id="12_w3v4g"]
-[ext_resource type="AudioStream" uid="uid://ivxk0aryil43" path="res://sound/pools/whiff.tres" id="13_w3jds"]
-[ext_resource type="AudioStream" uid="uid://dqntipl1uvb0e" path="res://sound/pools/guitar_hit_stock.tres" id="14_nuct7"]
-[ext_resource type="AudioStream" uid="uid://b8rm247vr5k5v" path="res://sound/pools/kibby_starstruck.tres" id="15_fwbwr"]
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_86oxc"]
-radius = 23.0868
+[ext_resource type="PackedScene" uid="uid://b3ebj3hu7gvb1" path="res://objects/abilities/starstruck.tscn" id="4_0x4ji"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_u7vwb"]
 radius = 5.74163
 height = 21.0526
 
-[node name="Kibby" type="CharacterBody2D"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_86oxc"]
+radius = 23.0868
+
+[node name="Kibby" type="CharacterBody2D" node_paths=PackedStringArray("abilities")]
 collision_layer = 4
 script = ExtResource("1_j0iaj")
 entityName = "Kibby"
@@ -33,6 +23,13 @@ team = 1
 objPath = "res://objects/characters/kibby.tscn"
 controllerPath = "res://objects/controllers/basic_enemy_ai.tscn"
 aggroPriority = 1
+abilities = [NodePath("InstrumentStrikeStock"), NodePath("FreehandAoe"), NodePath("Starstruck")]
+
+[node name="InstrumentStrikeStock" parent="." instance=ExtResource("2_3be6p")]
+
+[node name="FreehandAoe" parent="." instance=ExtResource("3_oppbj")]
+
+[node name="Starstruck" parent="." instance=ExtResource("4_0x4ji")]
 
 [node name="stat_speed" type="Node" parent="."]
 script = ExtResource("2_cnk3q")
@@ -50,6 +47,13 @@ baseValue = 2.0
 script = ExtResource("2_cnk3q")
 baseValue = 200.0
 
+[node name="hurtbox" type="Area2D" parent="."]
+scale = Vector2(5.225, 5.225)
+
+[node name="shape" type="CollisionShape2D" parent="hurtbox"]
+position = Vector2(5.96046e-08, -10.3349)
+shape = SubResource("CapsuleShape2D_u7vwb")
+
 [node name="shoulder" type="Node2D" parent="."]
 position = Vector2(0, -91)
 
@@ -60,118 +64,13 @@ position = Vector2(65, 0)
 rotation = 1.5708
 texture = ExtResource("2_ooq4y")
 
-[node name="swordwoosh" type="GPUParticles2D" parent="shoulder"]
-z_index = 1
-texture_filter = 1
-scale = Vector2(1.5, 1.3)
-emitting = false
-amount = 1
-process_material = ExtResource("3_c10h1")
-texture = ExtResource("4_y4mt3")
-lifetime = 0.5
-one_shot = true
-fixed_fps = 60
-local_coords = true
-trail_enabled = true
-trail_lifetime = 0.24
-
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -25)
 shape = SubResource("CircleShape2D_86oxc")
 
 [node name="Node2D" type="Node2D" parent="." groups=["upright_sprite"]]
 
-[node name="lightningbar" type="TextureProgressBar" parent="Node2D"]
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -75.0
-offset_top = -145.74
-offset_right = 125.0
-offset_bottom = 54.26
-grow_horizontal = 2
-grow_vertical = 0
-scale = Vector2(0.745, 0.745)
-value = 100.0
-fill_mode = 3
-texture_under = ExtResource("5_h4gok")
-texture_progress = ExtResource("5_h4gok")
-tint_under = Color(1, 0, 0, 0)
-tint_progress = Color(0, 0.811765, 1, 1)
-
-[node name="m2readyloop" type="GPUParticles2D" parent="Node2D"]
-modulate = Color(0, 0.966667, 1, 1)
-position = Vector2(0, -69)
-scale = Vector2(2, 2)
-emitting = false
-amount = 16
-process_material = ExtResource("6_4yom4")
-texture = ExtResource("7_wq06t")
-visibility_rect = Rect2(-25, -25, 50, 50)
-
 [node name="Sprite2D" type="Sprite2D" parent="Node2D"]
 scale = Vector2(0.745, 0.745)
 texture = ExtResource("3_vd5t2")
 offset = Vector2(0, -95.845)
-
-[node name="m2readycue" type="GPUParticles2D" parent="Node2D"]
-modulate = Color(0, 0.983334, 1, 1)
-position = Vector2(0, -66)
-scale = Vector2(3, 3)
-emitting = false
-amount = 1
-process_material = ExtResource("6_copnh")
-texture = ExtResource("9_4pe4u")
-lifetime = 0.55
-one_shot = true
-visibility_rect = Rect2(-25, -25, 50, 50)
-local_coords = true
-
-[node name="hurtbox" type="Area2D" parent="."]
-scale = Vector2(5.225, 5.225)
-
-[node name="shape" type="CollisionShape2D" parent="hurtbox"]
-position = Vector2(5.96046e-08, -10.3349)
-shape = SubResource("CapsuleShape2D_u7vwb")
-
-[node name="AoePreview" type="Sprite2D" parent="."]
-visible = false
-scale = Vector2(4, 4)
-texture = ExtResource("11_ny6kj")
-
-[node name="AoeBurst" type="GPUParticles2D" parent="."]
-modulate = Color(1, 0.765667, 0.26, 1)
-self_modulate = Color(1, 1, 1, 0.72549)
-show_behind_parent = true
-scale = Vector2(4, 4)
-emitting = false
-amount = 3
-process_material = ExtResource("6_copnh")
-texture = ExtResource("7_wry1b")
-lifetime = 0.5
-one_shot = true
-fixed_fps = 60
-visibility_rect = Rect2(-50, -50, 100, 100)
-local_coords = true
-
-[node name="AoeHitboxTick" type="Timer" parent="."]
-wait_time = 0.2
-
-[node name="snd_secondarycharged" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("12_w3v4g")
-bus = &"sfx"
-
-[node name="snd_whiff" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("13_w3jds")
-pitch_scale = 1.2
-bus = &"sfx"
-
-[node name="snd_guitarhit" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("14_nuct7")
-bus = &"sfx"
-
-[node name="snd_starstruck" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("15_fwbwr")
-bus = &"kibby_guitar"

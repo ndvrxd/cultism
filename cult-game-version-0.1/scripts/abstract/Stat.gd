@@ -23,15 +23,14 @@ var multFlatModifier:float = 0.0;
 ## Not recommended to change in the inspector.
 var additive:float = 0.0;
 
-var val:float: #getValue shorthand
-	get:
-		return getValue()
+@onready var val:float = baseValue;
 
 func _ready():
 	process_mode = PROCESS_MODE_DISABLED
 
 func mp_sync():
 	if is_multiplayer_authority():
+		val = (baseValue + baseModifier) *	(multiplier + multFlatModifier) + additive;
 		valueChanged.emit(getValue());
 		await get_tree().create_timer(0.1).timeout
 		mp_sync_rpc.rpc(baseValue, baseModifier, multiplier,
@@ -44,6 +43,7 @@ func mp_sync_rpc(base:float, baseadd:float, mult:float, multadd:float, add:float
 	multiplier = mult;
 	multFlatModifier = multadd;
 	additive = add;
+	val = (baseValue + baseModifier) *	(multiplier + multFlatModifier) + additive;
 	valueChanged.emit(getValue());
 
 # custom constructor because no overloads allowed :(
@@ -83,4 +83,4 @@ func modifyFlat(flatValue:float):
 
 func getValue() -> float:
 	## Returns the final value of the statistic.
-	return (baseValue + baseModifier) *	(multiplier + multFlatModifier) + additive;
+	return val

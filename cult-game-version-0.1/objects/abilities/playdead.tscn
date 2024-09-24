@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://qgqpf0iswovu"]
+
+[ext_resource type="Script" path="res://scripts/generic/Ability.gd" id="1_0ud26"]
+
+[node name="Playdead" type="Node2D"]
+script = ExtResource("1_0ud26")

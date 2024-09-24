@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=4 uid="uid://j2javknfi4yo"]
+[gd_scene load_steps=26 format=4 uid="uid://j2javknfi4yo"]
 
 [ext_resource type="Texture2D" uid="uid://dr1jlcktudyg" path="res://art/playermapxd.png" id="1_8gipf"]
 [ext_resource type="PackedScene" uid="uid://bhatrw3cecxw1" path="res://objects/characters/test_effigy.tscn" id="2_wrja3"]
@@ -17,6 +17,7 @@
 [ext_resource type="Script" path="res://scripts/SpawnDirector.gd" id="10_fkhkt"]
 [ext_resource type="Script" path="res://scripts/abstract/SpawnCard.gd" id="11_hj8iu"]
 [ext_resource type="Script" path="res://scripts/abstract/SpawnDeck.gd" id="12_1wwus"]
+[ext_resource type="PackedScene" uid="uid://dy3rocd3ulfru" path="res://objects/scenery/grass_ph.tscn" id="18_6xqse"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_ob1or"]
 vertices = PackedVector2Array(1134, -750, 1134, 590, 1070, 590, 402, 402, 402, 238, 146, -718, 146, -750, 370, 142, 274, -210, -430, 626, 142, 494, 142, 690, -466, 718, -430, 270, 110, 434, 14, 114, 14, 242, -974, 178, -18, 114, -974, -242, -50, -14, -498, -782, -338, -782, -338, -718, -462, -722, -210, -718, -210, -686, -46, -686, -46, -718, 146, -658, 370, 238, 338, 142, 338, 46, 306, 46, 306, -82, 274, -82, 242, -210, 242, -306, 210, -306, 210, -434, 178, -434, 178, -530, 146, -530, -114, -658, -114, -626, -178, -626, -178, -494, -146, -494, -146, -366, -462, -366, -114, -366, -114, -302, -82, -142, -82, -302, -50, -142, -18, -14, -754, -366, -974, -270, 46, 242, 46, 306, 78, 306, 78, 370, 110, 370, 306, 434, 306, 402, 1070, 622, 814, 622, 434, 462, 814, 654, 498, 654, 498, 590, 466, 590, 466, 526, 434, 526, 270, 462, 270, 494, 174, 690, 174, 718, -494, 626, -494, 850, -466, 878, -718, 878, -690, 850, -718, 302, -690, 270, -974, 302, -974, 206, -1202, 206, -1202, 302, -1358, 302, -1358, -366, -1234, -270, -1234, -366, -974, -366, -782, -366, -1202, 178, -1202, -242, -754, -946, -782, -974, -498, -974, -526, -946, -526, -722)
@@ -116,7 +117,7 @@ texture = ExtResource("1_8gipf")
 position = Vector2(-706, -71)
 
 [node name="navmesh" type="NavigationRegion2D" parent="."]
-z_index = -1
+z_index = -2
 position = Vector2(0, 1)
 navigation_polygon = SubResource("NavigationPolygon_ob1or")
 
@@ -137,9 +138,9 @@ anchor_top = 1.0
 anchor_right = 0.0
 anchor_bottom = 1.0
 offset_left = 18.0
-offset_top = -225.0
+offset_top = -275.0
 offset_right = 338.0
-offset_bottom = -25.0
+offset_bottom = -75.0
 grow_horizontal = 1
 grow_vertical = 0
 
@@ -400,7 +401,115 @@ position = Vector2(-1027, -316)
 [node name="post15" parent="deco" instance=ExtResource("6_8pmr1")]
 position = Vector2(-1178, -194)
 
+[node name="grass" parent="deco" instance=ExtResource("18_6xqse")]
+position = Vector2(-561, 86)
+
 [node name="post16" parent="deco" instance=ExtResource("6_8pmr1")]
 position = Vector2(-1026, -191)
+
+[node name="grass2" parent="deco" instance=ExtResource("18_6xqse")]
+position = Vector2(-213, -78)
+
+[node name="grass3" parent="deco" instance=ExtResource("18_6xqse")]
+position = Vector2(816, -580)
+
+[node name="grass4" parent="deco" instance=ExtResource("18_6xqse")]
+position = Vector2(1029, -497)
+
+[node name="grass5" parent="deco" instance=ExtResource("18_6xqse")]
+position = Vector2(340, -357)
+
+[node name="grass6" parent="deco" instance=ExtResource("18_6xqse")]
+position = Vector2(753, 119)
+
+[node name="grass7" parent="deco" instance=ExtResource("18_6xqse")]
+position = Vector2(997, 341)
+
+[node name="grass8" parent="deco" instance=ExtResource("18_6xqse")]
+position = Vector2(810, 420)
+
+[node name="grass9" parent="deco" instance=ExtResource("18_6xqse")]
+position = Vector2(-492, -199)
+
+[node name="grass10" parent="deco" instance=ExtResource("18_6xqse")]
+position = Vector2(-470, -494)
+
+[node name="grass11" parent="deco" instance=ExtResource("18_6xqse")]
+position = Vector2(-426, -602)
+
+[node name="grass12" parent="deco" instance=ExtResource("18_6xqse")]
+position = Vector2(-918, 252)
+
+[node name="grass13" parent="deco" instance=ExtResource("18_6xqse")]
+position = Vector2(-839, 131)
+
+[node name="grass14" parent="deco" instance=ExtResource("18_6xqse")]
+position = Vector2(-906, -313)
+
+[node name="grass15" parent="deco" instance=ExtResource("18_6xqse")]
+position = Vector2(-361, 356)
+
+[node name="grass16" parent="deco" instance=ExtResource("18_6xqse")]
+position = Vector2(-173, 457)
+
+[node name="grass17" parent="deco" instance=ExtResource("18_6xqse")]
+position = Vector2(37, 720)
+
+[node name="grass18" parent="deco" instance=ExtResource("18_6xqse")]
+position = Vector2(-232, 729)
+
+[node name="grass19" parent="deco" instance=ExtResource("18_6xqse")]
+position = Vector2(593, 572)
+
+[node name="grass20" parent="deco" instance=ExtResource("18_6xqse")]
+position = Vector2(841, 618)
+
+[node name="grass21" parent="deco" instance=ExtResource("18_6xqse")]
+position = Vector2(411, -105)
+
+[node name="grass22" parent="deco" instance=ExtResource("18_6xqse")]
+position = Vector2(254, -495)
+
+[node name="grass23" parent="deco" instance=ExtResource("18_6xqse")]
+position = Vector2(406, -509)
+
+[node name="grass24" parent="deco" instance=ExtResource("18_6xqse")]
+position = Vector2(1029, -706)
+
+[node name="grass25" parent="deco" instance=ExtResource("18_6xqse")]
+position = Vector2(839, -411)
+
+[node name="rocks6" parent="deco" instance=ExtResource("5_c2tqm")]
+position = Vector2(409, -319)
+
+[node name="rocks7" parent="deco" instance=ExtResource("5_c2tqm")]
+position = Vector2(901, -662)
+
+[node name="rocks15" parent="deco" instance=ExtResource("5_c2tqm")]
+position = Vector2(-738, 735)
+
+[node name="rocks19" parent="deco" instance=ExtResource("5_c2tqm")]
+position = Vector2(899, -254)
+
+[node name="rocks20" parent="deco" instance=ExtResource("5_c2tqm")]
+position = Vector2(1061, -40)
+
+[node name="rocks22" parent="deco" instance=ExtResource("5_c2tqm")]
+position = Vector2(592, -451)
+
+[node name="rocks24" parent="deco" instance=ExtResource("5_c2tqm")]
+position = Vector2(252, -729)
+
+[node name="rocks25" parent="deco" instance=ExtResource("5_c2tqm")]
+position = Vector2(-340, -598)
+
+[node name="rocks31" parent="deco" instance=ExtResource("5_c2tqm")]
+position = Vector2(-727, -930)
+
+[node name="rocks10" parent="deco" instance=ExtResource("5_c2tqm")]
+position = Vector2(-505, 198)
+
+[node name="rocks13" parent="deco" instance=ExtResource("5_c2tqm")]
+position = Vector2(-95, 647)
 
 [connection signal="interacted_with" from="testSpawner2" to="testSpawner2" method="_on_interacted_with"]

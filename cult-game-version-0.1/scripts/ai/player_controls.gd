@@ -6,7 +6,6 @@ var mouseLookMode = true
 @onready var ui_hb_over:TextureProgressBar = $"HUD STUFF/healthbar_under/healthbar_over"
 @onready var ui_hb_under:TextureProgressBar = $"HUD STUFF/healthbar_under"
 @onready var ui_hb_text:Label = $"HUD STUFF/healthbar_under/Label"
-@onready var ui_active_cd:TextureProgressBar = $"HUD STUFF/active/cooldown"
 var vignetteTween:Tween
 
 const spectatorBody:String = "res://objects/characters/spectator.tscn"
@@ -23,6 +22,12 @@ func _ready():
 	ent.damage_taken.connect(damageVignette)
 	$"HUD STUFF/vignette".modulate = Color(Color.RED, 0)
 	ent.killed.connect(spectate)
+	if ent.abilities.size() > 0 and is_instance_valid(ent.abilities[0]): 
+		$"HUD STUFF/primaryIcon".set_ability(ent.abilities[0])
+	if ent.abilities.size() > 1 and is_instance_valid(ent.abilities[1]): 
+		$"HUD STUFF/secondaryIcon".set_ability(ent.abilities[1])
+	if ent.abilities.size() > 2 and is_instance_valid(ent.abilities[2]): 
+		$"HUD STUFF/specialIcon".set_ability(ent.abilities[2])
 
 func spectate(killedBy:Entity):
 	var ename:String = ent.name
@@ -64,6 +69,10 @@ func _physics_process(delta: float) -> void:
 			controllerAimLength = 0
 		lastStickDir = cameraStickDir
 		if Input.get_last_mouse_velocity().length() > 0: mouseLookMode = true
+		
+	if !Chatbox.isFocused:
+		if Input.is_action_just_pressed("Interact"):
+			ent.interact()
 
 func _process(delta):
 	if !is_instance_valid(ent): return
@@ -71,23 +80,22 @@ func _process(delta):
 	ui_hb_over.value = (ent.health / ent.stat_maxHp.val)
 	ui_hb_under.value = lerp(ui_hb_under.value, ui_hb_over.value, delta*7)
 	ui_hb_text.text = str(int(ent.health)) + " / " + str(int(ent.stat_maxHp.val))
-	ui_active_cd.value = 1 - ent.activeTimer / ent.activeCD
 	#endregion
 	
 	#region input stuff
 	if !Chatbox.isFocused:
 		if Input.is_action_just_pressed("PrimaryAttack"):
-			ent.primaryFire.rpc(ent.aimPosition)
-		if Input.is_action_just_pressed("SecondaryAttack"):
-			ent.secondaryFire.rpc(ent.aimPosition)
+			ent.setAbilityPressed.rpc(0, true)
 		if Input.is_action_just_released("PrimaryAttack"):
-			ent.primaryFireReleased.rpc(ent.aimPosition)
+			ent.setAbilityPressed.rpc(0, false)
+		if Input.is_action_just_pressed("SecondaryAttack"):
+			ent.setAbilityPressed.rpc(1, true)
 		if Input.is_action_just_released("SecondaryAttack"):
-			ent.secondaryFireReleased.rpc(ent.aimPosition)
+			ent.setAbilityPressed.rpc(1, false)
 		if Input.is_action_just_pressed("SpecialAbility"):
-			ent.activeAbilityRpc.rpc(ent.aimPosition)
-		if Input.is_action_just_pressed("Interact"):
-			ent.interact()
+			ent.setAbilityPressed.rpc(2, true)
+		if Input.is_action_just_released("SpecialAbility"):
+			ent.setAbilityPressed.rpc(2, false)
 	#endregion
 
 func damageVignette(dmg_amt, _from):

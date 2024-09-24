@@ -1,0 +1,187 @@
+[gd_scene load_steps=14 format=3 uid="uid://d0xuqfm81y8em"]
+
+[ext_resource type="Script" path="res://scripts/abstract/Stat.gd" id="1_7q63i"]
+[ext_resource type="AudioStream" uid="uid://dtb4qnmeaet6h" path="res://sound/fx/bnuuy/charge_stance.mp3" id="2_2py8f"]
+[ext_resource type="Material" uid="uid://mxrc8o1ov8cn" path="res://vfx/particle/processmaterial/bladeflurry.tres" id="2_3y2j5"]
+[ext_resource type="AudioStream" uid="uid://dr23xuxyu8ihm" path="res://sound/fx/blip.mp3" id="3_lvm7p"]
+[ext_resource type="AudioStream" uid="uid://ivxk0aryil43" path="res://sound/pools/whiff.tres" id="3_qjana"]
+[ext_resource type="Texture2D" uid="uid://7dro3tyfewrc" path="res://vfx/particle/diamond_lightercenter.png" id="3_s3msv"]
+[ext_resource type="Material" uid="uid://beg2mqqa0fc2f" path="res://vfx/particle/processmaterial/sparkle.tres" id="4_87v65"]
+[ext_resource type="AudioStream" uid="uid://bmowiy6k6qk1f" path="res://sound/fx/smallstab_quick.mp3" id="4_537ei"]
+[ext_resource type="Texture2D" uid="uid://c3l4kkjo4q83i" path="res://vfx/particle/sparkle haha.png" id="5_1yma2"]
+[ext_resource type="Material" uid="uid://cnrnbxtuhjeyt" path="res://vfx/particle/processmaterial/charged_tell.tres" id="6_ps0af"]
+[ext_resource type="Texture2D" uid="uid://b5aefjahrsgq1" path="res://vfx/particle/lightflare2.png" id="7_a60nu"]
+
+[sub_resource type="GDScript" id="GDScript_7yrby"]
+script/source = "extends Ability
+
+var swordShape:CircleShape2D = CircleShape2D.new()
+@export var swordRange = 100
+
+@onready var swordHitFx:PackedScene = load(\"res://vfx/objects/sword_hit.tscn\")
+
+func _ready():
+	super._ready()
+	swordShape.radius = 50;
+
+func _process(delta:float) -> void:
+	super._process(delta)
+	$upright.scale.x = 1 if ent.lookDirection.x > 0 else -1
+
+func _on_deal_damage_timeout() -> void:
+	var ents = ent.shapeCastFromShoulder(ent.lookDirection*swordRange, swordShape, false)
+	if !ents.is_empty():
+		$sfx/hit.play()
+	if is_multiplayer_authority():
+		for target:Entity in ents:
+			doHitFlash.rpc(target.shoulderPoint.global_position)
+			if ent.team != target.team:
+				target.changeHealth.rpc(target.health,
+					-ent.stat_baseDamage.val * 0.15,
+					ent.get_path())
+
+func _on_blink_timeout() -> void:
+	var temp = ent.modulate
+	ent.modulate = Color.YELLOW
+	await get_tree().create_timer(0.05).timeout
+	ent.modulate = temp
+
+@rpc(\"authority\", \"call_local\", \"reliable\")
+func doHitFlash(pos:Vector2):
+	var temp = swordHitFx.instantiate()
+	temp.emitting = true
+	temp.global_position = pos
+	get_tree().current_scene.add_child(temp)
+"
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_eubhq"]
+random_pitch = 1.2
+streams_count = 1
+stream_0/stream = ExtResource("4_537ei")
+
+[node name="SwordStrikeFlurry" type="Node2D"]
+script = SubResource("GDScript_7yrby")
+ability_name = "Flurry"
+ability_desc = "Charge to unleash a flurry of hits that can
+cut through large swarms of enemies."
+portrait = ExtResource("5_1yma2")
+is_charged_ability = true
+
+[node name="deal_damage" type="Timer" parent="."]
+wait_time = 0.1
+
+[node name="flurry_duration" type="Timer" parent="."]
+wait_time = 0.65
+one_shot = true
+
+[node name="blink" type="Timer" parent="."]
+wait_time = 0.3
+
+[node name="stats" type="Node" parent="."]
+
+[node name="cooldown" type="Node" parent="stats"]
+script = ExtResource("1_7q63i")
+baseValue = 0.75
+
+[node name="chargeTime" type="Node" parent="stats"]
+script = ExtResource("1_7q63i")
+baseValue = 0.8
+
+[node name="sfx" type="Node2D" parent="."]
+
+[node name="stance" type="AudioStreamPlayer2D" parent="sfx"]
+stream = ExtResource("2_2py8f")
+volume_db = -5.0
+pitch_scale = 1.3
+bus = &"sfx"
+
+[node name="ready" type="AudioStreamPlayer2D" parent="sfx"]
+stream = ExtResource("3_lvm7p")
+volume_db = -5.0
+bus = &"sfx"
+
+[node name="swing" type="AudioStreamPlayer2D" parent="sfx"]
+stream = ExtResource("3_qjana")
+pitch_scale = 4.0
+max_polyphony = 5
+bus = &"sfx"
+
+[node name="hit" type="AudioStreamPlayer2D" parent="sfx"]
+stream = SubResource("AudioStreamRandomizer_eubhq")
+pitch_scale = 2.0
+max_polyphony = 3
+bus = &"sfx"
+
+[node name="shoulder" type="Node2D" parent="."]
+
+[node name="swordflurry" type="GPUParticles2D" parent="shoulder"]
+z_index = 1
+texture_filter = 1
+scale = Vector2(1.2, 1)
+emitting = false
+amount = 3
+process_material = ExtResource("2_3y2j5")
+texture = ExtResource("3_s3msv")
+lifetime = 0.5
+one_shot = true
+fixed_fps = 60
+local_coords = true
+trail_enabled = true
+trail_lifetime = 0.24
+
+[node name="swordflurry2" type="GPUParticles2D" parent="shoulder"]
+z_index = 1
+texture_filter = 1
+scale = Vector2(1.2, -1)
+emitting = false
+amount = 4
+process_material = ExtResource("2_3y2j5")
+texture = ExtResource("3_s3msv")
+lifetime = 0.5
+one_shot = true
+fixed_fps = 60
+local_coords = true
+trail_enabled = true
+trail_lifetime = 0.24
+
+[node name="upright" type="Node2D" parent="." groups=["upright_sprite"]]
+
+[node name="charged_sparkles" type="GPUParticles2D" parent="upright"]
+modulate = Color(0.966667, 1, 0, 1)
+z_index = 1
+position = Vector2(55, -79)
+emitting = false
+process_material = ExtResource("4_87v65")
+texture = ExtResource("5_1yma2")
+local_coords = true
+
+[node name="charged_tell" type="GPUParticles2D" parent="upright"]
+modulate = Color(0.933333, 1, 0, 1)
+z_index = 1
+texture_filter = 1
+position = Vector2(61, -79)
+rotation = 1.5708
+emitting = false
+amount = 1
+process_material = ExtResource("6_ps0af")
+texture = ExtResource("7_a60nu")
+lifetime = 0.4
+one_shot = true
+local_coords = true
+
+[connection signal="charged" from="." to="blink" method="stop"]
+[connection signal="charged" from="." to="sfx/ready" method="play"]
+[connection signal="charged" from="." to="upright/charged_tell" method="restart"]
+[connection signal="charged" from="." to="upright/charged_sparkles" method="set_emitting" binds= [true]]
+[connection signal="fired" from="." to="deal_damage" method="start"]
+[connection signal="fired" from="." to="flurry_duration" method="start"]
+[connection signal="fired" from="." to="shoulder/swordflurry" method="restart"]
+[connection signal="fired" from="." to="shoulder/swordflurry2" method="restart"]
+[connection signal="fired" from="." to="upright/charged_sparkles" method="set_emitting" binds= [false]]
+[connection signal="pressed" from="." to="blink" method="start"]
+[connection signal="pressed" from="." to="sfx/stance" method="play"]
+[connection signal="released" from="." to="blink" method="stop"]
+[connection signal="timeout" from="deal_damage" to="." method="_on_deal_damage_timeout"]
+[connection signal="timeout" from="deal_damage" to="sfx/swing" method="play"]
+[connection signal="timeout" from="flurry_duration" to="deal_damage" method="stop"]
+[connection signal="timeout" from="blink" to="." method="_on_blink_timeout"]

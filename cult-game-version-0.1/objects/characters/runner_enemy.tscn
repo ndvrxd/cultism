@@ -1,44 +1,24 @@
-[gd_scene load_steps=11 format=3 uid="uid://fajivgoriugi"]
+[gd_scene load_steps=8 format=3 uid="uid://fajivgoriugi"]
 
-[ext_resource type="Material" uid="uid://ck8ixyuqbmu4n" path="res://vfx/particle/processmaterial/burst.tres" id="2_rllhs"]
+[ext_resource type="PackedScene" uid="uid://bcsqev2e0pnu" path="res://objects/abilities/selfdestruct.tscn" id="2_3g8ij"]
+[ext_resource type="AudioStream" uid="uid://bgtfyqw5g85l3" path="res://sound/fx/kamikaze_loop.mp3" id="2_pggda"]
 [ext_resource type="Script" path="res://scripts/abstract/Stat.gd" id="2_ttffq"]
-[ext_resource type="Texture2D" uid="uid://clqo76f6tebyl" path="res://art/ui/arrow.png" id="3_8rp6b"]
 [ext_resource type="Texture2D" uid="uid://6i8qff0kq7ei" path="res://art/character ph/enemy ph.png" id="3_na1fc"]
-[ext_resource type="Texture2D" uid="uid://dmcej1hbhoaj0" path="res://vfx/particle/aoe.png" id="3_v8ctk"]
-[ext_resource type="Material" uid="uid://cnrnbxtuhjeyt" path="res://vfx/particle/processmaterial/charged_tell.tres" id="6_kbg78"]
-[ext_resource type="Texture2D" uid="uid://b5aefjahrsgq1" path="res://vfx/particle/lightflare2.png" id="7_s10sa"]
 
-[sub_resource type="GDScript" id="GDScript_wsrpc"]
-resource_name = "runner"
+[sub_resource type="GDScript" id="GDScript_p4soy"]
 script/source = "extends Entity
 
-var aoeDmg:PackedScene = load(\"res://objects/aoe_dmg.tscn\")
-var aoeFx:PackedScene = load(\"res://vfx/objects/aoe_burst.tscn\")
+var time_alive:float=0
+@onready var base_pitch:float = randf_range(1, 1.2)
 
-#any special functionality for the enemy can be overridden here
-func _ready():
-	super._ready();
-	primaryCD = 2
-
-func primaryFireAction():
-	$upright_anchor/tell.restart()
-	stat_speed.modifyMultFlat(-0.99)
-	velocity = Vector2.ZERO
-	await get_tree().create_timer(1.35).timeout
-	$upright_anchor.visible = false
-	$blast.restart()
-	$Area2D.monitorable = false
-	$Area2D.monitoring = false
-	if is_multiplayer_authority():
-		var aoe = aoeDmg.instantiate()
-		aoe.damage = 40
-		aoe.scale = Vector2(200, 200)
-		aoe.team = team
-		aoe.inflictor = get_path()
-		get_tree().current_scene.add_child(aoe)
-		aoe.global_position = global_position
-		await get_tree().create_timer(0.5).timeout
-		changeHealth.rpc.call_deferred(health, -health, get_path())
+func _process(delta:float)->void:
+	super._process(delta)
+	time_alive += delta
+	if abilities[0].isOffCooldown:
+		$aaaaaaaaaaa.pitch_scale = base_pitch + velocity.length()*0.001 + sin(time_alive*6)*0.05
+	else:
+		$aaaaaaaaaaa.pitch_scale += delta*0.85
+	$aaaaaaaaaaa.playing = $upright_anchor/sprite.visible
 "
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_jucqc"]
@@ -48,21 +28,31 @@ height = 21.0526
 [sub_resource type="CircleShape2D" id="CircleShape2D_uaxf4"]
 radius = 20.0998
 
-[node name="runner" type="CharacterBody2D"]
+[node name="runner" type="CharacterBody2D" node_paths=PackedStringArray("abilities")]
 y_sort_enabled = true
 disable_mode = 1
-collision_layer = 2
 motion_mode = 1
 slide_on_ceiling = false
 wall_min_slide_angle = 0.0
 platform_wall_layers = 15
-script = SubResource("GDScript_wsrpc")
-entityName = "Exploding Bastard"
+script = SubResource("GDScript_p4soy")
+entityName = "Kamikaze"
 team = 2
 objPath = "res://objects/characters/runner_enemy.tscn"
 controllerPath = "res://objects/controllers/runner_ai.tscn"
 aggroPriority = 1
-healthBarColor = Color(1, 0, 0, 1)
+healthBarColor = Color(1, 0.2, 0.2, 1)
+abilities = [NodePath("Selfdestruct")]
+
+[node name="Selfdestruct" parent="." instance=ExtResource("2_3g8ij")]
+
+[node name="aaaaaaaaaaa" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_pggda")
+volume_db = -8.0
+autoplay = true
+max_distance = 1000.0
+panning_strength = 2.45
+bus = &"sfx"
 
 [node name="stat_speed" type="Node" parent="."]
 script = ExtResource("2_ttffq")
@@ -80,28 +70,8 @@ baseValue = 2.0
 script = ExtResource("2_ttffq")
 baseValue = 5000.0
 
-[node name="blast" type="GPUParticles2D" parent="."]
-modulate = Color(1, 0.45, 0, 0.631373)
-scale = Vector2(4, 4)
-emitting = false
-amount = 1
-process_material = ExtResource("2_rllhs")
-texture = ExtResource("3_v8ctk")
-lifetime = 0.3
-one_shot = true
-fixed_fps = 45
-visibility_rect = Rect2(-50, -50, 100, 100)
-local_coords = true
-
 [node name="shoulder" type="Node2D" parent="."]
 position = Vector2(-1, -64)
-
-[node name="Sprite2D" type="Sprite2D" parent="shoulder"]
-visible = false
-modulate = Color(1, 0, 0, 1)
-position = Vector2(60, 0)
-rotation = 1.5708
-texture = ExtResource("3_8rp6b")
 
 [node name="upright_anchor" type="Node2D" parent="." groups=["upright_sprite"]]
 y_sort_enabled = true
@@ -113,18 +83,6 @@ texture_filter = 1
 scale = Vector2(0.575, 0.575)
 texture = ExtResource("3_na1fc")
 offset = Vector2(0, -89.58)
-
-[node name="tell" type="GPUParticles2D" parent="upright_anchor"]
-modulate = Color(1, 0.65, 0, 1)
-position = Vector2(0, -67)
-scale = Vector2(2, 2)
-emitting = false
-amount = 7
-process_material = ExtResource("6_kbg78")
-texture = ExtResource("7_s10sa")
-one_shot = true
-fixed_fps = 40
-local_coords = true
 
 [node name="Area2D" type="Area2D" parent="."]
 scale = Vector2(5.225, 5.225)

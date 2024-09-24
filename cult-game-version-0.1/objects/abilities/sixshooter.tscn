@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://c7m3igog3rlis"]
+
+[ext_resource type="Script" path="res://scripts/generic/Ability.gd" id="1_spc5a"]
+
+[node name="Sixshooter" type="Node2D"]
+script = ExtResource("1_spc5a")

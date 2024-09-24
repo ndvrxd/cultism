@@ -16,6 +16,11 @@ signal killed(by:Entity)
 @export var controllerPath:String = ""
 @export var aggroPriority:int = 0
 @export var healthBarColor:Color = Color.LIME_GREEN;
+@export var frozen:bool = false
+
+@export var abilities:Array[Ability] = []
+var ability_vars:Dictionary = {}
+
 var controllerAttached:bool = false;
 
 var healthBar:TextureProgressBar
@@ -26,29 +31,26 @@ const damageNumberScn:PackedScene = preload("res://objects/damageNumber.tscn")
 const healthBarScn:PackedScene = preload("res://objects/healthBar.tscn")
 
 var moveIntent:Vector2 = Vector2.ZERO;
-var lookDirection:Vector2 = Vector2.UP;
-# TODO: allow lookDirection into lookAngle conversion
-	# NOTE: this may not actually be necessary
+var lookDirection:Vector2 = Vector2.UP; #lookDirection is a Vector2, not an angle!
 var aimPosition:Vector2 = Vector2.ZERO;
 
-var stat_maxHp:Stat
-var stat_speed:Stat
-var stat_accel:Stat
-var stat_regen:Stat
-# "aggro" stats get used by entity controllers for target selection
-var stat_aggroRange:Stat
-var stat_aggroNoise:Stat
-var stat_swingSpeed:Stat
-
-# TODO replace these with Stats when the Stat rework rolls around
-@export var primaryCD:float = 1;
-@export var secondaryCD:float = 1;
-@export var activeCD:float = 20;
-var primaryTimer:float = 0;
-var secondaryTimer:float = 0;
-var activeTimer:float = 0;
-var holdingPrimary:bool = false;
-var holdingSecondary:bool = false;
+#there is 100% a cleaner way to write this but right now i don't care to find it
+@onready var stat_maxHp:Stat = $stat_maxHp if has_node("stat_maxHp") \
+		else Stat.fromBase(100, "stat_maxHp", self) # both returns the Stat and adds it to the tree
+@onready var stat_speed:Stat = $stat_speed if has_node("stat_speed") \
+		else Stat.fromBase(400, "stat_speed", self)
+@onready var stat_accel:Stat = $stat_accel if has_node("stat_accel") \
+		else Stat.fromBase(8.5, "stat_accel", self)
+@onready var stat_regen:Stat = $stat_regen if has_node("stat_regen") \
+		else Stat.fromBase(0, "stat_regen", self)
+@onready var stat_aggroRange:Stat = $stat_aggroRange if has_node("stat_aggroRange") \
+		else Stat.fromBase(250, "stat_aggroRange", self)
+@onready var stat_aggroNoise:Stat = $stat_aggroNoise if has_node("stat_aggroNoise") \
+		else Stat.fromBase(0, "stat_aggroNoise", self)
+@onready var stat_swingSpeed:Stat = $stat_swingSpeed if has_node("stat_swingSpeed") \
+		else Stat.fromBase(1, "stat_swingSpeed", self)
+@onready var stat_baseDamage:Stat = $stat_baseDamage if has_node("stat_baseDamage") \
+		else Stat.fromBase(30, "stat_baseDamage", self)
 
 var health:float = 1
 var regenTimer:float = 0
@@ -58,26 +60,6 @@ var shoulderPoint:Node2D;
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	add_to_group("entity"); # for polling all active entities
-	
-	var defaultStats = {
-		"stat_maxHp": 100,
-		"stat_speed": 400,
-		"stat_accel": 8.5,
-		"stat_regen": 0,
-		"stat_aggroRange": 250,
-		"stat_aggroNoise": 0,
-		"stat_swingSpeed": 1
-	}
-	for key in defaultStats:
-		if !has_node(key):
-			add_child(Stat.fromBase(defaultStats[key], key))
-	stat_maxHp = $stat_maxHp
-	stat_speed = $stat_speed
-	stat_accel = $stat_accel
-	stat_regen = $stat_regen
-	stat_aggroRange = $stat_aggroRange
-	stat_aggroNoise = $stat_aggroNoise
-	stat_swingSpeed = $stat_swingSpeed
 	
 	shoulderPoint = get_node("shoulder")
 	if shoulderPoint == null:
@@ -105,9 +87,6 @@ func afterStatsSet():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	velocity.x = move_toward(velocity.x / stat_speed.val, moveIntent.x, stat_accel.val * delta) * stat_speed.val
-	velocity.y = move_toward(velocity.y / stat_speed.val, moveIntent.y, stat_accel.val * delta) * stat_speed.val
-	move_and_slide()
 	
 	if shoulderPoint: #aiming
 		shoulderPoint.look_at(shoulderPoint.global_position + lookDirection)
@@ -117,6 +96,7 @@ func _process(delta: float) -> void:
 	else:
 		health = min(health + stat_regen.val * delta, stat_maxHp.val)
 	
+	#really, this should be an Animation of some kind
 	if healthBarTimer > 0 && !NetManager.IsDedicated():
 		if !healthBar.visible: healthBar.visible = true
 		healthBarTimer -= delta
@@ -134,27 +114,19 @@ func _process(delta: float) -> void:
 		healthBarTimer = 0
 
 func _physics_process(delta: float) -> void:
+	if !frozen:
+		velocity.x = move_toward(velocity.x / stat_speed.val, moveIntent.x, stat_accel.val * delta) * stat_speed.val
+		velocity.y = move_toward(velocity.y / stat_speed.val, moveIntent.y, stat_accel.val * delta) * stat_speed.val
+	else:
+		velocity = Vector2.ZERO
+	move_and_slide()
+	
 	moveIntent = moveIntent.normalized();
 	lookDirection = lookDirection.normalized();
 	# if a controller is attached that PROBABLY means our client has control over this bitch
 	# so we need to be the one to stream the movement
 	if controllerAttached: streamMovement.rpc(global_position, moveIntent,
 									lookDirection, aimPosition)
-	
-	if holdingPrimary and primaryTimer <= 0:
-		primaryFireAction()
-		if get_multiplayer_authority() == multiplayer.get_unique_id():
-			primaryFireActionAuthority()
-		primaryTimer = primaryCD / stat_swingSpeed.val
-	if holdingSecondary and secondaryTimer <= 0:
-		secondaryFireAction()
-		if get_multiplayer_authority() == multiplayer.get_unique_id():
-			secondaryFireActionAuthority()
-		secondaryTimer = secondaryCD * stat_swingSpeed.val
-	if primaryTimer > 0: primaryTimer -= delta
-	if secondaryTimer > 0: secondaryTimer -= delta
-	if activeTimer > 0: activeTimer -= delta
-
 
 # what i'm thinking is that the authority for each entity
 # can attach a controller to it clientside, and the controller can make
@@ -177,85 +149,37 @@ static func spawn(scnPath:String, pos:Vector2=Vector2.ZERO, ctlPath:String="", p
 func changeTeam(newTeam:int) -> void:
 	team = newTeam
 
-# networked callbacks for use by controller and items
 @rpc("any_peer", "call_local", "reliable")
-func primaryFire(target:Vector2) -> void:
-	aimPosition = target
-	holdingPrimary = true
-
-@rpc("any_peer", "call_local", "reliable")
-func secondaryFire(target:Vector2) -> void:
-	aimPosition = target
-	holdingSecondary = true
-
-@rpc("any_peer", "call_local", "reliable")
-func primaryFireReleased(target:Vector2) -> void:
-	aimPosition = target
-	holdingPrimary = false
-
-@rpc("any_peer", "call_local", "reliable")
-func secondaryFireReleased(target:Vector2) -> void:
-	aimPosition = target
-	holdingSecondary = false
-
-@rpc("any_peer", "call_local", "reliable")
-func activeAbilityRpc(target:Vector2) -> void:
-	if activeTimer > 0: return
-	aimPosition = target
-	activeAbilityAction()
-	if multiplayer.get_remote_sender_id() == multiplayer.get_unique_id():
-		activeAbilityActionAuthority()
-	activeTimer = activeCD;
-
-# mmmmaybe use these hooks from now on
-func primaryFireAction() -> void: pass
-func secondaryFireAction() -> void: pass
-func primaryFireActionAuthority() -> void: pass
-func secondaryFireActionAuthority() -> void: pass
-func activeAbilityAction() -> void: pass
-func activeAbilityActionAuthority() -> void: pass
+func setAbilityPressed(id:int, pressed:bool, target:Vector2=Vector2.ZERO):
+	if target != Vector2.ZERO:
+		aimPosition = target
+	if id < abilities.size() and abilities[id] != null and is_instance_valid(abilities[id]):
+		abilities[id].press() if pressed else abilities[id].release()
 
 @rpc("any_peer", "call_local", "reliable")
 func chat(_msg:String) -> void:
 	pass #I FULLY INTEND TO USE THIS OUR CURRENT CHATBOX IS PLACEHOLDER
 
 @rpc("any_peer", "call_local", "reliable")
-func spawn_something() -> void:
-	pass # idk how to make this work
-	# TODO: split network spawn-something rpc off into like 3 things -> ...
-		# - spawnEffect for particles and such, any_peer
-		# - spawnProjectile for projectiles, any_peer
-		# - hitscan can be clientside, it feels better that way in coop
-		# - and SpawnEntity i guess can be a thing but only host authoritative-
-		# it'd only run it for everyone when called within an RPC 
-		# on the server side. when we start to enforce client/host authority,
-		# we'll need to do this!!!
-			# TODO, again: ALSO RESEARCH CLIENT AUTHORITY RULES
-			# how do i hand off authority to a specific client
-			# to call entity network methods like streamMovement and such,
-			# without anyone else being able to do it on their behalf?
-			# any_peer is, after all, callable by *any peer*
-
-@rpc("any_peer", "call_local", "reliable")
-func changeHealth(current:float, by:float, inflictor_path:String="") -> void:
+func changeHealth(current:float, by:float, inflictor:NodePath="") -> void:
 	# current health needs to be passed in to sync health between clients!
 	health = current;
 	health += by;
 	healthBarTimer = 2;
-	var inflictor = get_node(inflictor_path)
+	var opp = get_node(inflictor)
 	var dn:Node2D = damageNumberScn.instantiate()
 	dn.set_number(int(abs(by)))
 	dn.global_position = shoulderPoint.global_position
 	get_tree().current_scene.add_child(dn)
 	if sign(by) == -1:
 		regenTimer = 2
-		damage_taken.emit(-by, inflictor)
+		damage_taken.emit(-by, opp)
 		if team == 1: dn.set_color(Color.RED) #red is bad for players & allies
-		if inflictor != null:
-			inflictor.damage_dealt.emit(-by, self)
+		if opp != null:
+			opp.damage_dealt.emit(-by, self)
 		healthBarShakeTimer = 0.3
 	elif sign(by) == 1:
-		healed.emit(by, inflictor)
+		healed.emit(by, opp)
 		dn.set_color(Color.GREEN)
 	else:
 		# when the host is syncing entity health for joining players,
@@ -267,11 +191,11 @@ func changeHealth(current:float, by:float, inflictor_path:String="") -> void:
 		#dn.queue_free()
 	if health <= 0:
 		health = 0
-		die(inflictor_path) # needs to be called on the clientside, since we're already in an RPC
+		die(inflictor) # needs to be called on the clientside, since we're already in an RPC
 
 @rpc("any_peer", "call_local", "reliable")
-func die(killedBy_path:String="") -> void:
-	killed.emit(get_node(killedBy_path))
+func die(killedBy:NodePath="") -> void:
+	killed.emit(get_node(killedBy))
 	queue_free() # ideally, play some effects on death
 
 @rpc("any_peer", "call_remote", "unreliable_ordered")
@@ -305,7 +229,7 @@ func lineCastFromShoulder(direction:Vector2, range:float, triggerHitEffects=true
 	if hit.is_empty():
 		return {
 			"entity": null,
-			"pos": endpoint,
+			"pos": Vector2.ZERO,
 			"normal": Vector2.ZERO
 		} #all this may not be necessary
 	if triggerHitEffects:

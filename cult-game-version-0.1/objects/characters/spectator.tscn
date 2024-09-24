@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scripts/abstract/Stat.gd" id="1_bhg58"]
 [ext_resource type="Texture2D" uid="uid://5m8ckagwla2f" path="res://art/character ph/shadowdemon_eyes.png" id="1_ejiw6"]
-[ext_resource type="AudioStream" uid="uid://rqtq3s0mkg0i" path="res://sound/pools/spookyghostboo.tres" id="2_d1gos"]
+[ext_resource type="PackedScene" uid="uid://by3453xjeh7f0" path="res://objects/abilities/spook.tscn" id="1_otwcb"]
 
 [sub_resource type="GDScript" id="GDScript_gfdmq"]
 resource_name = "Spectator"
@@ -12,21 +12,20 @@ func _process(delta:float):
 	super._process(delta)
 	$Node2D/Sprite2D.flip_h = lookDirection.x < 0
 	$Node2D/Sprite2D.position = Vector2(randf_range(-1.5, 1.5), randf_range(-1.5, 1.5))
-
-func activeAbilityAction():
-	$sfx_boo.play()
 "
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_n3ohw"]
 
-[node name="Spectator" type="CharacterBody2D"]
+[node name="Spectator" type="CharacterBody2D" node_paths=PackedStringArray("abilities")]
 collision_layer = 0
 collision_mask = 0
 script = SubResource("GDScript_gfdmq")
 entityName = "Spectator"
 objPath = "res://objects/characters/spectator.tscn"
 healthBarColor = Color(0.65, 0.65, 0.65, 1)
-activeCD = 2.0
+abilities = [null, null, NodePath("Spook")]
+
+[node name="Spook" parent="." instance=ExtResource("1_otwcb")]
 
 [node name="stat_maxHp" type="Node" parent="."]
 script = ExtResource("1_bhg58")
@@ -53,7 +52,3 @@ position = Vector2(0, -72)
 scale = Vector2(0.75, 0.75)
 texture = ExtResource("1_ejiw6")
 offset = Vector2(0, -90)
-
-[node name="sfx_boo" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("2_d1gos")
-bus = &"sfx"
