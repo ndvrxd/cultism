@@ -1,9 +1,25 @@
-[gd_scene load_steps=7 format=3 uid="uid://fajivgoriugi"]
+[gd_scene load_steps=8 format=3 uid="uid://fajivgoriugi"]
 
-[ext_resource type="Script" path="res://scripts/generic/Entity.gd" id="1_77en6"]
 [ext_resource type="PackedScene" uid="uid://bcsqev2e0pnu" path="res://objects/abilities/selfdestruct.tscn" id="2_3g8ij"]
+[ext_resource type="AudioStream" uid="uid://bgtfyqw5g85l3" path="res://sound/fx/kamikaze_loop.mp3" id="2_pggda"]
 [ext_resource type="Script" path="res://scripts/abstract/Stat.gd" id="2_ttffq"]
 [ext_resource type="Texture2D" uid="uid://6i8qff0kq7ei" path="res://art/character ph/enemy ph.png" id="3_na1fc"]
+
+[sub_resource type="GDScript" id="GDScript_p4soy"]
+script/source = "extends Entity
+
+var time_alive:float=0
+@onready var base_pitch:float = randf_range(1, 1.2)
+
+func _process(delta:float)->void:
+	super._process(delta)
+	time_alive += delta
+	if abilities[0].isOffCooldown:
+		$aaaaaaaaaaa.pitch_scale = base_pitch + velocity.length()*0.001 + sin(time_alive*6)*0.05
+	else:
+		$aaaaaaaaaaa.pitch_scale += delta*0.85
+	$aaaaaaaaaaa.playing = $upright_anchor/sprite.visible
+"
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_jucqc"]
 radius = 5.74163
@@ -19,7 +35,7 @@ motion_mode = 1
 slide_on_ceiling = false
 wall_min_slide_angle = 0.0
 platform_wall_layers = 15
-script = ExtResource("1_77en6")
+script = SubResource("GDScript_p4soy")
 entityName = "Kamikaze"
 team = 2
 objPath = "res://objects/characters/runner_enemy.tscn"
@@ -29,6 +45,14 @@ healthBarColor = Color(1, 0.2, 0.2, 1)
 abilities = [NodePath("Selfdestruct")]
 
 [node name="Selfdestruct" parent="." instance=ExtResource("2_3g8ij")]
+
+[node name="aaaaaaaaaaa" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_pggda")
+volume_db = -8.0
+autoplay = true
+max_distance = 1000.0
+panning_strength = 2.45
+bus = &"sfx"
 
 [node name="stat_speed" type="Node" parent="."]
 script = ExtResource("2_ttffq")

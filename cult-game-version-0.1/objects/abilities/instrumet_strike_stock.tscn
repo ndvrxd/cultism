@@ -54,7 +54,7 @@ func fireAction():
 					ent.ability_vars[\"lightning_meter\"] + 0.04 )
 				doHitFlash.rpc(target.shoulderPoint.global_position)
 				target.changeHealth.rpc(target.health,
-					-ent.stat_baseDamage.val*0.6, ent.get_path())
+					-ent.stat_baseDamage.val*0.45, ent.get_path())
 			hits += 1
 		if hits >= maxHits:
 			break
