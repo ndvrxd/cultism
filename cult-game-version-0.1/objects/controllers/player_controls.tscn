@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://ci2psjf4f2qtu"]
+[gd_scene load_steps=26 format=3 uid="uid://ci2psjf4f2qtu"]
 
 [ext_resource type="Script" path="res://scripts/ai/player_controls.gd" id="1_122va"]
 [ext_resource type="Script" path="res://scripts/camera_tilt_test.gd" id="2_fxmue"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://bdeo180vqay6m" path="res://art/ui/run.png" id="3_pwfur"]
 [ext_resource type="Texture2D" uid="uid://btjilywxmdp3g" path="res://art/ui/vignette.png" id="3_vj6ed"]
 [ext_resource type="Texture2D" uid="uid://b8uotdxr13iyg" path="res://art/ui/attack.png" id="4_c01lm"]
+[ext_resource type="LabelSettings" uid="uid://w5lnebw7ico3" path="res://fonts/labelsettings-white-outline.tres" id="4_u25xa"]
 [ext_resource type="Texture2D" uid="uid://clqo76f6tebyl" path="res://art/ui/arrow.png" id="5_i4xsy"]
 [ext_resource type="Texture2D" uid="uid://w30ihm6saioh" path="res://art/ui/keys/key_r.png" id="6_4rguy"]
 [ext_resource type="Texture2D" uid="uid://42xrp4tgqr4c" path="res://art/ui/keys/m2.png" id="8_m8frb"]
@@ -92,6 +93,26 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("3_vj6ed")
+
+[node name="Label2" type="Label" parent="HUD STUFF"]
+modulate = Color(1, 1, 1, 0.709804)
+texture_filter = 2
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -251.0
+offset_top = 4.0
+offset_right = 33.9999
+offset_bottom = 141.0
+grow_horizontal = 0
+scale = Vector2(0.85, 0.85)
+text = "unnamed animal cult game prototype
+(so far from final it hurts)
+current prio:
+- Ability abstraction
+- Collision layer cleanup"
+label_settings = ExtResource("4_u25xa")
+horizontal_alignment = 2
 
 [node name="primaryIcon" parent="HUD STUFF" instance=ExtResource("10_h6yu6")]
 process_mode = 1
