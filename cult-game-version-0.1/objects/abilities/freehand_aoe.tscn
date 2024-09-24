@@ -205,6 +205,7 @@ stream = ExtResource("5_xgsmf")
 
 [node name="reticle" type="Node2D" parent="detach"]
 process_mode = 4
+visible = false
 
 [node name="ready" type="GPUParticles2D" parent="detach/reticle"]
 process_mode = 1
@@ -233,7 +234,7 @@ grow_vertical = 2
 max_value = 1.0
 step = 0.0
 value = 0.7
-fill_mode = 3
+fill_mode = 4
 nine_patch_stretch = true
 texture_under = ExtResource("3_djuaj")
 texture_progress = ExtResource("3_djuaj")
@@ -241,10 +242,10 @@ tint_under = Color(0, 0, 0, 0.305882)
 tint_progress = Color(0, 0.916667, 1, 1)
 
 [connection signal="charged" from="." to="." method="_on_charged"]
-[connection signal="chargedFire" from="." to="detach/aoe/AoeBurst" method="restart"]
-[connection signal="chargedFire" from="." to="detach/aoe/upright/bolt" method="restart"]
-[connection signal="chargedFire" from="." to="detach/aoe/AoeSparks" method="restart"]
 [connection signal="chargedFire" from="." to="hitbox_disable" method="start"]
+[connection signal="chargedFire" from="." to="detach/aoe/AoeBurst" method="restart"]
+[connection signal="chargedFire" from="." to="detach/aoe/AoeSparks" method="restart"]
+[connection signal="chargedFire" from="." to="detach/aoe/upright/bolt" method="restart"]
 [connection signal="chargedFire" from="." to="detach/aoe/sfx" method="play"]
 [connection signal="chargedFire" from="." to="detach/aoe/CollisionShape2D" method="set_disabled" binds= [false]]
 [connection signal="fired" from="." to="." method="_on_fired"]

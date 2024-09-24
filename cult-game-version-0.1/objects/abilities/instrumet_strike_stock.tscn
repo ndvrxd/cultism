@@ -159,6 +159,7 @@ bus = &"sfx"
 process_mode = 4
 
 [node name="meter" type="TextureProgressBar" parent="upright"]
+visible = false
 z_index = 1
 offset_left = 40.0
 offset_top = -109.0
@@ -179,8 +180,8 @@ one_shot = true
 
 [connection signal="fired" from="." to="shoulder/swordwoosh" method="restart"]
 [connection signal="fired" from="." to="sfx/whiff" method="play"]
-[connection signal="meter_charged" from="." to="sfx/meterfull" method="play"]
 [connection signal="meter_charged" from="." to="m2readycue" method="restart"]
+[connection signal="meter_charged" from="." to="sfx/meterfull" method="play"]
 [connection signal="meter_charged" from="." to="m2readyloop" method="set_emitting" binds= [true]]
 [connection signal="meter_used" from="." to="m2readyloop" method="set_emitting" binds= [false]]
 [connection signal="ready" from="." to="upright/meter" method="set_visible" binds= [false]]
