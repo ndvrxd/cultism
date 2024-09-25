@@ -1,9 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://fajivgoriugi"]
+[gd_scene load_steps=10 format=3 uid="uid://fajivgoriugi"]
 
 [ext_resource type="PackedScene" uid="uid://bcsqev2e0pnu" path="res://objects/abilities/selfdestruct.tscn" id="2_3g8ij"]
 [ext_resource type="AudioStream" uid="uid://bgtfyqw5g85l3" path="res://sound/fx/kamikaze_loop.mp3" id="2_pggda"]
 [ext_resource type="Script" path="res://scripts/abstract/Stat.gd" id="2_ttffq"]
 [ext_resource type="Texture2D" uid="uid://6i8qff0kq7ei" path="res://art/character ph/enemy ph.png" id="3_na1fc"]
+[ext_resource type="Texture2D" uid="uid://cj3v5trvdfo4r" path="res://art/character ph/bombsplode.tres" id="5_4sxd0"]
+[ext_resource type="Texture2D" uid="uid://doihh86i7s034" path="res://art/character ph/bombrun.tres" id="6_gix5n"]
 
 [sub_resource type="GDScript" id="GDScript_p4soy"]
 script/source = "extends Entity
@@ -13,12 +15,13 @@ var time_alive:float=0
 
 func _process(delta:float)->void:
 	super._process(delta)
+	$upright_anchor.scale.x = 1 if velocity.x > 0 else -1
 	time_alive += delta
 	if abilities[0].isOffCooldown:
 		$aaaaaaaaaaa.pitch_scale = base_pitch + velocity.length()*0.001 + sin(time_alive*6)*0.05
 	else:
 		$aaaaaaaaaaa.pitch_scale += delta*0.85
-	$aaaaaaaaaaa.playing = $upright_anchor/sprite.visible
+	$aaaaaaaaaaa.playing = $upright_anchor/Sprite2D.visible or $upright_anchor/Sprite2D2.visible
 "
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_jucqc"]
@@ -78,11 +81,23 @@ y_sort_enabled = true
 position = Vector2(0, 3.8147e-06)
 
 [node name="sprite" type="Sprite2D" parent="upright_anchor"]
+visible = false
 modulate = Color(1, 0.2, 0, 1)
 texture_filter = 1
 scale = Vector2(0.575, 0.575)
 texture = ExtResource("3_na1fc")
 offset = Vector2(0, -89.58)
+
+[node name="Sprite2D" type="Sprite2D" parent="upright_anchor"]
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("6_gix5n")
+offset = Vector2(0, -84)
+
+[node name="Sprite2D2" type="Sprite2D" parent="upright_anchor"]
+visible = false
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("5_4sxd0")
+offset = Vector2(0, -84)
 
 [node name="Area2D" type="Area2D" parent="."]
 scale = Vector2(5.225, 5.225)
@@ -95,3 +110,6 @@ shape = SubResource("CapsuleShape2D_jucqc")
 position = Vector2(0, -20)
 shape = SubResource("CircleShape2D_uaxf4")
 debug_color = Color(0.772432, 0.263693, 0.879854, 0.42)
+
+[connection signal="fired" from="Selfdestruct" to="upright_anchor/Sprite2D" method="set_visible" binds= [false]]
+[connection signal="fired" from="Selfdestruct" to="upright_anchor/Sprite2D2" method="set_visible" binds= [true]]

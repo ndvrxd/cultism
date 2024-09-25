@@ -1,0 +1,11 @@
+[gd_resource type="AnimatedTexture" load_steps=3 format=3 uid="uid://doihh86i7s034"]
+
+[ext_resource type="Texture2D" uid="uid://dsm2816pum58t" path="res://art/character ph/bombrun1.png" id="1_brwu1"]
+[ext_resource type="Texture2D" uid="uid://cdm3adhbvyw60" path="res://art/character ph/bombrun2.png" id="2_dtl3l"]
+
+[resource]
+frames = 2
+frame_0/texture = ExtResource("1_brwu1")
+frame_0/duration = 0.07
+frame_1/texture = ExtResource("2_dtl3l")
+frame_1/duration = 0.07
