@@ -17,9 +17,9 @@ var inWall:bool = false
 func _process(delta:float) -> void:
 	super._process(delta)
 	if isCharging or isCharged:
-		alignNodeWithShoulder($shoulder)
-		var dist = $shoulder.global_position.distance_to(ent.aimPosition)
-		$shoulder/length.scale.y = dist
+		var dist = $sigil2.global_position.distance_to($detach/reticle/sigil.global_position)
+		$length.scale.x = dist
+		$length.look_at($detach/reticle/sigil.global_position)
 
 func _physics_process(delta: float) -> void:
 	super._physics_process(delta)
@@ -27,11 +27,11 @@ func _physics_process(delta: float) -> void:
 		$detach/reticle.global_position = ent.aimPosition
 
 func _on_walltest_body_entered(body: Node2D) -> void:
-	$shoulder/length/tell.visible = false
+	$length/tell.visible = false
 	inWall = true
 
 func _on_walltest_body_exited(body: Node2D) -> void:
-	$shoulder/length/tell.visible = true
+	$length/tell.visible = true
 	inWall = false
 
 func _on_fired() -> void:
@@ -80,17 +80,16 @@ baseValue = 3.0
 script = ExtResource("1_2w6he")
 baseValue = 10.0
 
-[node name="shoulder" type="Node2D" parent="."]
+[node name="length" type="Node2D" parent="."]
 
-[node name="length" type="Node2D" parent="shoulder"]
-rotation = -1.5708
-
-[node name="tell" type="MeshInstance2D" parent="shoulder/length"]
+[node name="tell" type="MeshInstance2D" parent="length"]
 material = ExtResource("2_7cx1g")
+rotation = -1.5708
 mesh = SubResource("QuadMesh_c26lm")
 
 [node name="sigil2" type="Node2D" parent="."]
 modulate = Color(0.964706, 0.470588, 1, 1)
+z_index = -1
 texture_filter = 1
 scale = Vector2(3, 3)
 script = SubResource("GDScript_gs13m")
@@ -115,6 +114,7 @@ shape = SubResource("CircleShape2D_ox3vf")
 
 [node name="sigil" type="Node2D" parent="detach/reticle"]
 modulate = Color(0.964667, 0.47, 1, 1)
+z_index = -1
 scale = Vector2(3, 3)
 script = SubResource("GDScript_gs13m")
 
@@ -128,11 +128,13 @@ texture = ExtResource("5_rptaw")
 
 [connection signal="charged" from="." to="detach/reticle/sigil/outer" method="set_visible" binds= [true]]
 [connection signal="fired" from="." to="." method="_on_fired"]
-[connection signal="pressed" from="." to="shoulder/length/tell" method="set_visible" binds= [true]]
+[connection signal="pressed" from="." to="length/tell" method="set_visible" binds= [true]]
 [connection signal="pressed" from="." to="detach/reticle/sigil/outer" method="set_visible" binds= [false]]
 [connection signal="pressed" from="." to="detach/reticle" method="set_visible" binds= [true]]
 [connection signal="pressed" from="." to="sigil2" method="set_visible" binds= [true]]
-[connection signal="released" from="." to="shoulder/length/tell" method="set_visible" binds= [false]]
+[connection signal="ready" from="." to="detach/reticle" method="set_visible" binds= [false]]
+[connection signal="ready" from="." to="sigil2" method="set_visible" binds= [false]]
+[connection signal="released" from="." to="length/tell" method="set_visible" binds= [false]]
 [connection signal="released" from="." to="detach/reticle" method="set_visible" binds= [false]]
 [connection signal="released" from="." to="sigil2" method="set_visible" binds= [false]]
 [connection signal="body_entered" from="detach/reticle/walltest" to="." method="_on_walltest_body_entered"]

@@ -21,9 +21,9 @@ func fireAction():
 	tr.setDirection(ent.lookDirection)
 	tr.setRange(ent.shoulderPoint.global_position.distance_to(hit[\"pos\"]), 70)
 	get_tree().current_scene.add_child(tr)
-	if hit[\"pos\"] != Vector2.ZERO:
-		doHitVfx.rpc(hit[\"pos\"])
 	if is_multiplayer_authority():
+		if hit[\"pos\"] != Vector2.ZERO:
+			doHitVfx.rpc(hit[\"pos\"])
 		var target:Entity = hit[\"entity\"] as Entity
 		if target and target.team != ent.team:
 			target.changeHealth.rpc(target.health, 
@@ -33,6 +33,7 @@ func fireAction():
 func doHitVfx(pos:Vector2) -> void:
 	var temp = impactVfx.instantiate()
 	temp.global_position = pos
+	temp.modulate = Color.GOLD
 	get_tree().current_scene.add_child(temp)
 "
 
