@@ -74,11 +74,11 @@ process_mode = 4
 
 [node name="chargeTime" type="Node" parent="stats"]
 script = ExtResource("1_2w6he")
-baseValue = 3.0
+baseValue = 1.7
 
 [node name="cooldown" type="Node" parent="stats"]
 script = ExtResource("1_2w6he")
-baseValue = 10.0
+baseValue = 20.0
 
 [node name="length" type="Node2D" parent="."]
 
