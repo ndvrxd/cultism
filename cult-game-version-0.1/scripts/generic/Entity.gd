@@ -209,7 +209,7 @@ func streamMovement(pos:Vector2, intent:Vector2, lookDir:Vector2, aimPos:Vector2
 func triggerHitEffectsRpc(at:Vector2, normal:Vector2=Vector2.ZERO) -> void:
 	hit_landed.emit(at, normal)
 
-func lineCastFromShoulder(direction:Vector2, range:float, triggerHitEffects=true) -> Dictionary:
+func lineCastFromShoulder(direction:Vector2, range:float, triggerHitEffects=true, friendlyFire = false) -> Dictionary:
 	# hitscan. turns out shape/linecast in godot is tedious as fuck,
 	# so i'm making a nice clean method for it instead.
 	# returns the Entity hit, if any, the position hit, if any,
@@ -222,6 +222,12 @@ func lineCastFromShoulder(direction:Vector2, range:float, triggerHitEffects=true
 			# TODO: set collision flags here
 		)
 	physics_query.set_collide_with_areas(true);
+	if friendlyFire:
+		# use the "all characters" collision layer
+		physics_query.collision_mask = 32
+	else:
+		# use all allowed "character" collision layers except team
+		physics_query.collision_mask = 0xFFFFFFC0 ^ (32 << team)
 	
 	var hit = get_world_2d().direct_space_state.intersect_ray(
 		physics_query
@@ -281,6 +287,7 @@ func interact() -> Interactable:
 	params.shape = shape
 	params.transform = fuck
 	params.motion = lookDirection * 100
+	params.collision_mask = 8 # only collide with Interactable layer
 	
 	var hits = get_world_2d().direct_space_state.intersect_shape(params)
 	for i in hits:

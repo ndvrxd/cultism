@@ -11,6 +11,7 @@ signal offCooldown;
 @export var portrait:Texture2D;
 
 @export var is_charged_ability:bool = false
+@export var block_other_abilities_while_charging:bool = true
 @export var bypass_other_abilities_charging:bool = false
 var isCharging:bool = false
 var isCharged:bool = false
@@ -52,7 +53,7 @@ func press() -> void:
 	
 func release() -> void:
 	chargeTimer = 0
-	if is_charged_ability and isCharging:
+	if is_charged_ability and isCharging and block_other_abilities_while_charging:
 		ent.ability_vars["_busy"] = false
 	isCharging = false
 	isHeld = false
@@ -75,7 +76,7 @@ func _physics_process(delta: float) -> void:
 	if not isOffCooldown and cdTimer <= 0:
 		isOffCooldown = true
 		offCooldown.emit()
-		if is_charged_ability:
+		if is_charged_ability and block_other_abilities_while_charging:
 			ent.ability_vars["_busy"] = false
 	if isHeld and cdTimer <= 0:
 	# there must be a better way to do this, but im doing this for now. fuck it
@@ -90,7 +91,7 @@ func _physics_process(delta: float) -> void:
 				chargeTimer = 0
 				chargeStart()
 				isCharging = true
-				ent.ability_vars["_busy"] = true
+				ent.ability_vars["_busy"] = block_other_abilities_while_charging
 				pressed.emit()
 			if chargeTimer >= stat_chargeTime.val:
 				isCharged = true

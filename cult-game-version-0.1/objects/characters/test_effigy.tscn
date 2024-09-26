@@ -43,9 +43,9 @@ turbulence_enabled = true
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_10w11"]
 size = Vector2(6.78411, 1.37636)
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_vkpq7"]
-radius = 0.75304
-height = 11.2726
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_5juuo"]
+radius = 27.0
+height = 146.0
 
 [node name="test effigy" type="CharacterBody2D"]
 y_sort_enabled = true
@@ -72,7 +72,7 @@ script = ExtResource("2_nmdvh")
 baseValue = 2.0
 
 [node name="shoulder" type="Node2D" parent="."]
-position = Vector2(0, -142)
+position = Vector2(0, -120)
 
 [node name="upright_anchor" type="Node2D" parent="." groups=["upright_sprite"]]
 y_sort_enabled = true
@@ -102,11 +102,9 @@ scale = Vector2(8.22, 12)
 shape = SubResource("RectangleShape2D_10w11")
 
 [node name="hurtbox" type="Area2D" parent="."]
-position = Vector2(0, 17)
-scale = Vector2(70.3814, 4.04376)
+position = Vector2(0, -93)
 collision_layer = 96
 collision_mask = 4
 
 [node name="shape" type="CollisionShape2D" parent="hurtbox"]
-position = Vector2(0.0568332, -17.8052)
-shape = SubResource("CapsuleShape2D_vkpq7")
+shape = SubResource("CapsuleShape2D_5juuo")

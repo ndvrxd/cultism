@@ -129,6 +129,7 @@ area-of-effect lightning strike anywhere
 on the screen."
 portrait = ExtResource("2_sp5od")
 is_charged_ability = true
+block_other_abilities_while_charging = false
 
 [node name="stats" type="Node" parent="."]
 process_mode = 4
