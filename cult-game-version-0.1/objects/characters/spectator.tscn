@@ -10,8 +10,7 @@ script/source = "extends Entity
 
 func _process(delta:float):
 	super._process(delta)
-	$Node2D/Sprite2D.flip_h = lookDirection.x < 0
-	$Node2D/Sprite2D.position = Vector2(randf_range(-1.5, 1.5), randf_range(-1.5, 1.5))
+	$feet/Sprite2D.position = Vector2(randf_range(-1.5, 1.5), randf_range(-1.5, 1.5))
 "
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_n3ohw"]
