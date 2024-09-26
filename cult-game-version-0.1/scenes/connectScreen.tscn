@@ -214,7 +214,6 @@ item_1/text = "kibby"
 item_1/icon = ExtResource("4_3m4t2")
 item_2/text = "Possum"
 item_2/icon = ExtResource("3_vst5a")
-item_2/disabled = true
 item_3/text = "Lizer"
 item_3/icon = ExtResource("7_m7alx")
 item_3/disabled = true

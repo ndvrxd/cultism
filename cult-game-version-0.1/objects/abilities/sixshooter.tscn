@@ -1,7 +1,40 @@
-[gd_scene load_steps=4 format=3 uid="uid://c7m3igog3rlis"]
+[gd_scene load_steps=8 format=3 uid="uid://c7m3igog3rlis"]
 
-[ext_resource type="Script" path="res://scripts/generic/Ability.gd" id="1_spc5a"]
+[ext_resource type="PackedScene" uid="uid://1uajbkc46q8k" path="res://vfx/objects/hitscan_fx.tscn" id="1_nqjp1"]
 [ext_resource type="AudioStream" uid="uid://b2h08kwrqs8ax" path="res://sound/fx/gunshot.mp3" id="2_1t3d5"]
+[ext_resource type="PackedScene" uid="uid://c1luyms3v2wv5" path="res://vfx/objects/sword_hit.tscn" id="2_jwvgl"]
+[ext_resource type="Texture2D" uid="uid://b8uotdxr13iyg" path="res://art/ui/attack.png" id="3_enrv8"]
+[ext_resource type="Script" path="res://scripts/abstract/Stat.gd" id="4_f52xx"]
+
+[sub_resource type="GDScript" id="GDScript_60bdx"]
+script/source = "extends Ability
+
+@export var hitscanTracer:PackedScene
+@export var impactVfx:PackedScene
+@export var gunRange:float = 3000
+
+func fireAction():
+	$gunshot.play()
+	var hit = ent.lineCastFromShoulder(ent.lookDirection, gunRange, false) #don't trigger hit effects
+	var tr = hitscanTracer.instantiate()
+	tr.global_position = ent.shoulderPoint.global_position
+	tr.setDirection(ent.lookDirection)
+	tr.setRange(ent.shoulderPoint.global_position.distance_to(hit[\"pos\"]), 70)
+	get_tree().current_scene.add_child(tr)
+	if hit[\"pos\"] != Vector2.ZERO:
+		doHitVfx.rpc(hit[\"pos\"])
+	if is_multiplayer_authority():
+		var target:Entity = hit[\"entity\"] as Entity
+		if target and target.team != ent.team:
+			target.changeHealth.rpc(target.health, 
+				-ent.stat_baseDamage.val*2, ent.get_path())
+
+@rpc(\"authority\", \"call_local\", \"reliable\")
+func doHitVfx(pos:Vector2) -> void:
+	var temp = impactVfx.instantiate()
+	temp.global_position = pos
+	get_tree().current_scene.add_child(temp)
+"
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_2uhqp"]
 random_pitch = 1.15
@@ -9,7 +42,19 @@ streams_count = 1
 stream_0/stream = ExtResource("2_1t3d5")
 
 [node name="Sixshooter" type="Node2D"]
-script = ExtResource("1_spc5a")
+script = SubResource("GDScript_60bdx")
+hitscanTracer = ExtResource("1_nqjp1")
+impactVfx = ExtResource("2_jwvgl")
+ability_name = "Six Shooter"
+ability_desc = "Shoot your gun idk i haven't workshopped this yet"
+portrait = ExtResource("3_enrv8")
 
 [node name="gunshot" type="AudioStreamPlayer2D" parent="."]
 stream = SubResource("AudioStreamRandomizer_2uhqp")
+
+[node name="stats" type="Node" parent="."]
+process_mode = 4
+
+[node name="cooldown" type="Node" parent="stats"]
+script = ExtResource("4_f52xx")
+baseValue = 0.55
