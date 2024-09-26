@@ -223,11 +223,11 @@ func lineCastFromShoulder(direction:Vector2, range:float, triggerHitEffects=true
 		)
 	physics_query.set_collide_with_areas(true);
 	if friendlyFire:
-		# use the "all characters" collision layer
-		physics_query.collision_mask = 32
+		# use the "world" and "all characters" collision layers
+		physics_query.collision_mask = 33
 	else:
-		# use all allowed "character" collision layers except team
-		physics_query.collision_mask = 0xFFFFFFC0 ^ (32 << team)
+		# use "world" + all allowed "character" collision layers except team
+		physics_query.collision_mask = 0xFFFFFFC1 ^ (32 << team)
 	
 	var hit = get_world_2d().direct_space_state.intersect_ray(
 		physics_query
