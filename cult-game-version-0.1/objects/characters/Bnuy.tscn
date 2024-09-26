@@ -1,10 +1,8 @@
-[gd_scene load_steps=11 format=3 uid="uid://7j4v8eoc5ewj"]
+[gd_scene load_steps=9 format=3 uid="uid://7j4v8eoc5ewj"]
 
-[ext_resource type="Script" path="res://scripts/characters/bnuy.gd" id="1_l02gv"]
-[ext_resource type="PackedScene" uid="uid://drsr5aonofgsk" path="res://objects/abilities/warp.tscn" id="2_8ehij"]
+[ext_resource type="Script" path="res://scripts/generic/Entity.gd" id="1_x30jo"]
 [ext_resource type="Texture2D" uid="uid://b5k4twe1vvha5" path="res://art/character ph/bunny ph.png" id="2_c6683"]
 [ext_resource type="PackedScene" uid="uid://d2e4q455kjkby" path="res://objects/abilities/speed_increase.tscn" id="3_lqmu2"]
-[ext_resource type="Texture2D" uid="uid://clqo76f6tebyl" path="res://art/ui/arrow.png" id="3_n0sa5"]
 [ext_resource type="PackedScene" uid="uid://d0xuqfm81y8em" path="res://objects/abilities/sword_strike_flurry.tscn" id="4_xfqfj"]
 [ext_resource type="PackedScene" uid="uid://bhho2ywfqt0vw" path="res://objects/abilities/sword_strike_stock.tscn" id="5_8sfub"]
 [ext_resource type="Script" path="res://scripts/abstract/Stat.gd" id="17_bkmbb"]
@@ -22,14 +20,12 @@ texture_filter = 6
 collision_layer = 112
 collision_mask = 7
 slide_on_ceiling = false
-script = ExtResource("1_l02gv")
-entityName = "Bunny"
+script = ExtResource("1_x30jo")
+entityName = "Bnuy"
 team = 1
 objPath = "res://objects/characters/Bnuy.tscn"
 controllerPath = "res://objects/controllers/basic_enemy_ai.tscn"
-abilities = [NodePath("SwordStrikeStock"), NodePath("Warp"), NodePath("SpeedIncrease")]
-
-[node name="Warp" parent="." instance=ExtResource("2_8ehij")]
+abilities = [NodePath("SwordStrikeStock"), NodePath("SwordStrikeFlurry"), NodePath("SpeedIncrease")]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-1, -20)
@@ -37,10 +33,10 @@ shape = SubResource("CircleShape2D_a5fkp")
 
 [node name="SpeedIncrease" parent="." instance=ExtResource("3_lqmu2")]
 
-[node name="upright_anchor" type="Node2D" parent="." groups=["upright_sprite"]]
+[node name="feet" type="Node2D" parent="." groups=["upright_sprite"]]
 y_sort_enabled = true
 
-[node name="Sprite2D" type="Sprite2D" parent="upright_anchor"]
+[node name="Sprite2D" type="Sprite2D" parent="feet"]
 texture_filter = 1
 scale = Vector2(0.765, 0.765)
 texture = ExtResource("2_c6683")
@@ -48,13 +44,6 @@ offset = Vector2(0, -91)
 
 [node name="shoulder" type="Node2D" parent="."]
 position = Vector2(0, -79)
-
-[node name="Sprite2D" type="Sprite2D" parent="shoulder"]
-modulate = Color(0.489618, 0.433017, 0.996861, 1)
-z_index = 1
-position = Vector2(65, 0)
-rotation = 1.5708
-texture = ExtResource("3_n0sa5")
 
 [node name="stat_speed" type="Node" parent="."]
 script = ExtResource("17_bkmbb")

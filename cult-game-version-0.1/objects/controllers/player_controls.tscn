@@ -72,6 +72,16 @@ font_color = Color(4.04298e-06, 0.682316, 0.985905, 1)
 [node name="PlayerControls" type="Node2D"]
 script = ExtResource("1_122va")
 
+[node name="shoulder" type="Node2D" parent="."]
+position = Vector2(0, -79)
+
+[node name="Sprite2D" type="Sprite2D" parent="shoulder"]
+modulate = Color(0.489618, 0.433017, 0.996861, 1)
+z_index = 1
+position = Vector2(65, 0)
+rotation = 1.5708
+texture = ExtResource("5_i4xsy")
+
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(-0.5, -57.5)
 position_smoothing_enabled = true

@@ -55,7 +55,8 @@ var aimPosition:Vector2 = Vector2.ZERO;
 var health:float = 1
 var regenTimer:float = 0
 
-var shoulderPoint:Node2D;
+var shoulderPoint:Node2D; # acts as the "eye level" of an entity
+var footPoint:Node2D;
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -67,6 +68,8 @@ func _ready() -> void:
 		temp.name = "shoulder";
 		add_child(temp);
 		shoulderPoint = temp;
+	
+	footPoint = $feet if has_node("feet") else Node2D.new();
 		
 	# health bars only need to be shown in visible game windows
 	# otherwise, we don't need to instantiate or drive them
@@ -90,6 +93,8 @@ func _process(delta: float) -> void:
 	
 	if shoulderPoint: #aiming
 		shoulderPoint.look_at(shoulderPoint.global_position + lookDirection)
+	if footPoint: # visual look direction
+		footPoint.scale.x = 1 if lookDirection.x > 0 else -1
 		
 	if regenTimer > 0:
 		regenTimer -= delta

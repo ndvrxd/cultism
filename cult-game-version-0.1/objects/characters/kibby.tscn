@@ -1,9 +1,8 @@
-[gd_scene load_steps=10 format=3 uid="uid://ci7mx2j77fwhs"]
+[gd_scene load_steps=9 format=3 uid="uid://ci7mx2j77fwhs"]
 
-[ext_resource type="Script" path="res://scripts/characters/kibby.gd" id="1_j0iaj"]
+[ext_resource type="Script" path="res://scripts/generic/Entity.gd" id="1_jx1vv"]
 [ext_resource type="PackedScene" uid="uid://bibt0wcnslvxw" path="res://objects/abilities/instrumet_strike_stock.tscn" id="2_3be6p"]
 [ext_resource type="Script" path="res://scripts/abstract/Stat.gd" id="2_cnk3q"]
-[ext_resource type="Texture2D" uid="uid://clqo76f6tebyl" path="res://art/ui/arrow.png" id="2_ooq4y"]
 [ext_resource type="PackedScene" uid="uid://dvy5sraal3n12" path="res://objects/abilities/freehand_aoe.tscn" id="3_oppbj"]
 [ext_resource type="Texture2D" uid="uid://soudc4snc7fj" path="res://art/character ph/kibby ph 2.png" id="3_vd5t2"]
 [ext_resource type="PackedScene" uid="uid://b3ebj3hu7gvb1" path="res://objects/abilities/starstruck.tscn" id="4_0x4ji"]
@@ -18,9 +17,8 @@ radius = 23.0868
 [node name="Kibby" type="CharacterBody2D" node_paths=PackedStringArray("abilities")]
 collision_layer = 112
 collision_mask = 7
-script = ExtResource("1_j0iaj")
+script = ExtResource("1_jx1vv")
 entityName = "Kibby"
-team = 1
 objPath = "res://objects/characters/kibby.tscn"
 controllerPath = "res://objects/controllers/basic_enemy_ai.tscn"
 aggroPriority = 1
@@ -60,20 +58,13 @@ shape = SubResource("CapsuleShape2D_u7vwb")
 [node name="shoulder" type="Node2D" parent="."]
 position = Vector2(0, -91)
 
-[node name="Sprite2D" type="Sprite2D" parent="shoulder"]
-modulate = Color(0.489618, 0.433017, 0.996861, 1)
-z_index = 1
-position = Vector2(65, 0)
-rotation = 1.5708
-texture = ExtResource("2_ooq4y")
-
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -25)
 shape = SubResource("CircleShape2D_86oxc")
 
-[node name="Node2D" type="Node2D" parent="." groups=["upright_sprite"]]
+[node name="feet" type="Node2D" parent="." groups=["upright_sprite"]]
 
-[node name="Sprite2D" type="Sprite2D" parent="Node2D"]
+[node name="Sprite2D" type="Sprite2D" parent="feet"]
 scale = Vector2(0.745, 0.745)
 texture = ExtResource("3_vd5t2")
 offset = Vector2(0, -95.845)

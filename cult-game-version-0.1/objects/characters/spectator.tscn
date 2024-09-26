@@ -46,9 +46,9 @@ shape = SubResource("CircleShape2D_n3ohw")
 [node name="shoulder" type="Node2D" parent="."]
 position = Vector2(0, -72)
 
-[node name="Node2D" type="Node2D" parent="." groups=["upright_sprite"]]
+[node name="feet" type="Node2D" parent="." groups=["upright_sprite"]]
 
-[node name="Sprite2D" type="Sprite2D" parent="Node2D"]
+[node name="Sprite2D" type="Sprite2D" parent="feet"]
 scale = Vector2(0.75, 0.75)
 texture = ExtResource("1_ejiw6")
 offset = Vector2(0, -90)

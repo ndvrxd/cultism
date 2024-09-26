@@ -1,8 +1,7 @@
-[gd_scene load_steps=11 format=3 uid="uid://olevvkb7y5jg"]
+[gd_scene load_steps=10 format=3 uid="uid://olevvkb7y5jg"]
 
 [ext_resource type="Script" path="res://scripts/characters/lizer.gd" id="1_syvkj"]
 [ext_resource type="Texture2D" uid="uid://dx7xpikedu613" path="res://art/character ph/lizer ph.png" id="2_ty8gh"]
-[ext_resource type="Texture2D" uid="uid://clqo76f6tebyl" path="res://art/ui/arrow.png" id="3_fjttw"]
 [ext_resource type="Texture2D" uid="uid://c3l4kkjo4q83i" path="res://vfx/particle/sparkle haha.png" id="4_o7a7i"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_mtypy"]
@@ -61,10 +60,10 @@ controllerPath = "res://objects/controllers/basic_enemy_ai.tscn"
 position = Vector2(-1, -44)
 shape = SubResource("CapsuleShape2D_mtypy")
 
-[node name="upright_anchor" type="Node2D" parent="." groups=["upright_sprite"]]
+[node name="feet" type="Node2D" parent="." groups=["upright_sprite"]]
 y_sort_enabled = true
 
-[node name="Sprite2D" type="Sprite2D" parent="upright_anchor"]
+[node name="Sprite2D" type="Sprite2D" parent="feet"]
 texture_filter = 1
 scale = Vector2(0.765, 0.765)
 texture = ExtResource("2_ty8gh")
@@ -72,13 +71,6 @@ offset = Vector2(-8, -64)
 
 [node name="shoulder" type="Node2D" parent="."]
 position = Vector2(0, -65)
-
-[node name="Sprite2D" type="Sprite2D" parent="shoulder"]
-modulate = Color(0.489618, 0.433017, 0.996861, 1)
-z_index = 1
-position = Vector2(65, 0)
-rotation = 1.5708
-texture = ExtResource("3_fjttw")
 
 [node name="swordwoosh" type="GPUParticles2D" parent="shoulder"]
 z_index = 1

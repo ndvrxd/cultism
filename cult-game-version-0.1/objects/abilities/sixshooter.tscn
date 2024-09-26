@@ -1,6 +1,15 @@
-[gd_scene load_steps=2 format=3 uid="uid://c7m3igog3rlis"]
+[gd_scene load_steps=4 format=3 uid="uid://c7m3igog3rlis"]
 
 [ext_resource type="Script" path="res://scripts/generic/Ability.gd" id="1_spc5a"]
+[ext_resource type="AudioStream" uid="uid://b2h08kwrqs8ax" path="res://sound/fx/gunshot.mp3" id="2_1t3d5"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_2uhqp"]
+random_pitch = 1.15
+streams_count = 1
+stream_0/stream = ExtResource("2_1t3d5")
 
 [node name="Sixshooter" type="Node2D"]
 script = ExtResource("1_spc5a")
+
+[node name="gunshot" type="AudioStreamPlayer2D" parent="."]
+stream = SubResource("AudioStreamRandomizer_2uhqp")

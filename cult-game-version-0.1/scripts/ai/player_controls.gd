@@ -80,6 +80,7 @@ func _process(delta):
 	ui_hb_over.value = (ent.health / ent.stat_maxHp.val)
 	ui_hb_under.value = lerp(ui_hb_under.value, ui_hb_over.value, delta*7)
 	ui_hb_text.text = str(int(ent.health)) + " / " + str(int(ent.stat_maxHp.val))
+	$shoulder.transform = ent.shoulderPoint.transform
 	#endregion
 	
 	#region input stuff
