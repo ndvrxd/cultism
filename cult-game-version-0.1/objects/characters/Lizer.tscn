@@ -48,7 +48,8 @@ height = 21.0526
 [node name="lizer" type="CharacterBody2D"]
 y_sort_enabled = true
 texture_filter = 6
-collision_layer = 4
+collision_layer = 112
+collision_mask = 7
 slide_on_ceiling = false
 script = ExtResource("1_syvkj")
 entityName = "Lizer"
@@ -112,6 +113,8 @@ trail_section_subdivisions = 1
 
 [node name="hurtbox" type="Area2D" parent="."]
 scale = Vector2(5.225, 5.225)
+collision_layer = 96
+collision_mask = 4
 
 [node name="shape" type="CollisionShape2D" parent="hurtbox"]
 position = Vector2(5.96046e-08, -10.3349)

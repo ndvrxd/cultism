@@ -85,8 +85,8 @@ script = ExtResource("3_ae7nj")
 baseValue = 25.0
 
 [node name="aoe" type="Area2D" parent="."]
-collision_layer = 7
-collision_mask = 7
+collision_layer = 4
+collision_mask = 32
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="aoe"]
 shape = SubResource("CircleShape2D_240iu")

@@ -16,7 +16,8 @@ height = 21.0526
 radius = 23.0868
 
 [node name="Kibby" type="CharacterBody2D" node_paths=PackedStringArray("abilities")]
-collision_layer = 4
+collision_layer = 112
+collision_mask = 7
 script = ExtResource("1_j0iaj")
 entityName = "Kibby"
 team = 1
@@ -49,6 +50,8 @@ baseValue = 200.0
 
 [node name="hurtbox" type="Area2D" parent="."]
 scale = Vector2(5.225, 5.225)
+collision_layer = 96
+collision_mask = 4
 
 [node name="shape" type="CollisionShape2D" parent="hurtbox"]
 position = Vector2(5.96046e-08, -10.3349)

@@ -35,15 +35,16 @@ height = 21.0526
 [node name="player" type="CharacterBody2D" node_paths=PackedStringArray("swordWoosh")]
 y_sort_enabled = true
 texture_filter = 6
-collision_layer = 4
+collision_layer = 112
+collision_mask = 7
 slide_on_ceiling = false
 script = ExtResource("1_5qw1a")
-swordWoosh = NodePath("shoulder/swordwoosh")
 entityName = "Player"
 team = 1
 objPath = "res://objects/characters/player.tscn"
 controllerPath = "res://objects/controllers/basic_enemy_ai.tscn"
 healthBarColor = Color(0.16, 1, 0.3, 1)
+swordWoosh = NodePath("shoulder/swordwoosh")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-1, -44)
@@ -85,6 +86,8 @@ trail_lifetime = 0.24
 
 [node name="hurtbox" type="Area2D" parent="."]
 scale = Vector2(5.225, 5.225)
+collision_layer = 96
+collision_mask = 4
 
 [node name="shape" type="CollisionShape2D" parent="hurtbox"]
 position = Vector2(5.96046e-08, -10.3349)
