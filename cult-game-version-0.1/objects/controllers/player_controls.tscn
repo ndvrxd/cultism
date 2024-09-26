@@ -109,8 +109,7 @@ scale = Vector2(0.85, 0.85)
 text = "unnamed animal cult game prototype
 (so far from final it hurts)
 current prio:
-- Ability abstraction
-- Collision layer cleanup"
+- Ability abstraction"
 label_settings = ExtResource("4_u25xa")
 horizontal_alignment = 2
 
