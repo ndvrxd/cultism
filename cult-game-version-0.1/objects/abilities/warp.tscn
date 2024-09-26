@@ -1,0 +1,139 @@
+[gd_scene load_steps=10 format=3 uid="uid://drsr5aonofgsk"]
+
+[ext_resource type="Script" path="res://scripts/abstract/Stat.gd" id="1_2w6he"]
+[ext_resource type="Texture2D" uid="uid://d37m7rbl1uqlo" path="res://vfx/particle/zap.png" id="1_dwc2p"]
+[ext_resource type="Material" uid="uid://crjhe8h0g1bbn" path="res://vfx/material/warptell.tres" id="2_7cx1g"]
+[ext_resource type="Texture2D" uid="uid://be4oc6abu7j8b" path="res://vfx/particle/summon.png" id="4_5pn45"]
+[ext_resource type="Texture2D" uid="uid://b5aefjahrsgq1" path="res://vfx/particle/lightflare2.png" id="5_rptaw"]
+
+[sub_resource type="GDScript" id="GDScript_5nsm2"]
+script/source = "extends Ability
+
+signal failed_teleport
+signal successful_teleport
+
+var inWall:bool = false
+
+func _process(delta:float) -> void:
+	super._process(delta)
+	if isCharging or isCharged:
+		alignNodeWithShoulder($shoulder)
+		var dist = $shoulder.global_position.distance_to(ent.aimPosition)
+		$shoulder/length.scale.y = dist
+
+func _physics_process(delta: float) -> void:
+	super._physics_process(delta)
+	if isCharging or isCharged:
+		$detach/reticle.global_position = ent.aimPosition
+
+func _on_walltest_body_entered(body: Node2D) -> void:
+	$shoulder/length/tell.visible = false
+	inWall = true
+
+func _on_walltest_body_exited(body: Node2D) -> void:
+	$shoulder/length/tell.visible = true
+	inWall = false
+
+func _on_fired() -> void:
+	if inWall:
+		failed_teleport.emit()
+		await get_tree().create_timer(0.2).timeout
+		cdTimer = 0.1
+	else:
+		successful_teleport.emit()
+		if is_multiplayer_authority():
+			ent.global_position = ent.aimPosition
+"
+
+[sub_resource type="QuadMesh" id="QuadMesh_c26lm"]
+size = Vector2(50, 1)
+center_offset = Vector3(0, 0.5, 0)
+
+[sub_resource type="GDScript" id="GDScript_gs13m"]
+resource_name = "sigil"
+script/source = "extends Node2D
+
+func _process(delta:float):
+	if !visible: return
+	$outer.rotation += delta
+	$inner.rotation -= delta
+"
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ox3vf"]
+
+[node name="Warp" type="Node2D"]
+script = SubResource("GDScript_5nsm2")
+ability_name = "Warp"
+ability_desc = "Charge to teleport anywhere on-screen (except into walls)."
+portrait = ExtResource("1_dwc2p")
+is_charged_ability = true
+block_other_abilities_while_charging = false
+
+[node name="stats" type="Node" parent="."]
+process_mode = 4
+
+[node name="chargeTime" type="Node" parent="stats"]
+script = ExtResource("1_2w6he")
+baseValue = 3.0
+
+[node name="cooldown" type="Node" parent="stats"]
+script = ExtResource("1_2w6he")
+baseValue = 10.0
+
+[node name="shoulder" type="Node2D" parent="."]
+
+[node name="length" type="Node2D" parent="shoulder"]
+rotation = -1.5708
+
+[node name="tell" type="MeshInstance2D" parent="shoulder/length"]
+material = ExtResource("2_7cx1g")
+mesh = SubResource("QuadMesh_c26lm")
+
+[node name="sigil2" type="Node2D" parent="."]
+modulate = Color(0.964706, 0.470588, 1, 1)
+texture_filter = 1
+scale = Vector2(3, 3)
+script = SubResource("GDScript_gs13m")
+
+[node name="outer" type="Sprite2D" parent="sigil2"]
+rotation = 6.28319
+texture = ExtResource("4_5pn45")
+
+[node name="inner" type="Sprite2D" parent="sigil2"]
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("5_rptaw")
+
+[node name="detach" type="Node" parent="."]
+
+[node name="reticle" type="Node2D" parent="detach"]
+
+[node name="walltest" type="Area2D" parent="detach/reticle"]
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="detach/reticle/walltest"]
+shape = SubResource("CircleShape2D_ox3vf")
+
+[node name="sigil" type="Node2D" parent="detach/reticle"]
+modulate = Color(0.964667, 0.47, 1, 1)
+scale = Vector2(3, 3)
+script = SubResource("GDScript_gs13m")
+
+[node name="outer" type="Sprite2D" parent="detach/reticle/sigil"]
+rotation = 6.28319
+texture = ExtResource("4_5pn45")
+
+[node name="inner" type="Sprite2D" parent="detach/reticle/sigil"]
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("5_rptaw")
+
+[connection signal="charged" from="." to="detach/reticle/sigil/outer" method="set_visible" binds= [true]]
+[connection signal="fired" from="." to="." method="_on_fired"]
+[connection signal="pressed" from="." to="shoulder/length/tell" method="set_visible" binds= [true]]
+[connection signal="pressed" from="." to="detach/reticle/sigil/outer" method="set_visible" binds= [false]]
+[connection signal="pressed" from="." to="detach/reticle" method="set_visible" binds= [true]]
+[connection signal="pressed" from="." to="sigil2" method="set_visible" binds= [true]]
+[connection signal="released" from="." to="shoulder/length/tell" method="set_visible" binds= [false]]
+[connection signal="released" from="." to="detach/reticle" method="set_visible" binds= [false]]
+[connection signal="released" from="." to="sigil2" method="set_visible" binds= [false]]
+[connection signal="body_entered" from="detach/reticle/walltest" to="." method="_on_walltest_body_entered"]
+[connection signal="body_exited" from="detach/reticle/walltest" to="." method="_on_walltest_body_exited"]
