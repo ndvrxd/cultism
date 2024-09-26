@@ -1,6 +1,11 @@
-[gd_resource type="TileSet" load_steps=3 format=3 uid="uid://daul54ym8tixc"]
+[gd_resource type="TileSet" load_steps=7 format=3 uid="uid://daul54ym8tixc"]
 
 [ext_resource type="Texture2D" uid="uid://3vhkxmid511r" path="res://objects/tileset/new_atlas_texture.tres" id="1_0n45a"]
+[ext_resource type="Material" uid="uid://02oyc1e65ii" path="res://vfx/material/water.tres" id="1_j860l"]
+[ext_resource type="Texture2D" uid="uid://d0iiod50s6ji7" path="res://art/scenery/test_tileset_euphoria.png" id="3_363jf"]
+
+[sub_resource type="TileMapPattern" id="TileMapPattern_lxno6"]
+tile_data = PackedInt32Array(0, 196609, 1, 65536, 196609, 2, 131072, 196609, 3, 196608, 196609, 0, 1, 1, 1, 65537, 1, 2, 131073, 1, 3, 196609, 1, 0, 2, 65537, 1, 65538, 65537, 2, 131074, 65537, 3, 196610, 65537, 0, 3, 131073, 1, 65539, 131073, 2, 131075, 131073, 3, 196611, 131073, 0)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_chrln"]
 texture = ExtResource("1_0n45a")
@@ -13,11 +18,67 @@ texture_region_size = Vector2i(32, 32)
 1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 0:1/next_alternative_id = 2
 0:1/0 = 0
+1:1/next_alternative_id = 2
 1:1/0 = 0
 1:1/0/physics_layer_1/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+1:1/1 = 1
+1:1/1/material = ExtResource("1_j860l")
 2:1/0 = 0
 2:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 3:1/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ympde"]
+resource_name = "water"
+texture = ExtResource("3_363jf")
+texture_region_size = Vector2i(32, 32)
+1:0/0 = 0
+1:0/0/material = ExtResource("1_j860l")
+1:0/0/physics_layer_1/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+0:0/0 = 0
+0:0/0/material = ExtResource("1_j860l")
+0:0/0/physics_layer_1/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+2:0/0 = 0
+2:0/0/material = ExtResource("1_j860l")
+2:0/0/physics_layer_1/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+3:0/0 = 0
+3:0/0/material = ExtResource("1_j860l")
+3:0/0/physics_layer_1/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+3:1/0 = 0
+3:1/0/material = ExtResource("1_j860l")
+3:1/0/physics_layer_1/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+2:1/0 = 0
+2:1/0/material = ExtResource("1_j860l")
+2:1/0/physics_layer_1/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+1:1/0 = 0
+1:1/0/material = ExtResource("1_j860l")
+1:1/0/physics_layer_1/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+0:1/0 = 0
+0:1/0/material = ExtResource("1_j860l")
+0:1/0/physics_layer_1/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+0:2/0 = 0
+0:2/0/material = ExtResource("1_j860l")
+0:2/0/physics_layer_1/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+1:2/0 = 0
+1:2/0/material = ExtResource("1_j860l")
+1:2/0/physics_layer_1/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+2:2/0 = 0
+2:2/0/material = ExtResource("1_j860l")
+2:2/0/physics_layer_1/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+3:2/0 = 0
+3:2/0/material = ExtResource("1_j860l")
+3:2/0/physics_layer_1/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+3:3/0 = 0
+3:3/0/material = ExtResource("1_j860l")
+3:3/0/physics_layer_1/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+2:3/0 = 0
+2:3/0/material = ExtResource("1_j860l")
+2:3/0/physics_layer_1/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+1:3/0 = 0
+1:3/0/material = ExtResource("1_j860l")
+1:3/0/physics_layer_1/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+0:3/0 = 0
+0:3/0/material = ExtResource("1_j860l")
+0:3/0/physics_layer_1/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 
 [resource]
 tile_size = Vector2i(32, 32)
@@ -26,3 +87,5 @@ physics_layer_0/collision_mask = 124
 physics_layer_1/collision_layer = 2
 physics_layer_1/collision_mask = 4
 sources/0 = SubResource("TileSetAtlasSource_chrln")
+sources/1 = SubResource("TileSetAtlasSource_ympde")
+pattern_0 = SubResource("TileMapPattern_lxno6")

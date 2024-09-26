@@ -1,0 +1,23 @@
+[gd_resource type="ShaderMaterial" load_steps=5 format=3 uid="uid://c3q8c8kqaos2t"]
+
+[ext_resource type="Shader" uid="uid://ddrtmf5kkqkju" path="res://vfx/shaders/scroll_mix_gradient_base.tres" id="1_o1v0g"]
+[ext_resource type="Texture2D" uid="uid://ca2q2kr4pgliw" path="res://vfx/shaders/noisetextures/Super Perlin 11 - 128x128.png" id="2_crd74"]
+
+[sub_resource type="Gradient" id="Gradient_btbiw"]
+offsets = PackedFloat32Array(0, 0.0859729, 0.171946, 0.257919, 0.782805, 0.959276, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 1, 0.266575, 0.266575, 0.266575, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_rekyl"]
+gradient = SubResource("Gradient_btbiw")
+
+[resource]
+shader = ExtResource("1_o1v0g")
+shader_parameter/Tex1Scroll = Vector2(0.5, 0)
+shader_parameter/Tex1Tiling = Vector2(2, 2)
+shader_parameter/Tex2Scroll = Vector2(-0.3, -0.3)
+shader_parameter/Tex2Tiling = Vector2(4, 4)
+shader_parameter/MixWeight = 0.5
+shader_parameter/Opaque = false
+shader_parameter/Tex1 = ExtResource("2_crd74")
+shader_parameter/Tex2 = ExtResource("2_crd74")
+shader_parameter/GradientMap = SubResource("GradientTexture1D_rekyl")
