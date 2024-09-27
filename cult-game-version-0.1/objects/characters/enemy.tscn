@@ -13,7 +13,7 @@ height = 21.0526
 [sub_resource type="CircleShape2D" id="CircleShape2D_uaxf4"]
 radius = 20.0998
 
-[node name="enemy" type="CharacterBody2D" node_paths=PackedStringArray("abilities")]
+[node name="enemy" type="CharacterBody2D" node_paths=PackedStringArray("abilities", "stat_maxHp", "stat_speed")]
 y_sort_enabled = true
 disable_mode = 1
 collision_layer = 176
@@ -26,17 +26,18 @@ script = ExtResource("1_34ypl")
 entityName = "Shadow Demon"
 team = 2
 objPath = "res://objects/characters/enemy.tscn"
-controllerPath = "res://objects/controllers/basic_enemy_ai.tscn"
 healthBarColor = Color(1, 0.26, 0.26, 1)
 abilities = [NodePath("ShadowDemonMelee")]
+stat_maxHp = NodePath("maxHp")
+stat_speed = NodePath("speed")
 
 [node name="ShadowDemonMelee" parent="." instance=ExtResource("2_6wl3w")]
 
-[node name="stat_speed" type="Node" parent="."]
+[node name="speed" type="Node" parent="."]
 script = ExtResource("2_f64of")
 baseValue = 200.0
 
-[node name="stat_maxHp" type="Node" parent="."]
+[node name="maxHp" type="Node" parent="."]
 script = ExtResource("2_f64of")
 baseValue = 50.0
 

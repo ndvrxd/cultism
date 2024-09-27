@@ -25,20 +25,13 @@ func _process(delta: float) -> void:
 			zoom.y -= rate * 0.055; tilting = true
 	if tilting:
 		if clampf(zoom.y, 0.4, 1) == zoom.y:
-			sprites = get_tree().get_nodes_in_group("upright_sprite") #this is bad but it fixes a crash
+			sprites = get_tree().get_nodes_in_group("upright_sprite")
 			for s:Node2D in sprites:
 				s.scale.y = 1 / zoom.y;
 		zoom.y = clampf(zoom.y, 0.4, 1)
-	
 
 func _physics_process(delta: float) -> void:
 	if NetManager.IsDedicated(): return
-	refreshTimer += delta;
-	if refreshTimer > refreshRate:
-		# if theres a new sprite that hasnt been scaled yet, scale it.
-		# check for that every couple of seconds
-		sprites = get_tree().get_nodes_in_group("upright_sprite") 
-		for s:Node2D in sprites:
-			s.scale.y = 1 / zoom.y;
-		#refreshTimer=0 #apparently the refresh timer hasn't been resetting.
-		# if it's been working fine the whole time, then... well. i'm not worried
+	sprites = get_tree().get_nodes_in_group("upright_sprite") 
+	for s:Node2D in sprites:
+		s.scale.y = 1 / zoom.y;

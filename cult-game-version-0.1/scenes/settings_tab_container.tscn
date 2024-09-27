@@ -178,4 +178,6 @@ autowrap_mode = 1
 [connection signal="toggled" from="TabContainer/Sounding/MarginContainer/VBoxContainer/Mute" to="." method="_on_mute_toggled"]
 [connection signal="toggled" from="TabContainer/Sounding/MarginContainer/VBoxContainer/Mute" to="." method="_on_check_button_toggled"]
 [connection signal="item_selected" from="TabContainer/Grafics/MarginContainer/VBoxContainer/Resolutions" to="." method="_on_resolutions_item_selected"]
+[connection signal="item_rect_changed" from="TabContainer/Grafics/MarginContainer/VBoxContainer/Fullscreen" to="." method="_on_fullscreen_draw"]
 [connection signal="toggled" from="TabContainer/Grafics/MarginContainer/VBoxContainer/Fullscreen" to="." method="_on_fullscreen_toggled"]
+[connection signal="visibility_changed" from="TabContainer/Grafics/MarginContainer/VBoxContainer/Fullscreen" to="." method="_on_fullscreen_draw"]

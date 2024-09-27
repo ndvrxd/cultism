@@ -120,6 +120,8 @@ text = "unnamed animal cult game prototype
 (so far from final it hurts)
 current prio:
 - Possum
+- StatusCondition, Projectile &
+ Upgrade base classes
 - More enemy variation
 - Waves & repeatable gameplay loop
 - Respawn & fail conditions"

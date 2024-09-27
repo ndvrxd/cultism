@@ -31,7 +31,7 @@ height = 21.0526
 [sub_resource type="CircleShape2D" id="CircleShape2D_uaxf4"]
 radius = 20.0998
 
-[node name="runner" type="CharacterBody2D" node_paths=PackedStringArray("abilities")]
+[node name="runner" type="CharacterBody2D" node_paths=PackedStringArray("abilities", "stat_maxHp", "stat_speed", "stat_accel", "stat_aggroRange")]
 y_sort_enabled = true
 disable_mode = 1
 collision_layer = 176
@@ -48,6 +48,10 @@ controllerPath = "res://objects/controllers/runner_ai.tscn"
 aggroPriority = 1
 healthBarColor = Color(1, 0.2, 0.2, 1)
 abilities = [NodePath("Selfdestruct")]
+stat_maxHp = NodePath("stat_maxHp")
+stat_speed = NodePath("stat_speed")
+stat_accel = NodePath("stat_accel")
+stat_aggroRange = NodePath("stat_aggroRange")
 
 [node name="Selfdestruct" parent="." instance=ExtResource("2_3g8ij")]
 

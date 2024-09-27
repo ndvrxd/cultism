@@ -14,7 +14,7 @@ radius = 20.025
 radius = 5.74163
 height = 21.0526
 
-[node name="bnuny" type="CharacterBody2D" node_paths=PackedStringArray("abilities")]
+[node name="bnuny" type="CharacterBody2D" node_paths=PackedStringArray("abilities", "stat_speed", "stat_regen", "stat_baseDamage")]
 y_sort_enabled = true
 texture_filter = 6
 collision_layer = 112
@@ -24,8 +24,24 @@ script = ExtResource("1_x30jo")
 entityName = "Bnuy"
 team = 1
 objPath = "res://objects/characters/Bnuy.tscn"
-controllerPath = "res://objects/controllers/basic_enemy_ai.tscn"
 abilities = [NodePath("SwordStrikeStock"), NodePath("SwordStrikeFlurry"), NodePath("SpeedIncrease")]
+stat_speed = NodePath("stats/speed")
+stat_regen = NodePath("stats/regen")
+stat_baseDamage = NodePath("stats/base damage")
+
+[node name="stats" type="Node" parent="."]
+
+[node name="speed" type="Node" parent="stats"]
+script = ExtResource("17_bkmbb")
+baseValue = 300.0
+
+[node name="regen" type="Node" parent="stats"]
+script = ExtResource("17_bkmbb")
+baseValue = 2.0
+
+[node name="base damage" type="Node" parent="stats"]
+script = ExtResource("17_bkmbb")
+baseValue = 35.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-1, -20)
@@ -44,18 +60,6 @@ offset = Vector2(0, -91)
 
 [node name="shoulder" type="Node2D" parent="."]
 position = Vector2(0, -79)
-
-[node name="stat_speed" type="Node" parent="."]
-script = ExtResource("17_bkmbb")
-baseValue = 300.0
-
-[node name="stat_regen" type="Node" parent="."]
-script = ExtResource("17_bkmbb")
-baseValue = 2.0
-
-[node name="stat_baseDamage" type="Node" parent="."]
-script = ExtResource("17_bkmbb")
-baseValue = 35.0
 
 [node name="SwordStrikeStock" parent="." instance=ExtResource("5_8sfub")]
 

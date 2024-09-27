@@ -33,3 +33,7 @@ func onCreateClicked():
 
 func emsgCallback(reason):
 	errorMsg.text = reason;
+
+
+func _on_close_pressed() -> void:
+	get_tree().quit()

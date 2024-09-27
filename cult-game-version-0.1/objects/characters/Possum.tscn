@@ -13,15 +13,16 @@ radius = 23.1948
 radius = 5.74163
 height = 21.0526
 
-[node name="Possum" type="CharacterBody2D" node_paths=PackedStringArray("abilities")]
+[node name="Possum" type="CharacterBody2D" node_paths=PackedStringArray("abilities", "stat_speed", "stat_regen")]
 collision_layer = 112
 collision_mask = 7
 script = ExtResource("1_kvvxe")
 entityName = "Pos'm"
 team = 1
 objPath = "res://objects/characters/Possum.tscn"
-controllerPath = "res://objects/controllers/basic_enemy_ai.tscn"
 abilities = [NodePath("Sixshooter"), null, NodePath("Warp")]
+stat_speed = NodePath("stat_speed")
+stat_regen = NodePath("stat_regen")
 
 [node name="Sixshooter" parent="." instance=ExtResource("2_nhaul")]
 

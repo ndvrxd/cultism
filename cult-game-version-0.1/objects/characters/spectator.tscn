@@ -16,13 +16,16 @@ func _process(delta:float):
 [sub_resource type="CircleShape2D" id="CircleShape2D_n3ohw"]
 radius = 16.0
 
-[node name="Spectator" type="CharacterBody2D" node_paths=PackedStringArray("abilities")]
+[node name="Spectator" type="CharacterBody2D" node_paths=PackedStringArray("abilities", "stat_maxHp", "stat_speed", "stat_aggroNoise")]
 collision_layer = 16
 script = SubResource("GDScript_gfdmq")
 entityName = "Spectator"
 objPath = "res://objects/characters/spectator.tscn"
 healthBarColor = Color(0.65, 0.65, 0.65, 1)
 abilities = [null, null, NodePath("Spook")]
+stat_maxHp = NodePath("stat_maxHp")
+stat_speed = NodePath("stat_speed")
+stat_aggroNoise = NodePath("stat_aggroNoise")
 
 [node name="Spook" parent="." instance=ExtResource("1_otwcb")]
 

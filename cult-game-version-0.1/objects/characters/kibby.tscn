@@ -14,16 +14,19 @@ height = 21.0526
 [sub_resource type="CircleShape2D" id="CircleShape2D_86oxc"]
 radius = 23.0868
 
-[node name="Kibby" type="CharacterBody2D" node_paths=PackedStringArray("abilities")]
+[node name="Kibby" type="CharacterBody2D" node_paths=PackedStringArray("abilities", "stat_maxHp", "stat_speed", "stat_regen", "stat_aggroNoise")]
 collision_layer = 112
 collision_mask = 7
 script = ExtResource("1_jx1vv")
 entityName = "Kibby"
 team = 1
 objPath = "res://objects/characters/kibby.tscn"
-controllerPath = "res://objects/controllers/basic_enemy_ai.tscn"
 aggroPriority = 1
 abilities = [NodePath("InstrumentStrikeStock"), NodePath("FreehandAoe"), NodePath("Starstruck")]
+stat_maxHp = NodePath("stat_maxHp")
+stat_speed = NodePath("stat_speed")
+stat_regen = NodePath("stat_regen")
+stat_aggroNoise = NodePath("stat_aggroNoise")
 
 [node name="InstrumentStrikeStock" parent="." instance=ExtResource("2_3be6p")]
 

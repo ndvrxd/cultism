@@ -12,13 +12,24 @@ script/source = "extends Ability
 @export var hitscanTracer:PackedScene
 @export var impactVfx:PackedScene
 @export var gunRange:float = 3000
+@export var gunDamageCoeff:float = 2
+
+func _physics_process(delta: float) -> void:
+	super._physics_process(delta)
+	alignNodeWithShoulder($assist)
 
 func fireAction():
+	var aimAssist:Vector2 = ent.lookDirection
+	var sucker:Entity = ent.prioritize($assist.get_overlapping_areas())
+	if sucker: aimAssist = ent.shoulderPoint.global_position.direction_to(
+			sucker.shoulderPoint.global_position
+			)
+	
 	$gunshot.play()
-	var hit = ent.lineCastFromShoulder(ent.lookDirection, gunRange, false) #don't trigger hit effects
+	var hit = ent.lineCastFromShoulder(aimAssist, gunRange, false) #don't trigger hit effects
 	var tr = hitscanTracer.instantiate()
 	tr.global_position = ent.shoulderPoint.global_position
-	tr.setDirection(ent.lookDirection)
+	tr.setDirection(aimAssist)
 	tr.setRange(ent.shoulderPoint.global_position.distance_to(hit[\"pos\"]), 70)
 	get_tree().current_scene.add_child(tr)
 	if is_multiplayer_authority():
@@ -27,7 +38,7 @@ func fireAction():
 		var target:Entity = hit[\"entity\"] as Entity
 		if target and target.team != ent.team:
 			target.changeHealth.rpc(target.health, 
-				-ent.stat_baseDamage.val*2, ent.get_path())
+				-ent.stat_baseDamage.val*gunDamageCoeff, ent.get_path())
 
 @rpc(\"authority\", \"call_local\", \"reliable\")
 func doHitVfx(pos:Vector2) -> void:
@@ -59,3 +70,10 @@ process_mode = 4
 [node name="cooldown" type="Node" parent="stats"]
 script = ExtResource("4_f52xx")
 baseValue = 0.55
+
+[node name="assist" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 32
+
+[node name="shape" type="CollisionPolygon2D" parent="assist"]
+polygon = PackedVector2Array(0, 0, 1408, -192, 1408, 192)

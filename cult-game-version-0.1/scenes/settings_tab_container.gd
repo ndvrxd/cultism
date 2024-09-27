@@ -29,7 +29,8 @@ func _on_resolutions_item_selected(index: int) -> void:
 
 
 func _on_fullscreen_toggled(button_pressed) -> void:
-	if button_pressed == true:
-		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
-	else:
-		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
+	Fullscreen.setEnabled(button_pressed)
+
+
+func _on_fullscreen_draw() -> void:
+	$TabContainer/Grafics/MarginContainer/VBoxContainer/Fullscreen.button_pressed = Fullscreen.enabled

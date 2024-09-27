@@ -16,27 +16,22 @@ func attemptControl() -> void:
 		nav = NavigationAgent2D.new();
 		ent.add_child.call_deferred(nav)
 	#nav.debug_enabled = true;
-	ent.controllerAttached = true;
+	ent._controllerAttached = true;
 
-func findNewTarget(friendlyfire=false) -> Entity:
+func findNewTarget(_friendlyfire=false) -> Entity:
 	## stock aggro mechanics for all enemies
 	## don't call every frame
 	# maybe don't do this every time, maybe just cache valid targets
-	target = null;
-	var closest = INF;
-	var highestPriority = -INF;
-	var ents = get_tree().get_nodes_in_group("entity")
-	for i in ents:
+	var allEnts = get_tree().get_nodes_in_group("entity")
+	var valid:Array[Entity];
+	for i in allEnts:
 		if not i is Entity: continue
-		var e = i as Entity
-		nav.target_position = e.global_position;
-		if (e.team != ent.team or friendlyfire) and not e.team == 0:
-			var dist:float = ent.global_position.distance_to(e.global_position)
-			if dist < closest or e.aggroPriority > highestPriority: #nav.is_target_reachable() and dist < closest:
-				if dist < (ent.stat_aggroRange.val + e.stat_aggroNoise.val) and e.aggroPriority >= highestPriority:
-					target = e;
-					closest = dist;
-					highestPriority = e.aggroPriority
+		var e:Entity = i as Entity
+		var dist:float = ent.global_position.distance_to(e.global_position)
+		if dist < (ent.stat_aggroRange.val + e.stat_aggroNoise.val):
+			valid.append(e)
+	target = ent.prioritize(valid)
+	if target: nav.target_position = target.global_position;
 	return target;
 
 func updateIdlePathing():

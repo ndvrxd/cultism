@@ -31,6 +31,7 @@ texture_region_size = Vector2i(32, 32)
 resource_name = "water"
 texture = ExtResource("3_363jf")
 texture_region_size = Vector2i(32, 32)
+use_texture_padding = false
 1:0/0 = 0
 1:0/0/material = ExtResource("1_j860l")
 1:0/0/physics_layer_1/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)

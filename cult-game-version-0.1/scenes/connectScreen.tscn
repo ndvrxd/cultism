@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://bqn8v6gbnfj1u"]
+[gd_scene load_steps=18 format=3 uid="uid://bqn8v6gbnfj1u"]
 
 [ext_resource type="Script" path="res://scripts/menus/connectScreen.gd" id="1_bngj7"]
 [ext_resource type="Shader" uid="uid://dsj7wr5hf50yw" path="res://vfx/shaders/scroll_simple.tres" id="2_eu0g0"]
@@ -12,16 +12,22 @@
 [ext_resource type="Texture2D" uid="uid://dx7xpikedu613" path="res://art/character ph/lizer ph.png" id="7_m7alx"]
 [ext_resource type="Texture2D" uid="uid://cqrh7ndjucvg5" path="res://art/character ph/effigy ph.png" id="8_3ew3o"]
 [ext_resource type="Texture2D" uid="uid://684pxvrx2k8n" path="res://art/character ph/shadowdemon_body.png" id="8_4dw75"]
-[ext_resource type="Script" path="res://scripts/menus/connectScreenGrabFocus.gd" id="9_ucoia"]
+[ext_resource type="Texture2D" uid="uid://dsm2816pum58t" path="res://art/character ph/bombrun1.png" id="10_noj8f"]
 [ext_resource type="AudioStream" uid="uid://o46j6vbj5ncu" path="res://sound/music/aeiou.ogg" id="12_vledh"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_0gu1n"]
 shader = ExtResource("2_eu0g0")
-shader_parameter/direction = Vector2(0.1, 0)
+shader_parameter/direction = Vector2(0.05, 0)
 shader_parameter/Texture2DParameter = ExtResource("3_6nwss")
 
 [sub_resource type="LabelSettings" id="LabelSettings_yj1jt"]
 font_color = Color(1, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_1pvem"]
+font = ExtResource("2_ial8x")
+font_size = 56
+outline_size = 5
+outline_color = Color(0, 0, 0, 1)
 
 [node name="ConnectScreen" type="Control" node_paths=PackedStringArray("nameBox", "addressBox", "portBox", "errorMsg", "charBodySel")]
 layout_mode = 3
@@ -206,27 +212,39 @@ offset_right = 128.0
 offset_bottom = 219.0
 grow_horizontal = 2
 grow_vertical = 2
-item_count = 8
+item_count = 14
 fixed_icon_size = Vector2i(50, 50)
-item_0/text = "Bnuy"
-item_0/icon = ExtResource("2_rywp4")
-item_1/text = "kibby"
-item_1/icon = ExtResource("4_3m4t2")
-item_2/text = "Possum"
-item_2/icon = ExtResource("3_vst5a")
-item_3/text = "Lizer"
-item_3/icon = ExtResource("7_m7alx")
-item_3/disabled = true
-item_4/text = "enemy"
-item_4/icon = ExtResource("8_4dw75")
-item_5/text = "runner_enemy"
-item_5/icon = ExtResource("5_hl3gd")
-item_6/text = "player"
-item_6/icon = ExtResource("4_iac7p")
-item_6/disabled = true
-item_7/text = "test_effigy"
-item_7/icon = ExtResource("8_3ew3o")
-script = ExtResource("9_ucoia")
+item_0/text = "Fully playable characters"
+item_0/selectable = false
+item_1/text = "Bnuy"
+item_1/icon = ExtResource("2_rywp4")
+item_2/text = "kibby"
+item_2/icon = ExtResource("4_3m4t2")
+item_3/text = "Incomplete characters"
+item_3/selectable = false
+item_4/text = "Possum"
+item_4/icon = ExtResource("3_vst5a")
+item_5/text = "Lizer"
+item_5/icon = ExtResource("7_m7alx")
+item_5/disabled = true
+item_6/text = "Enemies"
+item_6/selectable = false
+item_7/text = "enemy"
+item_7/icon = ExtResource("8_4dw75")
+item_8/text = "runner_enemy"
+item_8/icon = ExtResource("10_noj8f")
+item_9/text = "Technical"
+item_9/selectable = false
+item_10/text = "test_effigy"
+item_10/icon = ExtResource("8_3ew3o")
+item_11/text = "Scrap"
+item_11/selectable = false
+item_12/text = "player"
+item_12/icon = ExtResource("4_iac7p")
+item_12/disabled = true
+item_13/text = "enemy_o"
+item_13/icon = ExtResource("5_hl3gd")
+item_13/disabled = true
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("12_vledh")
@@ -235,5 +253,31 @@ pitch_scale = 0.9
 autoplay = true
 bus = &"music"
 
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+offset_left = 19.0
+offset_top = 7.0
+offset_right = 617.0
+offset_bottom = 74.0
+text = "Let's call this a \"debug menu\""
+label_settings = SubResource("LabelSettings_1pvem")
+
+[node name="close" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 63.0
+offset_top = -100.0
+offset_right = 178.0
+offset_bottom = -57.0
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("2_ial8x")
+theme_override_font_sizes/font_size = 29
+text = "Exit Game"
+
 [connection signal="pressed" from="Control/VBoxContainer/CenterContainer/HBoxContainer4/Button" to="." method="onJoinClicked"]
 [connection signal="pressed" from="Control/VBoxContainer/CenterContainer/HBoxContainer4/Button2" to="." method="onCreateClicked"]
+[connection signal="ready" from="Panel2/ItemList" to="Panel2/ItemList" method="grab_focus"]
+[connection signal="ready" from="Panel2/ItemList" to="Panel2/ItemList" method="select" binds= [1]]
+[connection signal="pressed" from="close" to="." method="_on_close_pressed"]

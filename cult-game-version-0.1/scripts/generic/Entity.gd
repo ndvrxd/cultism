@@ -10,52 +10,106 @@ signal healed(amount:float, by:Entity)
 signal hit_landed(at:Vector2, normal:Vector2)
 signal killed(by:Entity)
 
+## The in-game name for this Entity.
 @export var entityName:String = "Entity";
+
+## The "faction" this entity belongs to. Used to prevent friendly fire & infighting.
+## Not automatically replicated across clients.
 @export var team:int = 0;
+
+## The resource path to the [PackedScene] this entity resides in.
+## Used when new clients request & replicate all Entities in the scene.
+## [br][b]Must be set for this Entity to function in multiplayer![/b]
 @export var objPath:String = ""
-@export var controllerPath:String = ""
+
+## The resource path to the [EntityController] this entity should be driven by,
+## if spawned as a non-player character.
+@export var controllerPath:String = "res://objects/controllers/basic_enemy_ai.tscn"
+
+## Quantifies how much attention this Entity should demand, or how much of a threat it poses.
+## Used in enemy aggro logic and aim assist. Directly affects [method Entity.prioritize].
 @export var aggroPriority:int = 0
+
+## The color of this Entity's health bar.[br][b]Note[/b]: Setting this property with code
+## does not automatically update the health bar's color.
 @export var healthBarColor:Color = Color.LIME_GREEN;
+
+## Disables the entity's movement completely. Not automatically replicated across clients.
 @export var frozen:bool = false
 
+## Indexed list of every [Ability] attached to this Entity.
 @export var abilities:Array[Ability] = []
+## Acts as a "registry" of state variables to be shared between every [Ability] on this Entity.
+## [br]Example: One [Ability] charges a meter on hit, the other [Ability] expends the meter to fire.
+## The state of the meter will be stored here, under an arbitrary name.
 var ability_vars:Dictionary = {}
 
-var controllerAttached:bool = false;
+var _controllerAttached:bool = false;
 
-var healthBar:TextureProgressBar
-var healthBarTimer:float = 0;
-var healthBarShakeTimer:float = 0;
+var _healthBar:TextureProgressBar
+var _healthBarTimer:float = 0;
+var _healthBarShakeTimer:float = 0;
  
-const damageNumberScn:PackedScene = preload("res://objects/damageNumber.tscn")
-const healthBarScn:PackedScene = preload("res://objects/healthBar.tscn")
+const _damageNumberScn:PackedScene = preload("res://objects/damageNumber.tscn")
+const _healthBarScn:PackedScene = preload("res://objects/healthBar.tscn")
 
+## The direction this entity intends to move.
+## The direction it actually moves is handled by movement code.
 var moveIntent:Vector2 = Vector2.ZERO;
-var lookDirection:Vector2 = Vector2.UP; #lookDirection is a Vector2, not an angle!
+
+## The direction this entity is looking, as a [Vector2], [b]not an angle.[/b]
+var lookDirection:Vector2 = Vector2.UP;
+
+## Where this entity's "cursor" is on the screen. Used for "place anywhere" [Ability]
+## moves on players and enemies alike. Does not necessarily dictate [member lookDirection].
 var aimPosition:Vector2 = Vector2.ZERO;
 
-#there is 100% a cleaner way to write this but right now i don't care to find it
-@onready var stat_maxHp:Stat = $stat_maxHp if has_node("stat_maxHp") \
-		else Stat.fromBase(100, "stat_maxHp", self) # both returns the Stat and adds it to the tree
-@onready var stat_speed:Stat = $stat_speed if has_node("stat_speed") \
-		else Stat.fromBase(400, "stat_speed", self)
-@onready var stat_accel:Stat = $stat_accel if has_node("stat_accel") \
-		else Stat.fromBase(8.5, "stat_accel", self)
-@onready var stat_regen:Stat = $stat_regen if has_node("stat_regen") \
-		else Stat.fromBase(0, "stat_regen", self)
-@onready var stat_aggroRange:Stat = $stat_aggroRange if has_node("stat_aggroRange") \
-		else Stat.fromBase(250, "stat_aggroRange", self)
-@onready var stat_aggroNoise:Stat = $stat_aggroNoise if has_node("stat_aggroNoise") \
-		else Stat.fromBase(0, "stat_aggroNoise", self)
-@onready var stat_swingSpeed:Stat = $stat_swingSpeed if has_node("stat_swingSpeed") \
-		else Stat.fromBase(1, "stat_swingSpeed", self)
-@onready var stat_baseDamage:Stat = $stat_baseDamage if has_node("stat_baseDamage") \
-		else Stat.fromBase(30, "stat_baseDamage", self)
+## How long it should take, in seconds, before this Entity begins to regenerate health.
+@export var regenDelay:float = 2
+var _regenTimer:float = 0
 
+## Reference to a child [Stat] node that dictates how much maximum health this Entity should have.
+## [br]Defaults to 100.
+@export var stat_maxHp:Stat = Stat.fromBase(100, "stat_maxHp", self)
+
+## Reference to a child [Stat] node that dictates how many pixels this Entity should move per second.
+## [br]Defaults to 400.
+@export var stat_speed:Stat = Stat.fromBase(400, "stat_speed", self)
+
+## Reference to a child [Stat] node that dictates what proportion of its top speed this Entity gains or loses per second.
+## [br]Defaults to 8.5 (850%).
+@export var stat_accel:Stat = Stat.fromBase(8.5, "stat_accel", self)
+
+## Reference to a child [Stat] node that dictates how much health this Entity should regain per second.
+## [br]Defaults to 0. Best used only on player characters.
+@export var stat_regen:Stat = Stat.fromBase(0, "stat_regen", self)
+
+## Reference to a child [Stat] node that dictates how far away this Entity should notice enemies.
+## [br]Used primarily in enemy aggro logic. Defaults to 250.
+@export var stat_aggroRange:Stat = Stat.fromBase(250, "stat_aggroRange", self)
+
+## Reference to a child [Stat] node that dictates how much further away this Entity is noticed by
+## enemies than their default range.
+## [br]Can be set to a negative number for "stealthy" characters. Defaults to 0.
+@export var stat_aggroNoise:Stat = Stat.fromBase(0, "stat_aggroNoise", self)
+
+## @experimental
+## Reference to a child [Stat] node that dictates how much damage this Entity should do,
+## before [Ability] damage calculations. [br]Defaults to 100.
+@export var stat_baseDamage:Stat = Stat.fromBase(30, "stat_baseDamage", self)
+
+## The current health that this entity has. Synced via [method changeHealth],
+## when invoked using [method Callable.rpc].
 var health:float = 1
-var regenTimer:float = 0
 
-var shoulderPoint:Node2D; # acts as the "eye level" of an entity
+## Reference to a [Node2D] that acts as the "eye level" of an entity.
+## This will always be a child [Node2D] named [code]shoulder[/code]. If it does not exist,
+## it will be created.
+## [br] This node's position is used to determine the height of name tags and health bars.
+var shoulderPoint:Node2D;
+## Reference to a [Node2D] that acts as the "foot point" of an entity.
+## This will always be a child [Node2D] named [code]feet[/code]. If it does not exist,
+## it will be created. This node is visually flipped based on [member lookDirection].
 var footPoint:Node2D;
 
 # Called when the node enters the scene tree for the first time.
@@ -74,18 +128,18 @@ func _ready() -> void:
 	# health bars only need to be shown in visible game windows
 	# otherwise, we don't need to instantiate or drive them
 	if !NetManager.IsDedicated():
-		var hbscn = healthBarScn.instantiate()
+		var hbscn = _healthBarScn.instantiate()
 		add_child(hbscn)
-		healthBar = hbscn.get_node("healthbar")
-		healthBar.position.y = (shoulderPoint.global_position.y - global_position.y) * 2
-		healthBar.tint_progress = healthBarColor
-		healthBar.visible = false;
+		_healthBar = hbscn.get_node("healthbar")
+		_healthBar.position.y = (shoulderPoint.global_position.y - global_position.y) * 2
+		_healthBar.tint_progress = healthBarColor
+		_healthBar.visible = false;
 	
 	# ensure any stat changes by child class are reflected,
 	# regardless of super._ready() being called before or after:
-	afterStatsSet.call_deferred()
+	_afterStatsSet.call_deferred()
 
-func afterStatsSet():
+func _afterStatsSet():
 	health = stat_maxHp.val
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -96,27 +150,27 @@ func _process(delta: float) -> void:
 	if footPoint: # visual look direction
 		footPoint.scale.x = 1 if lookDirection.x > 0 else -1
 		
-	if regenTimer > 0:
-		regenTimer -= delta
+	if _regenTimer > 0:
+		_regenTimer -= delta
 	else:
 		health = min(health + stat_regen.val * delta, stat_maxHp.val)
 	
 	#really, this should be an Animation of some kind
-	if healthBarTimer > 0 && !NetManager.IsDedicated():
-		if !healthBar.visible: healthBar.visible = true
-		healthBarTimer -= delta
-		healthBar.value = (health / stat_maxHp.val) * 100
-		if healthBarShakeTimer > 0:
-			var tc = healthBar.tint_under
-			if healthBarShakeTimer > 0.25 or (healthBarShakeTimer <= 0.25 and tc.r > 0.5):
-				healthBar.set_tint_under(Color(1-tc.r, 1-tc.g, 1-tc.b, tc.a))
-			healthBarShakeTimer -= delta
-			healthBar.rotation = sin(Time.get_unix_time_from_system()*70) * healthBarShakeTimer * 0.3
+	if _healthBarTimer > 0 && !NetManager.IsDedicated():
+		if !_healthBar.visible: _healthBar.visible = true
+		_healthBarTimer -= delta
+		_healthBar.value = (health / stat_maxHp.val) * 100
+		if _healthBarShakeTimer > 0:
+			var tc = _healthBar.tint_under
+			if _healthBarShakeTimer > 0.25 or (_healthBarShakeTimer <= 0.25 and tc.r > 0.5):
+				_healthBar.set_tint_under(Color(1-tc.r, 1-tc.g, 1-tc.b, tc.a))
+			_healthBarShakeTimer -= delta
+			_healthBar.rotation = sin(Time.get_unix_time_from_system()*70) * _healthBarShakeTimer * 0.3
 		else:
-			healthBar.rotation = 0;
-	elif healthBarTimer < 0:
-		healthBar.visible = false
-		healthBarTimer = 0
+			_healthBar.rotation = 0;
+	elif _healthBarTimer < 0:
+		_healthBar.visible = false
+		_healthBarTimer = 0
 
 func _physics_process(delta: float) -> void:
 	if !frozen:
@@ -130,7 +184,8 @@ func _physics_process(delta: float) -> void:
 	lookDirection = lookDirection.normalized();
 	# if a controller is attached that PROBABLY means our client has control over this bitch
 	# so we need to be the one to stream the movement
-	if controllerAttached: streamMovement.rpc(global_position, moveIntent,
+	# FIXME: PLEASE replace this with multiplayer authority
+	if _controllerAttached: streamMovement.rpc(global_position, moveIntent,
 									lookDirection, aimPosition)
 
 # what i'm thinking is that the authority for each entity
@@ -138,22 +193,32 @@ func _physics_process(delta: float) -> void:
 # Entity RPC calls from within itself so shit gets synced for everyone
 # from within a script that ISNT synced for everyone
 
-# static "spawn" method for all entities
-# use this instead of NetManager.spawnEntityRpc.rpc
-# exists to ensure network sync by determining the entity's name & nodepath clientside
+## Static "spawn" method for all entities.
+## Use this instead of [NetManager.spawnEntityRpc].
+## Exists to ensure network sync by determining the entity's name & nodepath clientside first.[br]
+## [br] If [param ctlPath] is specified, the entity will be spawned with the appropriate
+## [EntityController] instead of their default.
+## [br] If [param playerName] is specified, the Entity will be spawned as a player,
+## with the invoking client's(?) perspective controlling it.
 static func spawn(scnPath:String, pos:Vector2=Vector2.ZERO, ctlPath:String="", playerName:String=""):
 	var isPlayer:bool = false;
 	if playerName == "":
-		playerName = str(randi_range(0, 999999999999))
+		playerName = str(randi_range(0, 999999999999)) #fuck it
 	else:
 		ctlPath = NetManager.PLAYERCONTROLSOBJ
 		isPlayer = true;
 	NetManager.spawnEntityRpc.rpc(scnPath, pos, ctlPath, playerName, isPlayer) 
 
+## @experimental: Not currently used anywhere in code.
+## May need some bitwise logic later to manage team-based collision layers.
 @rpc("any_peer", "call_local", "reliable")
 func changeTeam(newTeam:int) -> void:
 	team = newTeam
 
+## RPC-decorated method to invoke an [Ability]. Invoke using [method Callable.rpc].
+## Requires an index for the [member abilities] array, and a boolean "pressed"
+## state for the [Ability], for whether or not it's being held down.
+## [param target] may be used to sync [member aimPosition] before firing.
 @rpc("any_peer", "call_local", "reliable")
 func setAbilityPressed(id:int, pressed:bool, target:Vector2=Vector2.ZERO):
 	if target != Vector2.ZERO:
@@ -161,64 +226,113 @@ func setAbilityPressed(id:int, pressed:bool, target:Vector2=Vector2.ZERO):
 	if id < abilities.size() and abilities[id] != null and is_instance_valid(abilities[id]):
 		abilities[id].press() if pressed else abilities[id].release()
 
+## @experimental: Does nothing. I fully intend to use this later, our current chatbox is placeholder.
 @rpc("any_peer", "call_local", "reliable")
 func chat(_msg:String) -> void:
-	pass #I FULLY INTEND TO USE THIS OUR CURRENT CHATBOX IS PLACEHOLDER
+	pass
 
+## RPC-decorated method used to damage or heal an entity. May be invoked by anyone
+## using [method Callable.rpc].
+## Needs the client's current subjective health of the Entity to ensure network sync.
+## Damage may be traced back to an inflicting Entity by its [NodePath].
 @rpc("any_peer", "call_local", "reliable")
-func changeHealth(current:float, by:float, inflictor:NodePath="") -> void:
-	# current health needs to be passed in to sync health between clients!
+func changeHealth(current:float, delta:float, inflictor:NodePath="") -> void:
 	health = current;
-	health += by;
-	healthBarTimer = 2;
+	health += delta;
+	_healthBarTimer = 2;
 	var opp = get_node(inflictor)
-	var dn:Node2D = damageNumberScn.instantiate()
-	dn.set_number(int(abs(by)))
+	var dn:Node2D = _damageNumberScn.instantiate()
+	dn.set_number(int(abs(delta)))
 	dn.global_position = shoulderPoint.global_position
 	get_tree().current_scene.add_child(dn)
-	if sign(by) == -1:
-		regenTimer = 2
-		damage_taken.emit(-by, opp)
+	if sign(delta) == -1:
+		_regenTimer = 2
+		damage_taken.emit(-delta, opp)
 		if team == 1: dn.set_color(Color.RED) #red is bad for players & allies
 		if opp != null:
-			opp.damage_dealt.emit(-by, self)
-		healthBarShakeTimer = 0.3
-	elif sign(by) == 1:
-		healed.emit(by, opp)
+			opp.damage_dealt.emit(-delta, self)
+		_healthBarShakeTimer = 0.3
+	elif sign(delta) == 1:
+		healed.emit(delta, opp)
 		dn.set_color(Color.GREEN)
 	else:
 		# when the host is syncing entity health for joining players,
 		# it'll pass in their current health with a delta of 0.
 		# this ensures every entity has the correct amount of health on all clients,
 		# from the very beginning of the game, or dropping in midway through.
-		# no healthbar needs to be shown for this
-		healthBarTimer = 0
+		# no _healthBar needs to be shown for this
+		_healthBarTimer = 0
 		#dn.queue_free()
 	if health <= 0:
 		health = 0
-		die(inflictor) # needs to be called on the clientside, since we're already in an RPC
+		kill(inflictor) # needs to be called on the clientside, since we're already in an RPC
 
+## @experimental: This method's behavior sorely needs an update.
+## RPC-decorated method to "kill" an entity.
+## At the moment, immediately removes the Entity from the scene,
+## preventing "on-death" effects from playing through as necessary.
+## [b]This will change in the future.[/b]
 @rpc("any_peer", "call_local", "reliable")
-func die(killedBy:NodePath="") -> void:
+func kill(killedBy:NodePath="") -> void:
 	killed.emit(get_node(killedBy))
 	queue_free() # ideally, play some effects on death
 
+## RPC-decorated method to stream an Entity's movement to other clients.
+## Set to [code]unreliable_ordered[/code] for efficiency.
 @rpc("any_peer", "call_remote", "unreliable_ordered")
 func streamMovement(pos:Vector2, intent:Vector2, lookDir:Vector2, aimPos:Vector2):
+	# TODO: NEEDS TO BE MADE AUTHORITY ONLY
 	global_position = pos;
 	moveIntent = intent.normalized();
 	lookDirection = lookDir.normalized();
 	aimPosition = aimPos;
 
+## @experimental
 @rpc("any_peer", "call_local", "reliable")
 func triggerHitEffectsRpc(at:Vector2, normal:Vector2=Vector2.ZERO) -> void:
 	hit_landed.emit(at, normal)
 
+## Prioritizes a set of other Entities based on their [member team], proximity &
+## [member aggroPriority]. [br]
+## [param ents] may be passed in as a collection of either [Entity], [CharacterBody2D], or
+## [Area2D], for ease of use with the 2 different types of collision box an Entity has.
+## If an item is invalid, it will be ignored. [br]
+## Returns a single Entity as a "recommendation" on who to attack.
+## Used for aim assist and enemy aggro logic.
+## @experimental: This should return [code]Array[Entity][/code] in the future.
+func prioritize(ents:Array) -> Entity:
+	var result:Entity = null;
+	var closest:float = INF
+	var highestPrio:int = -INF
+	
+	for hitbox:CollisionObject2D in ents:
+		
+		var candidate:Entity;
+		if hitbox is Entity:
+			candidate = hitbox as Entity
+		elif hitbox is Area2D:
+			candidate = hitbox.get_parent() as Entity
+		if not candidate or team == candidate.team or candidate.team == 0: continue
+		
+		var dist = global_position.distance_to(candidate.global_position)
+		var dir = shoulderPoint.global_position.direction_to(hitbox.global_position)
+		if candidate.aggroPriority > highestPrio:
+			highestPrio = candidate.aggroPriority
+			closest = dist
+			result = candidate
+		elif dist < closest and candidate.aggroPriority == highestPrio:
+			closest = dist
+			result = candidate
+			
+	return result;
+
+
+## hitscan. turns out shape/linecast in godot is tedious as fuck,
+## so i'm making a nice clean method for it instead.
+## returns the Entity hit, if any, the position hit, if any,
+## and the normal of the surface hit, if any.
 func lineCastFromShoulder(direction:Vector2, range:float, triggerHitEffects=true, friendlyFire = false) -> Dictionary:
-	# hitscan. turns out shape/linecast in godot is tedious as fuck,
-	# so i'm making a nice clean method for it instead.
-	# returns the Entity hit, if any, the position hit, if any,
-	# and the normal of the surface hit, if any.
+	
 	var endpoint:Vector2 = shoulderPoint.global_position + direction.normalized() * range
 	
 	var physics_query = PhysicsRayQueryParameters2D.create(

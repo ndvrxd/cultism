@@ -26,7 +26,6 @@ script = ExtResource("1_d40on")
 entityName = "Enemy"
 team = 2
 objPath = "res://objects/characters/enemy.tscn"
-controllerPath = "res://objects/controllers/basic_enemy_ai.tscn"
 healthBarColor = Color(1, 0.26, 0.26, 1)
 
 [node name="shoulder" type="Node2D" parent="."]
