@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://pr17s47egsv2"]
+[gd_scene load_steps=8 format=3 uid="uid://clj1vi8wsb3xq"]
 
 [ext_resource type="Script" path="res://scripts/generic/Entity.gd" id="1_kvvxe"]
 [ext_resource type="Texture2D" uid="uid://bdyllnybosvnm" path="res://art/character ph/poss ph.png" id="2_5mqqm"]
@@ -28,6 +28,10 @@ abilities = [NodePath("Sixshooter"), null, NodePath("Warp")]
 [node name="stat_regen" type="Node" parent="."]
 script = ExtResource("2_6ewo4")
 baseValue = 2.0
+
+[node name="stat_speed" type="Node" parent="."]
+script = ExtResource("2_6ewo4")
+baseValue = 400.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -23)

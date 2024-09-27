@@ -30,7 +30,6 @@ scale_curve = SubResource("CurveXYZTexture_50y75")
 
 [node name="SwordHit" type="GPUParticles2D" groups=["upright_sprite"]]
 z_index = 1
-emitting = false
 amount = 1
 process_material = SubResource("ParticleProcessMaterial_dnpfs")
 texture = ExtResource("1_3h0ar")

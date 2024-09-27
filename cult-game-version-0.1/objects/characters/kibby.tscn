@@ -19,6 +19,7 @@ collision_layer = 112
 collision_mask = 7
 script = ExtResource("1_jx1vv")
 entityName = "Kibby"
+team = 1
 objPath = "res://objects/characters/kibby.tscn"
 controllerPath = "res://objects/controllers/basic_enemy_ai.tscn"
 aggroPriority = 1
