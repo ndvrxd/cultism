@@ -140,7 +140,11 @@ func spawnEntityRpc(scnPath:String, pos:Vector2 = Vector2.ZERO, ctlPath:String="
 			if get_tree().current_scene.has_node(eName):
 				if is_instance_valid(get_tree().current_scene.get_node(eName)): return
 		var ebody:Entity = load(scnPath).instantiate();
+		get_tree().current_scene.add_child(ebody)
 		ebody.global_position = pos
+		#await ebody.ready # ready dddnever emits for some godforsaken reason
+		#print("ready")
+		await get_tree().create_timer(0.1).timeout #FIXME find a way around this
 		if eName != "":
 			ebody.name = eName;
 			if isPlayer:
@@ -149,25 +153,23 @@ func spawnEntityRpc(scnPath:String, pos:Vector2 = Vector2.ZERO, ctlPath:String="
 				# make sure that, subjectively, this node should be controlled by the invoking party
 				ebody.set_multiplayer_authority(id) 
 				if id != multiplayer.get_unique_id():
-					_addNametagToEntity.call_deferred(ebody)
-		get_tree().current_scene.add_child.call_deferred(ebody)
-		await ebody.ready
-		if id == multiplayer.get_unique_id():
+					var nametag = preload("res://objects/nameTag.tscn").instantiate();
+					ebody.add_child(nametag)
+					nametag.get_child(0).position.y = (ebody.shoulderPoint.global_position.y
+							- ebody.global_position.y) * 2.3
+					nametag.get_child(0).text = ebody.entityName
+		if is_multiplayer_authority():
 			var ectl:EntityController
 			if ctlPath != "":
 				ectl = load(ctlPath).instantiate();
 			elif ebody.controllerPath != "":
 				ectl = load(ebody.controllerPath).instantiate();
 			else: return
-			ebody.add_child.call_deferred(ectl)
-			#ectl.attemptControl.call_deferred();
+			ebody.add_child(ectl)
+			ectl.attemptControl.call_deferred();
 
 func _addNametagToEntity(ebody): # here so i can call this deferred clientside
 	await get_tree().create_timer(0.1).timeout
-	var nametag = preload("res://objects/nameTag.tscn").instantiate();
-	ebody.add_child(nametag)
-	nametag.get_child(0).position.y = (ebody.shoulderPoint.global_position.y - ebody.global_position.y) * 2.3
-	nametag.get_child(0).text = ebody.entityName
 
 # When the server decides to start the game from a UI scene,
 # do load_game.rpc(filepath)
