@@ -32,7 +32,7 @@ baseValue = 2.0
 
 [node name="stat_speed" type="Node" parent="."]
 script = ExtResource("2_6ewo4")
-baseValue = 400.0
+baseValue = 300.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -23)

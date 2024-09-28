@@ -50,17 +50,16 @@ func doHitFlash(pos:Vector2):
 	get_tree().current_scene.add_child(temp)
 "
 
-[node name="SwordStrikeStock" type="Node2D"]
+[node name="SwordStrikeStock" type="Node2D" node_paths=PackedStringArray("stat_cooldown")]
 script = SubResource("GDScript_ae2ol")
 ability_name = "Slash"
 ability_desc = "Swing your sword.
 Does decent damage, but can only hit
 up to 3 enemies in one swing."
 portrait = ExtResource("1_jydsv")
+stat_cooldown = NodePath("cooldown")
 
-[node name="stats" type="Node" parent="."]
-
-[node name="cooldown" type="Node" parent="stats"]
+[node name="cooldown" type="Node" parent="."]
 script = ExtResource("2_bti61")
 baseValue = 0.65
 
@@ -101,5 +100,6 @@ stream = ExtResource("5_q4vom")
 pitch_scale = 2.0
 bus = &"sfx"
 
+[connection signal="fired" from="." to="." method="fireAction"]
 [connection signal="fired" from="." to="shoulder/swordwoosh" method="restart"]
 [connection signal="fired" from="." to="sfx/whiff" method="play"]

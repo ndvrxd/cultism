@@ -67,7 +67,7 @@ scale_max = 5.0
 scale_curve = SubResource("CurveTexture_g25xu")
 alpha_curve = SubResource("CurveTexture_77unl")
 
-[node name="Starstruck" type="Node2D"]
+[node name="Starstruck" type="Node2D" node_paths=PackedStringArray("stat_cooldown")]
 script = SubResource("GDScript_0cxmo")
 ability_name = "Starstruck"
 ability_desc = "Rally all smaller enemies around you to your cause.
@@ -77,10 +77,9 @@ numbers!
 (Note: As Kibby, you draw more attention from enemies
 than any other character. Use this to your advantage!)"
 portrait = ExtResource("2_ok36r")
+stat_cooldown = NodePath("cooldown")
 
-[node name="stats" type="Node" parent="."]
-
-[node name="cooldown" type="Node" parent="stats"]
+[node name="cooldown" type="Node" parent="."]
 script = ExtResource("3_ae7nj")
 baseValue = 25.0
 

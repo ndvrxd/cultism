@@ -60,22 +60,20 @@ func _process(delta:float):
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ox3vf"]
 
-[node name="Warp" type="Node2D"]
+[node name="Warp" type="Node2D" node_paths=PackedStringArray("stat_cooldown", "stat_chargeTime")]
 script = SubResource("GDScript_5nsm2")
 ability_name = "Warp"
 ability_desc = "Charge to teleport anywhere on-screen (except into walls)."
 portrait = ExtResource("1_dwc2p")
+stat_cooldown = NodePath("cooldown")
 is_charged_ability = true
-block_other_abilities_while_charging = false
+stat_chargeTime = NodePath("chargeTime")
 
-[node name="stats" type="Node" parent="."]
-process_mode = 4
-
-[node name="chargeTime" type="Node" parent="stats"]
+[node name="chargeTime" type="Node" parent="."]
 script = ExtResource("1_2w6he")
 baseValue = 1.7
 
-[node name="cooldown" type="Node" parent="stats"]
+[node name="cooldown" type="Node" parent="."]
 script = ExtResource("1_2w6he")
 baseValue = 20.0
 

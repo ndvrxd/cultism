@@ -5,15 +5,14 @@
 [ext_resource type="Script" path="res://scripts/abstract/Stat.gd" id="3_tjhao"]
 [ext_resource type="AudioStream" uid="uid://rqtq3s0mkg0i" path="res://sound/pools/spookyghostboo.tres" id="4_aq0wx"]
 
-[node name="Spook" type="Node2D"]
+[node name="Spook" type="Node2D" node_paths=PackedStringArray("stat_cooldown")]
 script = ExtResource("1_643fo")
 ability_name = "Spook"
 ability_desc = "Boo!"
 portrait = ExtResource("2_qf5fx")
+stat_cooldown = NodePath("cooldown")
 
-[node name="stats" type="Node" parent="."]
-
-[node name="cooldown" type="Node" parent="stats"]
+[node name="cooldown" type="Node" parent="."]
 script = ExtResource("3_tjhao")
 baseValue = 1.5
 

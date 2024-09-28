@@ -71,11 +71,16 @@ scale_max = 1.3
 scale_curve = SubResource("CurveTexture_lruqc")
 alpha_curve = SubResource("CurveTexture_b3t4b")
 
-[node name="ShadowDemonMelee" type="Node2D"]
+[node name="ShadowDemonMelee" type="Node2D" node_paths=PackedStringArray("stat_cooldown")]
 script = SubResource("GDScript_kn5v2")
 ability_name = "Lunge"
 ability_desc = "Wind up, then deal 1x base damage."
 portrait = ExtResource("1_8sr3p")
+stat_cooldown = NodePath("cooldown")
+
+[node name="cooldown" type="Node" parent="."]
+script = ExtResource("4_65iks")
+baseValue = 1.5
 
 [node name="attack_delay" type="Timer" parent="."]
 wait_time = 0.4
@@ -113,8 +118,4 @@ one_shot = true
 visibility_rect = Rect2(-30, -70, 60, 100)
 local_coords = true
 
-[node name="stats" type="Node" parent="."]
-
-[node name="cooldown" type="Node" parent="stats"]
-script = ExtResource("4_65iks")
-baseValue = 1.5
+[connection signal="fired" from="." to="." method="fireAction"]

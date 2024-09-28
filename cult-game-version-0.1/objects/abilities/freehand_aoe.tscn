@@ -120,7 +120,7 @@ scale_curve = SubResource("CurveXYZTexture_0c56c")
 color_ramp = SubResource("GradientTexture1D_c3f5y")
 alpha_curve = SubResource("CurveTexture_4hul4")
 
-[node name="FreehandAoe" type="Node2D"]
+[node name="FreehandAoe" type="Node2D" node_paths=PackedStringArray("stat_cooldown", "stat_chargeTime")]
 position = Vector2(-4, 0)
 script = SubResource("GDScript_ts7ur")
 ability_name = "Smite"
@@ -128,19 +128,18 @@ ability_desc = "At full meter, allows you to call down an
 area-of-effect lightning strike anywhere
 on the screen."
 portrait = ExtResource("2_sp5od")
+stat_cooldown = NodePath("cooldown")
 is_charged_ability = true
+stat_chargeTime = NodePath("chargeTime")
 block_other_abilities_while_charging = false
 
-[node name="stats" type="Node" parent="."]
-process_mode = 4
-
-[node name="chargeTime" type="Node" parent="stats"]
-script = ExtResource("1_tixrr")
-baseValue = 0.2
-
-[node name="cooldown" type="Node" parent="stats"]
+[node name="cooldown" type="Node" parent="."]
 script = ExtResource("1_tixrr")
 baseValue = 0.1
+
+[node name="chargeTime" type="Node" parent="."]
+script = ExtResource("1_tixrr")
+baseValue = 0.2
 
 [node name="hitbox_disable" type="Timer" parent="."]
 wait_time = 0.2

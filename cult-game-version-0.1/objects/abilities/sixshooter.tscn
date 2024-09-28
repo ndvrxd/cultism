@@ -53,21 +53,19 @@ random_pitch = 1.15
 streams_count = 1
 stream_0/stream = ExtResource("2_1t3d5")
 
-[node name="Sixshooter" type="Node2D"]
+[node name="Sixshooter" type="Node2D" node_paths=PackedStringArray("stat_cooldown")]
 script = SubResource("GDScript_60bdx")
 hitscanTracer = ExtResource("1_nqjp1")
 impactVfx = ExtResource("2_jwvgl")
 ability_name = "Six Shooter"
 ability_desc = "Shoot your gun idk i haven't workshopped this yet"
 portrait = ExtResource("3_enrv8")
+stat_cooldown = NodePath("cooldown")
 
 [node name="gunshot" type="AudioStreamPlayer2D" parent="."]
 stream = SubResource("AudioStreamRandomizer_2uhqp")
 
-[node name="stats" type="Node" parent="."]
-process_mode = 4
-
-[node name="cooldown" type="Node" parent="stats"]
+[node name="cooldown" type="Node" parent="."]
 script = ExtResource("4_f52xx")
 baseValue = 0.55
 
@@ -77,3 +75,5 @@ collision_mask = 32
 
 [node name="shape" type="CollisionPolygon2D" parent="assist"]
 polygon = PackedVector2Array(0, 0, 1408, -192, 1408, 192)
+
+[connection signal="fired" from="." to="." method="fireAction"]

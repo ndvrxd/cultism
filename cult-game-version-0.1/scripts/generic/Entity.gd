@@ -64,11 +64,11 @@ var lookDirection:Vector2 = Vector2.UP;
 ## moves on players and enemies alike. Does not necessarily dictate [member lookDirection].
 var aimPosition:Vector2 = Vector2.ZERO;
 
-## How long it should take, in seconds, before this Entity begins to regenerate health.
+## How long it should take, in seconds, before this Entity begins to regenerate [member health].
 @export var regenDelay:float = 2
 var _regenTimer:float = 0
 
-## Reference to a child [Stat] node that dictates how much maximum health this Entity should have.
+## Reference to a child [Stat] node that dictates how much maximum [member health] this Entity should have.
 ## [br]Defaults to 100.
 @export var stat_maxHp:Stat = Stat.fromBase(100, "stat_maxHp", self)
 
@@ -105,7 +105,8 @@ var health:float = 1
 ## Reference to a [Node2D] that acts as the "eye level" of an entity.
 ## This will always be a child [Node2D] named [code]shoulder[/code]. If it does not exist,
 ## it will be created.
-## [br] This node's position is used to determine the height of name tags and health bars.
+## [br] This node's position is used to determine the height of name tags and health bars,
+## and its rotation corresponds to the [member lookDirection] of the Entity.
 var shoulderPoint:Node2D;
 ## Reference to a [Node2D] that acts as the "foot point" of an entity.
 ## This will always be a child [Node2D] named [code]feet[/code]. If it does not exist,
@@ -224,7 +225,7 @@ func setAbilityPressed(id:int, pressed:bool, target:Vector2=Vector2.ZERO):
 	if target != Vector2.ZERO:
 		aimPosition = target
 	if id < abilities.size() and abilities[id] != null and is_instance_valid(abilities[id]):
-		abilities[id].press() if pressed else abilities[id].release()
+		abilities[id]._press() if pressed else abilities[id]._release()
 
 ## @experimental: Does nothing. I fully intend to use this later, our current chatbox is placeholder.
 @rpc("any_peer", "call_local", "reliable")
@@ -392,6 +393,8 @@ func shapeCastFromShoulder(motion:Vector2, shape:Shape2D=null, triggerHitEffects
 				result.append(e)
 	return result;
 
+## Checks clientside for any [Interactable]s in range, and emits
+## [signal Interactable.interacted_with] for all clients on the first one found.
 func interact() -> Interactable:
 	# see above. why do i have to do this
 	var params:PhysicsShapeQueryParameters2D = PhysicsShapeQueryParameters2D.new()
@@ -413,6 +416,6 @@ func interact() -> Interactable:
 		var collider = i["collider"]
 		if collider is Interactable:
 			var intr = collider as Interactable
-			intr.trigger_interact_rpc.rpc(get_path())
+			intr._trigger_interact_rpc.rpc(get_path())
 			return intr
 	return null;

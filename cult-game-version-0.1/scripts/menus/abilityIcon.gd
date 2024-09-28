@@ -18,7 +18,7 @@ func set_ability(a:Ability) -> void:
 		
 func _process(_delta):
 	if ability and is_instance_valid(ability):
-		$icon_anchor/cooldown.visible = ability.isOnCooldown or ability.isCharging
+		$icon_anchor/cooldown.visible = !ability.isOffCooldown or ability.isCharging
 		if ability.isCharging:
 			$icon_anchor/cooldown.value = 1 - ability.chargeTimer / ability.stat_chargeTime.val
 		else:

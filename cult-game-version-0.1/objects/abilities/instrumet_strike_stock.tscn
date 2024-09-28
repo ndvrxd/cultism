@@ -79,7 +79,7 @@ func doHitFlash(pos:Vector2):
 	get_tree().current_scene.add_child(temp)
 "
 
-[node name="InstrumentStrikeStock" type="Node2D"]
+[node name="InstrumentStrikeStock" type="Node2D" node_paths=PackedStringArray("stat_cooldown")]
 script = SubResource("GDScript_ae2ol")
 ability_name = "Bludgeon"
 ability_desc = "Swing your guitar at enemies for blunt force damage.
@@ -88,6 +88,7 @@ but can easily mow down crowds of enemies.
 
 Successful hits with the guitar charge your meter."
 portrait = ExtResource("1_jbwos")
+stat_cooldown = NodePath("cooldown")
 
 [node name="m2readyloop" type="GPUParticles2D" parent="."]
 modulate = Color(0, 0.966667, 1, 1)
@@ -112,10 +113,7 @@ one_shot = true
 visibility_rect = Rect2(-25, -25, 50, 50)
 local_coords = true
 
-[node name="stats" type="Node" parent="."]
-process_mode = 4
-
-[node name="cooldown" type="Node" parent="stats"]
+[node name="cooldown" type="Node" parent="."]
 script = ExtResource("2_d34hl")
 baseValue = 0.9
 
@@ -178,6 +176,7 @@ tint_progress = Color(0.0352941, 1, 1, 1)
 [node name="hide_meter" type="Timer" parent="."]
 one_shot = true
 
+[connection signal="fired" from="." to="." method="fireAction"]
 [connection signal="fired" from="." to="shoulder/swordwoosh" method="restart"]
 [connection signal="fired" from="." to="sfx/whiff" method="play"]
 [connection signal="meter_charged" from="." to="m2readycue" method="restart"]
