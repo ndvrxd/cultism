@@ -27,7 +27,7 @@ func _ready():
 	if IsDedicated():
 		start_listen_server();
 
-func IsDedicated():
+func IsDedicated() -> bool:
 	return multiplayer.is_server() and (OS.has_feature("dedicated_server") or DisplayServer.get_name() == "headless")
 
 func join_game(address="localhost", port=24500):
@@ -48,6 +48,9 @@ func leave_game():
 	multiplayer.multiplayer_peer.close()
 	get_tree().change_scene_to_file("res://scenes/connectScreen.tscn")
 
+## Tries to kick a connected peer as the server.
+## The client can ignore this, but they will be disconnected
+## forcefully anyway - this method just gives them a chance to know why.
 @rpc("authority", "call_remote", "reliable")
 func kick_rpc(reason:String = "No reason given"):
 	leave_game()
@@ -147,8 +150,6 @@ func spawnEntityRpc(scnPath:String, pos:Vector2 = Vector2.ZERO, ctlPath:String="
 			if isPlayer:
 				ebody.entityName = eName;
 				ebody.changeTeam(1); # set to "allies" team
-				# make sure that, subjectively, this node should be controlled by the invoking party
-				ebody.set_multiplayer_authority(id) 
 				if id != multiplayer.get_unique_id():
 					var nametag = preload("res://objects/nameTag.tscn").instantiate();
 					ebody.add_child(nametag)
@@ -156,6 +157,9 @@ func spawnEntityRpc(scnPath:String, pos:Vector2 = Vector2.ZERO, ctlPath:String="
 							- ebody.global_position.y) * 2.3
 					nametag.get_child(0).text = ebody.entityName
 		if id == multiplayer.get_unique_id():
+			# make sure that, subjectively, this node should be controlled by the invoking party
+			# if we're the one spawning it, we should control it
+			ebody.set_multiplayer_authority(id) 
 			var ectl:EntityController
 			if ctlPath != "":
 				ectl = load(ctlPath).instantiate();
@@ -163,10 +167,6 @@ func spawnEntityRpc(scnPath:String, pos:Vector2 = Vector2.ZERO, ctlPath:String="
 				ectl = load(ebody.controllerPath).instantiate();
 			else: return
 			ebody.add_child(ectl)
-			ectl.attemptControl.call_deferred();
-
-func _addNametagToEntity(ebody): # here so i can call this deferred clientside
-	await get_tree().create_timer(0.1).timeout
 
 # When the server decides to start the game from a UI scene,
 # do load_game.rpc(filepath)
@@ -199,14 +199,13 @@ func onPlayerDisconnect(id): # all clients, NOT JUST server
 	player_disconnected.emit(id)
 
 func onConnectionSuccess(): # clientside only
+	var peer_id = multiplayer.get_unique_id()
 	if !IsDedicated():
-		var peer_id = multiplayer.get_unique_id()
 		players[peer_id] = playerinfo_local
-		player_connected.emit(peer_id, playerinfo_local)
+	player_connected.emit(peer_id, playerinfo_local)
 
 func onConnectionFailed(): # clientside only
 	leave_game()
-	
 	setDisconnectMessage("Dropped from server.");
 
 func onServerDisconnect(): # clientside only
