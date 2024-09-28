@@ -3,7 +3,7 @@
 [ext_resource type="Material" uid="uid://ck8ixyuqbmu4n" path="res://vfx/particle/processmaterial/burst.tres" id="1_aeqxh"]
 [ext_resource type="Texture2D" uid="uid://brlqerolroesd" path="res://vfx/particle/lightflare.png" id="2_j4wxc"]
 
-[node name="WololoFlash" type="GPUParticles2D" groups=["upright_sprite"]]
+[node name="WololoFlash" type="GPUParticles2D"]
 modulate = Color(1, 0.6, 0.94, 1)
 z_index = 1
 scale = Vector2(2, 2)

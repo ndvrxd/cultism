@@ -30,7 +30,7 @@ func turnEnemy(path:NodePath) -> void:
 	if not target or target.team == ent.team or target.aggroPriority > 1: return
 	#TODO make this a debuff when those are in
 	target.modulate = Color.CORNFLOWER_BLUE
-	target.team = ent.team
+	target.changeTeam(ent.team)
 	#\"applied\" vfx - again, move this to the debuff when debuffs are in
 	var temp:Node2D = wololoHitFx.instantiate()
 	temp.global_position = target.shoulderPoint.global_position

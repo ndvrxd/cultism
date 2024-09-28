@@ -50,7 +50,7 @@ height = 146.0
 [node name="test effigy" type="CharacterBody2D" node_paths=PackedStringArray("stat_maxHp", "stat_speed", "stat_regen")]
 y_sort_enabled = true
 collision_layer = 113
-collision_mask = 36
+collision_mask = 4
 motion_mode = 1
 script = ExtResource("1_bfdly")
 entityName = "Effigy"

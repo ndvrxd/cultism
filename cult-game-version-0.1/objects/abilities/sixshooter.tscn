@@ -1,62 +1,22 @@
 [gd_scene load_steps=8 format=3 uid="uid://c7m3igog3rlis"]
 
+[ext_resource type="Script" path="res://scripts/ability-generic/pistol_generic.gd" id="1_hsxrh"]
 [ext_resource type="PackedScene" uid="uid://1uajbkc46q8k" path="res://vfx/objects/hitscan_fx.tscn" id="1_nqjp1"]
 [ext_resource type="AudioStream" uid="uid://b2h08kwrqs8ax" path="res://sound/fx/gunshot.mp3" id="2_1t3d5"]
 [ext_resource type="PackedScene" uid="uid://c1luyms3v2wv5" path="res://vfx/objects/sword_hit.tscn" id="2_jwvgl"]
 [ext_resource type="Texture2D" uid="uid://b8uotdxr13iyg" path="res://art/ui/attack.png" id="3_enrv8"]
 [ext_resource type="Script" path="res://scripts/abstract/Stat.gd" id="4_f52xx"]
 
-[sub_resource type="GDScript" id="GDScript_60bdx"]
-script/source = "extends Ability
-
-@export var hitscanTracer:PackedScene
-@export var impactVfx:PackedScene
-@export var gunRange:float = 3000
-@export var gunDamageCoeff:float = 2
-
-func _physics_process(delta: float) -> void:
-	super._physics_process(delta)
-	alignNodeWithShoulder($assist)
-
-func fireAction():
-	var aimAssist:Vector2 = ent.lookDirection
-	var sucker:Entity = ent.prioritize($assist.get_overlapping_areas())
-	if sucker: aimAssist = ent.shoulderPoint.global_position.direction_to(
-			sucker.shoulderPoint.global_position
-			)
-	
-	$gunshot.play()
-	var hit = ent.lineCastFromShoulder(aimAssist, gunRange, false) #don't trigger hit effects
-	var tr = hitscanTracer.instantiate()
-	tr.global_position = ent.shoulderPoint.global_position
-	tr.setDirection(aimAssist)
-	tr.setRange(ent.shoulderPoint.global_position.distance_to(hit[\"pos\"]), 70)
-	get_tree().current_scene.add_child(tr)
-	if is_multiplayer_authority():
-		if hit[\"pos\"] != Vector2.ZERO:
-			doHitVfx.rpc(hit[\"pos\"])
-		var target:Entity = hit[\"entity\"] as Entity
-		if target and target.team != ent.team:
-			target.changeHealth.rpc(target.health, 
-				-ent.stat_baseDamage.val*gunDamageCoeff, ent.get_path())
-
-@rpc(\"authority\", \"call_local\", \"reliable\")
-func doHitVfx(pos:Vector2) -> void:
-	var temp = impactVfx.instantiate()
-	temp.global_position = pos
-	temp.modulate = Color.GOLD
-	get_tree().current_scene.add_child(temp)
-"
-
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_2uhqp"]
 random_pitch = 1.15
 streams_count = 1
 stream_0/stream = ExtResource("2_1t3d5")
 
-[node name="Sixshooter" type="Node2D" node_paths=PackedStringArray("stat_cooldown")]
-script = SubResource("GDScript_60bdx")
+[node name="Sixshooter" type="Node2D" node_paths=PackedStringArray("aimAssistZone", "stat_cooldown")]
+script = ExtResource("1_hsxrh")
 hitscanTracer = ExtResource("1_nqjp1")
 impactVfx = ExtResource("2_jwvgl")
+aimAssistZone = NodePath("assist")
 ability_name = "Six Shooter"
 ability_desc = "Shoot your gun idk i haven't workshopped this yet"
 portrait = ExtResource("3_enrv8")
@@ -77,3 +37,4 @@ collision_mask = 32
 polygon = PackedVector2Array(0, 0, 1408, -192, 1408, 192)
 
 [connection signal="fired" from="." to="." method="fireAction"]
+[connection signal="fired" from="." to="gunshot" method="play"]

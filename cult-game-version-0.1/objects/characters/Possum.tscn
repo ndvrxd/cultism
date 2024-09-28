@@ -13,7 +13,7 @@ radius = 23.1948
 radius = 5.74163
 height = 21.0526
 
-[node name="Possum" type="CharacterBody2D" node_paths=PackedStringArray("abilities", "stat_speed", "stat_regen")]
+[node name="Possum" type="CharacterBody2D" node_paths=PackedStringArray("abilities", "stat_speed", "stat_regen", "stat_baseDamage")]
 collision_layer = 112
 collision_mask = 7
 script = ExtResource("1_kvvxe")
@@ -23,6 +23,7 @@ objPath = "res://objects/characters/Possum.tscn"
 abilities = [NodePath("Sixshooter"), null, NodePath("Warp")]
 stat_speed = NodePath("stat_speed")
 stat_regen = NodePath("stat_regen")
+stat_baseDamage = NodePath("damage")
 
 [node name="Sixshooter" parent="." instance=ExtResource("2_nhaul")]
 
@@ -58,3 +59,7 @@ position = Vector2(5.96046e-08, -10.3349)
 shape = SubResource("CapsuleShape2D_esllf")
 
 [node name="Warp" parent="." instance=ExtResource("5_8slmk")]
+
+[node name="damage" type="Node" parent="."]
+script = ExtResource("2_6ewo4")
+baseValue = 20.0

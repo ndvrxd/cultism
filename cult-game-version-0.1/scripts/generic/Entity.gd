@@ -13,8 +13,8 @@ signal killed(by:Entity)
 ## The in-game name for this Entity.
 @export var entityName:String = "Entity";
 
-## The "faction" this entity belongs to. Used to prevent friendly fire & infighting.
-## Not automatically replicated across clients.
+## The "faction" this entity belongs to. Used to prevent friendly fire & infighting. [br]
+## [b]Do not change this property directly with code. Use [method changeTeam] instead.[/b]
 @export var team:int = 0;
 
 ## The resource path to the [PackedScene] this entity resides in.
@@ -210,10 +210,27 @@ static func spawn(scnPath:String, pos:Vector2=Vector2.ZERO, ctlPath:String="", p
 		isPlayer = true;
 	NetManager.spawnEntityRpc.rpc(scnPath, pos, ctlPath, playerName, isPlayer) 
 
-## @experimental: Not currently used anywhere in code.
-## May need some bitwise logic later to manage team-based collision layers.
+## RPC-decorated method to change the entity's faction. Use this instead of
+## setting [member team] with code. Sets the Entity's collision layers to the
+## appropriate ones for their team, and may be used to reliably replicate
+## the change across clients (though, so far, it typically isn't.)
+## @experimental: The RPC decorator may be removed later down the line, once status conditions are implemented.
 @rpc("any_peer", "call_local", "reliable")
 func changeTeam(newTeam:int) -> void:
+	var foo:Array[Node] = find_children("*", "Area2D", false)
+	var hitbox:Area2D = null if foo.is_empty() else (foo[0] as Area2D)
+	# flip the appropriate bit off for our current team
+	collision_layer = collision_layer ^ 32 << team
+	# set the appropriate bits for new team
+	# (32, for all characters, as well as 32 << newTeam for factions)
+	# (layer 6, bit 32, should pretty much always be set)
+	var newBits:int = (32 | (32 << newTeam))
+	collision_layer |= newBits
+	hitbox.collision_layer = newBits # completely replace collision layer for hurtbox
+	# make sure if they were meant to collide with teammates before, they still do that(?)
+	if collision_mask & (32 << team):
+		collision_mask = collision_mask ^ (32 << team)
+		collision_mask |= 32 << newTeam
 	team = newTeam
 
 ## RPC-decorated method to invoke an [Ability]. Primarily used within [EntityController]s.
@@ -359,7 +376,7 @@ func lineCastFromShoulder(direction:Vector2, range:float, triggerHitEffects=true
 			"pos": Vector2.ZERO,
 			"normal": Vector2.ZERO
 		} #all this may not be necessary
-	if triggerHitEffects:
+	if triggerHitEffects and is_multiplayer_authority():
 		triggerHitEffectsRpc.rpc(hit["position"], hit["normal"])
 	return {
 		"entity": hit["collider"].get_parent() as Entity,

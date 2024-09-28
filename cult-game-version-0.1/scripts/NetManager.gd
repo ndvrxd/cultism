@@ -129,7 +129,7 @@ func spawnEntityRpc(scnPath:String, pos:Vector2 = Vector2.ZERO, ctlPath:String="
 			ebody.name = eName;
 			if isPlayer:
 				ebody.entityName = eName;
-				ebody.team = 1;
+				ebody.changeTeam(1); # set to "allies" team
 				if id != multiplayer.get_unique_id():
 					addNametagToEntity.call_deferred(ebody)
 		get_tree().current_scene.add_child.call_deferred(ebody)
