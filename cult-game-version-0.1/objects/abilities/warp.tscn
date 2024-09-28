@@ -85,7 +85,6 @@ rotation = -1.5708
 mesh = SubResource("QuadMesh_c26lm")
 
 [node name="sigil2" type="Node2D" parent="."]
-visible = false
 modulate = Color(0.964706, 0.470588, 1, 1)
 z_index = -1
 texture_filter = 1
@@ -103,7 +102,6 @@ texture = ExtResource("5_rptaw")
 [node name="detach" type="Node" parent="."]
 
 [node name="reticle" type="Node2D" parent="detach"]
-visible = false
 
 [node name="walltest" type="Area2D" parent="detach/reticle"]
 collision_layer = 0
@@ -132,6 +130,7 @@ texture = ExtResource("5_rptaw")
 [connection signal="pressed" from="." to="sigil2" method="set_visible" binds= [true]]
 [connection signal="pressed" from="." to="detach/reticle" method="set_visible" binds= [true]]
 [connection signal="pressed" from="." to="detach/reticle/sigil/outer" method="set_visible" binds= [false]]
+[connection signal="ready" from="." to="length/tell" method="set_visible" binds= [false]]
 [connection signal="ready" from="." to="sigil2" method="set_visible" binds= [false]]
 [connection signal="ready" from="." to="detach/reticle" method="set_visible" binds= [false]]
 [connection signal="released" from="." to="length/tell" method="set_visible" binds= [false]]

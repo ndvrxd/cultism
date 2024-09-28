@@ -226,7 +226,7 @@ func changeTeam(newTeam:int) -> void:
 	# (layer 6, bit 32, should pretty much always be set)
 	var newBits:int = (32 | (32 << newTeam))
 	collision_layer |= newBits
-	hitbox.collision_layer = newBits # completely replace collision layer for hurtbox
+	if hitbox: hitbox.collision_layer = newBits # completely replace collision layer for hurtbox
 	# make sure if they were meant to collide with teammates before, they still do that(?)
 	if collision_mask & (32 << team):
 		collision_mask = collision_mask ^ (32 << team)

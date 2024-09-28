@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://dvy5sraal3n12"]
+[gd_scene load_steps=27 format=3 uid="uid://dvy5sraal3n12"]
 
 [ext_resource type="Script" path="res://scripts/abstract/Stat.gd" id="1_tixrr"]
 [ext_resource type="Texture2D" uid="uid://r7ajt3aoays7" path="res://art/ui/ability_icons/lightning2.png" id="2_sp5od"]
@@ -21,6 +21,8 @@ func _process(delta:float)->void:
 	if isCharging or isCharged:
 		$detach/reticle.global_position = ent.aimPosition
 		$detach/reticle/meter.value = ent.ability_vars.get(\"lightning_meter\", 0)
+		if not isCharging and ent.ability_vars.get(\"lightning_meter\", 0) >= 1:
+			$detach/reticle/ready.emitting = true
 		
 func _on_charged() -> void:
 	if ent.ability_vars.get(\"lightning_meter\", 0) >= 1:
@@ -31,8 +33,15 @@ func _on_aoe_body_entered(body: Node2D) -> void:
 	if not target or !is_multiplayer_authority(): return
 	if target.team != ent.team:
 		ent.triggerHitEffectsRpc.rpc(target.shoulderPoint.global_position)
+		# damage falloff - full damage < 100 px, 1/2 damage 200 px, 1/3 damage 300 px, so on
+		# if overlapping with the fulldamage Area2D, apply full damage no matter what -
+		# this is for enemies with large hitboxes who may still be directly hit but
+		# technically \"further away\" from the point of contact otherwise
+		var dist:float = 0
+		if not body in $detach/aoe/fulldamage.get_overlapping_bodies():
+			dist = global_position.distance_to(target.global_position)
 		target.changeHealth.rpc(target.health,
-			-ent.stat_baseDamage.val*1.2, ent.get_path())
+			-ent.stat_baseDamage.val*2.5/max(1,dist/100), ent.get_path())
 
 func _on_fired() -> void:
 	$detach/aoe.position = ent.aimPosition
@@ -120,6 +129,8 @@ scale_curve = SubResource("CurveXYZTexture_0c56c")
 color_ramp = SubResource("GradientTexture1D_c3f5y")
 alpha_curve = SubResource("CurveTexture_4hul4")
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_blhv4"]
+
 [node name="FreehandAoe" type="Node2D" node_paths=PackedStringArray("stat_cooldown", "stat_chargeTime")]
 position = Vector2(-4, 0)
 script = SubResource("GDScript_ts7ur")
@@ -202,6 +213,13 @@ local_coords = true
 
 [node name="sfx" type="AudioStreamPlayer2D" parent="detach/aoe"]
 stream = ExtResource("5_xgsmf")
+
+[node name="fulldamage" type="Area2D" parent="detach/aoe"]
+collision_layer = 4
+collision_mask = 32
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="detach/aoe/fulldamage"]
+shape = SubResource("CircleShape2D_blhv4")
 
 [node name="reticle" type="Node2D" parent="detach"]
 process_mode = 4
