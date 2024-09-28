@@ -1,7 +1,8 @@
 class_name Ability extends Node2D
 ## Base class for actions that an [Entity] can perform. [br]
 ## Most often referenced using [member Entity.abilities] and
-## [method Entity.setAbilityPressed]. [br][br]
+## [method Entity.setAbilityPressed]. [br]
+## Invoked primarily by [EntityController]s. [br][br]
 ## When making a new Ability, make use of the parent class's provided signals: [br]
 ## - [signal fired][br]- [signal pressed][br]- [signal charged][br]
 ## - [signal released][br]- [signal offCooldown]

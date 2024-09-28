@@ -195,7 +195,7 @@ func _physics_process(delta: float) -> void:
 # from within a script that ISNT synced for everyone
 
 ## Static "spawn" method for all entities.
-## Use this instead of [NetManager.spawnEntityRpc].
+## Use this instead of [method NetManager.spawnEntityRpc].
 ## Exists to ensure network sync by determining the entity's name & nodepath clientside first.[br]
 ## [br] If [param ctlPath] is specified, the entity will be spawned with the appropriate
 ## [EntityController] instead of their default.
@@ -216,7 +216,8 @@ static func spawn(scnPath:String, pos:Vector2=Vector2.ZERO, ctlPath:String="", p
 func changeTeam(newTeam:int) -> void:
 	team = newTeam
 
-## RPC-decorated method to invoke an [Ability]. Invoke using [method Callable.rpc].
+## RPC-decorated method to invoke an [Ability]. Primarily used within [EntityController]s.
+## Invoke using [method Callable.rpc]. [br]
 ## Requires an index for the [member abilities] array, and a boolean "pressed"
 ## state for the [Ability], for whether or not it's being held down.
 ## [param target] may be used to sync [member aimPosition] before firing.

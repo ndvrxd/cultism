@@ -70,7 +70,7 @@ func _mp_sync_rpc(base:float, baseadd:float, mult:float, multadd:float, add:floa
 ## need to exist in the [SceneTree] to work, but in most cases, it will still
 ## be in the tree. For this, use [param nodeName] and [param parent]
 ## to save the trouble of using [member Node.name] and [method Node.add_child] on separate lines.
-## [br][br][b]This can be used inline for fields decorated with [annotation @GDscript.@export]![/b]
+## [br][br][b]This can be used inline for fields decorated with [annotation @GDScript.@export]![/b]
 static func fromBase(base:float, nodeName:String="", parent:Node=null) -> Stat:
 	var newStat:Stat = Stat.new()
 	newStat.setBase.call_deferred(base)
