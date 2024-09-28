@@ -12,6 +12,7 @@ func attemptControl() -> void:
 	var parent = get_parent();
 	if not parent is Entity: return
 	ent = parent
+	set_multiplayer_authority(ent.get_multiplayer_authority())
 	if nav == null or not ent.is_ancestor_of(nav):
 		nav = NavigationAgent2D.new();
 		ent.add_child.call_deferred(nav)

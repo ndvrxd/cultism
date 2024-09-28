@@ -125,6 +125,12 @@ func _ready() -> void:
 		shoulderPoint = temp;
 	
 	footPoint = $feet if has_node("feet") else Node2D.new();
+	
+	# create a "projectiles" node for all of this entity's projectiles to be kept under
+	if !has_node("projectiles"):
+		var temp = Node.new();
+		temp.name = "projectiles"
+		add_child(temp)
 		
 	# health bars only need to be shown in visible game windows
 	# otherwise, we don't need to instantiate or drive them
@@ -238,7 +244,7 @@ func changeTeam(newTeam:int) -> void:
 ## Requires an index for the [member abilities] array, and a boolean "pressed"
 ## state for the [Ability], for whether or not it's being held down.
 ## [param target] may be used to sync [member aimPosition] before firing.
-@rpc("any_peer", "call_local", "reliable")
+@rpc("authority", "call_local", "reliable")
 func setAbilityPressed(id:int, pressed:bool, target:Vector2=Vector2.ZERO):
 	if target != Vector2.ZERO:
 		aimPosition = target
@@ -246,7 +252,7 @@ func setAbilityPressed(id:int, pressed:bool, target:Vector2=Vector2.ZERO):
 		abilities[id]._press() if pressed else abilities[id]._release()
 
 ## @experimental: Does nothing. I fully intend to use this later, our current chatbox is placeholder.
-@rpc("any_peer", "call_local", "reliable")
+@rpc("authority", "call_local", "reliable")
 func chat(_msg:String) -> void:
 	pass
 
@@ -291,14 +297,14 @@ func changeHealth(current:float, delta:float, inflictor:NodePath="") -> void:
 ## At the moment, immediately removes the Entity from the scene,
 ## preventing "on-death" effects from playing through as necessary.
 ## [b]This will change in the future.[/b]
-@rpc("any_peer", "call_local", "reliable")
+@rpc("authority", "call_local", "reliable")
 func kill(killedBy:NodePath="") -> void:
 	killed.emit(get_node(killedBy))
 	queue_free() # ideally, play some effects on death
 
 ## RPC-decorated method to stream an Entity's movement to other clients.
 ## Set to [code]unreliable_ordered[/code] for efficiency.
-@rpc("any_peer", "call_remote", "unreliable_ordered")
+@rpc("authority", "call_remote", "unreliable_ordered")
 func streamMovement(pos:Vector2, intent:Vector2, lookDir:Vector2, aimPos:Vector2):
 	# TODO: NEEDS TO BE MADE AUTHORITY ONLY
 	global_position = pos;
@@ -307,7 +313,7 @@ func streamMovement(pos:Vector2, intent:Vector2, lookDir:Vector2, aimPos:Vector2
 	aimPosition = aimPos;
 
 ## @experimental
-@rpc("any_peer", "call_local", "reliable")
+@rpc("authority", "call_local", "reliable")
 func triggerHitEffectsRpc(at:Vector2, normal:Vector2=Vector2.ZERO) -> void:
 	hit_landed.emit(at, normal)
 

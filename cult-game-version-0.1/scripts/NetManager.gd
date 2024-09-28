@@ -79,6 +79,11 @@ func setDisconnectMessage(reason):
 	print("Disconnected: " + reason)
 	connection_refused.emit(reason)
 
+## Called by [b]every peer[/b] when a new player joins.
+## Each peer uses [method Callable.rpc_id] to send their player
+## data specifically to the newly connected client.
+## This method then runs on the connecting client's side for every
+## other connected peer.
 @rpc("any_peer", "reliable", "call_local")
 func recvPeerInfoCallback(new_player_info):
 	var new_player_id = multiplayer.get_remote_sender_id()
@@ -101,21 +106,32 @@ func recvPeerInfoCallback(new_player_info):
 	players[new_player_id] = new_player_info
 	player_connected.emit(new_player_id, new_player_info)
 
+## Called by newly connected clients to request every [Entity] from the server.
+## The server calls [method spawnEntityRpc] for specifically that client,
+## placing a copy of every (server subjective) [Entity] into their game, with the
+## same [NodePath] to ensure network sync.
 @rpc("any_peer", "call_remote", "reliable")
 func askForEntities():
-	var id = multiplayer.get_remote_sender_id()
+	# this runs basically only as the server
 	if multiplayer.is_server():
+		var id = multiplayer.get_remote_sender_id() #id of requesting client
+		# try to send the requesting client commands to spawn
+		# every entity that currently exists
 		var ents = get_tree().get_nodes_in_group("entity")
 		for i in ents:
 			if not i is Entity: continue
 			var e = i as Entity
+			# if this entity's node name is the same as its in-game name,
+			# assume it's a player. this is stupid and dumb but theres no other
+			# indication on our end
 			spawnEntityRpc.rpc_id(id, e.objPath, e.global_position, "", e.name,
-				e.name == e.entityName); # very stupid bandaid fix this is BAD.
-				# this only nametags an entity & considers it a player if the
-				# node name is the same as the entity name.
-				# i really need to do some cleanup around here
+				e.name == e.entityName);
 			e.changeHealth.rpc_id(id, e.health, 0) # sync enemy health when player joins
 
+## RPC-decorated method to spawn an [Entity] into someone else's game. [br]
+## [b]In general, DO NOT use this to spawn entities.[\b] Instead, use
+## the static method [method Entity.spawn], which determines the [NodePath]
+## of the newly spawned entity [i]clientside[/i] before sending the RPC call.
 @rpc("any_peer", "call_local", "reliable")
 func spawnEntityRpc(scnPath:String, pos:Vector2 = Vector2.ZERO, ctlPath:String="", eName:String="", isPlayer=false):
 	var id = multiplayer.get_remote_sender_id()
@@ -130,9 +146,12 @@ func spawnEntityRpc(scnPath:String, pos:Vector2 = Vector2.ZERO, ctlPath:String="
 			if isPlayer:
 				ebody.entityName = eName;
 				ebody.changeTeam(1); # set to "allies" team
+				# make sure that, subjectively, this node should be controlled by the invoking party
+				ebody.set_multiplayer_authority(id) 
 				if id != multiplayer.get_unique_id():
-					addNametagToEntity.call_deferred(ebody)
+					_addNametagToEntity.call_deferred(ebody)
 		get_tree().current_scene.add_child.call_deferred(ebody)
+		await ebody.ready
 		if id == multiplayer.get_unique_id():
 			var ectl:EntityController
 			if ctlPath != "":
@@ -143,7 +162,7 @@ func spawnEntityRpc(scnPath:String, pos:Vector2 = Vector2.ZERO, ctlPath:String="
 			ebody.add_child.call_deferred(ectl)
 			#ectl.attemptControl.call_deferred();
 
-func addNametagToEntity(ebody): # here so i can call this deferred clientside
+func _addNametagToEntity(ebody): # here so i can call this deferred clientside
 	await get_tree().create_timer(0.1).timeout
 	var nametag = preload("res://objects/nameTag.tscn").instantiate();
 	ebody.add_child(nametag)
@@ -152,23 +171,32 @@ func addNametagToEntity(ebody): # here so i can call this deferred clientside
 
 # When the server decides to start the game from a UI scene,
 # do load_game.rpc(filepath)
+## Loads a scene for all players by its resource path. 
+## Callable only by the server.
 @rpc("call_local", "reliable")
-func load_game(game_scene_path):
+func load_game(game_scene_path:String):
 	get_tree().change_scene_to_file(game_scene_path)
-	await get_tree().create_timer(0.1).timeout
+	# wait for the scene to load completely
+	await get_tree().tree_changed
+	await get_tree().current_scene.ready
 	if !IsDedicated():
+		# pick somewhere to spawn
 		var spawnpoints = get_tree().get_nodes_in_group("player_spawnpoint") 
 		var sp:Vector2 = spawnpoints.pick_random().global_position
 		Entity.spawn.call_deferred(playerinfo_local["charbody"], sp, '', playerinfo_local["name"])
-		if !multiplayer.is_server(): askForEntities.rpc_id.call_deferred(1)
+		# ask the server to spawn all entities into your game
+		if !multiplayer.is_server(): askForEntities.rpc_id(1)
+		# set your name for the chatbox
+		# TODO: redo the chatbox entirely, you bitch
 		Chatbox.inst.set_username(playerinfo_local["name"])
 
 func onPlayerDisconnect(id): # all clients, NOT JUST server
+	# destroy the disconnecting client's Entity body, if there is any
 	if get_tree().current_scene.get_node(players[id]["name"]):
 		get_tree().current_scene.get_node(players[id]["name"]).queue_free()
 	if Chatbox.inst:
 		Chatbox.inst.print_chat(players[id]["name"] + " disconnected.")
-	players.erase(id)
+	players.erase(id) # no more entry in player data table
 	player_disconnected.emit(id)
 
 func onConnectionSuccess(): # clientside only
@@ -186,10 +214,3 @@ func onServerDisconnect(): # clientside only
 	multiplayer.multiplayer_peer.close()
 	players.clear()
 	server_disconnected.emit()
-
-@rpc("authority", "reliable", "call_local")
-func transferAuthority(nodepath:String, cid:int, recursive:bool=false) -> void: # use this later
-	# make sure all clients are in agreement over who controls what
-	var node:Node
-	node = get_tree().get_node(nodepath)
-	node.set_multiplayer_authority(cid, recursive);

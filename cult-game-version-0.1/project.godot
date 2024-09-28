@@ -195,12 +195,10 @@ CameraZoomOutImpulse={
 2d_physics/layer_3="Attack"
 2d_physics/layer_4="Interactable"
 2d_physics/layer_5="Grounded Character"
-2d_physics/layer_6="Team 0 / All Characters"
-2d_physics/layer_7="Team 1 / Allies"
-2d_physics/layer_8="Team 2 / Enemies"
-2d_physics/layer_9="Team 3"
-2d_physics/layer_10="Team 4"
-2d_physics/layer_11="... so on and so forth"
+2d_physics/layer_6="Character (All)"
+2d_physics/layer_7="Character (Allied)"
+2d_physics/layer_8="Character (Enemy)"
+2d_physics/layer_9="Character (Secret third thing?)"
 
 [rendering]
 
