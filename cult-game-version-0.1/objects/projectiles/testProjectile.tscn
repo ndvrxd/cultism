@@ -1,6 +1,17 @@
-[gd_scene load_steps=2 format=3 uid="uid://qbr6fu8qlgm"]
+[gd_scene load_steps=4 format=3 uid="uid://qbr6fu8qlgm"]
 
 [ext_resource type="Script" path="res://scripts/generic/Projectile.gd" id="1_thgxi"]
+[ext_resource type="Texture2D" uid="uid://dmcej1hbhoaj0" path="res://vfx/particle/aoe.png" id="2_uxlmt"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_bw4ro"]
 
 [node name="TestProjectile" type="CharacterBody2D"]
+collision_mask = 33
 script = ExtResource("1_thgxi")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.205, 0.205)
+texture = ExtResource("2_uxlmt")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_bw4ro")

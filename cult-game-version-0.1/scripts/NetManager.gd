@@ -142,9 +142,6 @@ func spawnEntityRpc(scnPath:String, pos:Vector2 = Vector2.ZERO, ctlPath:String="
 		var ebody:Entity = load(scnPath).instantiate();
 		get_tree().current_scene.add_child(ebody)
 		ebody.global_position = pos
-		#await ebody.ready # ready dddnever emits for some godforsaken reason
-		#print("ready")
-		await get_tree().create_timer(0.1).timeout #FIXME find a way around this
 		if eName != "":
 			ebody.name = eName;
 			if isPlayer:
@@ -158,7 +155,7 @@ func spawnEntityRpc(scnPath:String, pos:Vector2 = Vector2.ZERO, ctlPath:String="
 					nametag.get_child(0).position.y = (ebody.shoulderPoint.global_position.y
 							- ebody.global_position.y) * 2.3
 					nametag.get_child(0).text = ebody.entityName
-		if is_multiplayer_authority():
+		if id == multiplayer.get_unique_id():
 			var ectl:EntityController
 			if ctlPath != "":
 				ectl = load(ctlPath).instantiate();
