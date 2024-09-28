@@ -120,6 +120,7 @@ explosiveness = 1.0
 visibility_rect = Rect2(-100, -200, 200, 300)
 local_coords = true
 
+[connection signal="fired" from="." to="." method="fireAction"]
 [connection signal="fired" from="." to="aaaa" method="start"]
 [connection signal="fired" from="." to="upright/tell" method="restart"]
 [connection signal="timeout" from="aaaa" to="." method="_on_aaaa_timeout"]
