@@ -80,11 +80,13 @@ baseValue = 20.0
 [node name="length" type="Node2D" parent="."]
 
 [node name="tell" type="MeshInstance2D" parent="length"]
+visible = false
 material = ExtResource("2_7cx1g")
 rotation = -1.5708
 mesh = SubResource("QuadMesh_c26lm")
 
 [node name="sigil2" type="Node2D" parent="."]
+visible = false
 modulate = Color(0.964706, 0.470588, 1, 1)
 z_index = -1
 texture_filter = 1
@@ -102,6 +104,7 @@ texture = ExtResource("5_rptaw")
 [node name="detach" type="Node" parent="."]
 
 [node name="reticle" type="Node2D" parent="detach"]
+visible = false
 
 [node name="walltest" type="Area2D" parent="detach/reticle"]
 collision_layer = 0

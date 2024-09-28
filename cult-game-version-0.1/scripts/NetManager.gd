@@ -143,6 +143,7 @@ func spawnEntityRpc(scnPath:String, pos:Vector2 = Vector2.ZERO, ctlPath:String="
 			if get_tree().current_scene.has_node(eName):
 				if is_instance_valid(get_tree().current_scene.get_node(eName)): return
 		var ebody:Entity = load(scnPath).instantiate();
+		ebody.set_multiplayer_authority(id) 
 		get_tree().current_scene.add_child(ebody)
 		ebody.global_position = pos
 		if eName != "":
@@ -159,7 +160,6 @@ func spawnEntityRpc(scnPath:String, pos:Vector2 = Vector2.ZERO, ctlPath:String="
 		if id == multiplayer.get_unique_id():
 			# make sure that, subjectively, this node should be controlled by the invoking party
 			# if we're the one spawning it, we should control it
-			ebody.set_multiplayer_authority(id) 
 			var ectl:EntityController
 			if ctlPath != "":
 				ectl = load(ctlPath).instantiate();

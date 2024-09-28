@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://w4fycpo8l5fc"]
+
+[ext_resource type="PackedScene" uid="uid://qbr6fu8qlgm" path="res://objects/projectiles/testProjectile.tscn" id="1_b5cqs"]
+[ext_resource type="Script" path="res://scripts/ability-generic/fire_projectile_simple.gd" id="1_wka04"]
+
+[node name="ProjectileTest" type="Node2D"]
+script = ExtResource("1_wka04")
+projectileScn = ExtResource("1_b5cqs")
+
+[connection signal="fired" from="." to="." method="_on_fired"]

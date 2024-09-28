@@ -15,8 +15,6 @@ class_name Stat extends Node
 ## @experimental: Currently fires when the final value of the [Stat] does not actually change.
 signal valueChanged(value:float);
 
-## Internal use only. Don't touch this.
-signal _entered_tree() # needs to be awaited in mp_sync if being added to the tree outside _ready
 var _waitingForTree:bool = false
 
 ## The base value of the statistic. May be set in the inspector.
@@ -35,7 +33,6 @@ var _additive:float = 0.0;
 
 
 func _ready():
-	_entered_tree.emit()
 	_waitingForTree = false
 	process_mode = PROCESS_MODE_DISABLED
 
@@ -45,8 +42,10 @@ func _ready():
 ## This method is invoked automatically by [method setBase], [method modifyBase],
 ## [method modifyMult], [method modifyMultFlat], and [method modifyFlat].
 func mp_sync():
+	if !is_inside_tree(): #make sure the value changes if outside the tree
+		val = (baseValue + _baseModifier) * (_multiplier + _multFlatModifier) + _additive;
 	if _waitingForTree: #ensure the Stat has entered the tree before doing initial mp_sync
-		await _entered_tree
+		await ready
 	if is_inside_tree() and is_multiplayer_authority():
 		val = (baseValue + _baseModifier) * (_multiplier + _multFlatModifier) + _additive;
 		valueChanged.emit(getValue());

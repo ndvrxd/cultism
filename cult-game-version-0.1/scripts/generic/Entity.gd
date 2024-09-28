@@ -351,6 +351,42 @@ func prioritize(ents:Array) -> Entity:
 			
 	return result;
 
+## Creates a [Projectile] owned and simulated by this Entity. [br]
+## Is automatically replicated across clients. Ignored if called as
+## non-authority. [br] [br]
+## [param Ability] may be the [Ability] that fired this projectile, or null. [br]
+## [param from] is the point this projectile fires from. Defaults to the [member shoulderPoint]. [br]
+## [param facing] is direction this projectile faces when spawned. Defaults to [member lookDirection]. [br]
+## [param vel] is the initial velocity of the projectile.
+## Defaults to [member Projectile.default_speed] * [member lookDirection]. [br]
+## [param accel] is the initial acceleration of the projectile.
+## Defaults to [member Projectile.default_accel] * [member lookDirection].
+func create_projectile(scn:PackedScene, ability:Ability=null, from:Vector2=Vector2.ZERO, facing:Vector2=Vector2.ZERO, vel:Vector2=Vector2.ZERO, accel:Vector2=Vector2.ZERO):
+	if !is_multiplayer_authority(): return
+	var pname:String = str(randi_range(0, 999999999999))
+	from = from if from != Vector2.ZERO else shoulderPoint.global_position
+	facing = facing if facing != Vector2.ZERO else lookDirection
+	_create_projectile_rpc.rpc(scn.resource_path, get_path(), ability.get_path() if ability else "",
+			 pname, from, facing, vel, accel)
+
+@rpc("authority", "reliable", "call_local")
+func _create_projectile_rpc(scnPath:String, entPath:NodePath, abilPath:NodePath, nodeName:String, from:Vector2, facing:Vector2, vel:Vector2, accel:Vector2):
+	var temp:Node = load(scnPath).instantiate()
+	if not temp is Projectile:
+		temp.queue_free()
+		return
+	var proj:Projectile = temp as Projectile
+	proj.set_multiplayer_authority(multiplayer.get_remote_sender_id())
+	proj.name = nodeName
+	proj.look_at(facing)
+	proj.global_position = from
+	proj.velocity = vel if vel != Vector2.ZERO else facing * proj.default_speed
+	proj.accel = accel if accel != Vector2.ZERO else facing * proj.default_accel
+	proj.ent = get_node(entPath)
+	if abilPath != ("" as NodePath):
+		proj.ability = get_node(abilPath)
+	$projectiles.add_child(proj)
+
 
 ## hitscan. turns out shape/linecast in godot is tedious as fuck,
 ## so i'm making a nice clean method for it instead.

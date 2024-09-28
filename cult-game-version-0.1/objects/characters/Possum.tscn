@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://clj1vi8wsb3xq"]
+[gd_scene load_steps=9 format=3 uid="uid://clj1vi8wsb3xq"]
 
 [ext_resource type="Script" path="res://scripts/generic/Entity.gd" id="1_kvvxe"]
 [ext_resource type="Texture2D" uid="uid://bdyllnybosvnm" path="res://art/character ph/poss ph.png" id="2_5mqqm"]
 [ext_resource type="Script" path="res://scripts/abstract/Stat.gd" id="2_6ewo4"]
 [ext_resource type="PackedScene" uid="uid://c7m3igog3rlis" path="res://objects/abilities/sixshooter.tscn" id="2_nhaul"]
+[ext_resource type="PackedScene" uid="uid://w4fycpo8l5fc" path="res://objects/abilities/projectile_test.tscn" id="3_ajkmw"]
 [ext_resource type="PackedScene" uid="uid://drsr5aonofgsk" path="res://objects/abilities/warp.tscn" id="5_8slmk"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_lyfbl"]
@@ -20,12 +21,14 @@ script = ExtResource("1_kvvxe")
 entityName = "Pos'm"
 team = 1
 objPath = "res://objects/characters/Possum.tscn"
-abilities = [NodePath("Sixshooter"), null, NodePath("Warp")]
+abilities = [NodePath("Sixshooter"), NodePath("ProjectileTest"), NodePath("Warp")]
 stat_speed = NodePath("stat_speed")
 stat_regen = NodePath("stat_regen")
 stat_baseDamage = NodePath("damage")
 
 [node name="Sixshooter" parent="." instance=ExtResource("2_nhaul")]
+
+[node name="ProjectileTest" parent="." instance=ExtResource("3_ajkmw")]
 
 [node name="stat_regen" type="Node" parent="."]
 script = ExtResource("2_6ewo4")
