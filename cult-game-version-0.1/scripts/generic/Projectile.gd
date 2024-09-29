@@ -104,7 +104,7 @@ func _on_area_entered(area:Area2D):
 
 @rpc("authority", "call_local", "reliable")
 func _sync_entity_hit(path:NodePath):
-	hit_enemy.emit(get_node(path))
+	hit_enemy.emit.call_deferred(get_node(path))
 
 func _on_body_entered(body:Node2D):
 	if body is TileMapLayer or body.collision_layer & 1:
@@ -112,4 +112,4 @@ func _on_body_entered(body:Node2D):
 
 @rpc("authority", "call_local", "reliable")
 func _sync_wall_hit():
-	hit_wall.emit()
+	hit_wall.emit.call_deferred()
