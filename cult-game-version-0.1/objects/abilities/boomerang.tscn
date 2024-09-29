@@ -1,0 +1,19 @@
+[gd_scene load_steps=5 format=3 uid="uid://bga12kqmary5o"]
+
+[ext_resource type="Script" path="res://scripts/ability-generic/fire_projectile_simple.gd" id="1_7ggvd"]
+[ext_resource type="PackedScene" uid="uid://ci7imlg54k55i" path="res://objects/projectiles/boomerang.tscn" id="2_4m68d"]
+[ext_resource type="Texture2D" uid="uid://cgbpbd7cntj84" path="res://art/attack/boomerang.png" id="3_x3l7r"]
+[ext_resource type="Script" path="res://scripts/abstract/Stat.gd" id="3_xefrg"]
+
+[node name="BoomerangAbility" type="Node2D" node_paths=PackedStringArray("stat_cooldown")]
+script = ExtResource("1_7ggvd")
+projectileScn = ExtResource("2_4m68d")
+fromFeet = true
+ability_name = "Boomerang"
+ability_desc = "Throw a boomerang."
+portrait = ExtResource("3_x3l7r")
+stat_cooldown = NodePath("cd")
+
+[node name="cd" type="Node" parent="."]
+script = ExtResource("3_xefrg")
+baseValue = 4.0

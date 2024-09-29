@@ -11,7 +11,7 @@ signal expire
 signal hit_wall
 
 ## Emitted when the Projectile collides with an enemy [Entity].
-signal hit_enemy(ent:Entity)
+signal hit_enemy(target:Entity)
 
 ## The default speed this projectile should have when spawned.
 @export var default_speed:float = 100;
@@ -107,7 +107,7 @@ func _sync_entity_hit(path:NodePath):
 	hit_enemy.emit(get_node(path))
 
 func _on_body_entered(body:Node2D):
-	if body.collision_layer & 1:
+	if body is TileMapLayer or body.collision_layer & 1:
 		_sync_wall_hit.rpc()
 
 @rpc("authority", "call_local", "reliable")
