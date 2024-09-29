@@ -1,5 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://7le6afmj6w8e"]
+[gd_scene load_steps=6 format=3 uid="uid://7le6afmj6w8e"]
 
+[ext_resource type="Material" uid="uid://di1b160vqpl63" path="res://vfx/material/titlebg.tres" id="1_s75qj"]
 [ext_resource type="FontFile" uid="uid://dhk11k42eybnt" path="res://fonts/chela-one.regular.ttf" id="1_xo7x8"]
 [ext_resource type="PackedScene" uid="uid://cixt7jlqnxfa6" path="res://scenes/settings.tscn" id="2_3x6rn"]
 
@@ -30,13 +31,18 @@ layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 5.0
-offset_top = 3.0
-offset_right = 5.0
-offset_bottom = 3.0
 grow_horizontal = 2
 grow_vertical = 2
 script = SubResource("GDScript_xgb1g")
+
+[node name="bg" type="ColorRect" parent="."]
+material = ExtResource("1_s75qj")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="Label" type="Label" parent="."]
 modulate = Color(1, 1, 1, 0.627)
@@ -94,11 +100,11 @@ vertical_alignment = 2
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.46
-anchor_top = 0.27
+anchor_top = 0.385
 anchor_right = 0.541
 anchor_bottom = 0.612
 offset_left = 0.200012
-offset_top = 110.6
+offset_top = 27.8
 offset_right = -0.47998
 offset_bottom = 0.359955
 grow_horizontal = 2
