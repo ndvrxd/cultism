@@ -1,60 +1,32 @@
-[gd_scene load_steps=10 format=3 uid="uid://olevvkb7y5jg"]
+[gd_scene load_steps=9 format=3 uid="uid://olevvkb7y5jg"]
 
 [ext_resource type="Script" path="res://scripts/characters/lizer.gd" id="1_syvkj"]
 [ext_resource type="Texture2D" uid="uid://dx7xpikedu613" path="res://art/character ph/lizer ph.png" id="2_ty8gh"]
-[ext_resource type="Texture2D" uid="uid://c3l4kkjo4q83i" path="res://vfx/particle/sparkle haha.png" id="4_o7a7i"]
+[ext_resource type="PackedScene" uid="uid://c7m3igog3rlis" path="res://objects/abilities/sixshooter.tscn" id="4_ty5ob"]
+[ext_resource type="PackedScene" uid="uid://bhho2ywfqt0vw" path="res://objects/abilities/sword_strike_stock.tscn" id="5_omy2c"]
+[ext_resource type="PackedScene" uid="uid://d2e4q455kjkby" path="res://objects/abilities/speed_increase.tscn" id="6_pfu4c"]
+[ext_resource type="Script" path="res://scripts/abstract/Stat.gd" id="7_fmvfk"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_mtypy"]
 radius = 22.0
 height = 88.0
 
-[sub_resource type="Curve" id="Curve_78r1v"]
-min_value = -2.0
-max_value = 2.0
-_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.476852, 0.10989), 0.0, 0.0, 0, 0, Vector2(1, 0.0219781), 0.0, 0.0, 0, 0]
-point_count = 3
-
-[sub_resource type="CurveTexture" id="CurveTexture_c2e3b"]
-curve = SubResource("Curve_78r1v")
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_b5pqp"]
-particle_flag_disable_z = true
-emission_shape_offset = Vector3(0, -90, 0)
-orbit_velocity_min = -3.5
-orbit_velocity_max = -3.5
-orbit_velocity_curve = SubResource("CurveTexture_c2e3b")
-gravity = Vector3(0, 0, 0)
-scale_min = 0.5
-scale_max = 0.5
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_h7sle"]
-particle_flag_disable_z = true
-spread = 0.0
-initial_velocity_min = 10000.0
-initial_velocity_max = 10000.7
-gravity = Vector3(0, 0, 0)
-scale_min = 0.2
-scale_max = 0.2
-collision_mode = 1
-collision_friction = 1.0
-collision_bounce = 0.0
-collision_use_scale = true
-
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_da74b"]
 radius = 5.74163
 height = 21.0526
 
-[node name="lizer" type="CharacterBody2D"]
+[node name="lizer" type="CharacterBody2D" node_paths=PackedStringArray("abilities", "stat_maxHp", "stat_speed", "stat_regen", "stat_aggroNoise")]
 y_sort_enabled = true
 texture_filter = 6
 collision_layer = 112
 collision_mask = 7
 slide_on_ceiling = false
 script = ExtResource("1_syvkj")
-entityName = "Lizer"
-team = 1
-objPath = "res://objects/characters/Lizer.tscn"
-controllerPath = "res://objects/controllers/basic_enemy_ai.tscn"
+abilities = [NodePath("SwordStrikeStock"), NodePath("Sixshooter"), NodePath("SpeedIncrease")]
+stat_maxHp = NodePath("stat_maxHp")
+stat_speed = NodePath("stat_speed")
+stat_regen = NodePath("stat_regen")
+stat_aggroNoise = NodePath("stat_aggroNoise")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-1, -44)
@@ -72,37 +44,6 @@ offset = Vector2(-8, -64)
 [node name="shoulder" type="Node2D" parent="."]
 position = Vector2(0, -65)
 
-[node name="swordwoosh" type="GPUParticles2D" parent="shoulder"]
-z_index = 1
-texture_filter = 1
-scale = Vector2(1.3, 1)
-emitting = false
-amount = 1
-process_material = SubResource("ParticleProcessMaterial_b5pqp")
-texture = ExtResource("4_o7a7i")
-lifetime = 0.5
-one_shot = true
-fixed_fps = 60
-local_coords = true
-trail_enabled = true
-trail_lifetime = 0.24
-
-[node name="GPUParticles2D" type="GPUParticles2D" parent="shoulder"]
-modulate = Color(1, 0.746832, 0.584172, 1)
-position = Vector2(-157, 0)
-emitting = false
-amount = 1
-process_material = SubResource("ParticleProcessMaterial_h7sle")
-texture = ExtResource("4_o7a7i")
-lifetime = 0.5
-one_shot = true
-fixed_fps = 60
-collision_base_size = 10.0
-trail_enabled = true
-trail_lifetime = 0.01
-trail_sections = 2
-trail_section_subdivisions = 1
-
 [node name="hurtbox" type="Area2D" parent="."]
 scale = Vector2(5.225, 5.225)
 collision_layer = 96
@@ -111,3 +52,26 @@ collision_mask = 4
 [node name="shape" type="CollisionShape2D" parent="hurtbox"]
 position = Vector2(5.96046e-08, -10.3349)
 shape = SubResource("CapsuleShape2D_da74b")
+
+[node name="Sixshooter" parent="." instance=ExtResource("4_ty5ob")]
+position = Vector2(266, 251)
+
+[node name="SwordStrikeStock" parent="." instance=ExtResource("5_omy2c")]
+
+[node name="SpeedIncrease" parent="." instance=ExtResource("6_pfu4c")]
+
+[node name="stat_speed" type="Node" parent="."]
+script = ExtResource("7_fmvfk")
+baseValue = 330.0
+
+[node name="stat_maxHp" type="Node" parent="."]
+script = ExtResource("7_fmvfk")
+baseValue = 115.0
+
+[node name="stat_regen" type="Node" parent="."]
+script = ExtResource("7_fmvfk")
+baseValue = 1.5
+
+[node name="stat_aggroNoise" type="Node" parent="."]
+script = ExtResource("7_fmvfk")
+baseValue = -50.0

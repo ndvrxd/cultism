@@ -226,7 +226,6 @@ item_4/text = "Possum"
 item_4/icon = ExtResource("3_vst5a")
 item_5/text = "Lizer"
 item_5/icon = ExtResource("7_m7alx")
-item_5/disabled = true
 item_6/text = "Enemies"
 item_6/selectable = false
 item_7/text = "enemy"
