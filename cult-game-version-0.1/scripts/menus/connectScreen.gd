@@ -36,4 +36,4 @@ func emsgCallback(reason):
 
 
 func _on_close_pressed() -> void:
-	get_tree().quit()
+	get_tree().change_scene_to_file("res://scenes/menu/title.tscn")

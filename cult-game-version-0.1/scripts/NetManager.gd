@@ -46,7 +46,7 @@ func leave_game():
 	get_tree().paused = false
 	multiplayer.multiplayer_peer.disconnect_peer(1)
 	multiplayer.multiplayer_peer.close()
-	get_tree().change_scene_to_file("res://scenes/connectScreen.tscn")
+	get_tree().change_scene_to_file("res://scenes/menu/title.tscn")
 
 ## Tries to kick a connected peer as the server.
 ## The client can ignore this, but they will be disconnected
