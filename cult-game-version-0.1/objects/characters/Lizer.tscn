@@ -54,7 +54,6 @@ position = Vector2(5.96046e-08, -10.3349)
 shape = SubResource("CapsuleShape2D_da74b")
 
 [node name="Sixshooter" parent="." instance=ExtResource("4_ty5ob")]
-position = Vector2(266, 251)
 
 [node name="SwordStrikeStock" parent="." instance=ExtResource("5_omy2c")]
 
