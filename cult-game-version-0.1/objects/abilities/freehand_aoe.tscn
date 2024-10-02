@@ -213,6 +213,7 @@ local_coords = true
 
 [node name="sfx" type="AudioStreamPlayer2D" parent="detach/aoe"]
 stream = ExtResource("5_xgsmf")
+bus = &"sfx"
 
 [node name="fulldamage" type="Area2D" parent="detach/aoe"]
 collision_layer = 4

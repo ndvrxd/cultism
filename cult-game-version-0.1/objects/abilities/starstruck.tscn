@@ -105,7 +105,7 @@ one_shot = true
 
 [node name="snd" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("2_b1qa7")
-bus = &"kibby_guitar"
+bus = &"sfx"
 
 [node name="upright" type="Node2D" parent="." groups=["upright_sprite"]]
 

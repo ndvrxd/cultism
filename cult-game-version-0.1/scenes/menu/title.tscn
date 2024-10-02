@@ -15,14 +15,14 @@ script/source = "extends Control
 @export var characterBodyPaths:Array[String];
 
 func _on_multiplayer_pressed() -> void:
-	get_tree().change_scene_to_file(\"res://scenes/connectScreen.tscn\")
+	get_tree().change_scene_to_file(\"res://scenes/menu/connectScreen.tscn\")
 
 func _on_quit_pressed() -> void:
 	get_tree().quit()
 
 func _input(e:InputEvent) -> void:
 	if Input.is_key_pressed(KEY_F3):
-		get_tree().change_scene_to_file(\"res://scenes/connectScreen.tscn\")
+		get_tree().change_scene_to_file(\"res://scenes/menu/connectScreen.tscn\")
 
 
 func _on_singleplayer_pressed() -> void:

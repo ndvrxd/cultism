@@ -1,4 +1,4 @@
-class_name Settings
+#class_name Settings
 extends Control
 
 @onready var exit_button: Button = $MarginContainer/VBoxContainer/Exit_Button as Button

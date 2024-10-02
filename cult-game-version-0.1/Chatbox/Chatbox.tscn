@@ -56,3 +56,4 @@ placeholder_text = "press enter to chat"
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_s6d71")
+bus = &"sfx"

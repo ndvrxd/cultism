@@ -1,30 +1,30 @@
 [gd_scene load_steps=18 format=3 uid="uid://bqn8v6gbnfj1u"]
 
-[ext_resource type="Script" path="res://scripts/menus/connectScreen.gd" id="1_bngj7"]
-[ext_resource type="Shader" uid="uid://dsj7wr5hf50yw" path="res://vfx/shaders/scroll_simple.tres" id="2_eu0g0"]
-[ext_resource type="FontFile" uid="uid://dhk11k42eybnt" path="res://fonts/chela-one.regular.ttf" id="2_ial8x"]
-[ext_resource type="Texture2D" uid="uid://b5k4twe1vvha5" path="res://art/character ph/bunny ph.png" id="2_rywp4"]
-[ext_resource type="Texture2D" uid="uid://brgcnnmsawhxw" path="res://art/ui/background.png" id="3_6nwss"]
-[ext_resource type="Texture2D" uid="uid://bdyllnybosvnm" path="res://art/character ph/poss ph.png" id="3_vst5a"]
-[ext_resource type="Texture2D" uid="uid://soudc4snc7fj" path="res://art/character ph/kibby ph 2.png" id="4_3m4t2"]
-[ext_resource type="Texture2D" uid="uid://veo5l360amx3" path="res://art/character ph/player ph.png" id="4_iac7p"]
-[ext_resource type="Texture2D" uid="uid://6i8qff0kq7ei" path="res://art/character ph/enemy ph.png" id="5_hl3gd"]
-[ext_resource type="Texture2D" uid="uid://dx7xpikedu613" path="res://art/character ph/lizer ph.png" id="7_m7alx"]
-[ext_resource type="Texture2D" uid="uid://cqrh7ndjucvg5" path="res://art/character ph/effigy ph.png" id="8_3ew3o"]
-[ext_resource type="Texture2D" uid="uid://684pxvrx2k8n" path="res://art/character ph/shadowdemon_body.png" id="8_4dw75"]
-[ext_resource type="Texture2D" uid="uid://dsm2816pum58t" path="res://art/character ph/bombrun1.png" id="10_noj8f"]
-[ext_resource type="AudioStream" uid="uid://o46j6vbj5ncu" path="res://sound/music/aeiou.ogg" id="12_vledh"]
+[ext_resource type="Script" path="res://scripts/menus/connectScreen.gd" id="1_ep8hg"]
+[ext_resource type="Shader" uid="uid://dsj7wr5hf50yw" path="res://vfx/shaders/scroll_simple.tres" id="2_mssil"]
+[ext_resource type="Texture2D" uid="uid://brgcnnmsawhxw" path="res://art/ui/background.png" id="3_kglrb"]
+[ext_resource type="FontFile" uid="uid://dhk11k42eybnt" path="res://fonts/chela-one.regular.ttf" id="4_nlh17"]
+[ext_resource type="Texture2D" uid="uid://b5k4twe1vvha5" path="res://art/character ph/bunny ph.png" id="5_faemh"]
+[ext_resource type="Texture2D" uid="uid://soudc4snc7fj" path="res://art/character ph/kibby ph 2.png" id="6_sn75l"]
+[ext_resource type="Texture2D" uid="uid://bdyllnybosvnm" path="res://art/character ph/poss ph.png" id="7_h07s7"]
+[ext_resource type="Texture2D" uid="uid://dx7xpikedu613" path="res://art/character ph/lizer ph.png" id="8_7jkg3"]
+[ext_resource type="Texture2D" uid="uid://684pxvrx2k8n" path="res://art/character ph/shadowdemon_body.png" id="9_75m87"]
+[ext_resource type="Texture2D" uid="uid://dsm2816pum58t" path="res://art/character ph/bombrun1.png" id="10_itjb4"]
+[ext_resource type="Texture2D" uid="uid://cqrh7ndjucvg5" path="res://art/character ph/effigy ph.png" id="11_v2v6k"]
+[ext_resource type="Texture2D" uid="uid://veo5l360amx3" path="res://art/character ph/player ph.png" id="12_m4gtj"]
+[ext_resource type="Texture2D" uid="uid://6i8qff0kq7ei" path="res://art/character ph/enemy ph.png" id="13_oj0rj"]
+[ext_resource type="AudioStream" uid="uid://o46j6vbj5ncu" path="res://sound/music/aeiou.ogg" id="14_5jyka"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_0gu1n"]
-shader = ExtResource("2_eu0g0")
+shader = ExtResource("2_mssil")
 shader_parameter/direction = Vector2(0.05, 0)
-shader_parameter/Texture2DParameter = ExtResource("3_6nwss")
+shader_parameter/Texture2DParameter = ExtResource("3_kglrb")
 
 [sub_resource type="LabelSettings" id="LabelSettings_yj1jt"]
 font_color = Color(1, 0, 0, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_1pvem"]
-font = ExtResource("2_ial8x")
+font = ExtResource("4_nlh17")
 font_size = 56
 outline_size = 5
 outline_color = Color(0, 0, 0, 1)
@@ -38,7 +38,7 @@ offset_top = 1.0
 offset_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_bngj7")
+script = ExtResource("1_ep8hg")
 nameBox = NodePath("Control/VBoxContainer/HBoxContainer3/LineEdit")
 addressBox = NodePath("Control/VBoxContainer/HBoxContainer/LineEdit")
 portBox = NodePath("Control/VBoxContainer/HBoxContainer2/LineEdit")
@@ -89,7 +89,7 @@ theme_override_constants/shadow_offset_x = 10
 theme_override_constants/shadow_offset_y = 10
 theme_override_constants/outline_size = 10
 theme_override_constants/shadow_outline_size = 10
-theme_override_fonts/font = ExtResource("2_ial8x")
+theme_override_fonts/font = ExtResource("4_nlh17")
 theme_override_font_sizes/font_size = 50
 text = "join a server, fool
 
@@ -102,14 +102,14 @@ layout_mode = 2
 [node name="Label" type="Label" parent="Control/VBoxContainer/HBoxContainer3"]
 layout_mode = 2
 theme_override_constants/outline_size = 10
-theme_override_fonts/font = ExtResource("2_ial8x")
+theme_override_fonts/font = ExtResource("4_nlh17")
 theme_override_font_sizes/font_size = 30
 text = "Username : "
 
 [node name="LineEdit" type="LineEdit" parent="Control/VBoxContainer/HBoxContainer3"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
-theme_override_fonts/font = ExtResource("2_ial8x")
+theme_override_fonts/font = ExtResource("4_nlh17")
 theme_override_font_sizes/font_size = 25
 text = "Player"
 
@@ -119,14 +119,14 @@ layout_mode = 2
 [node name="Label" type="Label" parent="Control/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 theme_override_constants/outline_size = 10
-theme_override_fonts/font = ExtResource("2_ial8x")
+theme_override_fonts/font = ExtResource("4_nlh17")
 theme_override_font_sizes/font_size = 30
 text = "Hostname : "
 
 [node name="LineEdit" type="LineEdit" parent="Control/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
-theme_override_fonts/font = ExtResource("2_ial8x")
+theme_override_fonts/font = ExtResource("4_nlh17")
 theme_override_font_sizes/font_size = 25
 text = "localhost"
 
@@ -136,13 +136,13 @@ layout_mode = 2
 [node name="Label" type="Label" parent="Control/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
 theme_override_constants/outline_size = 10
-theme_override_fonts/font = ExtResource("2_ial8x")
+theme_override_fonts/font = ExtResource("4_nlh17")
 theme_override_font_sizes/font_size = 25
 text = "Port : "
 
 [node name="LineEdit" type="LineEdit" parent="Control/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("2_ial8x")
+theme_override_fonts/font = ExtResource("4_nlh17")
 theme_override_font_sizes/font_size = 25
 text = "24500"
 
@@ -155,14 +155,14 @@ layout_mode = 2
 [node name="Button" type="Button" parent="Control/VBoxContainer/CenterContainer/HBoxContainer4"]
 layout_mode = 2
 theme_override_constants/outline_size = 10
-theme_override_fonts/font = ExtResource("2_ial8x")
+theme_override_fonts/font = ExtResource("4_nlh17")
 theme_override_font_sizes/font_size = 40
 text = "Join"
 
 [node name="Button2" type="Button" parent="Control/VBoxContainer/CenterContainer/HBoxContainer4"]
 layout_mode = 2
 theme_override_constants/outline_size = 10
-theme_override_fonts/font = ExtResource("2_ial8x")
+theme_override_fonts/font = ExtResource("4_nlh17")
 theme_override_font_sizes/font_size = 40
 text = "Create"
 
@@ -193,7 +193,7 @@ offset_top = 11.0
 offset_right = 234.0
 offset_bottom = 43.0
 theme_override_constants/outline_size = 10
-theme_override_fonts/font = ExtResource("2_ial8x")
+theme_override_fonts/font = ExtResource("4_nlh17")
 theme_override_font_sizes/font_size = 26
 text = "choose ur character  :3"
 horizontal_alignment = 1
@@ -217,36 +217,36 @@ fixed_icon_size = Vector2i(50, 50)
 item_0/text = "Fully playable characters"
 item_0/selectable = false
 item_1/text = "Bnuy"
-item_1/icon = ExtResource("2_rywp4")
+item_1/icon = ExtResource("5_faemh")
 item_2/text = "kibby"
-item_2/icon = ExtResource("4_3m4t2")
+item_2/icon = ExtResource("6_sn75l")
 item_3/text = "Incomplete characters"
 item_3/selectable = false
 item_4/text = "Possum"
-item_4/icon = ExtResource("3_vst5a")
+item_4/icon = ExtResource("7_h07s7")
 item_5/text = "Lizer"
-item_5/icon = ExtResource("7_m7alx")
+item_5/icon = ExtResource("8_7jkg3")
 item_6/text = "Enemies"
 item_6/selectable = false
 item_7/text = "enemy"
-item_7/icon = ExtResource("8_4dw75")
+item_7/icon = ExtResource("9_75m87")
 item_8/text = "runner_enemy"
-item_8/icon = ExtResource("10_noj8f")
+item_8/icon = ExtResource("10_itjb4")
 item_9/text = "Technical"
 item_9/selectable = false
 item_10/text = "test_effigy"
-item_10/icon = ExtResource("8_3ew3o")
+item_10/icon = ExtResource("11_v2v6k")
 item_11/text = "Scrap"
 item_11/selectable = false
 item_12/text = "player"
-item_12/icon = ExtResource("4_iac7p")
+item_12/icon = ExtResource("12_m4gtj")
 item_12/disabled = true
 item_13/text = "enemy_o"
-item_13/icon = ExtResource("5_hl3gd")
+item_13/icon = ExtResource("13_oj0rj")
 item_13/disabled = true
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("12_vledh")
+stream = ExtResource("14_5jyka")
 volume_db = -12.0
 pitch_scale = 0.9
 autoplay = true
@@ -271,7 +271,7 @@ offset_top = -100.0
 offset_right = 178.0
 offset_bottom = -57.0
 grow_vertical = 0
-theme_override_fonts/font = ExtResource("2_ial8x")
+theme_override_fonts/font = ExtResource("4_nlh17")
 theme_override_font_sizes/font_size = 29
 text = "Back to Title"
 

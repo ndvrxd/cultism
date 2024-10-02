@@ -1,17 +1,20 @@
 extends Control
+
 @onready var settings_button: Button = $PanelContainer/VBoxContainer/Settings as Button
-@onready var settingslol: Settings = $Settings as Settings
+@onready var settings_menu = $settings_menu as Settings
 @onready var panel_container: PanelContainer = $PanelContainer as PanelContainer
 
 func _ready():
 	$AnimationPlayer.play("RESET")
 	grab_focus.call_deferred()
-	settingslol.visible = false
+	settings_menu.visible = false
+	panel_container.visible = false
+	visible = false
+	#panel_container.set_process(false)
 	handle_connecting_signals()
 	
+	
 
-#func resize():
-	#size() = OS.get_screen_size()
 
 func resume():
 	$AnimationPlayer.play_backwards("blur")
@@ -29,31 +32,33 @@ func pause():
 func testEsc():
 	if Input.is_action_just_pressed("esc") and !visible:
 		pause()
+		panel_container.set_process(true)
 	elif Input.is_action_just_pressed("esc") and visible:
-		settingslol.visible = false
+		settings_menu.visible = false
 		resume()
 
 func _on_resume_pressed() -> void:
+	panel_container.set_process(false)
 	resume()
 	
 	
-########### NEW STUFF ##############
-
+########### NEW STUFF (SETTINGS MENU) ##############
 
 
 func handle_connecting_signals() -> void:
-	settings_button.button_down.connect(_on_settings_pressed)
-	settingslol.exit_settings.connect(on_exit_settings)
+	settings_button.button_down.connect(on_settings_pressed)
+	settings_menu.exit_settings_menu.connect(on_exit_settings)
 	$"PanelContainer/VBoxContainer/Main Menu".pressed.connect(NetManager.leave_game)
 
-func _on_settings_pressed() -> void:
+func on_settings_pressed() -> void:
 	panel_container.visible = false
-	settingslol.set_process(true)
-	settingslol.visible = true
+	settings_menu.set_process(true)
+	settings_menu.visible = true
+
 
 func on_exit_settings() -> void:
 	panel_container.visible = true
-	settingslol.visible = false
+	settings_menu.visible = false
 	
 
 ##############################

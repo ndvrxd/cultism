@@ -24,6 +24,7 @@ stat_cooldown = NodePath("cooldown")
 
 [node name="gunshot" type="AudioStreamPlayer2D" parent="."]
 stream = SubResource("AudioStreamRandomizer_2uhqp")
+bus = &"sfx"
 
 [node name="cooldown" type="Node" parent="."]
 script = ExtResource("4_f52xx")

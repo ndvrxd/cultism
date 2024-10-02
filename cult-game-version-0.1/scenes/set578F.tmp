@@ -1,0 +1,176 @@
+[gd_scene load_steps=4 format=3 uid="uid://s3mfim2cwau0"]
+
+[ext_resource type="FontFile" uid="uid://dhk11k42eybnt" path="res://fonts/chela-one.regular.ttf" id="1_ibxyx"]
+[ext_resource type="Script" path="res://scenes/settings_menu.gd" id="1_q7er3"]
+[ext_resource type="PackedScene" uid="uid://d4afvuimmen53" path="res://scripts/h_slider.tscn" id="2_r63so"]
+
+[node name="New Menu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_q7er3")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -166.0
+offset_top = -248.0
+offset_right = 166.0
+offset_bottom = 249.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_right = 1
+theme_override_constants/margin_bottom = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 25
+
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/PanelContainer"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="Vbox padding lmao2" type="VBoxContainer" parent="MarginContainer/VBoxContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Display" type="Label" parent="MarginContainer/VBoxContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("1_ibxyx")
+theme_override_font_sizes/font_size = 36
+text = "Display"
+horizontal_alignment = 1
+
+[node name="Hbox Fullscreen" type="HBoxContainer" parent="MarginContainer/VBoxContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+tooltip_text = "bwahhh ignore"
+theme_override_constants/separation = 71
+
+[node name="Fullscreen" type="CheckButton" parent="MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/Hbox Fullscreen"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("1_ibxyx")
+theme_override_font_sizes/font_size = 21
+text = "Fullscreen"
+
+[node name="VSync" type="CheckButton" parent="MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/Hbox Fullscreen"]
+layout_mode = 2
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("1_ibxyx")
+theme_override_font_sizes/font_size = 21
+disabled = true
+text = "VSync"
+
+[node name="Hbox Resolution" type="HBoxContainer" parent="MarginContainer/VBoxContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_stretch_ratio = 15.74
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/Hbox Resolution"]
+layout_mode = 2
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("1_ibxyx")
+theme_override_font_sizes/font_size = 18
+text = "Resolution: "
+
+[node name="Resolutions" type="OptionButton" parent="MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/Hbox Resolution"]
+layout_mode = 2
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("1_ibxyx")
+selected = 0
+item_count = 3
+popup/item_0/text = "1280 x 720"
+popup/item_1/text = "1600 x 900"
+popup/item_1/id = 1
+popup/item_2/text = "1920 x 1080"
+popup/item_2/id = 2
+
+[node name="Audio" type="Label" parent="MarginContainer/VBoxContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("1_ibxyx")
+theme_override_font_sizes/font_size = 36
+text = "Audio"
+horizontal_alignment = 1
+
+[node name="Master Volume" type="Label" parent="MarginContainer/VBoxContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("1_ibxyx")
+theme_override_font_sizes/font_size = 18
+text = "Master Volume
+"
+horizontal_alignment = 1
+
+[node name="Hbox Master" type="HBoxContainer" parent="MarginContainer/VBoxContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+
+[node name="Master" parent="MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/Hbox Master" instance=ExtResource("2_r63so")]
+custom_minimum_size = Vector2(270, 0)
+layout_mode = 2
+bus_name = "Master"
+
+[node name="SFX Volume" type="Label" parent="MarginContainer/VBoxContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("1_ibxyx")
+theme_override_font_sizes/font_size = 18
+text = "SFX Volume
+"
+horizontal_alignment = 1
+
+[node name="Hbox SFX" type="HBoxContainer" parent="MarginContainer/VBoxContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="sfx" parent="MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/Hbox SFX" instance=ExtResource("2_r63so")]
+custom_minimum_size = Vector2(270, 0)
+layout_mode = 2
+bus_name = "sfx"
+
+[node name="Music Volume" type="Label" parent="MarginContainer/VBoxContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("1_ibxyx")
+theme_override_font_sizes/font_size = 18
+text = "Music Volume
+"
+horizontal_alignment = 1
+
+[node name="Hbox Music" type="HBoxContainer" parent="MarginContainer/VBoxContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="music" parent="MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/Hbox Music" instance=ExtResource("2_r63so")]
+custom_minimum_size = Vector2(270, 0)
+layout_mode = 2
+bus_name = "music"
+
+[node name="Vbox padding lmao" type="VBoxContainer" parent="MarginContainer/VBoxContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Exit_Button" type="Button" parent="MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(120, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_fonts/font = ExtResource("1_ibxyx")
+text = "Exit"
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/Hbox Fullscreen/Fullscreen" to="." method="_on_fullscreen_pressed"]
+[connection signal="item_selected" from="MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/Hbox Resolution/Resolutions" to="." method="_on_resolutions_item_selected"]
+[connection signal="button_down" from="MarginContainer/VBoxContainer/Exit_Button" to="." method="_on_exit_button_button_down"]
