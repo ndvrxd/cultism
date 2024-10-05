@@ -256,7 +256,6 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Label" type="Label" parent="HUD STUFF"]
-visible = false
 modulate = Color(1, 1, 1, 0.741176)
 anchors_preset = 3
 anchor_left = 1.0
@@ -286,7 +285,6 @@ grow_vertical = 0
 alignment = 2
 
 [node name="statusEffectIcon" type="TextureProgressBar" parent="HUD STUFF/statusEffectBar"]
-visible = false
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 max_value = 1.0
@@ -299,7 +297,6 @@ texture_progress = ExtResource("5_i4xsy")
 tint_under = Color(0, 0, 0, 0.533333)
 
 [node name="statusEffectIcon2" type="TextureProgressBar" parent="HUD STUFF/statusEffectBar"]
-visible = false
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 max_value = 1.0
@@ -312,7 +309,6 @@ texture_progress = ExtResource("5_i4xsy")
 tint_under = Color(0, 0, 0, 0.533333)
 
 [node name="statusEffectIcon3" type="TextureProgressBar" parent="HUD STUFF/statusEffectBar"]
-visible = false
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 max_value = 1.0

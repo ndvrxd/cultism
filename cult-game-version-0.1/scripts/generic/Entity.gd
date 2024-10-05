@@ -9,6 +9,7 @@ signal damage_dealt(amount:float, to:Entity)
 signal healed(amount:float, by:Entity)
 signal hit_landed(at:Vector2, normal:Vector2)
 signal killed(by:Entity)
+signal effect_added(effect:StatusEffect)
 
 ## The in-game name for this Entity.
 @export var entityName:String = "Entity";
@@ -45,6 +46,7 @@ signal killed(by:Entity)
 var ability_vars:Dictionary = {}
 
 var _controllerAttached:bool = false;
+var _statusEffects:Array[StatusEffect] = [];
 
 var _healthBar:TextureProgressBar
 var _healthBarTimer:float = 0;
@@ -311,6 +313,40 @@ func streamMovement(pos:Vector2, intent:Vector2, lookDir:Vector2, aimPos:Vector2
 	moveIntent = intent.normalized();
 	lookDirection = lookDir.normalized();
 	aimPosition = aimPos;
+
+## Syncs the state of this Entity to other clients when a new client connects.
+func _sync_effects_tx(cid:int, _playerinfo):
+	for effect:StatusEffect in _statusEffects:
+		_addEffectStackRpc.rpc_id(cid, effect._ownPath, effect.getStacks(), effect.name, effect._age)
+
+## CHECK FOR AUTHORITY BEFORE USING - RELAYS TO EVERYONE ELSE
+func addEffectStack(effectScene:PackedScene, count:int):
+	var path:String = effectScene.resource_path
+	var fxname:String = str(randi_range(0, 999999999999))
+	_addEffectStackRpc.rpc(path, count, fxname, -1)
+
+@rpc("authority", "reliable", "call_local")
+func _addEffectStackRpc(resource_path:String, count:int, fxname:String, age:float):
+	var effect:StatusEffect = getEffect(resource_path)
+	if !effect:
+		effect = load(resource_path).instantiate()
+		effect._ownPath = resource_path
+		effect.ent = self
+		effect.stackCount = 0
+		effect.addStacks(count)
+		if age >= 0:
+			effect._age = age
+		effect.name = fxname
+		add_child(effect)
+		effect_added.emit(effect)
+	else:
+		effect.name = fxname
+		effect.addStacks(count)
+
+func getEffect(path:String) -> StatusEffect:
+	for e:StatusEffect in _statusEffects:
+		if path == e._ownPath: return e;
+	return null;
 
 ## @experimental
 @rpc("authority", "call_local", "reliable")

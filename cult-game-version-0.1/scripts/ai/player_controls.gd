@@ -9,6 +9,7 @@ var mouseLookMode = true
 var vignetteTween:Tween
 
 const spectatorBody:String = "res://objects/characters/spectator.tscn"
+var statusEffectIcon = preload("res://objects/statusEffectIcon.tscn")
 
 var controllerAimLength:float = 0
 var controllerAimMinimum:float = 100
@@ -22,6 +23,7 @@ func _ready():
 	ent.damage_taken.connect(damageVignette)
 	$"HUD STUFF/vignette".modulate = Color(Color.RED, 0)
 	ent.killed.connect(spectate)
+	ent.effect_added.connect(_on_status_effect_added)
 	if ent.abilities.size() > 0 and is_instance_valid(ent.abilities[0]): 
 		$"HUD STUFF/primaryIcon".set_ability(ent.abilities[0])
 	if ent.abilities.size() > 1 and is_instance_valid(ent.abilities[1]): 
@@ -98,6 +100,11 @@ func _process(delta):
 		if Input.is_action_just_released("SpecialAbility"):
 			ent.setAbilityPressed.rpc(2, false)
 	#endregion
+
+func _on_status_effect_added(effect:StatusEffect):
+	var temp = statusEffectIcon.instantiate()
+	temp.effect = effect
+	$"HUD STUFF/statusEffectBar".add_child(temp)
 
 func damageVignette(dmg_amt, _from):
 	if !is_instance_valid(ent): return
