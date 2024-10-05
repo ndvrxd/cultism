@@ -1,0 +1,28 @@
+[gd_scene load_steps=2 format=3 uid="uid://bpipsq2n741a7"]
+
+[sub_resource type="GDScript" id="GDScript_ubm7q"]
+resource_name = "asfdsafjasfjdhfsgda"
+script/source = "extends EntityController
+
+var go_here
+
+func _process(_delta:float) -> void:
+	ent.lookDirection = Vector2(randf_range(-1, 1), randf_range(-1, 1)).normalized()
+	ent.moveIntent = ent.global_position.direction_to(nav.get_next_path_position())
+	nav.debug_enabled = true
+
+func _on_fuck_off_timeout() -> void:
+	for i in range(10):
+		go_here = ent.global_position + Vector2(randf_range(-1000, 1000), randf_range(-1000, 1000))
+		nav.target_position = go_here
+		if nav.is_target_reachable():
+			break
+"
+
+[node name="Ahfdasjfhdkashgsfjklh" type="Node2D"]
+script = SubResource("GDScript_ubm7q")
+
+[node name="fuck off" type="Timer" parent="."]
+autostart = true
+
+[connection signal="timeout" from="fuck off" to="." method="_on_fuck_off_timeout"]
