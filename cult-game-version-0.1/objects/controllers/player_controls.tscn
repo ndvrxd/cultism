@@ -84,6 +84,7 @@ texture = ExtResource("5_i4xsy")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(-0.5, -57.5)
+process_callback = 0
 position_smoothing_enabled = true
 drag_horizontal_enabled = true
 drag_vertical_enabled = true

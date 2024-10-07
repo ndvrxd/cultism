@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scenes/settings_menu.gd" id="1_sfttj"]
 [ext_resource type="FontFile" uid="uid://dhk11k42eybnt" path="res://fonts/chela-one.regular.ttf" id="2_axae7"]
-[ext_resource type="PackedScene" uid="uid://d4afvuimmen53" path="res://scripts/h_slider.tscn" id="3_xw6em"]
+[ext_resource type="PackedScene" uid="uid://d4afvuimmen53" path="res://scenes/menu/h_slider.tscn" id="3_xw6em"]
 
 [node name="New Menu" type="Control"]
 layout_mode = 3
