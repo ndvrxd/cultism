@@ -52,6 +52,7 @@ func _physics_process(delta: float) -> void:
 		
 	else: # if not aggroed, move toward the next node in the path
 		updateIdlePathing()
-		nav.target_position = nextPathNode.global_position;
-		ent.moveIntent = ent.global_position.direction_to(navdest)
-		ent.lookDirection = ent.moveIntent
+		if nextPathNode:
+			nav.target_position = nextPathNode.global_position;
+			ent.moveIntent = ent.global_position.direction_to(navdest)
+			ent.lookDirection = ent.moveIntent

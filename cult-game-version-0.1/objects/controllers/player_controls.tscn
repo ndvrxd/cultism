@@ -113,7 +113,7 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("3_vj6ed")
 
-[node name="Label2" type="Label" parent="HUD STUFF"]
+[node name="PRIORITIES" type="Label" parent="HUD STUFF"]
 modulate = Color(1, 1, 1, 0.709804)
 texture_filter = 2
 anchors_preset = 1
@@ -129,7 +129,6 @@ text = "unnamed animal cult game prototype
 (so far from final it hurts)
 current prio:
 - Possum
-- StatusCondition & Upgrade base classes
 - More enemy variation
 - Waves & repeatable gameplay loop
 - Respawn & fail conditions"
@@ -281,7 +280,6 @@ grow_vertical = 0
 text = "status effect bar (nyi) ->"
 
 [node name="itemdialog" type="PanelContainer" parent="HUD STUFF"]
-visible = false
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
@@ -317,6 +315,11 @@ layout_mode = 2
 text = "when you pick up an item it might show in this  stupid little dialog box"
 label_settings = ExtResource("4_u25xa")
 autowrap_mode = 2
+
+[node name="disappear" type="Timer" parent="HUD STUFF/itemdialog"]
+process_mode = 1
+wait_time = 4.0
+one_shot = true
 
 [node name="statusEffectBar" type="HBoxContainer" parent="HUD STUFF"]
 anchors_preset = 3
@@ -438,3 +441,5 @@ texture = ExtResource("4_c01lm")
 layout_mode = 2
 text = "Attack: "
 label_settings = SubResource("LabelSettings_xynuc")
+
+[connection signal="timeout" from="HUD STUFF/itemdialog/disappear" to="HUD STUFF/itemdialog" method="set_visible" binds= [false]]

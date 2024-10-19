@@ -25,7 +25,7 @@ func _on_body_entered(body: Node2D) -> void:
 	if body.is_multiplayer_authority():
 		var ent:Entity = body as Entity
 		ent.addItem(_item_scn)
-		$CollisionShape2D.disabled = true
+		$CollisionShape2D.set_deferred(\"disabled\", true)
 	if is_multiplayer_authority():
 		_remove_me.rpc()
 

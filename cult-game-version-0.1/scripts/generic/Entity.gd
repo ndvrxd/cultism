@@ -368,10 +368,10 @@ func _addItemStackRpc(resource_path:String, count:int, nodename:String):
 		item.name = nodename
 		_items.append(item)
 		add_child(item)
-		item_acquired.emit(item)
 	else:
 		item.name = nodename
 		item.addStacks(count)
+	item_acquired.emit(item)
 
 func getItem(path:String) -> PassiveItem:
 	for i:PassiveItem in _items:
