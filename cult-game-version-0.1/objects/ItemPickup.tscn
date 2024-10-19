@@ -1,0 +1,43 @@
+[gd_scene load_steps=4 format=3 uid="uid://dejjqradn0snl"]
+
+[ext_resource type="Texture2D" uid="uid://bmcl5vl05h6ty" path="res://art/missing texture.png" id="1_o6srj"]
+
+[sub_resource type="GDScript" id="GDScript_d6173"]
+script/source = "extends Area2D
+
+## Resource path to the [PassiveItem] scene
+## this pickup should grant.
+var item_path:String = \"\"
+"
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_n0w2k"]
+radius = 72.0625
+
+[node name="ItemPickup" type="Area2D"]
+collision_layer = 4
+collision_mask = 64
+input_pickable = false
+script = SubResource("GDScript_d6173")
+
+[node name="anchor" type="Node2D" parent="." groups=["upright_sprite"]]
+
+[node name="spr_center" type="Node2D" parent="anchor"]
+position = Vector2(0, -118)
+
+[node name="TextureRect" type="TextureRect" parent="anchor/spr_center"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -50.0
+offset_top = -50.0
+offset_right = 50.0
+offset_bottom = 50.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_o6srj")
+expand_mode = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_n0w2k")

@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=3 uid="uid://csjxjvyxjjvar"]
+
+[ext_resource type="Texture2D" uid="uid://c3l4kkjo4q83i" path="res://vfx/particle/sparkle haha.png" id="1_7d6tg"]
+
+[sub_resource type="GDScript" id="GDScript_e7ng8"]
+script/source = "extends StatusEffect
+
+func _on_ready() -> void:
+	pass	
+
+func _on_effect_removed() -> void:
+	pass # Replace with function body.
+"
+
+[node name="Starstruck" type="Node2D"]
+script = SubResource("GDScript_e7ng8")
+icon = ExtResource("1_7d6tg")
+effectName = "Starstruck"
+desc = "You've been turned to another team."
+
+[connection signal="effect_removed" from="." to="." method="_on_effect_removed"]
+[connection signal="ready" from="." to="." method="_on_ready"]

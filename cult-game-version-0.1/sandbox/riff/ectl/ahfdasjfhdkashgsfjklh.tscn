@@ -9,7 +9,7 @@ var go_here
 func _process(_delta:float) -> void:
 	ent.lookDirection = Vector2(randf_range(-1, 1), randf_range(-1, 1)).normalized()
 	ent.moveIntent = ent.global_position.direction_to(nav.get_next_path_position())
-	nav.debug_enabled = true
+	#nav.debug_enabled = true
 
 func _on_fuck_off_timeout() -> void:
 	for i in range(10):

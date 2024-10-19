@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="WeaponInfo" load_steps=3 format=3 uid="uid://cebmae0mofp4i"]
+
+[ext_resource type="Texture2D" uid="uid://cgbpbd7cntj84" path="res://art/attack/boomerang.png" id="1_vvjpm"]
+[ext_resource type="Script" path="res://scripts/abstract/WeaponInfo.gd" id="2_17vl6"]
+
+[resource]
+script = ExtResource("2_17vl6")
+wep_name = "Enchanted Boomerang"
+wep_desc = "A small, relatively weak boomerang with no secondary attack - instead, it allows you to teleport anywhere on-screen!"
+inventory_sprite = ExtResource("1_vvjpm")
+category = "Boomerangs"
+damage_coefficient = 0.7
+primaryResPath = "res://objects/abilities/boomerang.tscn"
+secondaryResPath = "res://objects/abilities/warp.tscn"
