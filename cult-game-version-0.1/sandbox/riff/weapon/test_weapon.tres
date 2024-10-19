@@ -10,5 +10,5 @@ wep_desc = "A small, relatively weak boomerang with no secondary attack - instea
 inventory_sprite = ExtResource("1_vvjpm")
 category = "Boomerangs"
 damage_coefficient = 0.7
-primaryResPath = "res://objects/abilities/boomerang.tscn"
-secondaryResPath = "res://objects/abilities/warp.tscn"
+primary_ability_path = "res://objects/abilities/boomerang.tscn"
+secondary_ability_path = "res://objects/abilities/warp.tscn"

@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://ci2psjf4f2qtu"]
+[gd_scene load_steps=28 format=3 uid="uid://ci2psjf4f2qtu"]
 
 [ext_resource type="Script" path="res://scripts/ai/player_controls.gd" id="1_122va"]
 [ext_resource type="Script" path="res://scripts/camera_tilt_test.gd" id="2_fxmue"]
@@ -53,6 +53,14 @@ height = 30
 [sub_resource type="LabelSettings" id="LabelSettings_ad3e4"]
 font = ExtResource("3_6ivni")
 font_size = 28
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_ccxkw"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_18e2f"]
+font = ExtResource("3_6ivni")
+font_size = 32
+outline_size = 5
+outline_color = Color(0, 0, 0, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_8wkxw"]
 font = ExtResource("3_6ivni")
@@ -271,6 +279,44 @@ offset_bottom = -79.0
 grow_horizontal = 0
 grow_vertical = 0
 text = "status effect bar (nyi) ->"
+
+[node name="itemdialog" type="PanelContainer" parent="HUD STUFF"]
+visible = false
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -197.0
+offset_top = -246.0
+offset_right = 207.0
+offset_bottom = -146.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="hflow" type="HBoxContainer" parent="HUD STUFF/itemdialog"]
+layout_mode = 2
+
+[node name="icon" type="TextureRect" parent="HUD STUFF/itemdialog/hflow"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+texture = SubResource("PlaceholderTexture2D_ccxkw")
+expand_mode = 1
+
+[node name="vflow" type="VBoxContainer" parent="HUD STUFF/itemdialog/hflow"]
+layout_mode = 2
+
+[node name="name" type="Label" parent="HUD STUFF/itemdialog/hflow/vflow"]
+layout_mode = 2
+text = "this might be an item"
+label_settings = SubResource("LabelSettings_18e2f")
+
+[node name="desc" type="Label" parent="HUD STUFF/itemdialog/hflow/vflow"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+text = "when you pick up an item it might show in this  stupid little dialog box"
+label_settings = ExtResource("4_u25xa")
+autowrap_mode = 2
 
 [node name="statusEffectBar" type="HBoxContainer" parent="HUD STUFF"]
 anchors_preset = 3

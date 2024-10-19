@@ -13,7 +13,7 @@ var ent:Entity
 @export var icon:Texture2D;
 
 ## The in-game name for this item.
-@export var effectName:String = "Formless"
+@export var itemName:String = "Formless"
 
 ## The in-game description for this item.
 @export_multiline var desc:String = "An item...? It does nothing."

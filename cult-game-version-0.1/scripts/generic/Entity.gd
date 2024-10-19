@@ -10,6 +10,7 @@ signal healed(amount:float, by:Entity)
 signal hit_landed(at:Vector2, normal:Vector2)
 signal killed(by:Entity)
 signal effect_added(effect:StatusEffect)
+signal item_acquired(item:PassiveItem)
 
 ## The in-game name for this Entity.
 @export var entityName:String = "Entity";
@@ -47,6 +48,7 @@ var ability_vars:Dictionary = {}
 
 var _controllerAttached:bool = false;
 var _statusEffects:Array[StatusEffect] = [];
+var _items:Array[PassiveItem] = [];
 
 var _healthBar:TextureProgressBar
 var _healthBarTimer:float = 0;
@@ -308,7 +310,6 @@ func kill(killedBy:NodePath="") -> void:
 ## Set to [code]unreliable_ordered[/code] for efficiency.
 @rpc("authority", "call_remote", "unreliable_ordered")
 func streamMovement(pos:Vector2, intent:Vector2, lookDir:Vector2, aimPos:Vector2):
-	# TODO: NEEDS TO BE MADE AUTHORITY ONLY
 	global_position = pos;
 	moveIntent = intent.normalized();
 	lookDirection = lookDir.normalized();
@@ -325,7 +326,7 @@ func addEffectStack(effectScene:PackedScene, count:int):
 	var fxname:String = str(randi_range(0, 999999999999))
 	_addEffectStackRpc.rpc(path, count, fxname, -1)
 
-@rpc("authority", "reliable", "call_local")
+@rpc("any_peer", "reliable", "call_local")
 func _addEffectStackRpc(resource_path:String, count:int, fxname:String, age:float):
 	var effect:StatusEffect = getEffect(resource_path)
 	if !effect:
@@ -337,6 +338,7 @@ func _addEffectStackRpc(resource_path:String, count:int, fxname:String, age:floa
 		if age >= 0:
 			effect._age = age
 		effect.name = fxname
+		_statusEffects.append(effect)
 		add_child(effect)
 		effect_added.emit(effect)
 	else:
@@ -346,6 +348,34 @@ func _addEffectStackRpc(resource_path:String, count:int, fxname:String, age:floa
 func getEffect(path:String) -> StatusEffect:
 	for e:StatusEffect in _statusEffects:
 		if path == e._ownPath: return e;
+	return null;
+
+func addItem(itemScene:PackedScene, count:int=1):
+	var path:String = itemScene.resource_path
+	var nodename:String = str(randi_range(0, 999999999999))
+	if is_multiplayer_authority():
+		_addItemStackRpc.rpc(path, count, nodename)
+
+@rpc("authority", "reliable", "call_local")
+func _addItemStackRpc(resource_path:String, count:int, nodename:String):
+	var item:PassiveItem = getItem(resource_path)
+	if !item:
+		item = load(resource_path).instantiate()
+		item._ownPath = resource_path
+		item.ent = self
+		item.stackCount = 0
+		item.addStacks(count)
+		item.name = nodename
+		_items.append(item)
+		add_child(item)
+		item_acquired.emit(item)
+	else:
+		item.name = nodename
+		item.addStacks(count)
+
+func getItem(path:String) -> PassiveItem:
+	for i:PassiveItem in _items:
+		if path == i._ownPath: return i;
 	return null;
 
 ## @experimental

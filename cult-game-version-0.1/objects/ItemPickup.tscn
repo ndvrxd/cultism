@@ -1,5 +1,6 @@
-[gd_scene load_steps=4 format=3 uid="uid://dejjqradn0snl"]
+[gd_scene load_steps=5 format=3 uid="uid://dejjqradn0snl"]
 
+[ext_resource type="Texture2D" uid="uid://dmcej1hbhoaj0" path="res://vfx/particle/aoe.png" id="1_ds8yy"]
 [ext_resource type="Texture2D" uid="uid://bmcl5vl05h6ty" path="res://art/missing texture.png" id="1_o6srj"]
 
 [sub_resource type="GDScript" id="GDScript_d6173"]
@@ -7,37 +8,76 @@ script/source = "extends Area2D
 
 ## Resource path to the [PassiveItem] scene
 ## this pickup should grant.
-var item_path:String = \"\"
+@export_file var item_scene_path:String = \"\"
+@onready var _item_scn:PackedScene = load(item_scene_path)
+
+func _ready() -> void:
+	if item_scene_path != \"\":
+		var temp:PassiveItem = _item_scn.instantiate()
+		$anchor/spr_center/icon.texture = temp.icon
+
+func _process(delta:float) -> void:
+	$anchor/spr_center/icon.position.y = sin(Time.get_unix_time_from_system()) * 15
+	$shadow.scale = Vector2.ONE * (sin(Time.get_unix_time_from_system()) * 0.1 + 0.5)
+
+func _on_body_entered(body: Node2D) -> void:
+	if not body is Entity: return
+	if body.is_multiplayer_authority():
+		var ent:Entity = body as Entity
+		ent.addItem(_item_scn)
+		$CollisionShape2D.disabled = true
+	if is_multiplayer_authority():
+		_remove_me.rpc()
+
+@rpc(\"authority\", \"reliable\", \"call_local\")
+func _remove_me():
+	queue_free()
 "
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_n0w2k"]
-radius = 72.0625
+radius = 31.1448
 
 [node name="ItemPickup" type="Area2D"]
+y_sort_enabled = true
 collision_layer = 4
 collision_mask = 64
 input_pickable = false
 script = SubResource("GDScript_d6173")
 
+[node name="shadow" type="Sprite2D" parent="."]
+process_mode = 4
+modulate = Color(0, 0, 0, 0.286275)
+z_index = -1
+scale = Vector2(0.615, 0.615)
+texture = ExtResource("1_ds8yy")
+
 [node name="anchor" type="Node2D" parent="." groups=["upright_sprite"]]
+process_mode = 4
 
 [node name="spr_center" type="Node2D" parent="anchor"]
-position = Vector2(0, -118)
+process_mode = 4
+position = Vector2(0, -75)
 
-[node name="TextureRect" type="TextureRect" parent="anchor/spr_center"]
+[node name="icon" type="TextureRect" parent="anchor/spr_center"]
+process_mode = 4
+y_sort_enabled = true
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -50.0
-offset_top = -50.0
-offset_right = 50.0
-offset_bottom = 50.0
+offset_left = -25.0
+offset_top = -25.0
+offset_right = 25.0
+offset_bottom = 25.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("1_o6srj")
 expand_mode = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+process_mode = 4
 shape = SubResource("CircleShape2D_n0w2k")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

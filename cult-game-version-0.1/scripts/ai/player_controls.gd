@@ -24,6 +24,7 @@ func _ready():
 	$"HUD STUFF/vignette".modulate = Color(Color.RED, 0)
 	ent.killed.connect(spectate)
 	ent.effect_added.connect(_on_status_effect_added)
+	ent.item_acquired.connect(_on_item_acquired)
 	if ent.abilities.size() > 0 and is_instance_valid(ent.abilities[0]): 
 		$"HUD STUFF/primaryIcon".set_ability(ent.abilities[0])
 	if ent.abilities.size() > 1 and is_instance_valid(ent.abilities[1]): 
@@ -105,6 +106,14 @@ func _on_status_effect_added(effect:StatusEffect):
 	var temp = statusEffectIcon.instantiate()
 	temp.effect = effect
 	$"HUD STUFF/statusEffectBar".add_child(temp)
+
+func _on_item_acquired(item:PassiveItem):
+	$"HUD STUFF/itemdialog".visible = true
+	$"HUD STUFF/itemdialog/hflow/icon".texture = item.icon
+	$"HUD STUFF/itemdialog/hflow/vflow/name".text = item.itemName
+	$"HUD STUFF/itemdialog/hflow/vflow/desc".text = item.desc
+	await get_tree().create_timer(4, false).timeout
+	$"HUD STUFF/itemdialog".visible = false
 
 func damageVignette(dmg_amt, _from):
 	if !is_instance_valid(ent): return

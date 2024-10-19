@@ -22,7 +22,7 @@ class_name WeaponInfo extends Resource
 @export var damage_coefficient:float = 1
 
 ## The resource path to the primary [Ability] scene this Weapon should have.
-@export_file var primaryResPath:String;
+@export_file var primary_ability_path:String;
 
 ## The resource path to the secondary [Ability] scene this weapon should have.
-@export_file var secondaryResPath:String;
+@export_file var secondary_ability_path:String;
