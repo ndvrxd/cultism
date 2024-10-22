@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://ci2psjf4f2qtu"]
+[gd_scene load_steps=29 format=3 uid="uid://ci2psjf4f2qtu"]
 
 [ext_resource type="Script" path="res://scripts/ai/player_controls.gd" id="1_122va"]
 [ext_resource type="Script" path="res://scripts/camera_tilt_test.gd" id="2_fxmue"]
@@ -76,6 +76,12 @@ font_color = Color(0, 0.762777, 0.386614, 1)
 font = ExtResource("3_6ivni")
 font_size = 25
 font_color = Color(4.04298e-06, 0.682316, 0.985905, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_rb2o6"]
+font = ExtResource("3_6ivni")
+font_size = 72
+outline_size = 10
+outline_color = Color(0, 0, 0, 1)
 
 [node name="PlayerControls" type="Node2D"]
 script = ExtResource("1_122va")
@@ -441,5 +447,14 @@ texture = ExtResource("4_c01lm")
 layout_mode = 2
 text = "Attack: "
 label_settings = SubResource("LabelSettings_xynuc")
+
+[node name="TimeElapsedLabel" type="Label" parent="HUD STUFF"]
+unique_name_in_owner = true
+offset_left = 604.0
+offset_right = 739.0
+offset_bottom = 85.0
+text = "00:00"
+label_settings = SubResource("LabelSettings_rb2o6")
+horizontal_alignment = 1
 
 [connection signal="timeout" from="HUD STUFF/itemdialog/disappear" to="HUD STUFF/itemdialog" method="set_visible" binds= [false]]

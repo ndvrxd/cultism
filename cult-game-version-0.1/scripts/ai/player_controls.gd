@@ -17,6 +17,10 @@ var controllerAimMaximum:float = 600
 var controllerAimSpeed:float = 400
 var lastStickDir:Vector2 = Vector2.ZERO
 
+# for time elapsed
+var seconds: float = 0.0
+var minutes: int = 0
+
 func _ready():
 	super._ready()
 	ui_hb_over.tint_progress = ent.healthBarColor
@@ -102,6 +106,29 @@ func _process(delta):
 		if Input.is_action_just_released("SpecialAbility"):
 			ent.setAbilityPressed.rpc(2, false)
 	#endregion
+	
+	time_elapsed(delta)
+
+
+# clock controller
+# i should add in hours later if needed
+# i also should probably put the label in a container
+func time_elapsed(delta):
+	seconds += delta
+	
+	var seconds_str = str(int(seconds))
+	
+	# single digit padding
+	if seconds < 10:
+		seconds_str = "0" + seconds_str
+	
+	# updating for minutes
+	if seconds >= 60:
+		seconds = 0
+		minutes += 1
+	
+	%TimeElapsedLabel.text = str(minutes) + ":" + seconds_str
+
 
 func _on_status_effect_added(effect:StatusEffect):
 	var temp = statusEffectIcon.instantiate()
