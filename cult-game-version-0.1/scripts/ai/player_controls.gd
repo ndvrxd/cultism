@@ -118,7 +118,6 @@ func _process(delta):
 
 # clock controller
 # i should add in hours later if needed
-# i also should probably put the label in a container
 func time_elapsed(delta):
 	seconds += delta
 	
