@@ -1,0 +1,24 @@
+[gd_scene load_steps=5 format=3 uid="uid://e4vadllji3kw"]
+
+[ext_resource type="Script" path="res://scripts/generic/Ability.gd" id="1_m5bpq"]
+[ext_resource type="Texture2D" uid="uid://soudc4snc7fj" path="res://art/character ph/kibby ph 2.png" id="2_7wdhk"]
+[ext_resource type="Script" path="res://scripts/abstract/Stat.gd" id="3_8v133"]
+[ext_resource type="AudioStream" uid="uid://dafv46onn3r6j" path="res://art/ui/keys/mrrowr.ogg" id="4_7g8go"]
+
+[node name="MeowButton" type="Node2D" node_paths=PackedStringArray("stat_cooldown")]
+script = ExtResource("1_m5bpq")
+ability_name = "Dedicated Meow Button"
+ability_desc = "Yeah."
+portrait = ExtResource("2_7wdhk")
+stat_cooldown = NodePath("cooldown")
+
+[node name="cooldown" type="Node" parent="."]
+script = ExtResource("3_8v133")
+baseValue = 1.0
+
+[node name="meow" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_7g8go")
+pitch_scale = 1.31
+bus = &"sfx"
+
+[connection signal="fired" from="." to="meow" method="play"]

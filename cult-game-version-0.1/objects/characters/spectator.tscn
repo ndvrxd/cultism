@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scripts/abstract/Stat.gd" id="1_bhg58"]
 [ext_resource type="Texture2D" uid="uid://5m8ckagwla2f" path="res://art/character ph/shadowdemon_eyes.png" id="1_ejiw6"]
-[ext_resource type="PackedScene" uid="uid://by3453xjeh7f0" path="res://objects/abilities/spook.tscn" id="1_otwcb"]
+[ext_resource type="PackedScene" uid="uid://by3453xjeh7f0" path="res://objects/abilities/dedicatedmeowbutton/spook.tscn" id="1_otwcb"]
 
 [sub_resource type="GDScript" id="GDScript_gfdmq"]
 resource_name = "Spectator"
@@ -22,7 +22,7 @@ script = SubResource("GDScript_gfdmq")
 entityName = "Spectator"
 objPath = "res://objects/characters/spectator.tscn"
 healthBarColor = Color(0.65, 0.65, 0.65, 1)
-abilities = [null, null, NodePath("Spook")]
+abilities = [null, null, null, NodePath("Spook")]
 stat_maxHp = NodePath("stat_maxHp")
 stat_speed = NodePath("stat_speed")
 stat_aggroNoise = NodePath("stat_aggroNoise")

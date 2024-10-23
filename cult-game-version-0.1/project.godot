@@ -30,7 +30,7 @@ window/size/viewport_height=720
 
 entity="Group containing all entities"
 upright_sprite="Sprites that should be visually scaled with camera Y."
-player_spawnpoint=""
+player_spawnpoint="Spawn points for players."
 path_start_node="Node group for nodes that determine the paths enemies can take.."
 path_node="Group for all enemy pathfinding nodes."
 enemy_spawnpoint="Spawn points for enemies."
@@ -186,6 +186,11 @@ CameraZoomOutImpulse={
 "Toggle Fullscreen"={
 "deadzone": 0.5,
 "events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":4194342,"key_label":0,"unicode":0,"location":0,"echo":false,"script":null)
+]
+}
+"dedicated meow button"={
+"deadzone": 0.5,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":90,"key_label":0,"unicode":122,"location":0,"echo":false,"script":null)
 ]
 }
 

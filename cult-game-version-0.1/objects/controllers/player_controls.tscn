@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://ci2psjf4f2qtu"]
+[gd_scene load_steps=30 format=3 uid="uid://ci2psjf4f2qtu"]
 
 [ext_resource type="Script" path="res://scripts/ai/player_controls.gd" id="1_122va"]
 [ext_resource type="Script" path="res://scripts/camera_tilt_test.gd" id="2_fxmue"]
@@ -11,6 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://clqo76f6tebyl" path="res://art/ui/arrow.png" id="5_i4xsy"]
 [ext_resource type="Texture2D" uid="uid://w30ihm6saioh" path="res://art/ui/keys/key_r.png" id="6_4rguy"]
 [ext_resource type="Texture2D" uid="uid://42xrp4tgqr4c" path="res://art/ui/keys/m2.png" id="8_m8frb"]
+[ext_resource type="Texture2D" uid="uid://ve5rff2233rg" path="res://art/ui/keys/key_z.tres" id="9_wsmga"]
 [ext_resource type="PackedScene" uid="uid://leqtb5qj5y1" path="res://objects/abilityIcon.tscn" id="10_h6yu6"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_p2dro"]
@@ -180,6 +181,20 @@ offset_bottom = -67.0
 grow_horizontal = 0
 grow_vertical = 0
 keyIcon = ExtResource("6_4rguy")
+
+[node name="meowButton" parent="HUD STUFF" instance=ExtResource("10_h6yu6")]
+process_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = -30.0
+offset_top = -79.0
+offset_right = -30.0
+offset_bottom = -79.0
+grow_horizontal = 0
+keyIcon = ExtResource("9_wsmga")
+iconScale = 0.5
 
 [node name="healthbar_under" type="TextureProgressBar" parent="HUD STUFF"]
 anchors_preset = 3
@@ -449,7 +464,6 @@ text = "Attack: "
 label_settings = SubResource("LabelSettings_xynuc")
 
 [node name="TimeElapsedLabel" type="Label" parent="HUD STUFF"]
-unique_name_in_owner = true
 offset_left = 604.0
 offset_right = 739.0
 offset_bottom = 85.0

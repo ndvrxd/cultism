@@ -40,13 +40,13 @@ position = Vector2(-655, -476)
 item_scene_path = "res://sandbox/riff/test_item.tscn"
 
 [node name="ItemPickup4" parent="." instance=ExtResource("4_irs02")]
-position = Vector2(-535, -476)
+position = Vector2(-563, -476)
 item_scene_path = "res://sandbox/riff/test_item.tscn"
 
 [node name="ItemPickup5" parent="." instance=ExtResource("4_irs02")]
-position = Vector2(-433, -476)
+position = Vector2(-468, -476)
 item_scene_path = "res://sandbox/riff/test_item.tscn"
 
 [node name="ItemPickup6" parent="." instance=ExtResource("4_irs02")]
-position = Vector2(-326, -476)
+position = Vector2(-376, -476)
 item_scene_path = "res://sandbox/riff/test_item.tscn"

@@ -1,7 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://ci7mx2j77fwhs"]
+[gd_scene load_steps=10 format=3 uid="uid://ci7mx2j77fwhs"]
 
 [ext_resource type="Script" path="res://scripts/generic/Entity.gd" id="1_jx1vv"]
 [ext_resource type="PackedScene" uid="uid://bibt0wcnslvxw" path="res://objects/abilities/instrumet_strike_stock.tscn" id="2_3be6p"]
+[ext_resource type="PackedScene" uid="uid://e4vadllji3kw" path="res://objects/abilities/dedicatedmeowbutton/meow.tscn" id="2_6pwcn"]
 [ext_resource type="Script" path="res://scripts/abstract/Stat.gd" id="2_cnk3q"]
 [ext_resource type="PackedScene" uid="uid://dvy5sraal3n12" path="res://objects/abilities/freehand_aoe.tscn" id="3_oppbj"]
 [ext_resource type="Texture2D" uid="uid://soudc4snc7fj" path="res://art/character ph/kibby ph 2.png" id="3_vd5t2"]
@@ -22,11 +23,13 @@ entityName = "Kibby"
 team = 1
 objPath = "res://objects/characters/kibby.tscn"
 aggroPriority = 1
-abilities = [NodePath("InstrumentStrikeStock"), NodePath("FreehandAoe"), NodePath("Starstruck")]
+abilities = [NodePath("InstrumentStrikeStock"), NodePath("FreehandAoe"), NodePath("Starstruck"), NodePath("MeowButton")]
 stat_maxHp = NodePath("stat_maxHp")
 stat_speed = NodePath("stat_speed")
 stat_regen = NodePath("stat_regen")
 stat_aggroNoise = NodePath("stat_aggroNoise")
+
+[node name="MeowButton" parent="." instance=ExtResource("2_6pwcn")]
 
 [node name="InstrumentStrikeStock" parent="." instance=ExtResource("2_3be6p")]
 

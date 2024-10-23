@@ -36,6 +36,8 @@ func _ready():
 		$"HUD STUFF/secondaryIcon".set_ability(ent.abilities[1])
 	if ent.abilities.size() > 2 and is_instance_valid(ent.abilities[2]): 
 		$"HUD STUFF/specialIcon".set_ability(ent.abilities[2])
+	if ent.abilities.size() > 3 and is_instance_valid(ent.abilities[3]): 
+		$"HUD STUFF/meowButton".set_ability(ent.abilities[3])
 
 func spectate(killedBy:Entity):
 	var ename:String = ent.name
@@ -105,6 +107,10 @@ func _process(delta):
 			ent.setAbilityPressed.rpc(2, true)
 		if Input.is_action_just_released("SpecialAbility"):
 			ent.setAbilityPressed.rpc(2, false)
+		if Input.is_action_just_pressed("dedicated meow button"):
+			ent.setAbilityPressed.rpc(3, true)
+		if Input.is_action_just_released("dedicated meow button"):
+			ent.setAbilityPressed.rpc(3, false)
 	#endregion
 	
 	time_elapsed(delta)
@@ -127,7 +133,7 @@ func time_elapsed(delta):
 		seconds = 0
 		minutes += 1
 	
-	%TimeElapsedLabel.text = str(minutes) + ":" + seconds_str
+	$"HUD STUFF/TimeElapsedLabel".text = str(minutes) + ":" + seconds_str
 
 
 func _on_status_effect_added(effect:StatusEffect):
