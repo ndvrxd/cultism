@@ -1,0 +1,71 @@
+[gd_scene load_steps=7 format=3 uid="uid://danxc8escdqhg"]
+
+[ext_resource type="Script" path="res://scripts/generic/Entity.gd" id="1_4wqhx"]
+[ext_resource type="Texture2D" uid="uid://bte5l2cpqvgmu" path="res://art/character ph/ndvr sprites/bnuy.png" id="2_ricvs"]
+[ext_resource type="Script" path="res://scripts/abstract/Stat.gd" id="3_ch04v"]
+[ext_resource type="PackedScene" uid="uid://bga12kqmary5o" path="res://objects/abilities/boomerang.tscn" id="4_sebco"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_7jqyf"]
+radius = 7.6555
+height = 21.0526
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_d77vd"]
+radius = 37.2364
+
+[node name="bunny" type="CharacterBody2D" node_paths=PackedStringArray("abilities", "stat_speed", "stat_regen", "stat_aggroNoise", "stat_baseDamage")]
+collision_layer = 112
+collision_mask = 7
+script = ExtResource("1_4wqhx")
+objPath = "res://objects/characters/bunny.tscn"
+abilities = [NodePath("BoomerangAbility")]
+stat_speed = NodePath("stats/speed")
+stat_regen = NodePath("stats/regen")
+stat_aggroNoise = NodePath("stats/aggro noise")
+stat_baseDamage = NodePath("stats/base damage")
+
+[node name="feet" type="Node2D" parent="." groups=["upright_sprite"]]
+y_sort_enabled = true
+
+[node name="Sprite2D" type="Sprite2D" parent="feet"]
+texture_filter = 1
+scale = Vector2(0.765, 0.765)
+texture = ExtResource("2_ricvs")
+offset = Vector2(0, -91)
+
+[node name="shoulder" type="Node2D" parent="."]
+position = Vector2(0, -79)
+
+[node name="hurtbox" type="Area2D" parent="."]
+scale = Vector2(5.225, 5.225)
+collision_layer = 96
+collision_mask = 4
+
+[node name="shape" type="CollisionShape2D" parent="hurtbox"]
+position = Vector2(-7.10543e-15, -12.2488)
+scale = Vector2(0.793301, 0.938756)
+shape = SubResource("CapsuleShape2D_7jqyf")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -23)
+scale = Vector2(0.670024, 0.68)
+shape = SubResource("CircleShape2D_d77vd")
+
+[node name="stats" type="Node" parent="."]
+
+[node name="speed" type="Node" parent="stats"]
+script = ExtResource("3_ch04v")
+baseValue = 300.0
+
+[node name="regen" type="Node" parent="stats"]
+script = ExtResource("3_ch04v")
+baseValue = 2.0
+
+[node name="base damage" type="Node" parent="stats"]
+script = ExtResource("3_ch04v")
+baseValue = 35.0
+
+[node name="aggro noise" type="Node" parent="stats"]
+script = ExtResource("3_ch04v")
+baseValue = 100.0
+
+[node name="BoomerangAbility" parent="." instance=ExtResource("4_sebco")]

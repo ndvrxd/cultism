@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://7le6afmj6w8e"]
+[gd_scene load_steps=15 format=3 uid="uid://7le6afmj6w8e"]
 
 [ext_resource type="Material" uid="uid://di1b160vqpl63" path="res://vfx/material/titlebg.tres" id="1_s75qj"]
 [ext_resource type="FontFile" uid="uid://dhk11k42eybnt" path="res://fonts/chela-one.regular.ttf" id="1_xo7x8"]
@@ -8,6 +8,9 @@
 [ext_resource type="Texture2D" uid="uid://bdyllnybosvnm" path="res://art/character ph/poss ph.png" id="4_ukcea"]
 [ext_resource type="Texture2D" uid="uid://dx7xpikedu613" path="res://art/character ph/lizer ph.png" id="5_bkdcn"]
 [ext_resource type="Texture2D" uid="uid://by4l1bqxb0vue" path="res://art/character ph/ndvr sprites/loser.png" id="6_sgw35"]
+[ext_resource type="Texture2D" uid="uid://cxqphh1ypvm5u" path="res://art/character ph/ndvr sprites/GATOR.png" id="7_mwwib"]
+[ext_resource type="Texture2D" uid="uid://bte5l2cpqvgmu" path="res://art/character ph/ndvr sprites/bnuy.png" id="8_8100t"]
+[ext_resource type="Texture2D" uid="uid://bbk43vaxuk3i0" path="res://art/character ph/ndvr sprites/demomouse.png" id="9_koe8f"]
 
 [sub_resource type="GDScript" id="GDScript_xgb1g"]
 resource_name = "title"
@@ -52,7 +55,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = SubResource("GDScript_xgb1g")
-characterBodyPaths = Array[String](["res://objects/characters/Bnuy.tscn", "res://objects/characters/kibby.tscn", "res://objects/characters/Possum.tscn", "res://objects/characters/Lizer.tscn", "res://objects/characters/LOSER.tscn"])
+characterBodyPaths = Array[String](["res://objects/characters/Bnuy.tscn", "res://objects/characters/kibby.tscn", "res://objects/characters/Possum.tscn", "res://objects/characters/Lizer.tscn", "res://objects/characters/LOSER.tscn", "res://objects/characters/gator.tscn", "res://objects/characters/bunny.tscn", "res://objects/characters/demomouse.tscn"])
 
 [node name="bg" type="ColorRect" parent="."]
 material = ExtResource("1_s75qj")
@@ -101,17 +104,12 @@ grow_vertical = 2
 [node name="roster" type="ItemList" parent="charsel"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.349
-anchor_top = 0.174
-anchor_right = 0.634
-anchor_bottom = 0.676
-offset_left = -179.72
-offset_top = -0.280006
-offset_right = 198.485
-offset_bottom = 0.279999
+anchor_left = 0.279
+anchor_top = 0.175
+anchor_right = 0.745
+anchor_bottom = 0.675
 grow_horizontal = 2
-grow_vertical = 2
-item_count = 5
+item_count = 8
 max_columns = 5
 icon_mode = 0
 icon_scale = 0.7
@@ -126,6 +124,12 @@ item_3/text = "lizer"
 item_3/icon = ExtResource("5_bkdcn")
 item_4/text = "LOSER"
 item_4/icon = ExtResource("6_sgw35")
+item_5/text = "Gator"
+item_5/icon = ExtResource("7_mwwib")
+item_6/text = "Bnuy"
+item_6/icon = ExtResource("8_8100t")
+item_7/text = "Demomouse"
+item_7/icon = ExtResource("9_koe8f")
 
 [node name="Label" type="Label" parent="charsel"]
 layout_mode = 1
