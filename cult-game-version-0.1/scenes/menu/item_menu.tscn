@@ -1,0 +1,84 @@
+[gd_scene load_steps=5 format=3 uid="uid://bwyw04q5473ta"]
+
+[ext_resource type="Script" path="res://scripts/menus/item_menu.gd" id="1_kaqdk"]
+[ext_resource type="Texture2D" uid="uid://b8uotdxr13iyg" path="res://art/ui/attack.png" id="1_mww4r"]
+[ext_resource type="FontFile" uid="uid://dhk11k42eybnt" path="res://fonts/chela-one.regular.ttf" id="2_rsg8m"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_uaa0a"]
+font = ExtResource("2_rsg8m")
+font_size = 50
+outline_size = 5
+outline_color = Color(0, 0, 0, 1)
+
+[node name="ItemMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_kaqdk")
+item_paths = Array[String](["res://sandbox/riff/test_item.tscn"])
+
+[node name="ItemSelect" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ItemList" type="ItemList" parent="ItemSelect"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.349
+anchor_top = 0.174
+anchor_right = 0.634
+anchor_bottom = 0.676
+offset_left = 253.04
+offset_top = 118.04
+offset_right = 972.64
+offset_bottom = 459.96
+grow_horizontal = 2
+grow_vertical = 2
+item_count = 1
+max_columns = 5
+icon_mode = 0
+icon_scale = 0.7
+fixed_icon_size = Vector2i(200, 200)
+item_0/text = "Rizzler's Arms"
+item_0/icon = ExtResource("1_mww4r")
+
+[node name="ItemSelectLabel" type="Label" parent="ItemSelect"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.171
+offset_left = 470.0
+offset_right = 771.0
+offset_bottom = 116.16
+grow_horizontal = 2
+text = "Item Select"
+label_settings = SubResource("LabelSettings_uaa0a")
+horizontal_alignment = 1
+vertical_alignment = 2
+
+[node name="Label" type="Label" parent="ItemSelect"]
+visible = false
+layout_mode = 0
+offset_left = 274.0
+offset_top = 494.0
+offset_right = 383.0
+offset_bottom = 517.0
+text = "press e to exit"
+
+[node name="ConfirmButton" type="Button" parent="ItemSelect"]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 925.0
+offset_top = 494.0
+offset_right = 996.0
+offset_bottom = 525.0
+text = "Confirm"
+
+[connection signal="item_clicked" from="ItemSelect/ItemList" to="." method="_on_item_list_item_clicked"]
+[connection signal="pressed" from="ItemSelect/ConfirmButton" to="." method="_on_confirm_button_pressed"]

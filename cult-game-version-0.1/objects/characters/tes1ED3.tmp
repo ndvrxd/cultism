@@ -56,8 +56,9 @@ var item_menu = preload(\"res://scenes/menu/item_menu.tscn\").instantiate()
 
 func _on_interacted_with(_by:Entity):
 	# THIS IS PROBABLY REALLY BAD!!!!!!
-	item_menu.setup(_by)
 	get_parent().get_parent().get_node(\"CanvasLayer\").add_child(item_menu)
+	# make this open the item menu somehow
+	#_by.addItem(load(\"res://sandbox/riff/test_item.tscn\"))
 "
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ctr2w"]
