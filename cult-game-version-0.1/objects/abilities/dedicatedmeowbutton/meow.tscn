@@ -14,7 +14,7 @@ stat_cooldown = NodePath("cooldown")
 
 [node name="cooldown" type="Node" parent="."]
 script = ExtResource("3_8v133")
-baseValue = 1.0
+baseValue = 0.76
 
 [node name="meow" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("4_7g8go")

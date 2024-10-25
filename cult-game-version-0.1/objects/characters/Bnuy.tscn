@@ -14,7 +14,7 @@ radius = 20.025
 radius = 5.74163
 height = 21.0526
 
-[node name="bnuny" type="CharacterBody2D" node_paths=PackedStringArray("abilities", "stat_speed", "stat_regen", "stat_baseDamage")]
+[node name="bnuny" type="CharacterBody2D" node_paths=PackedStringArray("abilities", "stat_speed", "stat_regen", "stat_aggroNoise", "stat_baseDamage")]
 y_sort_enabled = true
 texture_filter = 6
 collision_layer = 112
@@ -27,6 +27,7 @@ objPath = "res://objects/characters/Bnuy.tscn"
 abilities = [NodePath("SwordStrikeStock"), NodePath("SwordStrikeFlurry"), NodePath("SpeedIncrease")]
 stat_speed = NodePath("stats/speed")
 stat_regen = NodePath("stats/regen")
+stat_aggroNoise = NodePath("stats/aggro noise")
 stat_baseDamage = NodePath("stats/base damage")
 
 [node name="stats" type="Node" parent="."]
@@ -42,6 +43,10 @@ baseValue = 2.0
 [node name="base damage" type="Node" parent="stats"]
 script = ExtResource("17_bkmbb")
 baseValue = 35.0
+
+[node name="aggro noise" type="Node" parent="stats"]
+script = ExtResource("17_bkmbb")
+baseValue = 100.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-1, -20)

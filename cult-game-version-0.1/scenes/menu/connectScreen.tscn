@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://bqn8v6gbnfj1u"]
+[gd_scene load_steps=19 format=3 uid="uid://bqn8v6gbnfj1u"]
 
 [ext_resource type="Script" path="res://scripts/menus/connectScreen.gd" id="1_ep8hg"]
 [ext_resource type="Shader" uid="uid://dsj7wr5hf50yw" path="res://vfx/shaders/scroll_simple.tres" id="2_mssil"]
@@ -14,6 +14,7 @@
 [ext_resource type="Texture2D" uid="uid://veo5l360amx3" path="res://art/character ph/player ph.png" id="12_m4gtj"]
 [ext_resource type="Texture2D" uid="uid://6i8qff0kq7ei" path="res://art/character ph/enemy ph.png" id="13_oj0rj"]
 [ext_resource type="AudioStream" uid="uid://o46j6vbj5ncu" path="res://sound/music/aeiou.ogg" id="14_5jyka"]
+[ext_resource type="Texture2D" uid="uid://by4l1bqxb0vue" path="res://art/character ph/ndvr sprites/loser.png" id="14_u8vuc"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_0gu1n"]
 shader = ExtResource("2_mssil")
@@ -212,7 +213,7 @@ offset_right = 128.0
 offset_bottom = 219.0
 grow_horizontal = 2
 grow_vertical = 2
-item_count = 14
+item_count = 15
 fixed_icon_size = Vector2i(50, 50)
 item_0/text = "Fully playable characters"
 item_0/selectable = false
@@ -244,6 +245,8 @@ item_12/disabled = true
 item_13/text = "enemy_o"
 item_13/icon = ExtResource("13_oj0rj")
 item_13/disabled = true
+item_14/text = "LOSER"
+item_14/icon = ExtResource("14_u8vuc")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("14_5jyka")
