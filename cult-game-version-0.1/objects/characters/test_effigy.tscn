@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://bhatrw3cecxw1"]
+[gd_scene load_steps=17 format=3 uid="uid://bhatrw3cecxw1"]
 
 [ext_resource type="Script" path="res://scripts/generic/Entity.gd" id="1_5fyl5"]
 [ext_resource type="Texture2D" uid="uid://c3l4kkjo4q83i" path="res://vfx/particle/sparkle haha.png" id="1_ocdxr"]
@@ -47,7 +47,19 @@ size = Vector2(6.78411, 1.37636)
 radius = 27.0
 height = 146.0
 
-[node name="test effigy" type="CharacterBody2D" node_paths=PackedStringArray("stat_maxHp", "stat_speed", "stat_regen")]
+[sub_resource type="GDScript" id="GDScript_kvddp"]
+resource_name = "InteractableTest"
+script/source = "extends Interactable
+
+
+func _on_interacted_with(_by:Entity):
+	_by.addItem(load(\"res://sandbox/riff/test_item.tscn\"))
+"
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ctr2w"]
+radius = 62.6498
+
+[node name="test effigy" type="CharacterBody2D" node_paths=PackedStringArray("stat_maxHp", "stat_regen")]
 y_sort_enabled = true
 collision_layer = 113
 collision_mask = 4
@@ -61,7 +73,6 @@ aggroPriority = -1
 healthBarColor = Color(0.824, 0.19, 1, 1)
 frozen = true
 stat_maxHp = NodePath("stat_maxHp")
-stat_speed = NodePath("")
 stat_regen = NodePath("stat_regen")
 
 [node name="stat_maxHp" type="Node" parent="."]
@@ -109,3 +120,13 @@ collision_mask = 4
 
 [node name="shape" type="CollisionShape2D" parent="hurtbox"]
 shape = SubResource("CapsuleShape2D_5juuo")
+
+[node name="InteractableArea" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 8
+script = SubResource("GDScript_kvddp")
+
+[node name="InteractableShape" type="CollisionShape2D" parent="InteractableArea"]
+shape = SubResource("CircleShape2D_ctr2w")
+
+[connection signal="interacted_with" from="InteractableArea" to="InteractableArea" method="_on_interacted_with"]
