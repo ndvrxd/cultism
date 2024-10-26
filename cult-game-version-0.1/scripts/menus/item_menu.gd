@@ -32,7 +32,7 @@ func _on_item_list_item_clicked(index: int, at_position: Vector2, mouse_button_i
 
 func _on_confirm_button_pressed() -> void:
 	my_entity.addItem(load(selected_item))
-	$MarginContainer.process(false)
+	$MarginContainer.set_process(false)
 	hide_me()
 
 
