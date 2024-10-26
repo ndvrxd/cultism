@@ -32,6 +32,7 @@ func _on_item_list_item_clicked(index: int, at_position: Vector2, mouse_button_i
 
 func _on_confirm_button_pressed() -> void:
 	my_entity.addItem(load(selected_item))
+	$MarginContainer.process(false)
 	hide_me()
 
 
@@ -41,8 +42,8 @@ func show_me() -> void:
 	%AnimationPlayer.play("blur")
 	# this SHOULD work, but for some reason
 	# the items arent selectable
-	#if multiplayer.is_server() and NetManager.players.size() < 2:
-		#get_tree().paused = true
+	if multiplayer.is_server() and NetManager.players.size() < 2:
+		get_tree().paused = true
 
 
 func hide_me() -> void:
@@ -50,5 +51,5 @@ func hide_me() -> void:
 	await get_tree().create_timer(0.3).timeout
 	visible = false
 	
-	#if get_tree().paused:
-		#get_tree().paused = false
+	if get_tree().paused:
+		get_tree().paused = false
