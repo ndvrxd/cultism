@@ -1,14 +1,80 @@
-[gd_scene load_steps=5 format=3 uid="uid://bwyw04q5473ta"]
+[gd_scene load_steps=10 format=3 uid="uid://bwyw04q5473ta"]
 
 [ext_resource type="Script" path="res://scripts/menus/item_menu.gd" id="1_kaqdk"]
 [ext_resource type="Texture2D" uid="uid://b8uotdxr13iyg" path="res://art/ui/attack.png" id="1_mww4r"]
+[ext_resource type="Shader" path="res://vfx/shaders/pausemenu.gdshader" id="2_0u25w"]
 [ext_resource type="FontFile" uid="uid://dhk11k42eybnt" path="res://fonts/chela-one.regular.ttf" id="2_rsg8m"]
 
-[sub_resource type="LabelSettings" id="LabelSettings_uaa0a"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fiai1"]
+shader = ExtResource("2_0u25w")
+shader_parameter/lod = 0.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_cvc2n"]
 font = ExtResource("2_rsg8m")
 font_size = 50
 outline_size = 5
 outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="Animation" id="Animation_4af25"]
+resource_name = "blur"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:material:shader_parameter/lod")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.902]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MarginContainer:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_kr8ct"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:material:shader_parameter/lod")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MarginContainer:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_i30x5"]
+_data = {
+"RESET": SubResource("Animation_kr8ct"),
+"blur": SubResource("Animation_4af25")
+}
 
 [node name="ItemMenu" type="Control"]
 layout_mode = 3
@@ -20,25 +86,59 @@ grow_vertical = 2
 script = ExtResource("1_kaqdk")
 item_paths = Array[String](["res://sandbox/riff/test_item.tscn"])
 
-[node name="ItemSelect" type="Control" parent="."]
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="ItemList" type="ItemList" parent="ItemSelect"]
-unique_name_in_owner = true
+[node name="ColorRect" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_fiai1")
 layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.349
-anchor_top = 0.174
-anchor_right = 0.634
-anchor_bottom = 0.676
-offset_left = 253.04
-offset_top = 118.04
-offset_right = 972.64
-offset_bottom = 459.96
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -4961.0
+offset_top = -3048.0
+offset_right = 5495.0
+offset_bottom = 3328.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -200.0
+offset_right = 300.0
+offset_bottom = 200.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="OuterVBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer/OuterVBoxContainer"]
+layout_mode = 2
+
+[node name="InnerVBoxContainer" type="VBoxContainer" parent="MarginContainer/OuterVBoxContainer/PanelContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+alignment = 1
+
+[node name="ItemTitleLabel" type="Label" parent="MarginContainer/OuterVBoxContainer/PanelContainer/InnerVBoxContainer"]
+layout_mode = 2
+text = "Choose an item!"
+label_settings = SubResource("LabelSettings_cvc2n")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ItemList" type="ItemList" parent="MarginContainer/OuterVBoxContainer/PanelContainer/InnerVBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+auto_height = true
 item_count = 1
 max_columns = 5
 icon_mode = 0
@@ -47,38 +147,27 @@ fixed_icon_size = Vector2i(200, 200)
 item_0/text = "Rizzler's Arms"
 item_0/icon = ExtResource("1_mww4r")
 
-[node name="ItemSelectLabel" type="Label" parent="ItemSelect"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.171
-offset_left = 470.0
-offset_right = 771.0
-offset_bottom = 116.16
-grow_horizontal = 2
-text = "Item Select"
-label_settings = SubResource("LabelSettings_uaa0a")
-horizontal_alignment = 1
-vertical_alignment = 2
+[node name="BottomHBoxContainer" type="HBoxContainer" parent="MarginContainer/OuterVBoxContainer"]
+layout_mode = 2
 
-[node name="Label" type="Label" parent="ItemSelect"]
+[node name="ExitLabel" type="Label" parent="MarginContainer/OuterVBoxContainer/BottomHBoxContainer"]
 visible = false
-layout_mode = 0
-offset_left = 274.0
-offset_top = 494.0
-offset_right = 383.0
-offset_bottom = 517.0
-text = "press e to exit"
+layout_mode = 2
+size_flags_horizontal = 2
+text = "Press E to exit."
 
-[node name="ConfirmButton" type="Button" parent="ItemSelect"]
-layout_mode = 1
-anchors_preset = -1
-offset_left = 925.0
-offset_top = 494.0
-offset_right = 996.0
-offset_bottom = 525.0
+[node name="ConfirmButton" type="Button" parent="MarginContainer/OuterVBoxContainer/BottomHBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 4
 text = "Confirm"
 
-[connection signal="item_clicked" from="ItemSelect/ItemList" to="." method="_on_item_list_item_clicked"]
-[connection signal="pressed" from="ItemSelect/ConfirmButton" to="." method="_on_confirm_button_pressed"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+unique_name_in_owner = true
+libraries = {
+"": SubResource("AnimationLibrary_i30x5")
+}
+
+[connection signal="item_clicked" from="MarginContainer/OuterVBoxContainer/PanelContainer/InnerVBoxContainer/ItemList" to="." method="_on_item_list_item_clicked"]
+[connection signal="pressed" from="MarginContainer/OuterVBoxContainer/BottomHBoxContainer/ConfirmButton" to="." method="_on_confirm_button_pressed"]

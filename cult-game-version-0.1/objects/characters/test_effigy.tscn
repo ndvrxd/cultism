@@ -51,13 +51,11 @@ height = 146.0
 resource_name = "InteractableTest"
 script/source = "extends Interactable
 
-var item_menu = preload(\"res://scenes/menu/item_menu.tscn\").instantiate()
-
-
-func _on_interacted_with(_by:Entity):
+func _on_interacted_with(by:Entity):
 	# THIS IS PROBABLY REALLY BAD!!!!!!
-	item_menu.setup(_by)
-	get_parent().get_parent().get_node(\"CanvasLayer\").add_child(item_menu)
+	var item_menu = get_parent().get_parent().get_node(\"CanvasLayer/ItemMenu\")
+	item_menu.setup(by)
+	item_menu.show_me()
 "
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ctr2w"]

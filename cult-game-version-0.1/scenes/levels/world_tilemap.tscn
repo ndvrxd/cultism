@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=4 uid="uid://j2javknfi4yo"]
+[gd_scene load_steps=27 format=4 uid="uid://j2javknfi4yo"]
 
 [ext_resource type="Texture2D" uid="uid://dr1jlcktudyg" path="res://art/playermapxd.png" id="1_8gipf"]
 [ext_resource type="PackedScene" uid="uid://bhatrw3cecxw1" path="res://objects/characters/test_effigy.tscn" id="2_wrja3"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://d3yfvynamcihx" path="res://objects/scenery/post_ph.tscn" id="6_8pmr1"]
 [ext_resource type="FontFile" uid="uid://dhk11k42eybnt" path="res://fonts/chela-one.regular.ttf" id="6_bxv72"]
 [ext_resource type="Script" path="res://scripts/PathNode.gd" id="6_esxbb"]
+[ext_resource type="PackedScene" uid="uid://bwyw04q5473ta" path="res://scenes/menu/item_menu.tscn" id="6_v64f1"]
 [ext_resource type="PackedScene" uid="uid://dxiibdkgas3eu" path="res://scenes/menu/pause_menu.tscn" id="7_gvci0"]
 [ext_resource type="PackedScene" uid="uid://4x1q48mnamto" path="res://Chatbox/Chatbox.tscn" id="8_ayjcr"]
 [ext_resource type="AudioStream" uid="uid://bv75udhjj2xn0" path="res://sound/music/boss1.mp3" id="8_nuvqu"]
@@ -143,6 +144,8 @@ offset_right = 338.0
 offset_bottom = -75.0
 grow_horizontal = 1
 grow_vertical = 0
+
+[node name="ItemMenu" parent="CanvasLayer" instance=ExtResource("6_v64f1")]
 
 [node name="testSpawner2" type="Area2D" parent="."]
 position = Vector2(527, -157)
