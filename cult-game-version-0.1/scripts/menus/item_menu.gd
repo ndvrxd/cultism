@@ -19,7 +19,7 @@ func _process(delta: float) -> void:
 	
 	# TODO: fix this
 	#if Input.is_action_just_pressed("Interact") and visible:
-		#visible = false
+		#hide_me()
 
 
 func setup(entity: Entity) -> void:
@@ -32,7 +32,6 @@ func _on_item_list_item_clicked(index: int, at_position: Vector2, mouse_button_i
 
 func _on_confirm_button_pressed() -> void:
 	my_entity.addItem(load(selected_item))
-	$MarginContainer.set_process(false)
 	hide_me()
 
 
@@ -40,16 +39,11 @@ func show_me() -> void:
 	visible = true
 	%ItemList.deselect_all()
 	%AnimationPlayer.play("blur")
-	# this SHOULD work, but for some reason
-	# the items arent selectable
-	if multiplayer.is_server() and NetManager.players.size() < 2:
-		get_tree().paused = true
+	my_entity.frozen = true
 
 
 func hide_me() -> void:
 	%AnimationPlayer.play_backwards("blur")
 	await get_tree().create_timer(0.3).timeout
 	visible = false
-	
-	if get_tree().paused:
-		get_tree().paused = false
+	my_entity.frozen = false
