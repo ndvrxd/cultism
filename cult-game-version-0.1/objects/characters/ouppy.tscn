@@ -1,9 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://bh16gvljssriy"]
+[gd_scene load_steps=7 format=3 uid="uid://b6h7xp8bdv832"]
 
-[ext_resource type="Script" path="res://scripts/generic/Entity.gd" id="1_wkvkh"]
-[ext_resource type="Texture2D" uid="uid://bbk43vaxuk3i0" path="res://art/character ph/ndvr sprites/demomouse.png" id="2_42i8b"]
-[ext_resource type="Script" path="res://scripts/abstract/Stat.gd" id="3_2pgi4"]
-[ext_resource type="PackedScene" uid="uid://bga12kqmary5o" path="res://objects/abilities/boomerang.tscn" id="4_wjjjb"]
+[ext_resource type="Script" path="res://scripts/generic/Entity.gd" id="1_uugxg"]
+[ext_resource type="Texture2D" uid="uid://dd1ht4cqpvsn3" path="res://art/character ph/ndvr sprites/ouppy.png" id="2_5jsxe"]
+[ext_resource type="Script" path="res://scripts/abstract/Stat.gd" id="3_bf0o8"]
+[ext_resource type="PackedScene" uid="uid://bga12kqmary5o" path="res://objects/abilities/boomerang.tscn" id="4_0uynu"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_7jqyf"]
 radius = 10.1715
@@ -12,10 +12,10 @@ height = 30.9865
 [sub_resource type="CircleShape2D" id="CircleShape2D_d77vd"]
 radius = 59.4707
 
-[node name="demomouse" type="CharacterBody2D" node_paths=PackedStringArray("abilities", "stat_speed", "stat_regen", "stat_aggroNoise", "stat_baseDamage")]
+[node name="ouppy" type="CharacterBody2D" node_paths=PackedStringArray("abilities", "stat_speed", "stat_regen", "stat_aggroNoise", "stat_baseDamage")]
 collision_layer = 112
 collision_mask = 7
-script = ExtResource("1_wkvkh")
+script = ExtResource("1_uugxg")
 objPath = "res://objects/characters/demomouse.tscn"
 abilities = [NodePath("BoomerangAbility")]
 stat_speed = NodePath("stats/speed")
@@ -28,9 +28,9 @@ y_sort_enabled = true
 
 [node name="Sprite2D" type="Sprite2D" parent="feet"]
 texture_filter = 1
-position = Vector2(0, 1.35535)
-scale = Vector2(0.8, 0.82385)
-texture = ExtResource("2_42i8b")
+position = Vector2(-1.42109e-14, 0.403511)
+scale = Vector2(0.96, 0.965463)
+texture = ExtResource("2_5jsxe")
 offset = Vector2(0, -91)
 
 [node name="shoulder" type="Node2D" parent="."]
@@ -42,31 +42,31 @@ collision_layer = 96
 collision_mask = 4
 
 [node name="shape" type="CollisionShape2D" parent="hurtbox"]
-position = Vector2(-7.10543e-15, -12.2488)
+position = Vector2(0, -17.5824)
 scale = Vector2(0.977033, 1.11483)
 shape = SubResource("CapsuleShape2D_7jqyf")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -23)
+position = Vector2(0, -32)
 scale = Vector2(0.680001, 0.8)
 shape = SubResource("CircleShape2D_d77vd")
 
 [node name="stats" type="Node" parent="."]
 
 [node name="speed" type="Node" parent="stats"]
-script = ExtResource("3_2pgi4")
+script = ExtResource("3_bf0o8")
 baseValue = 300.0
 
 [node name="regen" type="Node" parent="stats"]
-script = ExtResource("3_2pgi4")
+script = ExtResource("3_bf0o8")
 baseValue = 2.0
 
 [node name="base damage" type="Node" parent="stats"]
-script = ExtResource("3_2pgi4")
+script = ExtResource("3_bf0o8")
 baseValue = 35.0
 
 [node name="aggro noise" type="Node" parent="stats"]
-script = ExtResource("3_2pgi4")
+script = ExtResource("3_bf0o8")
 baseValue = 100.0
 
-[node name="BoomerangAbility" parent="." instance=ExtResource("4_wjjjb")]
+[node name="BoomerangAbility" parent="." instance=ExtResource("4_0uynu")]

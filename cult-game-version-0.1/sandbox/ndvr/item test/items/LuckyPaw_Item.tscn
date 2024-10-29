@@ -1,0 +1,25 @@
+[gd_scene load_steps=3 format=3 uid="uid://dnkn441tdt8v4"]
+
+[ext_resource type="Script" path="res://sandbox/ndvr/item test/StatItem.tres.gd" id="1_an8fs"]
+[ext_resource type="Texture2D" uid="uid://c2ur0kqhge2sv" path="res://sandbox/ndvr/item test/items/item sprites/LUCKY PAW.png" id="2_fwkib"]
+
+[node name="Lucky Paw" type="Node2D" groups=["upright_sprite"]]
+script = ExtResource("1_an8fs")
+LuckModify = 0.3
+icon = ExtResource("2_fwkib")
+itemName = "Lucky Paw"
+desc = "What a funny lookin backscratcher!"
+
+[node name="Label" type="Label" parent="."]
+offset_left = -82.0
+offset_top = 44.0
+offset_right = 88.0
+offset_bottom = 67.0
+text = "+20% luck"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, 24)
+
+[connection signal="stackCountChanged" from="." to="." method="_on_stack_count_changed"]

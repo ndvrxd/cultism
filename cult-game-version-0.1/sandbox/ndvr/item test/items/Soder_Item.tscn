@@ -1,0 +1,25 @@
+[gd_scene load_steps=3 format=3 uid="uid://dqrfuwrykbjig"]
+
+[ext_resource type="Script" path="res://sandbox/ndvr/item test/StatItem.tres.gd" id="1_320gq"]
+[ext_resource type="Texture2D" uid="uid://3xx16ndnq837" path="res://sandbox/ndvr/item test/items/item sprites/SODER.png" id="1_gw37g"]
+
+[node name="Soder (Speed Up)" type="Node2D" groups=["upright_sprite"]]
+script = ExtResource("1_320gq")
+SpeedModify = 0.1
+icon = ExtResource("1_gw37g")
+itemName = "Soder"
+desc = "Tastes like metal! Hell yeah dude!"
+
+[node name="Label" type="Label" parent="."]
+offset_left = -82.0
+offset_top = 44.0
+offset_right = 88.0
+offset_bottom = 67.0
+text = "+10% Speed"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, 24)
+
+[connection signal="stackCountChanged" from="." to="." method="_on_stack_count_changed"]

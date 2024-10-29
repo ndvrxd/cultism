@@ -30,7 +30,8 @@ y_sort_enabled = true
 
 [node name="Sprite2D" type="Sprite2D" parent="feet"]
 texture_filter = 1
-scale = Vector2(0.765, 0.765)
+position = Vector2(5.24999, -2.42483)
+scale = Vector2(1.0625, 1.03443)
 texture = ExtResource("2_m6uhb")
 offset = Vector2(0, -91)
 

@@ -1,9 +1,13 @@
-[gd_scene load_steps=10 format=3 uid="uid://bwyw04q5473ta"]
+[gd_scene load_steps=14 format=3 uid="uid://bwyw04q5473ta"]
 
 [ext_resource type="Script" path="res://scripts/menus/item_menu.gd" id="1_kaqdk"]
-[ext_resource type="Texture2D" uid="uid://b8uotdxr13iyg" path="res://art/ui/attack.png" id="1_mww4r"]
 [ext_resource type="Shader" path="res://vfx/shaders/pausemenu.gdshader" id="2_0u25w"]
 [ext_resource type="FontFile" uid="uid://dhk11k42eybnt" path="res://fonts/chela-one.regular.ttf" id="2_rsg8m"]
+[ext_resource type="Texture2D" uid="uid://c2ur0kqhge2sv" path="res://sandbox/ndvr/item test/items/item sprites/LUCKY PAW.png" id="4_ihflv"]
+[ext_resource type="Texture2D" uid="uid://3xx16ndnq837" path="res://sandbox/ndvr/item test/items/item sprites/SODER.png" id="5_ugtw5"]
+[ext_resource type="Texture2D" uid="uid://dd8jwkfsomlex" path="res://sandbox/ndvr/item test/items/item sprites/FISTER2.png" id="6_o30qk"]
+[ext_resource type="Texture2D" uid="uid://b6f06gj6282x8" path="res://sandbox/ndvr/item test/items/item sprites/NACHOS.png" id="7_hg6ol"]
+[ext_resource type="Texture2D" uid="uid://ccp0dhptofoks" path="res://sandbox/ndvr/item test/items/item sprites/Mysterious Amalgamation.png" id="8_07ux2"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_fiai1"]
 shader = ExtResource("2_0u25w")
@@ -140,13 +144,21 @@ vertical_alignment = 1
 unique_name_in_owner = true
 layout_mode = 2
 auto_height = true
-item_count = 1
+item_count = 5
 max_columns = 5
 icon_mode = 0
 icon_scale = 0.7
 fixed_icon_size = Vector2i(200, 200)
-item_0/text = "Rizzler's Arms"
-item_0/icon = ExtResource("1_mww4r")
+item_0/text = "LuckyPaw_Item"
+item_0/icon = ExtResource("4_ihflv")
+item_1/text = "Soder_Item"
+item_1/icon = ExtResource("5_ugtw5")
+item_2/text = "Fister"
+item_2/icon = ExtResource("6_o30qk")
+item_3/text = "Nachos"
+item_3/icon = ExtResource("7_hg6ol")
+item_4/text = "Mysterious Amalgamation"
+item_4/icon = ExtResource("8_07ux2")
 
 [node name="BottomHBoxContainer" type="HBoxContainer" parent="MarginContainer/OuterVBoxContainer"]
 layout_mode = 2
