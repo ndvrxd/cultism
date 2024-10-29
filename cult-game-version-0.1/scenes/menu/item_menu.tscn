@@ -89,7 +89,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_kaqdk")
-item_paths = Array[String](["res://sandbox/riff/test_item.tscn"])
+item_paths = Array[String](["res://sandbox/ndvr/item test/items/LuckyPaw_Item.tscn", "res://sandbox/ndvr/item test/items/Soder_Item.tscn", "res://sandbox/ndvr/item test/items/Fister_Item.tscn", "res://sandbox/ndvr/item test/items/Nachos_Item.tscn", "res://sandbox/ndvr/item test/items/MysteriousAmalgamation_Item.tscn"])
 
 [node name="ColorRect" type="ColorRect" parent="."]
 material = SubResource("ShaderMaterial_fiai1")
@@ -135,7 +135,7 @@ alignment = 1
 
 [node name="ItemTitleLabel" type="Label" parent="MarginContainer/OuterVBoxContainer/PanelContainer/InnerVBoxContainer"]
 layout_mode = 2
-text = "Choose an item!"
+text = "Choose an item already !!!"
 label_settings = SubResource("LabelSettings_cvc2n")
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -151,7 +151,7 @@ icon_scale = 0.7
 fixed_icon_size = Vector2i(200, 200)
 item_0/text = "LuckyPaw_Item"
 item_0/icon = ExtResource("4_ihflv")
-item_1/text = "Soder_Item"
+item_1/text = "Soder"
 item_1/icon = ExtResource("5_ugtw5")
 item_2/text = "Fister"
 item_2/icon = ExtResource("6_o30qk")
