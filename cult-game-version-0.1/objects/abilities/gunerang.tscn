@@ -1,28 +1,12 @@
 [gd_scene load_steps=5 format=3 uid="uid://u1u2lhdtr33p"]
 
 [ext_resource type="PackedScene" uid="uid://cctoq5wiuux7v" path="res://objects/projectiles/gunerang.tscn" id="1_5q012"]
+[ext_resource type="Script" path="res://scripts/ability-generic/fire_projectile_simple.gd" id="1_n6apl"]
 [ext_resource type="Texture2D" uid="uid://cgbpbd7cntj84" path="res://art/attack/boomerang.png" id="2_tvpuw"]
 [ext_resource type="Script" path="res://scripts/abstract/Stat.gd" id="3_fh3l3"]
 
-[sub_resource type="GDScript" id="GDScript_0ojam"]
-script/source = "extends Ability
-
-## The [Projectile] this Ability should fire.
-@export var projectileScn:PackedScene
-## Whether to fire this Projectile from the foot point
-## instead of the shoulder point.
-@export var fromFeet:bool = false
-
-func _ready():
-	super._ready()
-	fired.connect(_on_fired)
-
-func _on_fired() -> void:
-	ent.create_projectile(projectileScn, self, global_position)
-"
-
 [node name="Gunerang" type="Node2D" node_paths=PackedStringArray("stat_cooldown")]
-script = SubResource("GDScript_0ojam")
+script = ExtResource("1_n6apl")
 projectileScn = ExtResource("1_5q012")
 fromFeet = true
 ability_name = "Gunerang"
