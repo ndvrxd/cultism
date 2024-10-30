@@ -6,6 +6,7 @@ var mouseLookMode = true
 @onready var ui_hb_over:TextureProgressBar = $"HUD STUFF/healthbar_under/healthbar_over"
 @onready var ui_hb_under:TextureProgressBar = $"HUD STUFF/healthbar_under"
 @onready var ui_hb_text:Label = $"HUD STUFF/healthbar_under/Label"
+@onready var ui_hb_effigy:TextureProgressBar = $"HUD STUFF/objective_health"
 var vignetteTween:Tween
 
 const spectatorBody:String = "res://objects/characters/spectator.tscn"
@@ -92,6 +93,8 @@ func _process(delta):
 	ui_hb_under.value = lerp(ui_hb_under.value, ui_hb_over.value, delta*7)
 	ui_hb_text.text = str(int(ent.health)) + " / " + str(int(ent.stat_maxHp.val))
 	$shoulder.transform = ent.shoulderPoint.transform
+	if is_instance_valid(Game.effigy):
+		ui_hb_effigy.value = (Game.effigy.health / Game.effigy.stat_maxHp.val)
 	#endregion
 	
 	#region input stuff

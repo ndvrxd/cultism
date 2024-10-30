@@ -1,0 +1,158 @@
+[gd_scene load_steps=13 format=3 uid="uid://cctoq5wiuux7v"]
+
+[ext_resource type="Texture2D" uid="uid://qiladiowmqjk" path="res://art/attack/gunerang.png" id="1_jdvai"]
+[ext_resource type="Script" path="res://scripts/spin.gd" id="2_76rwx"]
+[ext_resource type="Material" uid="uid://dvlw1v7p7d6i5" path="res://vfx/particle/processmaterial/flash.tres" id="3_kityr"]
+[ext_resource type="Texture2D" uid="uid://c3l4kkjo4q83i" path="res://vfx/particle/sparkle haha.png" id="4_q8l6k"]
+[ext_resource type="AudioStream" uid="uid://bausilmhk3vdv" path="res://sound/pools/punch.tres" id="5_lrwdf"]
+[ext_resource type="AudioStream" uid="uid://17u7k0quo3rd" path="res://sound/fx/tock.mp3" id="6_fb05b"]
+[ext_resource type="AudioStream" uid="uid://ivxk0aryil43" path="res://sound/pools/whiff.tres" id="7_a78co"]
+
+[sub_resource type="GDScript" id="GDScript_7a2bj"]
+script/source = "extends Projectile
+
+var dying:bool = false
+
+func _ready():
+	super._ready()
+	rotation = 0
+	ent.ability_vars[\"rangs_out\"] = ent.ability_vars.get(\"rangs_out\", 0) + 1
+	ent.abilities[0].stat_cooldown.modifyMult(2)
+	if ent.ability_vars[\"rangs_out\"] >= 2:
+		await get_tree().create_timer(0.1, false).timeout
+		ent.abilities[0].cdTimer = 9999
+		ability.cdTimer = 9999
+
+func _process(delta:float):
+	super._process(delta)
+	if ent and not dying and age > 1: #follow the player
+		if global_position.distance_to(ent.global_position) < 30: remove_me()
+		velocity = global_position.direction_to(ent.global_position) * velocity.length()
+		accel = global_position.direction_to(ent.global_position) * accel.length()
+
+func _on_hit_wall() -> void:
+	dying = true
+	velocity = Vector2.ZERO
+	accel = Vector2.ZERO
+
+func _on_hit_enemy(target: Entity) -> void:
+	if is_multiplayer_authority():
+		target.changeHealth.rpc(target.health, 
+				-ent.stat_baseDamage.val, ent.get_path())
+
+func remove_me():
+	ent.ability_vars[\"rangs_out\"] -= 1
+	ent.abilities[0].cdTimer = 0.0
+	ability.cdTimer = 0.0
+	ent.abilities[0].stat_cooldown.modifyMult(0.5)
+	queue_free()
+	
+"
+
+[sub_resource type="Curve" id="Curve_0v3wq"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.656716, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -6.25825, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_csq8v"]
+curve = SubResource("Curve_0v3wq")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_lcki6"]
+particle_flag_disable_z = true
+direction = Vector3(0, -1, 0)
+spread = 22.778
+initial_velocity_min = 460.33
+initial_velocity_max = 460.33
+angular_velocity_min = -720.0
+angular_velocity_max = 720.0
+gravity = Vector3(0, 980, 0)
+scale_curve = SubResource("CurveTexture_csq8v")
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_bw4ro"]
+radius = 25.2982
+
+[node name="Boomerang" type="Area2D"]
+y_sort_enabled = true
+collision_mask = 33
+script = SubResource("GDScript_7a2bj")
+default_speed = 500.0
+default_accel = -500.0
+ttl = 4.0
+
+[node name="upright" type="Node2D" parent="." groups=["upright_sprite"]]
+
+[node name="Sprite2D" type="Sprite2D" parent="upright"]
+position = Vector2(0, -72)
+texture = ExtResource("1_jdvai")
+script = ExtResource("2_76rwx")
+velocity = 45.0
+
+[node name="bonk" type="GPUParticles2D" parent="upright"]
+position = Vector2(0, -72)
+emitting = false
+amount = 1
+process_material = ExtResource("3_kityr")
+texture = ExtResource("4_q8l6k")
+lifetime = 0.1
+one_shot = true
+fixed_fps = 60
+local_coords = true
+
+[node name="flyoff" type="GPUParticles2D" parent="upright"]
+position = Vector2(0, -72)
+emitting = false
+amount = 1
+process_material = SubResource("ParticleProcessMaterial_lcki6")
+texture = ExtResource("1_jdvai")
+lifetime = 0.9
+one_shot = true
+fixed_fps = 60
+local_coords = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -48)
+shape = SubResource("CircleShape2D_bw4ro")
+
+[node name="hit" type="AudioStreamPlayer2D" parent="."]
+position = Vector2(0, -88)
+stream = ExtResource("5_lrwdf")
+volume_db = -6.0
+max_distance = 800.0
+max_polyphony = 3
+bus = &"sfx"
+
+[node name="thunk" type="AudioStreamPlayer2D" parent="."]
+position = Vector2(0, -88)
+stream = ExtResource("6_fb05b")
+pitch_scale = 0.8
+max_distance = 500.0
+bus = &"sfx"
+
+[node name="ambient" type="AudioStreamPlayer2D" parent="."]
+position = Vector2(0, -88)
+stream = ExtResource("7_a78co")
+pitch_scale = 2.2
+max_distance = 600.0
+max_polyphony = 2
+panning_strength = 3.0
+bus = &"sfx"
+
+[node name="play_ambient" type="Timer" parent="."]
+wait_time = 0.15
+autostart = true
+
+[node name="wallhit_kill" type="Timer" parent="."]
+
+[connection signal="expire" from="." to="." method="remove_me"]
+[connection signal="hit_enemy" from="." to="." method="_on_hit_enemy"]
+[connection signal="hit_enemy" from="." to="upright/bonk" method="restart" unbinds=1]
+[connection signal="hit_enemy" from="." to="hit" method="play" unbinds=1]
+[connection signal="hit_wall" from="." to="." method="_on_hit_wall"]
+[connection signal="hit_wall" from="." to="upright/bonk" method="restart"]
+[connection signal="hit_wall" from="." to="upright/flyoff" method="restart"]
+[connection signal="hit_wall" from="." to="thunk" method="play"]
+[connection signal="hit_wall" from="." to="play_ambient" method="stop"]
+[connection signal="hit_wall" from="." to="wallhit_kill" method="start"]
+[connection signal="hit_wall" from="." to="upright/Sprite2D" method="set_visible" binds= [false]]
+[connection signal="hit_wall" from="." to="CollisionShape2D" method="set_disabled" binds= [true]]
+[connection signal="timeout" from="play_ambient" to="ambient" method="play"]
+[connection signal="timeout" from="wallhit_kill" to="." method="remove_me"]

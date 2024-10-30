@@ -19,7 +19,7 @@ config/icon="res://art/icon.svg"
 
 NetManager="*res://scripts/NetManager.gd"
 Fullscreen="*res://scripts/fullscreen.gd"
-GameManager="*res://scripts/GameManager.gd"
+Game="*res://scripts/GameManager.gd"
 
 [display]
 

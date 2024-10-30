@@ -311,7 +311,7 @@ process_mode = 3
 offset_left = -145.0
 offset_top = -16.0
 offset_right = 147.0
-offset_bottom = 151.0
+offset_bottom = 21.0
 pivot_offset = Vector2(145, 16)
 script = ExtResource("1_kaqdk")
 

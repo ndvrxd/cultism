@@ -43,15 +43,15 @@ scale_curve = SubResource("CurveTexture_uot4q")
 color_ramp = SubResource("GradientTexture1D_id21g")
 turbulence_enabled = true
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_ctr2w"]
+radius = 40.4475
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_10w11"]
 size = Vector2(6.78411, 1.37636)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_5juuo"]
 radius = 27.0
 height = 146.0
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_ctr2w"]
-radius = 62.6498
 
 [node name="test effigy" type="CharacterBody2D" node_paths=PackedStringArray("stat_maxHp", "stat_regen")]
 y_sort_enabled = true
@@ -102,6 +102,20 @@ process_material = SubResource("ParticleProcessMaterial_yi8o0")
 texture = ExtResource("1_ocdxr")
 trail_lifetime = 0.2
 
+[node name="InteractableArea" type="Area2D" parent="upright_anchor"]
+collision_layer = 8
+collision_mask = 8
+script = ExtResource("6_dgco8")
+
+[node name="InteractableShape" type="CollisionShape2D" parent="upright_anchor/InteractableArea"]
+position = Vector2(0, -42)
+shape = SubResource("CircleShape2D_ctr2w")
+
+[node name="ItemMenu" parent="upright_anchor/InteractableArea" instance=ExtResource("6_qn3ot")]
+offset_top = -295.0
+offset_bottom = -128.0
+item_pool = ExtResource("8_k7j35")
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(3.8147e-06, -34.7418)
 scale = Vector2(8.22, 12)
@@ -114,16 +128,3 @@ collision_mask = 4
 
 [node name="shape" type="CollisionShape2D" parent="hurtbox"]
 shape = SubResource("CapsuleShape2D_5juuo")
-
-[node name="InteractableArea" type="Area2D" parent="."]
-collision_layer = 8
-collision_mask = 8
-script = ExtResource("6_dgco8")
-
-[node name="InteractableShape" type="CollisionShape2D" parent="InteractableArea"]
-shape = SubResource("CircleShape2D_ctr2w")
-
-[node name="ItemMenu" parent="InteractableArea" instance=ExtResource("6_qn3ot")]
-offset_top = -295.0
-offset_bottom = -133.0
-item_pool = ExtResource("8_k7j35")

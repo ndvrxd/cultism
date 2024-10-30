@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://1uajbkc46q8k" path="res://vfx/objects/hitscan_fx.tscn" id="1_nqjp1"]
 [ext_resource type="AudioStream" uid="uid://b2h08kwrqs8ax" path="res://sound/fx/gunshot.mp3" id="2_1t3d5"]
 [ext_resource type="PackedScene" uid="uid://c1luyms3v2wv5" path="res://vfx/objects/sword_hit.tscn" id="2_jwvgl"]
-[ext_resource type="Texture2D" uid="uid://b8uotdxr13iyg" path="res://art/ui/attack.png" id="3_enrv8"]
+[ext_resource type="Texture2D" uid="uid://qiladiowmqjk" path="res://art/attack/gunerang.png" id="4_6sx77"]
 [ext_resource type="Script" path="res://scripts/abstract/Stat.gd" id="4_f52xx"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_2uhqp"]
@@ -16,10 +16,12 @@ stream_0/stream = ExtResource("2_1t3d5")
 script = ExtResource("1_hsxrh")
 hitscanTracer = ExtResource("1_nqjp1")
 impactVfx = ExtResource("2_jwvgl")
+gunDamageCoeff = 1.3
 aimAssistZone = NodePath("assist")
-ability_name = "Six Shooter"
-ability_desc = "Shoot your gun idk i haven't workshopped this yet"
-portrait = ExtResource("3_enrv8")
+ability_name = "Six Shooters"
+ability_desc = "Shoot two revolvers.
+Can be thrown like boomerangs using secondary fire!"
+portrait = ExtResource("4_6sx77")
 stat_cooldown = NodePath("cooldown")
 
 [node name="gunshot" type="AudioStreamPlayer2D" parent="."]
@@ -28,7 +30,7 @@ bus = &"sfx"
 
 [node name="cooldown" type="Node" parent="."]
 script = ExtResource("4_f52xx")
-baseValue = 0.55
+baseValue = 0.3
 
 [node name="assist" type="Area2D" parent="."]
 collision_layer = 0

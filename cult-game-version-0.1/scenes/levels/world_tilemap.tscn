@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=4 uid="uid://j2javknfi4yo"]
+[gd_scene load_steps=26 format=4 uid="uid://j2javknfi4yo"]
 
 [ext_resource type="Texture2D" uid="uid://dr1jlcktudyg" path="res://art/playermapxd.png" id="1_8gipf"]
 [ext_resource type="PackedScene" uid="uid://bhatrw3cecxw1" path="res://objects/characters/test_effigy.tscn" id="2_wrja3"]
@@ -17,6 +17,13 @@
 [ext_resource type="Script" path="res://scripts/abstract/SpawnCard.gd" id="11_hj8iu"]
 [ext_resource type="Script" path="res://scripts/abstract/SpawnDeck.gd" id="12_1wwus"]
 [ext_resource type="PackedScene" uid="uid://dy3rocd3ulfru" path="res://objects/scenery/grass_ph.tscn" id="18_6xqse"]
+
+[sub_resource type="GDScript" id="GDScript_4mth6"]
+script/source = "extends Node2D
+
+func _ready() -> void:
+	Game.effigy = $\"test effigy\"
+"
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_ob1or"]
 vertices = PackedVector2Array(1134, -750, 1134, 590, 1070, 590, 402, 402, 402, 238, 146, -718, 146, -750, 370, 142, 274, -210, -430, 626, 142, 494, 142, 690, -466, 718, -430, 270, 110, 434, 14, 114, 14, 242, -974, 178, -18, 114, -974, -242, -50, -14, -498, -782, -338, -782, -338, -718, -462, -722, -210, -718, -210, -686, -46, -686, -46, -718, 146, -658, 370, 238, 338, 142, 338, 46, 306, 46, 306, -82, 274, -82, 242, -210, 242, -306, 210, -306, 210, -434, 178, -434, 178, -530, 146, -530, -114, -658, -114, -626, -178, -626, -178, -494, -146, -494, -146, -366, -462, -366, -114, -366, -114, -302, -82, -142, -82, -302, -50, -142, -18, -14, -754, -366, -974, -270, 46, 242, 46, 306, 78, 306, 78, 370, 110, 370, 306, 434, 306, 402, 1070, 622, 814, 622, 434, 462, 814, 654, 498, 654, 498, 590, 466, 590, 466, 526, 434, 526, 270, 462, 270, 494, 174, 690, 174, 718, -494, 626, -494, 850, -466, 878, -718, 878, -690, 850, -718, 302, -690, 270, -974, 302, -974, 206, -1202, 206, -1202, 302, -1358, 302, -1358, -366, -1234, -270, -1234, -366, -974, -366, -782, -366, -1202, 178, -1202, -242, -754, -946, -782, -974, -498, -974, -526, -946, -526, -722)
@@ -104,6 +111,7 @@ maxCredits = 10.0
 
 [node name="world" type="Node2D"]
 y_sort_enabled = true
+script = SubResource("GDScript_4mth6")
 
 [node name="Playermapxd" type="Sprite2D" parent="."]
 visible = false
