@@ -52,6 +52,4 @@ func _on_item_list_item_clicked(index: int, _at_position: Vector2, mouse_button_
 	ent.frozen = false
 	ent.addItem(load(selected_item))
 	$AnimationPlayer.play("selected")
-	await $AnimationPlayer.animation_finished
-	visible = false
 	ent = null
