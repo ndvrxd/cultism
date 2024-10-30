@@ -8,18 +8,7 @@ script = ExtResource("1_320gq")
 SpeedModify = 0.1
 icon = ExtResource("1_gw37g")
 itemName = "Soder"
-desc = "Tastes like metal! Hell yeah dude!"
-
-[node name="Label" type="Label" parent="."]
-offset_left = -82.0
-offset_top = 44.0
-offset_right = 88.0
-offset_bottom = 67.0
-text = "+10% Speed"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(0, 24)
+desc = "+10% speed increase per stack."
+pickup_blurb = "tastes like metal. hell yeah."
 
 [connection signal="stackCountChanged" from="." to="." method="_on_stack_count_changed"]

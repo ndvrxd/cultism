@@ -8,18 +8,7 @@ script = ExtResource("1_an8fs")
 DamageModify = 0.25
 icon = ExtResource("2_coote")
 itemName = "Fister"
-desc = "You should really clean that thing."
-
-[node name="Label" type="Label" parent="."]
-offset_left = -82.0
-offset_top = 44.0
-offset_right = 88.0
-offset_bottom = 67.0
-text = "+25% Damage"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(0, 24)
+desc = "+25% base damage per stack."
+pickup_blurb = "it looks used... and dirty?"
 
 [connection signal="stackCountChanged" from="." to="." method="_on_stack_count_changed"]

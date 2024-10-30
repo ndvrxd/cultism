@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="ItemDropPool" load_steps=2 format=3 uid="uid://cfvn221yp74js"]
+
+[ext_resource type="Script" path="res://scripts/abstract/ItemDropPool.gd" id="1_laxsx"]
+
+[resource]
+script = ExtResource("1_laxsx")
+items = Array[String](["res://sandbox/ndvr/item test/items/Fister_Item.tscn", "res://sandbox/ndvr/item test/items/LuckyPaw_Item.tscn", "res://sandbox/ndvr/item test/items/MysteriousAmalgamation_Item.tscn", "res://sandbox/ndvr/item test/items/Nachos_Item.tscn", "res://sandbox/ndvr/item test/items/Soder_Item.tscn"])

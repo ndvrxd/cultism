@@ -8,18 +8,7 @@ script = ExtResource("1_4okod")
 RegenModify = 0.15
 icon = ExtResource("2_ronyb")
 itemName = "Mysterious Amalgamation"
-desc = "Ewww, tastes like TV static.. *takes another bite*"
-
-[node name="Label" type="Label" parent="."]
-offset_left = -82.0
-offset_top = 44.0
-offset_right = 88.0
-offset_bottom = 67.0
-text = "+15% Regen"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(0, 24)
+desc = "+15% regen per stack."
+pickup_blurb = "tastes like TV static."
 
 [connection signal="stackCountChanged" from="." to="." method="_on_stack_count_changed"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://bhatrw3cecxw1"]
+[gd_scene load_steps=19 format=3 uid="uid://bhatrw3cecxw1"]
 
 [ext_resource type="Script" path="res://scripts/generic/Entity.gd" id="1_5fyl5"]
 [ext_resource type="Texture2D" uid="uid://c3l4kkjo4q83i" path="res://vfx/particle/sparkle haha.png" id="1_ocdxr"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://scripts/abstract/Stat.gd" id="2_nmdvh"]
 [ext_resource type="Script" path="res://scripts/generic/Interactable.gd" id="6_dgco8"]
 [ext_resource type="PackedScene" uid="uid://bwyw04q5473ta" path="res://scenes/menu/item_menu.tscn" id="6_qn3ot"]
+[ext_resource type="Resource" uid="uid://cfvn221yp74js" path="res://sandbox/riff/resource/test_drop_pool.tres" id="8_k7j35"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_moupg"]
 shader = ExtResource("2_bln26")
@@ -125,3 +126,4 @@ shape = SubResource("CircleShape2D_ctr2w")
 [node name="ItemMenu" parent="InteractableArea" instance=ExtResource("6_qn3ot")]
 offset_top = -295.0
 offset_bottom = -133.0
+item_pool = ExtResource("8_k7j35")

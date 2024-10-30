@@ -1,12 +1,7 @@
-[gd_scene load_steps=17 format=3 uid="uid://bwyw04q5473ta"]
+[gd_scene load_steps=12 format=3 uid="uid://bwyw04q5473ta"]
 
 [ext_resource type="Script" path="res://scripts/menus/item_menu.gd" id="1_kaqdk"]
 [ext_resource type="FontFile" uid="uid://dhk11k42eybnt" path="res://fonts/chela-one.regular.ttf" id="2_rsg8m"]
-[ext_resource type="Texture2D" uid="uid://c2ur0kqhge2sv" path="res://sandbox/ndvr/item test/items/item sprites/LUCKY PAW.png" id="4_ihflv"]
-[ext_resource type="Texture2D" uid="uid://3xx16ndnq837" path="res://sandbox/ndvr/item test/items/item sprites/SODER.png" id="5_ugtw5"]
-[ext_resource type="Texture2D" uid="uid://dd8jwkfsomlex" path="res://sandbox/ndvr/item test/items/item sprites/FISTER2.png" id="6_o30qk"]
-[ext_resource type="Texture2D" uid="uid://b6f06gj6282x8" path="res://sandbox/ndvr/item test/items/item sprites/NACHOS.png" id="7_hg6ol"]
-[ext_resource type="Texture2D" uid="uid://ccp0dhptofoks" path="res://sandbox/ndvr/item test/items/item sprites/Mysterious Amalgamation.png" id="8_07ux2"]
 [ext_resource type="AudioStream" uid="uid://cnuyidv1v8g8o" path="res://sound/fx/ui/notify.ogg" id="8_eweuj"]
 [ext_resource type="AudioStream" uid="uid://b8plbbynaogs6" path="res://sound/fx/ui/notify2.mp3" id="8_kvkl2"]
 [ext_resource type="AudioStream" uid="uid://bbay2jle0grlo" path="res://sound/fx/whiff.mp3" id="9_oed5p"]
@@ -121,6 +116,30 @@ tracks/2/keys = {
 "times": PackedFloat32Array(0.0333333)
 }
 tracks/2/use_blend = true
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("InnerVBoxContainer/ItemList:mouse_filter")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("InnerVBoxContainer/ItemList/ColorRect:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
 
 [sub_resource type="Animation" id="Animation_awypr"]
 resource_name = "selected"
@@ -244,12 +263,12 @@ process_mode = 3
 offset_left = -145.0
 offset_top = -16.0
 offset_right = 147.0
-offset_bottom = 21.0
+offset_bottom = 146.0
 pivot_offset = Vector2(145, 16)
 script = ExtResource("1_kaqdk")
-item_paths = Array[String](["res://sandbox/ndvr/item test/items/LuckyPaw_Item.tscn", "res://sandbox/ndvr/item test/items/Soder_Item.tscn", "res://sandbox/ndvr/item test/items/Fister_Item.tscn", "res://sandbox/ndvr/item test/items/Nachos_Item.tscn", "res://sandbox/ndvr/item test/items/MysteriousAmalgamation_Item.tscn"])
 
 [node name="InnerVBoxContainer" type="VBoxContainer" parent="."]
+process_mode = 4
 layout_mode = 2
 theme_override_constants/separation = 10
 alignment = 1
@@ -262,23 +281,14 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="ItemList" type="ItemList" parent="InnerVBoxContainer"]
+process_mode = 1
 custom_minimum_size = Vector2(0, 125)
 layout_mode = 2
-item_count = 5
 icon_scale = 0.7
 fixed_icon_size = Vector2i(50, 50)
-item_0/text = "LuckyPaw_Item"
-item_0/icon = ExtResource("4_ihflv")
-item_1/text = "Soder"
-item_1/icon = ExtResource("5_ugtw5")
-item_2/text = "Fister"
-item_2/icon = ExtResource("6_o30qk")
-item_3/text = "Nachos"
-item_3/icon = ExtResource("7_hg6ol")
-item_4/text = "Mysterious Amalgamation"
-item_4/icon = ExtResource("8_07ux2")
 
 [node name="ColorRect" type="ColorRect" parent="InnerVBoxContainer/ItemList"]
+process_mode = 4
 visible = false
 modulate = Color(1, 1, 1, 0)
 layout_mode = 1
