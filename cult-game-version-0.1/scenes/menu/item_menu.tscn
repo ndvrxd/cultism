@@ -1,21 +1,19 @@
-[gd_scene load_steps=14 format=3 uid="uid://bwyw04q5473ta"]
+[gd_scene load_steps=17 format=3 uid="uid://bwyw04q5473ta"]
 
 [ext_resource type="Script" path="res://scripts/menus/item_menu.gd" id="1_kaqdk"]
-[ext_resource type="Shader" path="res://vfx/shaders/pausemenu.gdshader" id="2_0u25w"]
 [ext_resource type="FontFile" uid="uid://dhk11k42eybnt" path="res://fonts/chela-one.regular.ttf" id="2_rsg8m"]
 [ext_resource type="Texture2D" uid="uid://c2ur0kqhge2sv" path="res://sandbox/ndvr/item test/items/item sprites/LUCKY PAW.png" id="4_ihflv"]
 [ext_resource type="Texture2D" uid="uid://3xx16ndnq837" path="res://sandbox/ndvr/item test/items/item sprites/SODER.png" id="5_ugtw5"]
 [ext_resource type="Texture2D" uid="uid://dd8jwkfsomlex" path="res://sandbox/ndvr/item test/items/item sprites/FISTER2.png" id="6_o30qk"]
 [ext_resource type="Texture2D" uid="uid://b6f06gj6282x8" path="res://sandbox/ndvr/item test/items/item sprites/NACHOS.png" id="7_hg6ol"]
 [ext_resource type="Texture2D" uid="uid://ccp0dhptofoks" path="res://sandbox/ndvr/item test/items/item sprites/Mysterious Amalgamation.png" id="8_07ux2"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_fiai1"]
-shader = ExtResource("2_0u25w")
-shader_parameter/lod = 0.0
+[ext_resource type="AudioStream" uid="uid://cnuyidv1v8g8o" path="res://sound/fx/ui/notify.ogg" id="8_eweuj"]
+[ext_resource type="AudioStream" uid="uid://b8plbbynaogs6" path="res://sound/fx/ui/notify2.mp3" id="8_kvkl2"]
+[ext_resource type="AudioStream" uid="uid://bbay2jle0grlo" path="res://sound/fx/whiff.mp3" id="9_oed5p"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_cvc2n"]
 font = ExtResource("2_rsg8m")
-font_size = 50
+font_size = 22
 outline_size = 5
 outline_color = Color(0, 0, 0, 1)
 
@@ -24,131 +22,251 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("ColorRect:material:shader_parameter/lod")
+tracks/0/path = NodePath("InnerVBoxContainer/ItemList:custom_minimum_size")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [0.0]
+"values": [Vector2(0, 125)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("MarginContainer:modulate")
+tracks/1/path = NodePath(".:scale")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("InnerVBoxContainer/ItemList/ColorRect:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("InnerVBoxContainer/ItemList/ColorRect:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Color(1, 1, 1, 0)]
 }
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("InnerVBoxContainer/ItemList:mouse_filter")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
 
-[sub_resource type="Animation" id="Animation_4af25"]
-resource_name = "blur"
-length = 0.3
+[sub_resource type="Animation" id="Animation_h1158"]
+resource_name = "open"
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("ColorRect:material:shader_parameter/lod")
-tracks/0/interp = 1
+tracks/0/path = NodePath("InnerVBoxContainer/ItemList:custom_minimum_size")
+tracks/0/interp = 2
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.3),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0.333333, 0.766667),
+"transitions": PackedFloat32Array(0.203063, 1),
 "update": 0,
-"values": [0.0, 0.902]
+"values": [Vector2(0, 0), Vector2(0, 125)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("MarginContainer:modulate")
+tracks/1/path = NodePath(".:scale")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.3),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(0.116629, 1),
 "update": 0,
-"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+"values": [Vector2(1, 1e-05), Vector2(1, 1)]
+}
+tracks/2/type = "audio"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AudioStreamPlayer")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("8_kvkl2")
+}],
+"times": PackedFloat32Array(0.0333333)
+}
+tracks/2/use_blend = true
+
+[sub_resource type="Animation" id="Animation_awypr"]
+resource_name = "selected"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.466667, 0.966667),
+"transitions": PackedFloat32Array(0.217638, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1e-05, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("InnerVBoxContainer/ItemList/ColorRect:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.0666667, 0.566667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("InnerVBoxContainer/ItemList/ColorRect:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.366667),
+"transitions": PackedFloat32Array(1, 0.435275),
+"update": 0,
+"values": [Color(1, 1, 1, 0.717647), Color(1, 1, 1, 0)]
+}
+tracks/3/type = "audio"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AudioStreamPlayer")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("8_eweuj")
+}, {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("9_oed5p")
+}],
+"times": PackedFloat32Array(0.0338, 0.333333)
+}
+tracks/3/use_blend = true
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("InnerVBoxContainer/ItemList:mouse_filter")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0.0666667, 0.933333),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [2, 0]
+}
+
+[sub_resource type="Animation" id="Animation_x0fdn"]
+resource_name = "closed"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1.00136e-05)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("InnerVBoxContainer/ItemList:custom_minimum_size")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:size")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(292, 37)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_i30x5"]
 _data = {
 "RESET": SubResource("Animation_kr8ct"),
-"blur": SubResource("Animation_4af25")
+"closed": SubResource("Animation_x0fdn"),
+"open": SubResource("Animation_h1158"),
+"selected": SubResource("Animation_awypr")
 }
 
-[node name="ItemMenu" type="Control"]
+[node name="ItemMenu" type="PanelContainer"]
 process_mode = 3
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+offset_left = -145.0
+offset_top = -16.0
+offset_right = 147.0
+offset_bottom = 21.0
+pivot_offset = Vector2(145, 16)
 script = ExtResource("1_kaqdk")
 item_paths = Array[String](["res://sandbox/ndvr/item test/items/LuckyPaw_Item.tscn", "res://sandbox/ndvr/item test/items/Soder_Item.tscn", "res://sandbox/ndvr/item test/items/Fister_Item.tscn", "res://sandbox/ndvr/item test/items/Nachos_Item.tscn", "res://sandbox/ndvr/item test/items/MysteriousAmalgamation_Item.tscn"])
 
-[node name="ColorRect" type="ColorRect" parent="."]
-material = SubResource("ShaderMaterial_fiai1")
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -4961.0
-offset_top = -3048.0
-offset_right = 5495.0
-offset_bottom = 3328.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="MarginContainer" type="MarginContainer" parent="."]
-modulate = Color(1, 1, 1, 0)
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -300.0
-offset_top = -200.0
-offset_right = 300.0
-offset_bottom = 200.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="OuterVBoxContainer" type="VBoxContainer" parent="MarginContainer"]
-layout_mode = 2
-theme_override_constants/separation = 20
-
-[node name="PanelContainer" type="PanelContainer" parent="MarginContainer/OuterVBoxContainer"]
-layout_mode = 2
-
-[node name="InnerVBoxContainer" type="VBoxContainer" parent="MarginContainer/OuterVBoxContainer/PanelContainer"]
+[node name="InnerVBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 2
 theme_override_constants/separation = 10
 alignment = 1
 
-[node name="ItemTitleLabel" type="Label" parent="MarginContainer/OuterVBoxContainer/PanelContainer/InnerVBoxContainer"]
+[node name="ItemTitleLabel" type="Label" parent="InnerVBoxContainer"]
 layout_mode = 2
-text = "Choose an item already !!!"
+text = "Rewards"
 label_settings = SubResource("LabelSettings_cvc2n")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="ItemList" type="ItemList" parent="MarginContainer/OuterVBoxContainer/PanelContainer/InnerVBoxContainer"]
-unique_name_in_owner = true
+[node name="ItemList" type="ItemList" parent="InnerVBoxContainer"]
+custom_minimum_size = Vector2(0, 125)
 layout_mode = 2
-auto_height = true
 item_count = 5
-max_columns = 5
-icon_mode = 0
 icon_scale = 0.7
-fixed_icon_size = Vector2i(200, 200)
+fixed_icon_size = Vector2i(50, 50)
 item_0/text = "LuckyPaw_Item"
 item_0/icon = ExtResource("4_ihflv")
 item_1/text = "Soder"
@@ -160,27 +278,21 @@ item_3/icon = ExtResource("7_hg6ol")
 item_4/text = "Mysterious Amalgamation"
 item_4/icon = ExtResource("8_07ux2")
 
-[node name="BottomHBoxContainer" type="HBoxContainer" parent="MarginContainer/OuterVBoxContainer"]
-layout_mode = 2
-
-[node name="ExitLabel" type="Label" parent="MarginContainer/OuterVBoxContainer/BottomHBoxContainer"]
+[node name="ColorRect" type="ColorRect" parent="InnerVBoxContainer/ItemList"]
 visible = false
-layout_mode = 2
-size_flags_horizontal = 2
-text = "Press E to exit."
-
-[node name="ConfirmButton" type="Button" parent="MarginContainer/OuterVBoxContainer/BottomHBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 10
-size_flags_vertical = 4
-text = "Confirm"
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-unique_name_in_owner = true
 libraries = {
 "": SubResource("AnimationLibrary_i30x5")
 }
 
-[connection signal="item_clicked" from="MarginContainer/OuterVBoxContainer/PanelContainer/InnerVBoxContainer/ItemList" to="." method="_on_item_list_item_clicked"]
-[connection signal="pressed" from="MarginContainer/OuterVBoxContainer/BottomHBoxContainer/ConfirmButton" to="." method="_on_confirm_button_pressed"]
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+
+[connection signal="item_clicked" from="InnerVBoxContainer/ItemList" to="." method="_on_item_list_item_clicked"]

@@ -187,7 +187,6 @@ func load_game(game_scene_path:String):
 		if !multiplayer.is_server(): askForEntities.rpc_id(1)
 		# set your name for the chatbox
 		# TODO: redo the chatbox entirely, you bitch
-		Chatbox.inst.set_username(playerinfo_local["name"])
 
 func onPlayerDisconnect(id): # all clients, NOT JUST server
 	# destroy the disconnecting client's Entity body, if there is any

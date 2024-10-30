@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://ci2psjf4f2qtu"]
+[gd_scene load_steps=31 format=3 uid="uid://ci2psjf4f2qtu"]
 
 [ext_resource type="Script" path="res://scripts/ai/player_controls.gd" id="1_122va"]
 [ext_resource type="Script" path="res://scripts/camera_tilt_test.gd" id="2_fxmue"]
@@ -13,6 +13,7 @@
 [ext_resource type="Texture2D" uid="uid://42xrp4tgqr4c" path="res://art/ui/keys/m2.png" id="8_m8frb"]
 [ext_resource type="Texture2D" uid="uid://ve5rff2233rg" path="res://art/ui/keys/key_z.tres" id="9_wsmga"]
 [ext_resource type="PackedScene" uid="uid://leqtb5qj5y1" path="res://objects/abilityIcon.tscn" id="10_h6yu6"]
+[ext_resource type="PackedScene" uid="uid://4x1q48mnamto" path="res://Chatbox/Chatbox.tscn" id="14_wr53g"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_p2dro"]
 size = Vector2(260, 50)
@@ -118,6 +119,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 texture = ExtResource("3_vj6ed")
 
 [node name="PRIORITIES" type="Label" parent="HUD STUFF"]
@@ -135,10 +137,10 @@ scale = Vector2(0.85, 0.85)
 text = "unnamed animal cult game prototype
 (so far from final it hurts)
 current prio:
-- Possum
-- More enemy variation
 - Waves & repeatable gameplay loop
-- Respawn & fail conditions"
+- Respawn & fail conditions
+- Possum
+- More enemy variation"
 label_settings = ExtResource("4_u25xa")
 horizontal_alignment = 2
 
@@ -475,5 +477,19 @@ text = "00:00"
 label_settings = SubResource("LabelSettings_rb2o6")
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="Chatbox" parent="HUD STUFF" instance=ExtResource("14_wr53g")]
+process_mode = 1
+anchors_preset = 2
+anchor_left = 0.0
+anchor_top = 1.0
+anchor_right = 0.0
+anchor_bottom = 1.0
+offset_left = 18.0
+offset_top = -275.0
+offset_right = 338.0
+offset_bottom = -75.0
+grow_horizontal = 1
+grow_vertical = 0
 
 [connection signal="timeout" from="HUD STUFF/itemdialog/disappear" to="HUD STUFF/itemdialog" method="set_visible" binds= [false]]

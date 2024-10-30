@@ -24,6 +24,7 @@ chatLabel = NodePath("Label")
 chatInput = NodePath("LineEdit")
 
 [node name="Label" type="Label" parent="."]
+process_mode = 4
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0

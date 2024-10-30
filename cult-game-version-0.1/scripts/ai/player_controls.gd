@@ -30,6 +30,7 @@ func _ready():
 	ent.effect_added.connect(_on_status_effect_added)
 	ent.item_acquired.connect(_on_item_acquired)
 	$"HUD STUFF/itemdialog".visible = false
+	Chatbox.inst.set_username(ent.entityName)
 	if ent.abilities.size() > 0 and is_instance_valid(ent.abilities[0]): 
 		$"HUD STUFF/primaryIcon".set_ability(ent.abilities[0])
 	if ent.abilities.size() > 1 and is_instance_valid(ent.abilities[1]): 
