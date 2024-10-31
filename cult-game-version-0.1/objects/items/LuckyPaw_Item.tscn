@@ -1,14 +1,14 @@
 [gd_scene load_steps=3 format=3 uid="uid://dnkn441tdt8v4"]
 
 [ext_resource type="Script" path="res://sandbox/ndvr/item test/StatItem.tres.gd" id="1_an8fs"]
-[ext_resource type="Texture2D" uid="uid://c2ur0kqhge2sv" path="res://sandbox/ndvr/item test/items/item sprites/LUCKY PAW.png" id="2_fwkib"]
+[ext_resource type="Texture2D" uid="uid://c2ur0kqhge2sv" path="res://objects/items/item sprites/LUCKY PAW.png" id="2_j46qv"]
 
 [node name="Lucky Paw" type="Node2D" groups=["upright_sprite"]]
 script = ExtResource("1_an8fs")
 LuckModify = 0.3
-icon = ExtResource("2_fwkib")
+icon = ExtResource("2_j46qv")
 itemName = "Lucky Paw"
 desc = "+30% luck per stack. (No effect at the moment)"
-pickup_blurb = "those are some really sharp claws."
+pickup_blurb = "What a funny lookin backscratcher!"
 
 [connection signal="stackCountChanged" from="." to="." method="_on_stack_count_changed"]

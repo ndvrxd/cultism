@@ -10,7 +10,7 @@ radius = 5.74163
 height = 21.0526
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_uvvog"]
-radius = 23.1948
+radius = 20.025
 
 [node name="loser" type="CharacterBody2D" node_paths=PackedStringArray("abilities", "stat_speed", "stat_regen", "stat_aggroNoise", "stat_baseDamage")]
 collision_layer = 112
@@ -30,8 +30,8 @@ y_sort_enabled = true
 
 [node name="Sprite2D" type="Sprite2D" parent="feet"]
 texture_filter = 1
-position = Vector2(5.24999, -2.42483)
-scale = Vector2(1.0625, 1.03443)
+position = Vector2(0, -8)
+scale = Vector2(0.8525, 0.829978)
 texture = ExtResource("2_m6uhb")
 offset = Vector2(0, -91)
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://7le6afmj6w8e"]
+[gd_scene load_steps=17 format=3 uid="uid://7le6afmj6w8e"]
 
 [ext_resource type="Material" uid="uid://di1b160vqpl63" path="res://vfx/material/titlebg.tres" id="1_s75qj"]
 [ext_resource type="FontFile" uid="uid://dhk11k42eybnt" path="res://fonts/chela-one.regular.ttf" id="1_xo7x8"]
@@ -12,6 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://bte5l2cpqvgmu" path="res://art/character ph/ndvr sprites/bnuy.png" id="8_8100t"]
 [ext_resource type="Texture2D" uid="uid://bbk43vaxuk3i0" path="res://art/character ph/ndvr sprites/demomouse.png" id="9_koe8f"]
 [ext_resource type="Texture2D" uid="uid://dd1ht4cqpvsn3" path="res://art/character ph/ndvr sprites/ouppy.png" id="10_18fpv"]
+[ext_resource type="Texture2D" uid="uid://bsh65awgwn84i" path="res://art/character ph/ndvr sprites/stone.png" id="11_dl1v1"]
 
 [sub_resource type="GDScript" id="GDScript_xgb1g"]
 resource_name = "title"
@@ -56,7 +57,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = SubResource("GDScript_xgb1g")
-characterBodyPaths = Array[String](["res://objects/characters/Bnuy.tscn", "res://objects/characters/kibby.tscn", "res://objects/characters/Possum.tscn", "res://objects/characters/Lizer.tscn", "res://objects/characters/LOSER.tscn", "res://objects/characters/gator.tscn", "res://objects/characters/bunny.tscn", "res://objects/characters/demomouse.tscn", "res://objects/characters/ouppy.tscn"])
+characterBodyPaths = Array[String](["res://objects/characters/Bnuy.tscn", "res://objects/characters/kibby.tscn", "res://objects/characters/Possum.tscn", "res://objects/characters/Lizer.tscn", "res://objects/characters/LOSER.tscn", "res://objects/characters/gator.tscn", "res://objects/characters/bunny.tscn", "res://objects/characters/demomouse.tscn", "res://objects/characters/ouppy.tscn", "res://objects/characters/Stone.tscn"])
 
 [node name="bg" type="ColorRect" parent="."]
 material = ExtResource("1_s75qj")
@@ -110,7 +111,7 @@ anchor_top = 0.175
 anchor_right = 0.745
 anchor_bottom = 0.675
 grow_horizontal = 2
-item_count = 9
+item_count = 10
 max_columns = 5
 icon_mode = 0
 icon_scale = 0.7
@@ -133,6 +134,8 @@ item_7/text = "Demomouse"
 item_7/icon = ExtResource("9_koe8f")
 item_8/text = "Ouppy"
 item_8/icon = ExtResource("10_18fpv")
+item_9/text = "Stone"
+item_9/icon = ExtResource("11_dl1v1")
 
 [node name="Label" type="Label" parent="charsel"]
 layout_mode = 1

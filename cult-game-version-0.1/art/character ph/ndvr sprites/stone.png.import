@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://3xx16ndnq837"
-path="res://.godot/imported/SODER.png-6a6119eb63b79eecacd6afee60db97ae.ctex"
+uid="uid://bsh65awgwn84i"
+path="res://.godot/imported/stone.png-1e73604ea60c4b232f5c1431f794d12b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sandbox/ndvr/item test/items/item sprites/SODER.png"
-dest_files=["res://.godot/imported/SODER.png-6a6119eb63b79eecacd6afee60db97ae.ctex"]
+source_file="res://art/character ph/ndvr sprites/stone.png"
+dest_files=["res://.godot/imported/stone.png-1e73604ea60c4b232f5c1431f794d12b.ctex"]
 
 [params]
 

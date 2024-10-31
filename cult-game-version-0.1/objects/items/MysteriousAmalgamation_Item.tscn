@@ -1,14 +1,14 @@
 [gd_scene load_steps=3 format=3 uid="uid://dqhjvasegy6dk"]
 
 [ext_resource type="Script" path="res://sandbox/ndvr/item test/StatItem.tres.gd" id="1_4okod"]
-[ext_resource type="Texture2D" uid="uid://ccp0dhptofoks" path="res://sandbox/ndvr/item test/items/item sprites/Mysterious Amalgamation.png" id="2_ronyb"]
+[ext_resource type="Texture2D" uid="uid://ccp0dhptofoks" path="res://objects/items/item sprites/Mysterious Amalgamation.png" id="2_ronyb"]
 
-[node name="Fister" type="Node2D" groups=["upright_sprite"]]
+[node name="Mysterious Amalgamation" type="Node2D" groups=["upright_sprite"]]
 script = ExtResource("1_4okod")
 RegenModify = 0.15
 icon = ExtResource("2_ronyb")
 itemName = "Mysterious Amalgamation"
 desc = "+15% regen per stack."
-pickup_blurb = "tastes like TV static."
+pickup_blurb = "Tastes like TV static!"
 
 [connection signal="stackCountChanged" from="." to="." method="_on_stack_count_changed"]

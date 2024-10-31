@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dd8jwkfsomlex"
-path="res://.godot/imported/FISTER2.png-6a7f6405bf90d2c062846a0654eaff23.ctex"
+uid="uid://3xx16ndnq837"
+path="res://.godot/imported/SODER.png-8f211062f02ec708242c411e629cbf2c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sandbox/ndvr/item test/items/item sprites/FISTER2.png"
-dest_files=["res://.godot/imported/FISTER2.png-6a7f6405bf90d2c062846a0654eaff23.ctex"]
+source_file="res://objects/items/item sprites/SODER.png"
+dest_files=["res://.godot/imported/SODER.png-8f211062f02ec708242c411e629cbf2c.ctex"]
 
 [params]
 

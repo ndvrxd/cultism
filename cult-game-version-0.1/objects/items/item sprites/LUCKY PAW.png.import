@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://c2ur0kqhge2sv"
-path="res://.godot/imported/LUCKY PAW.png-145197cfb9ec341162a54279d7a7dd07.ctex"
+path="res://.godot/imported/LUCKY PAW.png-16d89853e1f340b3a7c307844f059f01.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sandbox/ndvr/item test/items/item sprites/LUCKY PAW.png"
-dest_files=["res://.godot/imported/LUCKY PAW.png-145197cfb9ec341162a54279d7a7dd07.ctex"]
+source_file="res://objects/items/item sprites/LUCKY PAW.png"
+dest_files=["res://.godot/imported/LUCKY PAW.png-16d89853e1f340b3a7c307844f059f01.ctex"]
 
 [params]
 

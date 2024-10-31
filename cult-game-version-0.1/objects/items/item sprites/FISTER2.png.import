@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b6f06gj6282x8"
-path="res://.godot/imported/NACHOS.png-d816dd61db1f4fc493dabf95c072ce0e.ctex"
+uid="uid://dd8jwkfsomlex"
+path="res://.godot/imported/FISTER2.png-5446c6a5dc85c250456b259af25c4053.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sandbox/ndvr/item test/items/item sprites/NACHOS.png"
-dest_files=["res://.godot/imported/NACHOS.png-d816dd61db1f4fc493dabf95c072ce0e.ctex"]
+source_file="res://objects/items/item sprites/FISTER2.png"
+dest_files=["res://.godot/imported/FISTER2.png-5446c6a5dc85c250456b259af25c4053.ctex"]
 
 [params]
 

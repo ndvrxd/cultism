@@ -7,10 +7,10 @@
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_7jqyf"]
 radius = 7.6555
-height = 21.0526
+height = 32.6198
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_d77vd"]
-radius = 37.2364
+radius = 40.3239
 
 [node name="bunny" type="CharacterBody2D" node_paths=PackedStringArray("abilities", "stat_speed", "stat_regen", "stat_aggroNoise", "stat_baseDamage")]
 collision_layer = 112
