@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://bful3d4tj2b7r"]
 
 [ext_resource type="Script" path="res://sandbox/ndvr/item test/StatItem.tres.gd" id="1_kssbu"]
-[ext_resource type="Texture2D" uid="uid://b6f06gj6282x8" path="res://sandbox/ndvr/item test/items/item sprites/NACHOS.png" id="2_xvp4l"]
+[ext_resource type="Texture2D" uid="uid://b6f06gj6282x8" path="res://objects/items/item sprites/NACHOS.png" id="2_xvp4l"]
 
 [node name="Nachos" type="Node2D" groups=["upright_sprite"]]
 script = ExtResource("1_kssbu")
@@ -9,6 +9,6 @@ HealthModify = 0.1
 icon = ExtResource("2_xvp4l")
 itemName = "Questionable Nachos"
 desc = "+10% max health per stack."
-pickup_blurb = "it looks... radioactive??"
+pickup_blurb = "Why is the cheese glowing.."
 
 [connection signal="stackCountChanged" from="." to="." method="_on_stack_count_changed"]

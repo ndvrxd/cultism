@@ -1,14 +1,14 @@
 [gd_scene load_steps=3 format=3 uid="uid://dpiy0yttpusnk"]
 
 [ext_resource type="Script" path="res://sandbox/ndvr/item test/StatItem.tres.gd" id="1_an8fs"]
-[ext_resource type="Texture2D" uid="uid://dd8jwkfsomlex" path="res://sandbox/ndvr/item test/items/item sprites/FISTER2.png" id="2_coote"]
+[ext_resource type="Texture2D" uid="uid://dd8jwkfsomlex" path="res://objects/items/item sprites/FISTER2.png" id="2_m72ok"]
 
 [node name="Fister" type="Node2D" groups=["upright_sprite"]]
 script = ExtResource("1_an8fs")
 DamageModify = 0.25
-icon = ExtResource("2_coote")
+icon = ExtResource("2_m72ok")
 itemName = "Fister"
 desc = "+25% base damage per stack."
-pickup_blurb = "it looks used... and dirty?"
+pickup_blurb = "You should really clean those things.."
 
 [connection signal="stackCountChanged" from="." to="." method="_on_stack_count_changed"]

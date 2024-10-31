@@ -1,14 +1,14 @@
 [gd_scene load_steps=3 format=3 uid="uid://dqrfuwrykbjig"]
 
 [ext_resource type="Script" path="res://sandbox/ndvr/item test/StatItem.tres.gd" id="1_320gq"]
-[ext_resource type="Texture2D" uid="uid://3xx16ndnq837" path="res://sandbox/ndvr/item test/items/item sprites/SODER.png" id="1_gw37g"]
+[ext_resource type="Texture2D" uid="uid://3xx16ndnq837" path="res://objects/items/item sprites/SODER.png" id="2_j6nr1"]
 
 [node name="Soder (Speed Up)" type="Node2D" groups=["upright_sprite"]]
 script = ExtResource("1_320gq")
 SpeedModify = 0.1
-icon = ExtResource("1_gw37g")
+icon = ExtResource("2_j6nr1")
 itemName = "Soder"
 desc = "+10% speed increase per stack."
-pickup_blurb = "tastes like metal. hell yeah."
+pickup_blurb = "Tastes like metal. Hell yeah dude!"
 
 [connection signal="stackCountChanged" from="." to="." method="_on_stack_count_changed"]

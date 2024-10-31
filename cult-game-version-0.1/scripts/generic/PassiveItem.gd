@@ -28,7 +28,7 @@ static var _pickupBlurbScn = preload("res://objects/itemPickupBlurb.tscn")
 @export_multiline var desc:String = "An item...? It does nothing."
 
 ## The little "blurb" that should be shown when this item is picked up.
-@export var pickup_blurb:String = "NO PICKUP BLURB SET!!!"
+@export_multiline var pickup_blurb:String = "NO PICKUP BLURB SET!!!"
 
 ## The [Color] of the [member pickup_blurb].
 @export var pickup_blurb_color = Color.LIME_GREEN

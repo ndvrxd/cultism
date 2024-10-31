@@ -76,6 +76,14 @@ var _regenTimer:float = 0
 ## [br]Defaults to 100.
 @export var stat_maxHp:Stat = Stat.fromBase(100, "stat_maxHp", self)
 
+## Reference to a child [Stat] node that dictates ability cooldown reduction.
+## [br]Defaults to 0
+@export var stat_cooldown:Stat = Stat.fromBase(0, "stat_cooldown", self)
+
+## Reference to a child [Stat] node that dictates players ability to alter chance based encounters and such
+## [br]Defaults to 0
+@export var stat_luck:Stat = Stat.fromBase(0, "stat_luck", self)
+
 ## Reference to a child [Stat] node that dictates how many pixels this Entity should move per second.
 ## [br]Defaults to 400.
 @export var stat_speed:Stat = Stat.fromBase(400, "stat_speed", self)

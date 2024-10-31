@@ -1,23 +1,23 @@
-[gd_scene load_steps=7 format=3 uid="uid://f3vlcptdncbf"]
+[gd_scene load_steps=7 format=3 uid="uid://ld055ys23s8u"]
 
-[ext_resource type="Script" path="res://scripts/generic/Entity.gd" id="1_371lo"]
-[ext_resource type="Texture2D" uid="uid://cxqphh1ypvm5u" path="res://art/character ph/ndvr sprites/GATOR.png" id="1_bedmd"]
-[ext_resource type="Script" path="res://scripts/abstract/Stat.gd" id="2_3y38i"]
-[ext_resource type="PackedScene" uid="uid://bga12kqmary5o" path="res://objects/abilities/boomerang.tscn" id="3_qhwpv"]
+[ext_resource type="Script" path="res://scripts/generic/Entity.gd" id="1_1ocu6"]
+[ext_resource type="Texture2D" uid="uid://bsh65awgwn84i" path="res://art/character ph/ndvr sprites/stone.png" id="2_5gcvv"]
+[ext_resource type="Script" path="res://scripts/abstract/Stat.gd" id="3_fexqx"]
+[ext_resource type="PackedScene" uid="uid://bga12kqmary5o" path="res://objects/abilities/boomerang.tscn" id="4_rc0jy"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_7jqyf"]
 radius = 7.6555
-height = 21.0526
+height = 32.6198
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_d77vd"]
-radius = 37.2364
+radius = 40.3239
 
-[node name="gator" type="CharacterBody2D" node_paths=PackedStringArray("abilities", "stat_speed", "stat_regen", "stat_aggroNoise", "stat_baseDamage")]
+[node name="Stone" type="CharacterBody2D" node_paths=PackedStringArray("abilities", "stat_speed", "stat_regen", "stat_aggroNoise", "stat_baseDamage")]
 collision_layer = 112
 collision_mask = 7
-script = ExtResource("1_371lo")
-entityName = "Gator"
-objPath = "res://objects/characters/gator.tscn"
+script = ExtResource("1_1ocu6")
+entityName = "Stone"
+objPath = "res://objects/characters/Stone.tscn"
 abilities = [NodePath("BoomerangAbility")]
 stat_speed = NodePath("stats/speed")
 stat_regen = NodePath("stats/regen")
@@ -29,9 +29,9 @@ y_sort_enabled = true
 
 [node name="Sprite2D" type="Sprite2D" parent="feet"]
 texture_filter = 1
-position = Vector2(0, -1.80466)
-scale = Vector2(1.04, 1.06385)
-texture = ExtResource("1_bedmd")
+position = Vector2(0, -8.83652)
+scale = Vector2(0.88, 1.04798)
+texture = ExtResource("2_5gcvv")
 offset = Vector2(0, -91)
 
 [node name="shoulder" type="Node2D" parent="."]
@@ -43,30 +43,31 @@ collision_layer = 96
 collision_mask = 4
 
 [node name="shape" type="CollisionShape2D" parent="hurtbox"]
-position = Vector2(-7.10543e-15, -12.2488)
-scale = Vector2(0.977033, 1.11483)
+position = Vector2(0, -15.311)
+scale = Vector2(0.793301, 0.938756)
 shape = SubResource("CapsuleShape2D_7jqyf")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -23)
+scale = Vector2(0.670024, 0.68)
 shape = SubResource("CircleShape2D_d77vd")
 
 [node name="stats" type="Node" parent="."]
 
 [node name="speed" type="Node" parent="stats"]
-script = ExtResource("2_3y38i")
+script = ExtResource("3_fexqx")
 baseValue = 300.0
 
 [node name="regen" type="Node" parent="stats"]
-script = ExtResource("2_3y38i")
+script = ExtResource("3_fexqx")
 baseValue = 2.0
 
 [node name="base damage" type="Node" parent="stats"]
-script = ExtResource("2_3y38i")
+script = ExtResource("3_fexqx")
 baseValue = 35.0
 
 [node name="aggro noise" type="Node" parent="stats"]
-script = ExtResource("2_3y38i")
+script = ExtResource("3_fexqx")
 baseValue = 100.0
 
-[node name="BoomerangAbility" parent="." instance=ExtResource("3_qhwpv")]
+[node name="BoomerangAbility" parent="." instance=ExtResource("4_rc0jy")]

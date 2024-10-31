@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://bqn8v6gbnfj1u"]
+[gd_scene load_steps=23 format=3 uid="uid://bqn8v6gbnfj1u"]
 
 [ext_resource type="Script" path="res://scripts/menus/connectScreen.gd" id="1_ep8hg"]
 [ext_resource type="Shader" uid="uid://dsj7wr5hf50yw" path="res://vfx/shaders/scroll_simple.tres" id="2_mssil"]
@@ -18,6 +18,7 @@
 [ext_resource type="Texture2D" uid="uid://cxqphh1ypvm5u" path="res://art/character ph/ndvr sprites/GATOR.png" id="15_mlfi1"]
 [ext_resource type="Texture2D" uid="uid://bte5l2cpqvgmu" path="res://art/character ph/ndvr sprites/bnuy.png" id="16_0xpqv"]
 [ext_resource type="Texture2D" uid="uid://bbk43vaxuk3i0" path="res://art/character ph/ndvr sprites/demomouse.png" id="17_5o8er"]
+[ext_resource type="Texture2D" uid="uid://bsh65awgwn84i" path="res://art/character ph/ndvr sprites/stone.png" id="18_vmj0f"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_0gu1n"]
 shader = ExtResource("2_mssil")
@@ -216,7 +217,7 @@ offset_right = 128.0
 offset_bottom = 219.0
 grow_horizontal = 2
 grow_vertical = 2
-item_count = 18
+item_count = 19
 fixed_icon_size = Vector2i(50, 50)
 item_0/text = "Fully playable characters"
 item_0/selectable = false
@@ -256,6 +257,8 @@ item_16/text = "bunny"
 item_16/icon = ExtResource("16_0xpqv")
 item_17/text = "demomouse"
 item_17/icon = ExtResource("17_5o8er")
+item_18/text = "Stone"
+item_18/icon = ExtResource("18_vmj0f")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("14_5jyka")
