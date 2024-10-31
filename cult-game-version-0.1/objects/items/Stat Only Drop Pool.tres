@@ -4,4 +4,4 @@
 
 [resource]
 script = ExtResource("1_rn8dy")
-items = Array[String](["res://objects/items/Fister_Item.tscn", "res://objects/items/LuckyPaw_Item.tscn", "res://objects/items/MysteriousAmalgamation_Item.tscn", "res://objects/items/Nachos_Item.tscn", "res://objects/items/Soder_Item.tscn"])
+items = Array[String](["res://objects/items/Fister_Item.tscn", "res://objects/items/LuckyPaw_Item.tscn", "res://objects/items/MysteriousAmalgamation_Item.tscn", "res://objects/items/Nachos_Item.tscn", "res://objects/items/Soder_Item.tscn", "res://objects/items/halo.tscn", "res://objects/items/Megaphone.tscn"])

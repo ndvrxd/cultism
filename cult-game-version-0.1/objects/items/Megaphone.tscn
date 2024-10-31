@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://q2ph3sq4vggs"]
+
+[ext_resource type="Script" path="res://sandbox/ndvr/item test/StatItem.tres.gd" id="1_v42oc"]
+[ext_resource type="Texture2D" uid="uid://dum267uce302e" path="res://objects/items/item sprites/Megaphone.png" id="2_4gwvo"]
+
+[node name="Megaphone" type="Node2D" groups=["upright_sprite"]]
+script = ExtResource("1_v42oc")
+AggroModify = 0.5
+icon = ExtResource("2_4gwvo")
+itemName = "Megaphone"
+desc = "+50% Aggro Noise"
+pickup_blurb = "HEY IS THIS THING ON!!? (ON on ᵒⁿ) "
+
+[connection signal="stackCountChanged" from="." to="." method="_on_stack_count_changed"]

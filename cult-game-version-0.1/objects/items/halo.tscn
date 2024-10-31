@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://chgykhdpuykhn"]
+
+[ext_resource type="Script" path="res://sandbox/ndvr/item test/StatItem.tres.gd" id="1_6wcha"]
+[ext_resource type="Texture2D" uid="uid://ce3nnd1kqrlvx" path="res://objects/items/item sprites/HALO.png" id="2_pc2g7"]
+
+[node name="halo" type="Node2D" groups=["upright_sprite"]]
+script = ExtResource("1_6wcha")
+SpeedModify = 1.0
+LuckModify = 1.0
+Cooldown = 1.0
+HealthModify = 1.0
+DamageModify = 1.0
+RegenModify = 1.0
+AggroModify = 1.0
+icon = ExtResource("2_pc2g7")
+itemName = "Halo"
+desc = "+100% to everything"
+pickup_blurb = "jesus christ! *jesus walks in* \"you rang?\""
+pickup_blurb_color = Color(0.966667, 1, 0, 1)
+
+[connection signal="stackCountChanged" from="." to="." method="_on_stack_count_changed"]

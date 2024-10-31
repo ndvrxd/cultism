@@ -2,7 +2,6 @@
 
 [ext_resource type="Material" uid="uid://di1b160vqpl63" path="res://vfx/material/titlebg.tres" id="1_s75qj"]
 [ext_resource type="FontFile" uid="uid://dhk11k42eybnt" path="res://fonts/chela-one.regular.ttf" id="1_xo7x8"]
-[ext_resource type="PackedScene" uid="uid://cixt7jlqnxfa6" path="res://scenes/settings.tscn" id="2_3x6rn"]
 [ext_resource type="Texture2D" uid="uid://b5k4twe1vvha5" path="res://art/character ph/bunny ph.png" id="2_hj425"]
 [ext_resource type="Texture2D" uid="uid://soudc4snc7fj" path="res://art/character ph/kibby ph 2.png" id="3_0dnso"]
 [ext_resource type="Texture2D" uid="uid://bdyllnybosvnm" path="res://art/character ph/poss ph.png" id="4_ukcea"]
@@ -13,6 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://bbk43vaxuk3i0" path="res://art/character ph/ndvr sprites/demomouse.png" id="9_koe8f"]
 [ext_resource type="Texture2D" uid="uid://dd1ht4cqpvsn3" path="res://art/character ph/ndvr sprites/ouppy.png" id="10_18fpv"]
 [ext_resource type="Texture2D" uid="uid://bsh65awgwn84i" path="res://art/character ph/ndvr sprites/stone.png" id="11_dl1v1"]
+[ext_resource type="PackedScene" uid="uid://s3mfim2cwau0" path="res://scenes/menu/settings_menu.tscn" id="13_22r85"]
 
 [sub_resource type="GDScript" id="GDScript_xgb1g"]
 resource_name = "title"
@@ -25,6 +25,16 @@ func _on_multiplayer_pressed() -> void:
 
 func _on_quit_pressed() -> void:
 	get_tree().quit()
+
+func _on_settings_pressed() -> void:
+	$main.visible = false
+	$\"New Menu\".set_process(true)
+	$\"New Menu\".visible = true
+	
+func _on_new_menu_exit_settings_menu() -> void:
+	$main.visible = true
+	$\"New Menu\".set_process(false)
+	$\"New Menu\".visible = false
 
 func _input(e:InputEvent) -> void:
 	if Input.is_key_pressed(KEY_F3):
@@ -111,6 +121,9 @@ anchor_top = 0.175
 anchor_right = 0.745
 anchor_bottom = 0.675
 grow_horizontal = 2
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("1_xo7x8")
+theme_override_font_sizes/font_size = 20
 item_count = 10
 max_columns = 5
 icon_mode = 0
@@ -136,6 +149,7 @@ item_8/text = "Ouppy"
 item_8/icon = ExtResource("10_18fpv")
 item_9/text = "Stone"
 item_9/icon = ExtResource("11_dl1v1")
+metadata/_edit_use_anchors_ = true
 
 [node name="Label" type="Label" parent="charsel"]
 layout_mode = 1
@@ -250,7 +264,7 @@ anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="Settings" parent="." instance=ExtResource("2_3x6rn")]
+[node name="New Menu" parent="." instance=ExtResource("13_22r85")]
 visible = false
 layout_mode = 1
 
@@ -297,14 +311,12 @@ text = "no"
 [connection signal="pressed" from="main/buttons/singleplayer" to="singleplayer" method="set_visible" binds= [true]]
 [connection signal="ready" from="main/buttons/singleplayer" to="main/buttons/singleplayer" method="grab_focus"]
 [connection signal="pressed" from="main/buttons/multiplayer" to="." method="_on_multiplayer_pressed"]
-[connection signal="pressed" from="main/buttons/settings" to="main" method="set_visible" binds= [false]]
-[connection signal="pressed" from="main/buttons/settings" to="Settings" method="set_visible" binds= [true]]
+[connection signal="pressed" from="main/buttons/settings" to="." method="_on_settings_pressed"]
 [connection signal="pressed" from="main/buttons/quit" to="for realsies/hbox/no" method="grab_focus"]
 [connection signal="pressed" from="main/buttons/quit" to="main" method="set_visible" binds= [false]]
 [connection signal="pressed" from="main/buttons/quit" to="for realsies" method="set_visible" binds= [true]]
 [connection signal="pressed" from="singleplayer" to="." method="_on_singleplayer_pressed"]
-[connection signal="exit_settings" from="Settings" to="main" method="set_visible" binds= [true]]
-[connection signal="exit_settings" from="Settings" to="Settings" method="set_visible" binds= [false]]
+[connection signal="exit_settings_menu" from="New Menu" to="." method="_on_new_menu_exit_settings_menu"]
 [connection signal="pressed" from="for realsies/hbox/yes" to="." method="_on_quit_pressed"]
 [connection signal="pressed" from="for realsies/hbox/no" to="main/buttons/singleplayer" method="grab_focus"]
 [connection signal="pressed" from="for realsies/hbox/no" to="main" method="set_visible" binds= [true]]
