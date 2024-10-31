@@ -88,6 +88,14 @@ outline_color = Color(0, 0, 0, 1)
 [node name="PlayerControls" type="Node2D"]
 script = ExtResource("1_122va")
 
+[node name="assist" type="Area2D" parent="."]
+position = Vector2(0, -79)
+collision_layer = 0
+collision_mask = 32
+
+[node name="shape" type="CollisionPolygon2D" parent="assist"]
+polygon = PackedVector2Array(56, -1, 1408, -192, 1408, 192)
+
 [node name="shoulder" type="Node2D" parent="."]
 position = Vector2(0, -79)
 
