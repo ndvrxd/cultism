@@ -30,14 +30,14 @@ func roll_items():
 func toggle_for(entity:Entity) -> void:
 	if entity == ent:
 		$AnimationPlayer.play("closed")
-		ent.frozen = false
+		ent.get_node("PlayerControls").inhibitInputEvents = false
 		visible = false
 		ent = null
 	elif entity.has_node("PlayerControls"): #play nice in multiplayer
 		visible = true
 		$AnimationPlayer.play("open")
 		ent = entity
-		ent.frozen = true
+		ent.get_node("PlayerControls").inhibitInputEvents = true
 		list.deselect_all()
 		roll_items()
 
@@ -49,7 +49,8 @@ func _input(_event: InputEvent) -> void:
 func _on_item_list_item_clicked(index: int, _at_position: Vector2, mouse_button_index: int) -> void:
 	if mouse_button_index != 1: return
 	selected_item = _item_paths[index]
-	ent.frozen = false
 	ent.addItem(load(selected_item))
 	$AnimationPlayer.play("selected")
+	await get_tree().create_timer(0.1, false).timeout
+	ent.get_node("PlayerControls").inhibitInputEvents = false
 	ent = null

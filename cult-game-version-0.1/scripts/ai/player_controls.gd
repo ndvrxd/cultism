@@ -19,6 +19,8 @@ var controllerAimSpeed:float = 400
 var lastStickDir:Vector2 = Vector2.ZERO
 var trueLookDirection:Vector2 = Vector2.ZERO
 
+var inhibitInputEvents:bool = false
+
 # for time elapsed
 var seconds: float = 0.0
 var minutes: int = 0
@@ -71,7 +73,7 @@ func spectate(killedBy:Entity): # This will need to change to allow respawning
 func _physics_process(delta: float) -> void:
 	if !is_instance_valid(ent): return
 	direction = Input.get_vector("left", "right", "up", "down");
-	ent.moveIntent = direction if !Chatbox.isFocused else Vector2.ZERO
+	ent.moveIntent = direction if !(Chatbox.isFocused or inhibitInputEvents) else Vector2.ZERO
 	
 	var cameraStickDir = Input.get_vector("LookLeft", "LookRight", "LookUp", "LookDown").normalized();
 	
@@ -157,7 +159,7 @@ func _process(delta):
 	#endregion
 	
 	#region input stuff
-	if !Chatbox.isFocused:
+	if !(Chatbox.isFocused or inhibitInputEvents):
 		for i in range(ABILITY_ACTION_MAP.size()):
 			if Input.is_action_just_pressed(ABILITY_ACTION_MAP[i]):
 				ent.setAbilityPressed.rpc(i, true)
