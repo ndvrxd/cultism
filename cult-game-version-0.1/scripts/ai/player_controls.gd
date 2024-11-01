@@ -7,6 +7,18 @@ var mouseLookMode = true
 @onready var ui_hb_under:TextureProgressBar = $"HUD STUFF/healthbar_under"
 @onready var ui_hb_text:Label = $"HUD STUFF/healthbar_under/Label"
 @onready var ui_hb_effigy:TextureProgressBar = $"HUD STUFF/objective_health"
+
+#new ndvr shit trying to add stats to hud
+
+@onready var damage_stat:Label = $"HUD STUFF/HBoxContainer/Numbers/DamageNumber"
+@onready var speed_stat:Label = $"HUD STUFF/HBoxContainer/Numbers/SpeedNumber"
+@onready var regen_stat:Label = $"HUD STUFF/HBoxContainer/Numbers/RegenNumber"
+@onready var cooldown_stat:Label = $"HUD STUFF/HBoxContainer/Numbers/CooldownNumber"
+@onready var aggro_stat:Label = $"HUD STUFF/HBoxContainer/Numbers/AggroNumber"
+@onready var luck_stat:Label = $"HUD STUFF/HBoxContainer/Numbers/LuckNumber"
+
+
+
 var vignetteTween:Tween
 
 const SPECTATOR_BODY_PATH:String = "res://objects/characters/spectator.tscn"
@@ -166,7 +178,15 @@ func _process(delta):
 			if Input.is_action_just_released(ABILITY_ACTION_MAP[i]):
 				ent.setAbilityPressed.rpc(i, false)
 	#endregion
-
+	
+	
+	#more new ndvr shit testing hud reflecting stats ;p
+	damage_stat.text = str(ent.stat_baseDamage.val)
+	speed_stat.text = str(ent.stat_speed.val)
+	regen_stat.text = str(ent.stat_regen.val)
+	cooldown_stat.text = str(ent.stat_cooldown.val)
+	aggro_stat.text = str(ent.stat_aggroNoise.val)
+	luck_stat.text = str(ent.stat_luck.val)
 
 # clock controller
 # i should add in hours later if needed

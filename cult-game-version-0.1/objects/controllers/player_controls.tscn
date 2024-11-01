@@ -130,7 +130,102 @@ grow_vertical = 2
 mouse_filter = 2
 texture = ExtResource("3_vj6ed")
 
+[node name="HBoxContainer" type="HBoxContainer" parent="HUD STUFF"]
+anchors_preset = -1
+anchor_left = 0.908
+anchor_top = 0.064
+anchor_right = 0.917
+anchor_bottom = 0.064
+offset_right = 74.0
+offset_bottom = 242.0
+alignment = 1
+
+[node name="Stats" type="VBoxContainer" parent="HUD STUFF/HBoxContainer"]
+layout_mode = 2
+
+[node name="Damage" type="Label" parent="HUD STUFF/HBoxContainer/Stats"]
+layout_mode = 2
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("3_6ivni")
+theme_override_font_sizes/font_size = 30
+text = "DMG: "
+
+[node name="Speed" type="Label" parent="HUD STUFF/HBoxContainer/Stats"]
+layout_mode = 2
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("3_6ivni")
+theme_override_font_sizes/font_size = 30
+text = "SPD: "
+
+[node name="Regen" type="Label" parent="HUD STUFF/HBoxContainer/Stats"]
+layout_mode = 2
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("3_6ivni")
+theme_override_font_sizes/font_size = 30
+text = "RGN: "
+
+[node name="Cooldown" type="Label" parent="HUD STUFF/HBoxContainer/Stats"]
+layout_mode = 2
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("3_6ivni")
+theme_override_font_sizes/font_size = 30
+text = "CDR: "
+
+[node name="Aggro" type="Label" parent="HUD STUFF/HBoxContainer/Stats"]
+layout_mode = 2
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("3_6ivni")
+theme_override_font_sizes/font_size = 30
+text = "AGR: "
+
+[node name="Luck" type="Label" parent="HUD STUFF/HBoxContainer/Stats"]
+layout_mode = 2
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("3_6ivni")
+theme_override_font_sizes/font_size = 30
+text = "LCK: "
+
+[node name="Numbers" type="VBoxContainer" parent="HUD STUFF/HBoxContainer"]
+layout_mode = 2
+
+[node name="DamageNumber" type="Label" parent="HUD STUFF/HBoxContainer/Numbers"]
+layout_mode = 2
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("3_6ivni")
+theme_override_font_sizes/font_size = 30
+
+[node name="SpeedNumber" type="Label" parent="HUD STUFF/HBoxContainer/Numbers"]
+layout_mode = 2
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("3_6ivni")
+theme_override_font_sizes/font_size = 30
+
+[node name="RegenNumber" type="Label" parent="HUD STUFF/HBoxContainer/Numbers"]
+layout_mode = 2
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("3_6ivni")
+theme_override_font_sizes/font_size = 30
+
+[node name="CooldownNumber" type="Label" parent="HUD STUFF/HBoxContainer/Numbers"]
+layout_mode = 2
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("3_6ivni")
+theme_override_font_sizes/font_size = 30
+
+[node name="AggroNumber" type="Label" parent="HUD STUFF/HBoxContainer/Numbers"]
+layout_mode = 2
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("3_6ivni")
+theme_override_font_sizes/font_size = 30
+
+[node name="LuckNumber" type="Label" parent="HUD STUFF/HBoxContainer/Numbers"]
+layout_mode = 2
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("3_6ivni")
+theme_override_font_sizes/font_size = 30
+
 [node name="PRIORITIES" type="Label" parent="HUD STUFF"]
+visible = false
 modulate = Color(1, 1, 1, 0.709804)
 texture_filter = 2
 anchors_preset = 1
@@ -198,10 +293,10 @@ anchors_preset = 6
 anchor_left = 1.0
 anchor_top = 0.5
 anchor_bottom = 0.5
-offset_left = -30.0
-offset_top = -79.0
-offset_right = -30.0
-offset_bottom = -79.0
+offset_left = -41.0
+offset_top = 123.0
+offset_right = -41.0
+offset_bottom = 123.0
 grow_horizontal = 0
 keyIcon = ExtResource("9_wsmga")
 iconScale = 0.5
