@@ -189,9 +189,11 @@ func _process(delta):
 	#endregion
 	
 	
+	
+	#ndvr new stat stuff as of 11/2/24 nfdnghjfd this sucks omfg
 	#OK PLEASE AUTOMATE THIS TO BE "for every stat in statitem.gd" BUT FOR NOW ITS HARDCODED FOR ALL THE ONES
 	#DAMAGE
-	if float(ent.stat_baseDamage.val)- float(damage_stat.text) == 0 or float(ent.stat_baseDamage.val)- float(damage_stat.text) == float(ent.stat_baseDamage.val):
+	if abs(float(ent.stat_baseDamage.val)- float(damage_stat.text)) == 0 or abs(float(ent.stat_baseDamage.val)- float(damage_stat.text)) == abs(float(ent.stat_baseDamage.val)):
 		pass
 	elif float(ent.stat_baseDamage.val)- float(damage_stat.text) > 0:
 		damage_change.add_theme_color_override("font_color","32cd32")
@@ -201,7 +203,7 @@ func _process(delta):
 		damage_change.text = str(snappedf(float(ent.stat_baseDamage.val)- float(damage_stat.text), 0.01))
 	
 	#SPEED
-	if float(ent.stat_speed.val)- float(speed_stat.text) == 0 or float(ent.stat_speed.val)- float(speed_stat.text) == float(ent.stat_speed.val):
+	if abs(float(ent.stat_speed.val)- float(speed_stat.text)) == 0 or abs(float(ent.stat_speed.val)- float(speed_stat.text)) == abs(float(ent.stat_speed.val)):
 		pass
 	elif float(ent.stat_speed.val)- float(speed_stat.text) > 0:
 		speed_change.add_theme_color_override("font_color","32cd32")
@@ -211,7 +213,7 @@ func _process(delta):
 		speed_change.text = str(snappedf(float(ent.stat_speed.val)- float(speed_stat.text), 0.01))
 	
 	#REGEN
-	if float(ent.stat_regen.val)- float(regen_stat.text) == 0 or float(ent.stat_regen.val)- float(regen_stat.text) == float(ent.stat_regen.val):
+	if abs(float(ent.stat_regen.val)- float(regen_stat.text)) == 0 or abs(float(ent.stat_regen.val)- float(regen_stat.text)) == abs(float(ent.stat_regen.val)):
 		pass
 	elif float(ent.stat_regen.val)- float(regen_stat.text) > 0:
 		regen_change.add_theme_color_override("font_color","32cd32")
@@ -221,7 +223,7 @@ func _process(delta):
 		regen_change.text = str(snappedf(float(ent.stat_regen.val)- float(regen_stat.text), 0.01))
 	
 	#COOLDOWN
-	if float(ent.stat_cooldown.val)- float(cooldown_stat.text) == 0 or float(ent.stat_cooldown.val)- float(cooldown_stat.text) == float(ent.stat_cooldown.val):
+	if abs(float(ent.stat_cooldown.val)- float(cooldown_stat.text)) == 0 or abs(float(ent.stat_cooldown.val)- float(cooldown_stat.text)) == abs(float(ent.stat_cooldown.val)):
 		pass
 	elif float(ent.stat_cooldown.val)- float(cooldown_stat.text) > 0:
 		cooldown_change.add_theme_color_override("font_color","32cd32")
@@ -231,9 +233,9 @@ func _process(delta):
 		cooldown_change.text = str(snappedf(float(ent.stat_cooldown.val)- float(cooldown_stat.text), 0.01))
 	
 	#AGGRO
-	if float(ent.stat_aggroNoise.val)- float(aggro_stat.text) == 0 or float(ent.stat_aggroNoise.val)- float(aggro_stat.text) == float(ent.stat_aggroNoise.val):
+	if abs(float(ent.stat_aggroNoise.val)- float(aggro_stat.text)) == 0 or abs(float(ent.stat_aggroNoise.val)- float(aggro_stat.text)) == abs(float(ent.stat_aggroNoise.val)):
 		pass
-	elif float(ent.stat_aggroNoise.val)- float(cooldown_stat.text) > 0:
+	elif float(ent.stat_aggroNoise.val)- float(aggro_stat.text) > 0:
 		aggro_change.add_theme_color_override("font_color","32cd32")
 		aggro_change.text = str(snappedf(float(ent.stat_aggroNoise.val)- float(aggro_stat.text), 0.01))
 	elif float(ent.stat_aggroNoise.val)- float(aggro_stat.text) < 0:
@@ -241,9 +243,9 @@ func _process(delta):
 		aggro_change.text = str(snappedf(float(ent.stat_aggroNoise.val)- float(aggro_stat.text), 0.01))
 	
 	#LUCK
-	if float(ent.stat_luck.val)- float(luck_stat.text) == 0 or float(ent.stat_luck.val)- float(luck_stat.text) == float(ent.stat_luck.val):
+	if abs(float(ent.stat_luck.val)- float(luck_stat.text)) == 0 or abs(float(ent.stat_luck.val)- float(luck_stat.text)) == abs(float(ent.stat_luck.val)):
 		pass
-	elif float(ent.stat_luck.val)- float(cooldown_stat.text) > 0:
+	elif float(ent.stat_luck.val)- float(luck_stat.text) > 0:
 		luck_change.add_theme_color_override("font_color","32cd32")
 		luck_change.text = str(snappedf(float(ent.stat_luck.val)- float(luck_stat.text), 0.01))
 	elif float(ent.stat_luck.val)- float(luck_stat.text) < 0:

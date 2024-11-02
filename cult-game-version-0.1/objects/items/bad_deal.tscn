@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://bmj6l6ucmkn30"]
+
+[ext_resource type="Script" path="res://sandbox/ndvr/item test/StatItem.tres.gd" id="1_s24ul"]
+[ext_resource type="Texture2D" uid="uid://j31el7hgufny" path="res://objects/items/item sprites/BADDEAL.png" id="2_us75c"]
+
+[node name="BadDeal" type="Node2D" groups=["upright_sprite"]]
+script = ExtResource("1_s24ul")
+SpeedModify = -0.99
+LuckModify = -0.99
+Cooldown = -0.99
+HealthModify = -0.99
+DamageModify = -0.99
+RegenModify = -0.99
+AggroModify = -0.99
+icon = ExtResource("2_us75c")
+itemName = "Bad Deal"
+desc = "-99% to Everything"
+pickup_blurb = "Fucker took EVERYTHING! ITS ALL GONE"
+pickup_blurb_color = Color(0.8, 0, 0, 1)
+
+[connection signal="stackCountChanged" from="." to="." method="_on_stack_count_changed"]
