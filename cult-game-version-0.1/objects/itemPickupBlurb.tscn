@@ -1,18 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://cqr2hvm0eepkb"]
 
 [ext_resource type="LabelSettings" uid="uid://w5lnebw7ico3" path="res://fonts/labelsettings-white-outline.tres" id="1_qv8vu"]
-
-[sub_resource type="GDScript" id="GDScript_fjuks"]
-script/source = "extends Label
-
-func _ready() -> void:
-	pivot_offset = size/2
-	global_position -= size / 2
-
-func _process(delta: float) -> void:
-	position.y -= 20 * delta
-	modulate.a = $Timer.time_left / ($Timer.wait_time-0.3)
-"
+[ext_resource type="Script" path="res://objects/itempickupblurb.gd" id="2_gia03"]
 
 [node name="ItemPickupBlurb" type="Label"]
 z_index = 2
@@ -22,7 +11,7 @@ text = "item pickup blurb"
 label_settings = ExtResource("1_qv8vu")
 horizontal_alignment = 1
 vertical_alignment = 1
-script = SubResource("GDScript_fjuks")
+script = ExtResource("2_gia03")
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 2.0

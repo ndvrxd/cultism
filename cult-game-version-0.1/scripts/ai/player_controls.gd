@@ -17,6 +17,13 @@ var mouseLookMode = true
 @onready var aggro_stat:Label = $"HUD STUFF/HBoxContainer/Numbers/AggroNumber"
 @onready var luck_stat:Label = $"HUD STUFF/HBoxContainer/Numbers/LuckNumber"
 
+@onready var damage_change:Label = $"HUD STUFF/HBoxContainer/Change/DamageChange"
+@onready var speed_change:Label = $"HUD STUFF/HBoxContainer/Change/SpeedChange"
+@onready var regen_change:Label = $"HUD STUFF/HBoxContainer/Change/RegenChange"
+@onready var cooldown_change:Label = $"HUD STUFF/HBoxContainer/Change/CooldownChange"
+@onready var aggro_change:Label = $"HUD STUFF/HBoxContainer/Change/AggroChange"
+@onready var luck_change:Label = $"HUD STUFF/HBoxContainer/Change/LuckChange"
+
 
 
 var vignetteTween:Tween
@@ -66,6 +73,8 @@ func _ready():
 	for i in range(ABILITY_ICON_MAP.size()):
 		if ent.abilities.size() > i and is_instance_valid(ent.abilities[i]): 
 			ABILITY_ICON_MAP[i].set_ability(ent.abilities[i])
+	
+
 
 func spectate(killedBy:Entity): # This will need to change to allow respawning
 	var ename:String = ent.name
@@ -180,6 +189,71 @@ func _process(delta):
 	#endregion
 	
 	
+	#OK PLEASE AUTOMATE THIS TO BE "for every stat in statitem.gd" BUT FOR NOW ITS HARDCODED FOR ALL THE ONES
+	#DAMAGE
+	if float(ent.stat_baseDamage.val)- float(damage_stat.text) == 0 or float(ent.stat_baseDamage.val)- float(damage_stat.text) == float(ent.stat_baseDamage.val):
+		pass
+	elif float(ent.stat_baseDamage.val)- float(damage_stat.text) > 0:
+		damage_change.add_theme_color_override("font_color","32cd32")
+		damage_change.text = str(snappedf(float(ent.stat_baseDamage.val)- float(damage_stat.text), 0.01))
+	elif float(ent.stat_baseDamage.val)- float(damage_stat.text) < 0:
+		damage_change.add_theme_color_override("font_color","ff493a")
+		damage_change.text = str(snappedf(float(ent.stat_baseDamage.val)- float(damage_stat.text), 0.01))
+	
+	#SPEED
+	if float(ent.stat_speed.val)- float(speed_stat.text) == 0 or float(ent.stat_speed.val)- float(speed_stat.text) == float(ent.stat_speed.val):
+		pass
+	elif float(ent.stat_speed.val)- float(speed_stat.text) > 0:
+		speed_change.add_theme_color_override("font_color","32cd32")
+		speed_change.text = str(snappedf(float(ent.stat_speed.val)- float(speed_stat.text), 0.01))
+	elif float(ent.stat_speed.val)- float(speed_stat.text) < 0:
+		speed_change.add_theme_color_override("font_color","ff493a")
+		speed_change.text = str(snappedf(float(ent.stat_speed.val)- float(speed_stat.text), 0.01))
+	
+	#REGEN
+	if float(ent.stat_regen.val)- float(regen_stat.text) == 0 or float(ent.stat_regen.val)- float(regen_stat.text) == float(ent.stat_regen.val):
+		pass
+	elif float(ent.stat_regen.val)- float(regen_stat.text) > 0:
+		regen_change.add_theme_color_override("font_color","32cd32")
+		regen_change.text = str(snappedf(float(ent.stat_regen.val)- float(regen_stat.text), 0.01))
+	elif float(ent.stat_regen.val)- float(regen_stat.text) < 0:
+		regen_change.add_theme_color_override("font_color","ff493a")
+		regen_change.text = str(snappedf(float(ent.stat_regen.val)- float(regen_stat.text), 0.01))
+	
+	#COOLDOWN
+	if float(ent.stat_cooldown.val)- float(cooldown_stat.text) == 0 or float(ent.stat_cooldown.val)- float(cooldown_stat.text) == float(ent.stat_cooldown.val):
+		pass
+	elif float(ent.stat_cooldown.val)- float(cooldown_stat.text) > 0:
+		cooldown_change.add_theme_color_override("font_color","32cd32")
+		cooldown_change.text = str(snappedf(float(ent.stat_cooldown.val)- float(cooldown_stat.text), 0.01))
+	elif float(ent.stat_cooldown.val)- float(cooldown_stat.text) < 0:
+		cooldown_change.add_theme_color_override("font_color","ff493a")
+		cooldown_change.text = str(snappedf(float(ent.stat_cooldown.val)- float(cooldown_stat.text), 0.01))
+	
+	#AGGRO
+	if float(ent.stat_aggroNoise.val)- float(aggro_stat.text) == 0 or float(ent.stat_aggroNoise.val)- float(aggro_stat.text) == float(ent.stat_aggroNoise.val):
+		pass
+	elif float(ent.stat_aggroNoise.val)- float(cooldown_stat.text) > 0:
+		aggro_change.add_theme_color_override("font_color","32cd32")
+		aggro_change.text = str(snappedf(float(ent.stat_aggroNoise.val)- float(aggro_stat.text), 0.01))
+	elif float(ent.stat_aggroNoise.val)- float(aggro_stat.text) < 0:
+		aggro_change.add_theme_color_override("font_color","ff493a")
+		aggro_change.text = str(snappedf(float(ent.stat_aggroNoise.val)- float(aggro_stat.text), 0.01))
+	
+	#LUCK
+	if float(ent.stat_luck.val)- float(luck_stat.text) == 0 or float(ent.stat_luck.val)- float(luck_stat.text) == float(ent.stat_luck.val):
+		pass
+	elif float(ent.stat_luck.val)- float(cooldown_stat.text) > 0:
+		luck_change.add_theme_color_override("font_color","32cd32")
+		luck_change.text = str(snappedf(float(ent.stat_luck.val)- float(luck_stat.text), 0.01))
+	elif float(ent.stat_luck.val)- float(luck_stat.text) < 0:
+		luck_change.add_theme_color_override("font_color","ff493a")
+		luck_change.text = str(snappedf(float(ent.stat_luck.val)- float(luck_stat.text), 0.01))
+	
+	
+	
+	
+	
 	#more new ndvr shit testing hud reflecting stats ;p
 	damage_stat.text = str(ent.stat_baseDamage.val)
 	speed_stat.text = str(ent.stat_speed.val)
@@ -187,6 +261,14 @@ func _process(delta):
 	cooldown_stat.text = str(ent.stat_cooldown.val)
 	aggro_stat.text = str(ent.stat_aggroNoise.val)
 	luck_stat.text = str(ent.stat_luck.val)
+	
+	
+	
+#ok please resume as normal :DD   -ndvr :3
+
+
+
+
 
 # clock controller
 # i should add in hours later if needed

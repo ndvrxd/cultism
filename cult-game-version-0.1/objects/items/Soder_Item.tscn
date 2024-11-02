@@ -10,5 +10,6 @@ icon = ExtResource("2_j6nr1")
 itemName = "Soder"
 desc = "+10% speed increase per stack."
 pickup_blurb = "Tastes like metal. Hell yeah dude!"
+pickup_blurb_color = Color(1, 0.287176, 0.226426, 1)
 
 [connection signal="stackCountChanged" from="." to="." method="_on_stack_count_changed"]

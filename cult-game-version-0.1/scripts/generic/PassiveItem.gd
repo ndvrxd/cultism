@@ -18,6 +18,9 @@ var ent:Entity
 
 static var _pickupBlurbScn = preload("res://objects/itemPickupBlurb.tscn")
 
+#ndvr test thingie for stat blurb
+static var _itemStatBlurb = preload("res://objects/ItemStatBlurb.tscn")
+
 ## The icon for this item, as it should appear as a pickup & in UI.
 @export var icon:Texture2D;
 
@@ -65,6 +68,15 @@ func addStacks(count:int):
 	blurb.global_position = ent.shoulderPoint.global_position + Vector2(0, -80)
 	if !is_inside_tree(): await tree_entered
 	get_tree().current_scene.add_child(blurb)
+	
+	#ndvr stat blurb test
+	var blurbStat:Label = _itemStatBlurb.instantiate()
+	blurbStat.text = pickup_blurb
+	blurbStat.modulate = pickup_blurb_color
+	blurbStat.global_position = ent.shoulderPoint.global_position + Vector2(0, -80)
+	if !is_inside_tree(): await tree_entered
+	get_tree().current_scene.add_child(blurb)
+
 
 ## Removes a stack of this item.
 func removeStacks(count:int):
