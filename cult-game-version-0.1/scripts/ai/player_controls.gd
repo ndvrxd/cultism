@@ -26,6 +26,8 @@ var mouseLookMode = true
 
 
 
+
+
 var vignetteTween:Tween
 
 const SPECTATOR_BODY_PATH:String = "res://objects/characters/spectator.tscn"
@@ -192,18 +194,36 @@ func _process(delta):
 	
 	#ndvr new stat stuff as of 11/2/24 nfdnghjfd this sucks omfg
 	#OK PLEASE AUTOMATE THIS TO BE "for every stat in statitem.gd" BUT FOR NOW ITS HARDCODED FOR ALL THE ONES
+	
+	if ent.stat_maxHp.val <= 0:
+		ent.stat_maxHp.val = 1
+		ent.health = 1
+	if ent.stat_regen.val <= 0:
+		ent.stat_regen.val = 1
+	if ent.stat_baseDamage.val < 0:
+		ent.stat_baseDamage.val = 0
+	if ent.stat_speed.val < 0:
+		ent.stat_speed.val = 1
+	if ent.stat_cooldown.val < 0:
+		ent.stat_cooldown.val = 0
+	if ent.stat_aggroNoise.val < 0:
+		ent.stat_aggroNoise.val = 0
+	
 	#DAMAGE
-	if abs(float(ent.stat_baseDamage.val)- float(damage_stat.text)) == 0 or abs(float(ent.stat_baseDamage.val)- float(damage_stat.text)) == abs(float(ent.stat_baseDamage.val)):
+	if snappedf(float(ent.stat_baseDamage.val),0.01)- snappedf(float(damage_stat.text), 0.01) == snappedf(float(ent.stat_baseDamage.val), 0.01):
+		damage_change.text = ""
 		pass
+	elif snappedf(float(ent.stat_baseDamage.val),0.01)- snappedf(float(damage_stat.text), 0.01) == 0:
+		damage_change.text = ""
 	elif float(ent.stat_baseDamage.val)- float(damage_stat.text) > 0:
 		damage_change.add_theme_color_override("font_color","32cd32")
 		damage_change.text = str(snappedf(float(ent.stat_baseDamage.val)- float(damage_stat.text), 0.01))
 	elif float(ent.stat_baseDamage.val)- float(damage_stat.text) < 0:
 		damage_change.add_theme_color_override("font_color","ff493a")
 		damage_change.text = str(snappedf(float(ent.stat_baseDamage.val)- float(damage_stat.text), 0.01))
-	
+
 	#SPEED
-	if abs(float(ent.stat_speed.val)- float(speed_stat.text)) == 0 or abs(float(ent.stat_speed.val)- float(speed_stat.text)) == abs(float(ent.stat_speed.val)):
+	if snappedf(float(ent.stat_speed.val)- float(speed_stat.text), 0.01) == 0 or snappedf(float(ent.stat_speed.val)- float(speed_stat.text), 0.01) == snappedf(float(ent.stat_speed.val), 0.01):
 		pass
 	elif float(ent.stat_speed.val)- float(speed_stat.text) > 0:
 		speed_change.add_theme_color_override("font_color","32cd32")
@@ -213,7 +233,7 @@ func _process(delta):
 		speed_change.text = str(snappedf(float(ent.stat_speed.val)- float(speed_stat.text), 0.01))
 	
 	#REGEN
-	if abs(float(ent.stat_regen.val)- float(regen_stat.text)) == 0 or abs(float(ent.stat_regen.val)- float(regen_stat.text)) == abs(float(ent.stat_regen.val)):
+	if snappedf(float(ent.stat_regen.val)- float(regen_stat.text), 0.01) == 0 or snappedf(float(ent.stat_regen.val)- float(regen_stat.text), 0.01) == snappedf(float(ent.stat_regen.val), 0.01):
 		pass
 	elif float(ent.stat_regen.val)- float(regen_stat.text) > 0:
 		regen_change.add_theme_color_override("font_color","32cd32")
@@ -223,27 +243,27 @@ func _process(delta):
 		regen_change.text = str(snappedf(float(ent.stat_regen.val)- float(regen_stat.text), 0.01))
 	
 	#COOLDOWN
-	if abs(float(ent.stat_cooldown.val)- float(cooldown_stat.text)) == 0 or abs(float(ent.stat_cooldown.val)- float(cooldown_stat.text)) == abs(float(ent.stat_cooldown.val)):
+	if snappedf(float(ent.stat_cooldown.val)- float(cooldown_stat.text), 0.01) == 0 or snappedf(float(ent.stat_cooldown.val)- float(cooldown_stat.text), 0.01) == snappedf(float(ent.stat_cooldown.val), 0.01):
 		pass
 	elif float(ent.stat_cooldown.val)- float(cooldown_stat.text) > 0:
-		cooldown_change.add_theme_color_override("font_color","32cd32")
+		cooldown_change.add_theme_color_override("font_color","ff493a")
 		cooldown_change.text = str(snappedf(float(ent.stat_cooldown.val)- float(cooldown_stat.text), 0.01))
 	elif float(ent.stat_cooldown.val)- float(cooldown_stat.text) < 0:
-		cooldown_change.add_theme_color_override("font_color","ff493a")
+		cooldown_change.add_theme_color_override("font_color","32cd32")
 		cooldown_change.text = str(snappedf(float(ent.stat_cooldown.val)- float(cooldown_stat.text), 0.01))
 	
 	#AGGRO
-	if abs(float(ent.stat_aggroNoise.val)- float(aggro_stat.text)) == 0 or abs(float(ent.stat_aggroNoise.val)- float(aggro_stat.text)) == abs(float(ent.stat_aggroNoise.val)):
+	if snappedf(float(ent.stat_aggroNoise.val)- float(aggro_stat.text), 0.01) == 0 or snappedf(float(ent.stat_aggroNoise.val)- float(aggro_stat.text), 0.01) == snappedf(float(ent.stat_aggroNoise.val), 0.01):
 		pass
 	elif float(ent.stat_aggroNoise.val)- float(aggro_stat.text) > 0:
-		aggro_change.add_theme_color_override("font_color","32cd32")
+		aggro_change.add_theme_color_override("font_color","ff493a")
 		aggro_change.text = str(snappedf(float(ent.stat_aggroNoise.val)- float(aggro_stat.text), 0.01))
 	elif float(ent.stat_aggroNoise.val)- float(aggro_stat.text) < 0:
-		aggro_change.add_theme_color_override("font_color","ff493a")
+		aggro_change.add_theme_color_override("font_color","32cd32")
 		aggro_change.text = str(snappedf(float(ent.stat_aggroNoise.val)- float(aggro_stat.text), 0.01))
 	
 	#LUCK
-	if abs(float(ent.stat_luck.val)- float(luck_stat.text)) == 0 or abs(float(ent.stat_luck.val)- float(luck_stat.text)) == abs(float(ent.stat_luck.val)):
+	if snappedf(float(ent.stat_luck.val)- float(luck_stat.text), 0.01) == 0 or snappedf(float(ent.stat_luck.val)- float(luck_stat.text), 0.01) == snappedf(float(ent.stat_luck.val), 0.01):
 		pass
 	elif float(ent.stat_luck.val)- float(luck_stat.text) > 0:
 		luck_change.add_theme_color_override("font_color","32cd32")
@@ -251,20 +271,19 @@ func _process(delta):
 	elif float(ent.stat_luck.val)- float(luck_stat.text) < 0:
 		luck_change.add_theme_color_override("font_color","ff493a")
 		luck_change.text = str(snappedf(float(ent.stat_luck.val)- float(luck_stat.text), 0.01))
+		
 	
-	
-	
-	
+
 	
 	#more new ndvr shit testing hud reflecting stats ;p
-	damage_stat.text = str(ent.stat_baseDamage.val)
-	speed_stat.text = str(ent.stat_speed.val)
-	regen_stat.text = str(ent.stat_regen.val)
-	cooldown_stat.text = str(ent.stat_cooldown.val)
-	aggro_stat.text = str(ent.stat_aggroNoise.val)
-	luck_stat.text = str(ent.stat_luck.val)
+	damage_stat.text = str(snappedf((ent.stat_baseDamage.val), 0.01))
+	speed_stat.text = str(snappedf((ent.stat_speed.val), 0.01))
+	regen_stat.text = str(snappedf((ent.stat_regen.val), 0.01))
+	cooldown_stat.text = str(snappedf((ent.stat_cooldown.val), 0.01))
+	aggro_stat.text = str(snappedf((ent.stat_aggroNoise.val), 0.01))
+	luck_stat.text = str(snappedf((ent.stat_luck.val), 0.01))
 	
-	
+
 	
 #ok please resume as normal :DD   -ndvr :3
 

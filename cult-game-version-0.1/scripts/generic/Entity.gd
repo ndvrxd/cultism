@@ -112,7 +112,7 @@ var _regenTimer:float = 0
 
 ## The current health that this entity has. Synced via [method changeHealth],
 ## when invoked using [method Callable.rpc].
-var health:float = 1
+@export var health:float = 1
 
 ## Reference to a [Node2D] that acts as the "eye level" of an entity.
 ## This will always be a child [Node2D] named [code]shoulder[/code]. If it does not exist,
