@@ -199,7 +199,7 @@ func _process(delta):
 		ent.stat_maxHp.val = 1
 		ent.health = 1
 	if ent.stat_regen.val <= 0:
-		ent.stat_regen.val = 1
+		ent.stat_regen.val = float(regen_stat.text)
 	if ent.stat_baseDamage.val < 0:
 		ent.stat_baseDamage.val = 0
 	if ent.stat_speed.val < 0:
@@ -210,8 +210,7 @@ func _process(delta):
 		ent.stat_aggroNoise.val = 0
 	
 	#DAMAGE
-	if snappedf(float(ent.stat_baseDamage.val),0.01)- snappedf(float(damage_stat.text), 0.01) == snappedf(float(ent.stat_baseDamage.val), 0.01):
-		damage_change.text = ""
+	if snappedf(float(ent.stat_baseDamage.val),0.01)- snappedf(float(damage_stat.text), 0.01) == snappedf(float(ent.stat_baseDamage.val), 0.01) or snappedf(float(ent.stat_baseDamage.val),0.01)- snappedf(float(damage_stat.text), 0.01) == 0:
 		pass
 	elif snappedf(float(ent.stat_baseDamage.val),0.01)- snappedf(float(damage_stat.text), 0.01) == 0:
 		damage_change.text = ""
