@@ -39,7 +39,8 @@ func _on_new_menu_exit_settings_menu() -> void:
 func _input(e:InputEvent) -> void:
 	if Input.is_key_pressed(KEY_F3):
 		get_tree().change_scene_to_file(\"res://scenes/menu/connectScreen.tscn\")
-
+	if Input.is_key_pressed(KEY_ESCAPE) && $\"New Menu\".visible == true:
+		_on_new_menu_exit_settings_menu()
 
 func _on_singleplayer_pressed() -> void:
 	NetManager.playerinfo_local[\"name\"] = \"Player\"

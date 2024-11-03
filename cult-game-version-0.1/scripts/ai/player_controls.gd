@@ -210,7 +210,7 @@ func _process(delta):
 		ent.stat_aggroNoise.val = 0
 	
 	#DAMAGE
-	if snappedf(float(ent.stat_baseDamage.val),0.01)- snappedf(float(damage_stat.text), 0.01) == snappedf(float(ent.stat_baseDamage.val), 0.01) or snappedf(float(ent.stat_baseDamage.val),0.01)- snappedf(float(damage_stat.text), 0.01) == 0:
+	if snappedf(float(ent.stat_baseDamage.val),0.01)- snappedf(float(damage_stat.text), 0.01) == snappedf(float(ent.stat_baseDamage.val), 0.01):
 		pass
 	elif snappedf(float(ent.stat_baseDamage.val),0.01)- snappedf(float(damage_stat.text), 0.01) == 0:
 		damage_change.text = ""

@@ -173,4 +173,7 @@ text = "Exit"
 
 [connection signal="toggled" from="MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/Hbox Fullscreen/Fullscreen" to="." method="_on_fullscreen_toggled"]
 [connection signal="item_selected" from="MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/Hbox Resolution/Resolutions" to="." method="_on_resolutions_item_selected"]
+[connection signal="drag_ended" from="MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/Hbox Master/Master" to="." method="_on_master_drag_ended"]
+[connection signal="drag_ended" from="MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/Hbox SFX/sfx" to="." method="_on_sfx_drag_ended"]
+[connection signal="drag_ended" from="MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/Hbox Music/music" to="." method="_on_music_drag_ended"]
 [connection signal="button_down" from="MarginContainer/VBoxContainer/Exit_Button" to="." method="_on_exit_button_button_down"]

@@ -131,7 +131,6 @@ mouse_filter = 2
 texture = ExtResource("3_vj6ed")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="HUD STUFF"]
-anchors_preset = -1
 offset_left = 14.0
 offset_top = 80.0
 offset_right = 93.0
