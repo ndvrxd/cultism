@@ -224,13 +224,18 @@ theme_override_font_sizes/font_size = 30
 [node name="Change" type="VBoxContainer" parent="HUD STUFF/HBoxContainer"]
 layout_mode = 2
 
+[node name="Timer" type="Timer" parent="HUD STUFF/HBoxContainer/Change"]
+process_mode = 1
+process_callback = 0
+wait_time = 3.0
+one_shot = true
+autostart = true
+
 [node name="DamageChange" type="Label" parent="HUD STUFF/HBoxContainer/Change"]
 layout_mode = 2
 theme_override_constants/outline_size = 10
 theme_override_fonts/font = ExtResource("3_6ivni")
 theme_override_font_sizes/font_size = 30
-
-[node name="Timer" type="Timer" parent="HUD STUFF/HBoxContainer/Change/DamageChange"]
 
 [node name="SpeedChange" type="Label" parent="HUD STUFF/HBoxContainer/Change"]
 layout_mode = 2
@@ -633,4 +638,5 @@ offset_bottom = -75.0
 grow_horizontal = 1
 grow_vertical = 0
 
+[connection signal="timeout" from="HUD STUFF/HBoxContainer/Change/Timer" to="." method="_on_timer_timeout"]
 [connection signal="timeout" from="HUD STUFF/itemdialog/disappear" to="HUD STUFF/itemdialog" method="set_visible" binds= [false]]

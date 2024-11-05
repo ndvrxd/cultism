@@ -24,7 +24,7 @@ var mouseLookMode = true
 @onready var aggro_change:Label = $"HUD STUFF/HBoxContainer/Change/AggroChange"
 @onready var luck_change:Label = $"HUD STUFF/HBoxContainer/Change/LuckChange"
 
-
+@onready var change_timer:Timer = $"HUD STUFF/HBoxContainer/Change/Timer"
 
 
 
@@ -76,6 +76,7 @@ func _ready():
 		if ent.abilities.size() > i and is_instance_valid(ent.abilities[i]): 
 			ABILITY_ICON_MAP[i].set_ability(ent.abilities[i])
 	
+
 
 
 func spectate(killedBy:Entity): # This will need to change to allow respawning
@@ -211,25 +212,29 @@ func _process(delta):
 	
 	#DAMAGE
 	if snappedf(float(ent.stat_baseDamage.val),0.01)- snappedf(float(damage_stat.text), 0.01) == snappedf(float(ent.stat_baseDamage.val), 0.01):
-		pass
-	elif snappedf(float(ent.stat_baseDamage.val),0.01)- snappedf(float(damage_stat.text), 0.01) == 0:
 		damage_change.text = ""
+	elif snappedf(float(ent.stat_baseDamage.val),0.01)- snappedf(float(damage_stat.text), 0.01) == 0:
+		pass
 	elif float(ent.stat_baseDamage.val)- float(damage_stat.text) > 0:
 		damage_change.add_theme_color_override("font_color","32cd32")
 		damage_change.text = str(snappedf(float(ent.stat_baseDamage.val)- float(damage_stat.text), 0.01))
+		change_timer.start()
 	elif float(ent.stat_baseDamage.val)- float(damage_stat.text) < 0:
 		damage_change.add_theme_color_override("font_color","ff493a")
 		damage_change.text = str(snappedf(float(ent.stat_baseDamage.val)- float(damage_stat.text), 0.01))
-
+		change_timer.start()
+		
 	#SPEED
 	if snappedf(float(ent.stat_speed.val)- float(speed_stat.text), 0.01) == 0 or snappedf(float(ent.stat_speed.val)- float(speed_stat.text), 0.01) == snappedf(float(ent.stat_speed.val), 0.01):
 		pass
 	elif float(ent.stat_speed.val)- float(speed_stat.text) > 0:
 		speed_change.add_theme_color_override("font_color","32cd32")
 		speed_change.text = str(snappedf(float(ent.stat_speed.val)- float(speed_stat.text), 0.01))
+		change_timer.start()
 	elif float(ent.stat_speed.val)- float(speed_stat.text) < 0:
 		speed_change.add_theme_color_override("font_color","ff493a")
 		speed_change.text = str(snappedf(float(ent.stat_speed.val)- float(speed_stat.text), 0.01))
+		change_timer.start()
 	
 	#REGEN
 	if snappedf(float(ent.stat_regen.val)- float(regen_stat.text), 0.01) == 0 or snappedf(float(ent.stat_regen.val)- float(regen_stat.text), 0.01) == snappedf(float(ent.stat_regen.val), 0.01):
@@ -237,9 +242,11 @@ func _process(delta):
 	elif float(ent.stat_regen.val)- float(regen_stat.text) > 0:
 		regen_change.add_theme_color_override("font_color","32cd32")
 		regen_change.text = str(snappedf(float(ent.stat_regen.val)- float(regen_stat.text), 0.01))
+		change_timer.start()
 	elif float(ent.stat_regen.val)- float(regen_stat.text) < 0:
 		regen_change.add_theme_color_override("font_color","ff493a")
 		regen_change.text = str(snappedf(float(ent.stat_regen.val)- float(regen_stat.text), 0.01))
+		change_timer.start()
 	
 	#COOLDOWN
 	if snappedf(float(ent.stat_cooldown.val)- float(cooldown_stat.text), 0.01) == 0 or snappedf(float(ent.stat_cooldown.val)- float(cooldown_stat.text), 0.01) == snappedf(float(ent.stat_cooldown.val), 0.01):
@@ -247,9 +254,11 @@ func _process(delta):
 	elif float(ent.stat_cooldown.val)- float(cooldown_stat.text) > 0:
 		cooldown_change.add_theme_color_override("font_color","ff493a")
 		cooldown_change.text = str(snappedf(float(ent.stat_cooldown.val)- float(cooldown_stat.text), 0.01))
+		change_timer.start()
 	elif float(ent.stat_cooldown.val)- float(cooldown_stat.text) < 0:
 		cooldown_change.add_theme_color_override("font_color","32cd32")
 		cooldown_change.text = str(snappedf(float(ent.stat_cooldown.val)- float(cooldown_stat.text), 0.01))
+		change_timer.start()
 	
 	#AGGRO
 	if snappedf(float(ent.stat_aggroNoise.val)- float(aggro_stat.text), 0.01) == 0 or snappedf(float(ent.stat_aggroNoise.val)- float(aggro_stat.text), 0.01) == snappedf(float(ent.stat_aggroNoise.val), 0.01):
@@ -257,9 +266,11 @@ func _process(delta):
 	elif float(ent.stat_aggroNoise.val)- float(aggro_stat.text) > 0:
 		aggro_change.add_theme_color_override("font_color","ff493a")
 		aggro_change.text = str(snappedf(float(ent.stat_aggroNoise.val)- float(aggro_stat.text), 0.01))
+		change_timer.start()
 	elif float(ent.stat_aggroNoise.val)- float(aggro_stat.text) < 0:
 		aggro_change.add_theme_color_override("font_color","32cd32")
 		aggro_change.text = str(snappedf(float(ent.stat_aggroNoise.val)- float(aggro_stat.text), 0.01))
+		change_timer.start()
 	
 	#LUCK
 	if snappedf(float(ent.stat_luck.val)- float(luck_stat.text), 0.01) == 0 or snappedf(float(ent.stat_luck.val)- float(luck_stat.text), 0.01) == snappedf(float(ent.stat_luck.val), 0.01):
@@ -267,9 +278,11 @@ func _process(delta):
 	elif float(ent.stat_luck.val)- float(luck_stat.text) > 0:
 		luck_change.add_theme_color_override("font_color","32cd32")
 		luck_change.text = str(snappedf(float(ent.stat_luck.val)- float(luck_stat.text), 0.01))
+		change_timer.start()
 	elif float(ent.stat_luck.val)- float(luck_stat.text) < 0:
 		luck_change.add_theme_color_override("font_color","ff493a")
 		luck_change.text = str(snappedf(float(ent.stat_luck.val)- float(luck_stat.text), 0.01))
+		change_timer.start()
 		
 	
 
@@ -333,3 +346,15 @@ func damageVignette(dmg_amt, _from):
 	vignetteTween = get_tree().create_tween()
 	vignetteTween.tween_property($"HUD STUFF/vignette", "modulate",
 			Color(Color.RED, 0), 1 + proportion)
+
+
+
+
+
+func _on_timer_timeout() -> void:
+	damage_change.text = ""
+	speed_change.text = ""
+	regen_change.text = ""
+	cooldown_change.text = ""
+	aggro_change.text = ""
+	luck_change.text = ""
